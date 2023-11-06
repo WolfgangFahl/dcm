@@ -4,7 +4,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "dcm"
+name = "dynamic_competence_map"
 description = "dcm: visualization of dynamic competence map"
 home-page = "https://github.com/WolfgangFahl/dcm"
 authors = [
