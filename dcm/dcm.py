@@ -4,7 +4,7 @@ Created on 2023-06-11
 @author: wf
 """
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
 from dataclasses_json import dataclass_json
 from dcm.svg import SVG
 
@@ -14,6 +14,7 @@ class CompetenceAspect:
     full_name: str
     color_code: str
     facets: List[str]
+    url: Optional[str] = None  # Optional URL attribute
 
 
 @dataclass_json
@@ -64,7 +65,17 @@ class DynamicCompetenceMap:
             angle = (num_facets / total_facets) * 360  # Angle in degrees
             
             # Add the pie segment to the SVG
-            svg.add_pie_segment(cx, cy, radius, start_angle, start_angle + angle, aspect.color_code)
+            svg.add_pie_segment(
+                cx=150,
+                cy=150,
+                radius=135,
+                start_angle_deg=start_angle,
+                end_angle_deg=start_angle + angle,
+                color=aspect.color_code,
+                aspect_name=aspect.full_name,
+                aspect_id=aspect_code,
+                aspect_url=aspect.url  # This is optional and can be omitted
+            )
             
             # Increment the start angle for the next slice
             start_angle += angle
