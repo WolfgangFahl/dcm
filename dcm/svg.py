@@ -41,7 +41,7 @@ class SVG:
         # Add the properly indented group to the SVG elements
         self._add_element(group_str, level=0)  # level=0 to avoid further indentation
 
-    def add_pie_segment(self, cx, cy, radius, start_angle_deg, end_angle_deg, color, aspect_name, aspect_id=None, aspect_class=None, aspect_url=None):
+    def add_pie_segment(self, cx, cy, radius, start_angle_deg, end_angle_deg, color, aspect_description, aspect_id=None, aspect_class=None, aspect_url=None):
         # Convert angles from degrees to radians for calculations
         start_angle_rad = radians(start_angle_deg)
         end_angle_rad = radians(end_angle_deg)
@@ -65,7 +65,7 @@ class SVG:
         
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        title_element = f'<title>{aspect_name}</title>'
+        title_element = f'<title>{aspect_description}</title>'
 
         # Combine path and title into one string without adding indentation here
         group_content = f"{path_element}{title_element}"

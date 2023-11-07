@@ -1,0 +1,111 @@
+{
+  "competence_aspects": {
+    "BPWK": {
+      "name": "Berufspraktisches Wissen und Können",
+      "color_code": "#B5B0A8",
+      "facets": [
+        {
+          "name": "Lerninhalte und -ziele"
+        },
+        {
+          "name": "Methoden, Medien und Lernmaterialien"
+        },
+        {
+          "name": "Rahmenbedingungen und Lernumgebungen"
+        },
+        {
+          "name": "Outcomeorientierung"
+        },
+        {
+          "name": "Teilnehmendenorientierung"
+        },
+        {
+          "name": "Diagnostik und Lernberatung"
+        },
+        {
+          "name": "Moderation und Steuerung von Gruppen"
+        },
+        {
+          "name": "Professionelle Kommunikation"
+        },
+        {
+          "name": "Kooperation mit den Auftraggebenden/Arbeitgebenden"
+        },
+        {
+          "name": "Kollegiale Zusammenarbeit/Netzwerken"
+        }
+      ]
+    },
+    "FFW": {
+      "name": "Fach- und feldspezifisches Wissen",
+      "color_code": "#D1CFC7",
+      "facets": [
+        {
+          "name": "Adressatinnen und Adressaten"
+        },
+        {
+          "name": "Feldspezifisches Wissen"
+        },
+        {
+          "name": "Curriculare und institutionelle Rahmenbedingungen"
+        }
+      ]
+    },
+    "PWAU": {
+      "name": "Professionelle Werthaltungen und Überzeugungen",
+      "color_code": "#EBE8E5",
+      "facets": [
+        {
+          "name": "Menschenbilder"
+        },
+        {
+          "name": "Wertvorstellungen"
+        },
+        {
+          "name": "Berufliche Weiterentwicklung"
+        },
+        {
+          "name": "Subjektive Annahmen über das Lehren und Lernen"
+        }
+      ]
+    },
+    "PSS": {
+      "name": "Professionelle Selbststeuerung",
+      "color_code": "#918F82",
+      "facets": [
+        {
+          "name": "Selbstwirksamkeitsüberzeugungen"
+        },
+        {
+          "name": "Enthusiasmus"
+        },
+        {
+          "name": "Eigenes Rollenbewusstsein"
+        },
+        {
+          "name": "Reflexion des eigenen Lehrhandelns"
+        },
+        {
+          "name": "Umgang mit Feedback und Kritik"
+        },
+        {
+          "name": "Engagement und Distanz"
+        }
+      ]
+    }
+  },
+  "competence_levels": [
+    {
+      "name": "Basisstufe",
+      "level": 1
+    },
+    {
+      "name": "Ausbaustufe",
+      "level": 2
+    },
+    {
+      "name": "Nicht erfasst",
+      "level": 3
+    }
+  ]
+}
