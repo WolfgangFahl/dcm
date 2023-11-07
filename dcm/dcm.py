@@ -108,32 +108,33 @@ class DynamicCompetenceMap:
             error_message=f"error in {name}.json: {str(ex)}"
             raise ValueError(error_message)
 
-    def generate_svg(self, filename: str,width:int=600, height:int=600):
+    def generate_svg(self, filename: str, width: int = 600, height: int = 600):
         competence_aspects = self.competence_tree.competence_aspects
-        
+    
         # Instantiate the SVG class
         svg = SVG(width=width, height=height)
-        
-        # Center of the pie
+    
+        # Center of the donut
         cx, cy = svg.width // 2, svg.height // 2
-        facet_radius = min(cx, cy) 
-        aspect_radius=facet_radius//2 # smaller radius for aspects
-
+        outer_radius = min(cx, cy) * 0.8  # Leave some margin
+        inner_radius = outer_radius * 0.5  # Choose a suitable inner radius
+    
         # Total number of facets
         total_facets = sum(len(aspect.facets) for aspect in competence_aspects.values())
-
+    
         # Starting angle for the first aspect
         aspect_start_angle = 0
-
+    
         for aspect_code, aspect in competence_aspects.items():
             num_facets_in_aspect = len(aspect.facets)
             aspect_angle = (num_facets_in_aspect / total_facets) * 360
-
-            # Draw the aspect segment on top of the facets
-            svg.add_pie_segment(
+    
+            # Draw the aspect segment as a donut segment
+            svg.add_donut_segment(
                 cx=cx,
                 cy=cy,
-                radius=aspect_radius,
+                inner_radius=0,
+                outer_radius=outer_radius,
                 start_angle_deg=aspect_start_angle,
                 end_angle_deg=aspect_start_angle + aspect_angle,
                 color=aspect.color_code,
@@ -141,28 +142,30 @@ class DynamicCompetenceMap:
                 segment_id=aspect_code,
                 segment_url=aspect.url
             )
-
+    
             facet_start_angle = aspect_start_angle  # Facets start where the aspect starts
             angle_per_facet = aspect_angle / num_facets_in_aspect  # Equal angle for each facet
-
+    
             for facet in aspect.facets:
-                # Add the facet segment to the SVG
-                svg.add_pie_segment(
+                # Add the facet segment as a donut segment
+                svg.add_donut_segment(
                     cx=cx,
                     cy=cy,
-                    radius=facet_radius,  # Slightly larger radius for facets
+                    inner_radius=inner_radius,
+                    outer_radius=outer_radius,
                     start_angle_deg=facet_start_angle,
                     end_angle_deg=facet_start_angle + angle_per_facet,
                     color=facet.color_code,
                     segment_name=facet.name,
                     segment_id=facet.id,
-                    segment_url=facet.url  # This is optional and can be omitted
+                    segment_url=facet.url
                 )
                 facet_start_angle += angle_per_facet
-
+    
             aspect_start_angle += aspect_angle
-
+    
         # Save the SVG content to a file
         svg.save(filename)
+
 
 
