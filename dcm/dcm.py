@@ -6,7 +6,7 @@ Created on 2023-06-11
 from dataclasses import dataclass
 from typing import Dict, List
 from dataclasses_json import dataclass_json
-
+from dcm.svg import SVG
 
 @dataclass_json
 @dataclass
@@ -21,7 +21,6 @@ class CompetenceAspect:
 class CompetenceTree:
     competence_aspects: Dict[str, CompetenceAspect]
     competence_levels: List[str]
-
 
 class DynamicCompetenceMap:
     """
@@ -41,3 +40,34 @@ class DynamicCompetenceMap:
         """
         competence_tree = CompetenceTree.from_json(json_string)
         return DynamicCompetenceMap(competence_tree)
+
+    def generate_svg(self, filename: str):
+        competence_aspects = self.competence_tree.competence_aspects
+        
+        # Instantiate the SVG class
+        svg = SVG(width=300, height=300)
+        
+        # Center of the pie
+        cx, cy = svg.width // 2, svg.height // 2
+        radius = min(cx, cy) * 0.9  # Radius of the pie
+
+        # Calculate total number of facets
+        total_facets = sum(len(aspect.facets) for aspect in competence_aspects.values())
+        
+        # Starting angle for the first slice
+        start_angle = 0
+        
+        # Create the slices of the pie chart
+        for aspect_code, aspect in competence_aspects.items():
+            # Calculate the angle for this slice in degrees
+            num_facets = len(aspect.facets)
+            angle = (num_facets / total_facets) * 360  # Angle in degrees
+            
+            # Add the pie segment to the SVG
+            svg.add_pie_segment(cx, cy, radius, start_angle, start_angle + angle, aspect.color_code)
+            
+            # Increment the start angle for the next slice
+            start_angle += angle
+        
+        # Save the SVG content to a file
+        svg.save(filename)

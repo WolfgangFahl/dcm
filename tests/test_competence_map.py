@@ -77,4 +77,6 @@ class TestDynamicCompetenceMap(Basetest):
         # Now you can perform assertions to verify that the data was loaded correctly
         self.assertIsNotNone(dcm.competence_tree)
         self.assertTrue("BPWK" in dcm.competence_tree.competence_aspects)
+        svg_file="/tmp/competence_map.svg"
+        dcm.generate_svg(svg_file)
         
