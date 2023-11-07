@@ -5,34 +5,44 @@
       "color_code": "#B5B0A8",
       "facets": [
         {
-          "name": "Lerninhalte und -ziele"
+          "name": "Lerninhalte und -ziele",
+          "color_code": "#beb9b1"
         },
         {
-          "name": "Methoden, Medien und Lernmaterialien"
+          "name": "Methoden, Medien und Lernmaterialien",
+          "color_code": "#c7c2ba"
         },
         {
-          "name": "Rahmenbedingungen und Lernumgebungen"
+          "name": "Rahmenbedingungen und Lernumgebungen",
+          "color_code": "#d0cbc3"
         },
         {
-          "name": "Outcomeorientierung"
+          "name": "Outcomeorientierung",
+          "color_code": "#d9d4cc"
         },
         {
-          "name": "Teilnehmendenorientierung"
+          "name": "Teilnehmendenorientierung",
+          "color_code": "#e2ddd5"
         },
         {
-          "name": "Diagnostik und Lernberatung"
+          "name": "Diagnostik und Lernberatung",
+          "color_code": "#ebe6de"
         },
         {
-          "name": "Moderation und Steuerung von Gruppen"
+          "name": "Moderation und Steuerung von Gruppen",
+          "color_code": "#f4efe7"
         },
         {
-          "name": "Professionelle Kommunikation"
+          "name": "Professionelle Kommunikation",
+          "color_code": "#fdf8f0"
         },
         {
-          "name": "Kooperation mit den Auftraggebenden/Arbeitgebenden"
+          "name": "Kooperation mit den Auftraggebenden/Arbeitgebenden",
+          "color_code": "#ffffff" 
         },
         {
-          "name": "Kollegiale Zusammenarbeit/Netzwerken"
+          "name": "Kollegiale Zusammenarbeit/Netzwerken",
+          "color_code": "#ffffff" 
         }
       ]
     },
@@ -41,13 +51,16 @@
       "color_code": "#D1CFC7",
       "facets": [
         {
-          "name": "Adressatinnen und Adressaten"
+          "name": "Adressatinnen und Adressaten",
+          "color_code": "#dad8d0"
         },
         {
-          "name": "Feldspezifisches Wissen"
+          "name": "Feldspezifisches Wissen",
+          "color_code": "#e3e1d9"
         },
         {
-          "name": "Curriculare und institutionelle Rahmenbedingungen"
+          "name": "Curriculare und institutionelle Rahmenbedingungen",
+          "color_code": "#eceae2"
         }
       ]
     },
@@ -56,16 +69,20 @@
       "color_code": "#EBE8E5",
       "facets": [
         {
-          "name": "Menschenbilder"
+          "name": "Menschenbilder",
+          "color_code": "#f0efed"
         },
         {
-          "name": "Wertvorstellungen"
+          "name": "Wertvorstellungen",
+          "color_code": "#f5f4f3"
         },
         {
-          "name": "Berufliche Weiterentwicklung"
+          "name": "Berufliche Weiterentwicklung",
+          "color_code": "#faf9f8"
         },
         {
-          "name": "Subjektive Annahmen über das Lehren und Lernen"
+          "name": "Subjektive Annahmen über das Lehren und Lernen",
+          "color_code": "#ffffff" 
         }
       ]
     },
@@ -74,22 +91,28 @@
       "color_code": "#918F82",
       "facets": [
         {
-          "name": "Selbstwirksamkeitsüberzeugungen"
+          "name": "Selbstwirksamkeitsüberzeugungen",
+          "color_code": "#9a9487"
         },
         {
-          "name": "Enthusiasmus"
+          "name": "Enthusiasmus",
+          "color_code": "#a39d8c"
         },
         {
-          "name": "Eigenes Rollenbewusstsein"
+          "name": "Eigenes Rollenbewusstsein",
+          "color_code": "#acaa91"
         },
         {
-          "name": "Reflexion des eigenen Lehrhandelns"
+          "name": "Reflexion des eigenen Lehrhandelns",
+          "color_code": "#b5b396"
         },
         {
-          "name": "Umgang mit Feedback und Kritik"
+          "name": "Umgang mit Feedback und Kritik",
+          "color_code": "#bebc9b"
         },
         {
-          "name": "Engagement und Distanz"
+          "name": "Engagement und Distanz",
+          "color_code": "#c7c5a0"
         }
       ]
     }
@@ -97,15 +120,18 @@
   "competence_levels": [
     {
       "name": "Basisstufe",
-      "level": 1
+      "level": 1,
+      "color_code": "#A0A0A0" 
     },
     {
       "name": "Ausbaustufe",
-      "level": 2
+      "level": 2,
+      "color_code": "#A9A9A9"
     },
     {
       "name": "Nicht erfasst",
-      "level": 3
+      "level": 3,
+      "color_code": "#B2B2B2"
     }
   ]
 }

@@ -41,7 +41,7 @@ class SVG:
         # Add the properly indented group to the SVG elements
         self._add_element(group_str, level=0)  # level=0 to avoid further indentation
 
-    def add_pie_segment(self, cx, cy, radius, start_angle_deg, end_angle_deg, color, aspect_description, aspect_id=None, aspect_class=None, aspect_url=None):
+    def add_pie_segment(self, cx, cy, radius, start_angle_deg, end_angle_deg, color, segment_name:str, segment_id=None, segment_class=None, segment_url=None):
         # Convert angles from degrees to radians for calculations
         start_angle_rad = radians(start_angle_deg)
         end_angle_rad = radians(end_angle_deg)
@@ -65,17 +65,17 @@ class SVG:
         
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        title_element = f'<title>{aspect_description}</title>'
+        title_element = f'<title>{segment_name}</title>'
 
         # Combine path and title into one string without adding indentation here
         group_content = f"{path_element}{title_element}"
 
         # If an URL is provided, wrap the content within an anchor
-        if aspect_url:
-            group_content = f'<a xlink:href="{aspect_url}" target="_blank">\n{group_content}</a>\n'
+        if segment_url:
+            group_content = f'<a xlink:href="{segment_url}" target="_blank">\n{group_content}</a>\n'
 
         # Use add_group to add the pie segment with proper indentation
-        self.add_group(group_content, group_id=aspect_id, group_class=aspect_class, level=2)
+        self.add_group(group_content, group_id=segment_id, group_class=segment_class, level=2)
 
     def get_svg_markup(self):
         """
