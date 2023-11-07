@@ -18,8 +18,6 @@ license = {text = "Apache-2.0"}
 dependencies = [
 	# https://github.com/WolfgangFahl/nicegui_widgets
 	"ngwidgets>=0.3.3",
-	# https://github.com/mozman/svgwrite
-	"svgwrite>=1.4.3"
 ]
 
 requires-python = ">=3.9"
