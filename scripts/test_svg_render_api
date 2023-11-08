@@ -28,7 +28,8 @@ check_response() {
 for EXAMPLE in "${EXAMPLES[@]}"; do
     # Download the JSON file from GitHub
     JSON_FILE_PATH="$SVG_DIR/$EXAMPLE"
-    curl -o "$JSON_FILE_PATH" "$GITHUB_RAW_BASE_URL/$EXAMPLE"
+    echo "downloading $EXAMPLE ..."
+    curl -o "$JSON_FILE_PATH" "$GITHUB_RAW_BASE_URL/$EXAMPLE" > /dev/null 2>&1
 
     # Prepare the JSON payload
     NAME=$(basename "$EXAMPLE" .json)
@@ -36,6 +37,7 @@ for EXAMPLE in "${EXAMPLES[@]}"; do
     JSON_STRING=$(jq -c . "$JSON_FILE_PATH" | jq -sR .) # Encode the JSON content as a JSON-encoded string
     DATA="{\"name\":\"$NAME\",\"json_string\":$JSON_STRING}"
 
+	echo "rendering $EXAMPLE to SVG via dcm server ..."
     # Send a POST request with the JSON payload and follow redirects
     RESPONSE=$(curl -s -L -w "%{http_code}" -X POST -H "Content-Type: application/json" -d "$DATA" "$SERVER_ADDRESS/svg" -o "$SVG_DIR/${NAME}_competence_map.svg")
 
@@ -47,10 +49,12 @@ for EXAMPLE in "${EXAMPLES[@]}"; do
 
     # Check the response
     check_response "$HTTP_STATUS" "$RESPONSE_BODY"
+	SVG_FILE="$SVG_DIR/${NAME}_competence_map.svg"
 
     # Proceed only if the SVG was created successfully
-    if [ -s "$SVG_DIR/${NAME}_competence_map.svg" ]; then
+    if [ -s "$SVG_FILE" ]; then
+    	echo "displaying $SVG_FILE" 
         # Open the SVG file with the default application
-        open "$SVG_DIR/${NAME}_competence_map.svg"
+        open $SVG_FILE
     fi
 done
