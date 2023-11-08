@@ -13,13 +13,6 @@ class CompetenceCmd(WebserverCmd):
     """
     Command line for diagrams server
     """
-    def __init__(self):
-        """
-        constructor
-        """
-        config=DynamiceCompentenceMapWebServer.get_config()
-        WebserverCmd.__init__(self, config, DynamiceCompentenceMapWebServer, DEBUG)
-        pass
     
     def getArgParser(self,description:str,version_msg)->ArgumentParser:
         """
@@ -34,7 +27,7 @@ def main(argv:list=None):
     """
     main call
     """
-    cmd=CompetenceCmd()
+    cmd=CompetenceCmd(config=DynamiceCompentenceMapWebServer.get_config(),webserver_cls=DynamiceCompentenceMapWebServer)
     exit_code=cmd.cmd_main(argv)
     return exit_code
         

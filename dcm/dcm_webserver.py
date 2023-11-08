@@ -8,10 +8,19 @@ from urllib.parse import urlparse
 from ngwidgets.input_webserver import InputWebserver
 from ngwidgets.webserver import WebserverConfig
 from dcm.version import Version
-from nicegui import ui,Client
+from nicegui import app,ui,Client
 from ngwidgets.file_selector import FileSelector
 from dcm.dcm_core import DynamicCompetenceMap
+from pydantic import BaseModel
+from fastapi.responses import HTMLResponse
 
+class SVGRenderRequest(BaseModel):
+    """
+    an svg Render Request
+    """
+    name: str
+    json_string: str
+    
 class DynamiceCompentenceMapWebServer(InputWebserver):
     """
     server to supply Dynamic Competence Map Visualizations
@@ -29,6 +38,23 @@ class DynamiceCompentenceMapWebServer(InputWebserver):
         """Constructs all the necessary attributes for the WebServer object."""
         InputWebserver.__init__(self,config=DynamiceCompentenceMapWebServer.get_config())
         
+        @app.post("/svg/")
+        async def render_svg(svg_render_request: SVGRenderRequest)->HTMLResponse:
+            """
+            render the given request
+            """
+            return await self.render_svg(svg_render_request)
+            
+    async def render_svg(self,svg_render_request: SVGRenderRequest)->HTMLResponse:
+        """
+        render the given request
+        """
+        r=svg_render_request 
+        dcm=DynamicCompetenceMap.from_json(r.name, r.json_string)
+        svg_markup=dcm.generate_svg_markup()
+        response=HTMLResponse(content=svg_markup)
+        return response
+            
     def get_basename_without_extension(self,url)->str:
         # Parse the URL to get the path component
         path = urlparse(url).path

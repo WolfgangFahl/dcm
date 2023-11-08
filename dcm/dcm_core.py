@@ -94,8 +94,11 @@ class DynamicCompetenceMap:
         return path
     
     @classmethod
-    def get_examples(cls)->dict:
-        examples={}
+    def get_example_json_strings(cls)->dict:
+        """
+        get example json strings
+        """
+        example_jsons={}
         examples_path=cls.examples_path()
         for filename in os.listdir(examples_path):
             if filename.endswith('.json'):
@@ -103,8 +106,15 @@ class DynamicCompetenceMap:
                 with open(filepath, 'r') as json_file:
                     file_prefix=filename.replace(".json","")
                     json_text =json_file.read()
-                    dcm=DynamicCompetenceMap.from_json(file_prefix, json_text)
-                    examples[file_prefix]=dcm
+                    example_jsons[file_prefix]=json_text
+        return example_jsons            
+            
+    @classmethod
+    def get_examples(cls)->dict:
+        examples={}
+        for name,json_string in cls.get_example_json_strings().items():
+            dcm=DynamicCompetenceMap.from_json(name, json_string)
+            examples[name]=dcm
         return examples
 
     @staticmethod
