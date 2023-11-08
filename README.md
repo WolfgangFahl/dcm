@@ -5,7 +5,7 @@ defined competence aspects.
 
 [![Join the discussion at https://github.com/WolfgangFahl/dcm/discussions](https://img.shields.io/github/discussions/WolfgangFahl/dcm)](https://github.com/WolfgangFahl/dcm/discussions)
 [![pypi](https://img.shields.io/pypi/pyversions/dynamic_competence_map)](https://pypi.org/project/dynamic-competence-map/)
-[![Github Actions Build](https://github.com/WolfgangFahl/dcm/workflows/build.yml/badge.svg)](https://github.com/WolfgangFahl/dcm/actions?query=workflow%3Abuild+branch%3Amain)
+[![Github Actions Build](https://github.com/WolfgangFahl/dcm/actions/workflows/build.yml/badge.svg)](https://github.com/WolfgangFahl/dcm/actions/workflows/build.yml)
 [![PyPI Status](https://img.shields.io/pypi/v/dynamic_competence_map.svg)](https://pypi.python.org/pypi/dynamic-competence-map/)
 [![GitHub issues](https://img.shields.io/github/issues/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues)
 [![GitHub issues](https://img.shields.io/github/issues-closed/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues/?q=is%3Aissue+is%3Aclosed)
