@@ -5,8 +5,6 @@ Created on 2023-11-06
 '''
 from ngwidgets.basetest import Basetest
 from dcm.dcm_core import DynamicCompetenceMap
-import os
-import xml.etree.ElementTree as ET
 from tests.markup_check import MarkupCheck
 
 class TestDynamicCompetenceMap(Basetest):

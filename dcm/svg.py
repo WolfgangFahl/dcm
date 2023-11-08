@@ -9,6 +9,16 @@ class SVG:
         self.height = height
         self.elements = []
         self.indent = indent
+        
+    def get_svg_style(self):
+        """
+        Define styles for the SVG elements.
+        """
+        return (
+            '<style>\n'
+            '    .hoverable:hover { fill-opacity: 0.7; }\n'
+            '</style>\n'
+        )
 
     def _add_element(self, element,level:int=1):
         # Prepend the indent to the element according to its level
@@ -77,7 +87,7 @@ class SVG:
         # Use add_group to add the pie segment with proper indentation
         self.add_group(group_content, group_id=segment_id, group_class=segment_class, level=2)
 
-    def add_donut_segment(self, cx, cy, inner_radius, outer_radius, start_angle_deg, end_angle_deg, color, segment_name:str, segment_id=None, segment_class=None, segment_url=None):
+    def add_donut_segment(self, cx, cy, inner_radius, outer_radius, start_angle_deg, end_angle_deg, color, segment_name:str, segment_id=None, segment_class="hoverable", segment_url=None):
         # Convert angles from degrees to radians for calculations
         start_angle_rad = radians(start_angle_deg)
         end_angle_rad = radians(end_angle_deg)
@@ -123,18 +133,19 @@ class SVG:
 
     def get_svg_markup(self):
         """
-        get the complete svg markup
+        Get the complete SVG markup with styles.
         """
         header = (
             f'<svg xmlns="http://www.w3.org/2000/svg" '
             f'xmlns:xlink="http://www.w3.org/1999/xlink" '
             f'width="{self.width}" height="{self.height}">\n'
         )
+        styles = self.get_svg_style()  # Get the styles for the SVG
         body = "".join(self.elements)  # Combine all elements into one string
         footer = '</svg>'
         
         # Return the concatenated string
-        return f"{header}{body}{footer}"
+        return f"{header}{styles}{body}{footer}"
 
     def save(self, filename:str):
         """
