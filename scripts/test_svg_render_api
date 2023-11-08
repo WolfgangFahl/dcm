@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Server address for the SVG rendering API
+SERVER_ADDRESS="http://dcm.bitplan.com"
+
+# GitHub base URL for raw content
+GITHUB_RAW_BASE_URL="https://raw.githubusercontent.com/WolfgangFahl/dcm/main/dcm_examples"
+
+# Directory to store the SVG files
+SVG_DIR="/tmp"
+
+# List of example JSON files
+declare -a EXAMPLES=("architecture.json" "portfolio_plus.json")
+
+# Function to check the response
+check_response() {
+    if [ $1 -eq 422 ]; then
+        echo "Server responded with status code: $1. The request was well-formed but was unable to be followed due to semantic errors."
+        echo "Response body: $2"
+        exit 1
+    elif [ $1 -ne 200 ]; then
+        echo "Server responded with status code: $1. Exiting."
+        exit 1
+    fi
+}
+
+# Loop through each example JSON file
+for EXAMPLE in "${EXAMPLES[@]}"; do
+    # Download the JSON file from GitHub
+    JSON_FILE_PATH="$SVG_DIR/$EXAMPLE"
+    curl -o "$JSON_FILE_PATH" "$GITHUB_RAW_BASE_URL/$EXAMPLE"
+
+    # Prepare the JSON payload
+    NAME=$(basename "$EXAMPLE" .json)
+    JSON_CONTENT=$(<"$JSON_FILE_PATH")
+    JSON_STRING=$(jq -c . "$JSON_FILE_PATH" | jq -sR .) # Encode the JSON content as a JSON-encoded string
+    DATA="{\"name\":\"$NAME\",\"json_string\":$JSON_STRING}"
+
+    # Send a POST request with the JSON payload and follow redirects
+    RESPONSE=$(curl -s -L -w "%{http_code}" -X POST -H "Content-Type: application/json" -d "$DATA" "$SERVER_ADDRESS/svg" -o "$SVG_DIR/${NAME}_competence_map.svg")
+
+    # Get the status code from the response
+    HTTP_STATUS=$(echo "$RESPONSE" | tail -n1)
+
+    # Get the body of the response for debugging
+    RESPONSE_BODY=$(cat "$SVG_DIR/${NAME}_competence_map.svg")
+
+    # Check the response
+    check_response "$HTTP_STATUS" "$RESPONSE_BODY"
+
+    # Proceed only if the SVG was created successfully
+    if [ -s "$SVG_DIR/${NAME}_competence_map.svg" ]; then
+        # Open the SVG file with the default application
+        open "$SVG_DIR/${NAME}_competence_map.svg"
+    fi
+done
