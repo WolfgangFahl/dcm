@@ -3,6 +3,7 @@ Created on 2023-06-11
 
 @author: wf
 """
+import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from dataclasses_json import dataclass_json
@@ -84,7 +85,28 @@ class DynamicCompetenceMap:
         constructor
         """
         self.competence_tree = competence_tree
+        
+    @classmethod
+    def examples_path(cls)->str:
+        # the root directory (default: examples)
+        path = os.path.join(os.path.dirname(__file__), '../dcm_examples')
+        path = os.path.abspath(path)
+        return path
     
+    @classmethod
+    def get_examples(cls)->dict:
+        examples={}
+        examples_path=cls.examples_path()
+        for filename in os.listdir(examples_path):
+            if filename.endswith('.json'):
+                filepath = os.path.join(examples_path, filename)
+                with open(filepath, 'r') as json_file:
+                    file_prefix=filename.replace(".json","")
+                    json_text =json_file.read()
+                    dcm=DynamicCompetenceMap.from_json(file_prefix, json_text)
+                    examples[file_prefix]=dcm
+        return examples
+
     @staticmethod
     def from_json(name,json_string: str) -> 'DynamicCompetenceMap':
         """

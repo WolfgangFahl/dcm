@@ -18,6 +18,8 @@ license = {text = "Apache-2.0"}
 dependencies = [
 	# https://github.com/WolfgangFahl/nicegui_widgets
 	"ngwidgets>=0.3.3",
+	# https://pypi.org/project/dataclasses-json/
+	"dataclasses-json>=0.6.1"
 ]
 
 requires-python = ">=3.9"
@@ -50,9 +52,12 @@ test = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = [
-  "dcm",
-]
+only-include = ["dcm","dcm_examples"]
+
+[tool.hatch.build.targets.wheel.sources]
+"dcm" = "dcm"
+"dcm_examples" = "dcm_examples"
+
 
 [project.scripts]
 dcm = "dcm.dcm_cmd:main"
