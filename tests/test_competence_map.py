@@ -4,7 +4,7 @@ Created on 2023-11-06
 @author: wf
 '''
 from ngwidgets.basetest import Basetest
-from dcm.dcm import DynamicCompetenceMap
+from dcm.dcm_core import DynamicCompetenceMap
 import os
 import xml.etree.ElementTree as ET
 

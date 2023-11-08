@@ -1,0 +1,8 @@
+#!/bin/bash
+# WF 2023-11-08
+# start dcm server
+git pull
+python -m venv .venv
+source .venv/bin/activate
+pip install .
+dcm --serve --host 0.0.0.0 --debug

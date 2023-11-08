@@ -130,8 +130,40 @@ class DynamicCompetenceMap:
             error_message=f"error in {name}.json: {str(ex)}"
             raise ValueError(error_message)
 
-    def generate_svg(self, filename: str, width: int = 600, height: int = 600):
-        competence_aspects = self.competence_tree.competence_aspects
+    def generate_svg(self, filename: Optional[str] = None, width: int = 600, height: int = 600) -> str:
+        """
+        Generate the SVG markup and optionally save it to a file. If a filename is given, the method
+        will also save the SVG to that file. The SVG is generated based on internal state not shown here.
+
+        Args:
+            filename (str, optional): The path to the file where the SVG should be saved. Defaults to None.
+            width (int): The width of the SVG canvas in pixels. Defaults to 600.
+            height (int): The height of the SVG canvas in pixels. Defaults to 600.
+
+        Returns:
+            str: The SVG markup.
+        """
+        svg_markup = self.generate_svg_markup(self.competence_tree,width, height)  # Assuming this is defined to generate the SVG content.
+        if filename:
+            self.save_svg_to_file(svg_markup, filename)  # Assuming this is defined to handle file saving.
+        return svg_markup
+    
+    def generate_svg_markup(self,competence_tree=None, width: int = 600, height: int = 600) -> str:
+        """
+        Generate SVG markup based on the provided competence tree. The exact details of how the competence
+        tree is used to generate the SVG are not shown here.
+
+        Args:
+            competence_tree (Any): The competence tree structure containing the necessary data.
+            width (int): The width of the SVG canvas in pixels. Defaults to 600.
+            height (int): The height of the SVG canvas in pixels. Defaults to 600.
+
+        Returns:
+            str: The generated SVG markup.
+        """
+        if competence_tree is None:
+            competence_tree=self.competence_tree
+        competence_aspects = competence_tree.competence_aspects
     
         # Instantiate the SVG class
         svg = SVG(width=width, height=height)
@@ -186,8 +218,14 @@ class DynamicCompetenceMap:
     
             aspect_start_angle += aspect_angle
     
+        # Return the SVG markup
+        return svg.get_svg_markup()
+
+    def save_svg_to_file(self,svg_markup: str, filename: str):
         # Save the SVG content to a file
-        svg.save(filename)
+        with open(filename, 'w') as file:
+            file.write(svg_markup)
+
 
 
 
