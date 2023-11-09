@@ -97,14 +97,14 @@ class SVG:
             height (int): The height of each legend item.
         """
         # Add the title
-        self.add_text(x, y - height, title)
+        self.add_text(x, y - height, title, font_weight="bold")
         
         # Add the color boxes and labels
         for index, (color, label) in enumerate(items):
             self.add_rectangle(x, y + index * (height + 5), width, height, color)  # Using width for the rectangle's width
             self.add_text(x + width + 10, y + index * (height + 5) + height / 2, label)
 
-    def add_text(self, x: int, y: int, text: str, fill: str = "black") -> None:
+    def add_text(self, x: int, y: int, text: str, fill: str = "black", font_weight:str="normal") -> None:
         """
         Add text to the SVG.
 
@@ -113,10 +113,13 @@ class SVG:
             y (int): The y position of the text.
             text (str): The text content.
             fill (str): The fill color of the text.
+            font_weight(str): normal or bold
         """
         text_element = (
             f'<text x="{x}" y="{y}" fill="{fill}" '
-            f'font-family="{self.config.font}" font-size="{self.config.font_size}">'
+            f'font-family="{self.config.font}" '
+            f'font-size="{self.config.font_size}" '
+            f'font-weight="{font_weight}">'
             f'{text}</text>\n'
         )
         self._add_element(text_element)

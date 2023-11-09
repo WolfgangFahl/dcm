@@ -122,17 +122,17 @@
   "competence_levels": [{
       "name": "Basisstufe",
       "level": 1,
-      "color_code": "#A0A0A0"
+      "color_code": "#9FB429"
     },
     {
       "name": "Ausbaustufe",
       "level": 2,
-      "color_code": "#A9A9A9"
+      "color_code": "#0079C3"
     },
     {
       "name": "Nicht erfasst",
       "level": 3,
-      "color_code": "#B2B2B2"
+      "color_code": "#C3E3F2"
     }
   ]
 }
