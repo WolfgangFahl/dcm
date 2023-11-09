@@ -13,6 +13,7 @@ from ngwidgets.file_selector import FileSelector
 from dcm.dcm_core import DynamicCompetenceMap
 from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
+from dcm.svg import SVGConfig
 
 class SVGRenderRequest(BaseModel):
     """
@@ -20,6 +21,7 @@ class SVGRenderRequest(BaseModel):
     """
     name: str
     json_string: str
+    config: SVGConfig = None  # Optional SVGConfig. If None, defaults will be used.
     
 class DynamiceCompentenceMapWebServer(InputWebserver):
     """
@@ -51,7 +53,7 @@ class DynamiceCompentenceMapWebServer(InputWebserver):
         """
         r=svg_render_request 
         dcm=DynamicCompetenceMap.from_json(r.name, r.json_string)
-        svg_markup=dcm.generate_svg_markup()
+        svg_markup=dcm.generate_svg_markup(config=r.config)
         response=HTMLResponse(content=svg_markup)
         return response
             

@@ -6,6 +6,7 @@ Created on 2023-11-06
 from ngwidgets.basetest import Basetest
 from dcm.dcm_core import DynamicCompetenceMap
 from tests.markup_check import MarkupCheck
+from dcm.svg import SVGConfig
 
 class TestDynamicCompetenceMap(Basetest):
     """
@@ -24,8 +25,8 @@ class TestDynamicCompetenceMap(Basetest):
             # Now you can perform assertions to verify that the data was loaded correctly
             self.assertIsNotNone(dcm.competence_tree)
             self.assertTrue(any(key in dcm.competence_tree.competence_aspects for key in ["BPWK", "DandP"]))
-            
+            svg_config=SVGConfig(width=666,height=666)
             svg_file=f"/tmp/{example_name}_competence_map.svg"
-            dcm.generate_svg(svg_file)
+            dcm.generate_svg(svg_file,config=svg_config)
             markup_check=MarkupCheck(self,dcm)
-            markup_check.check_markup(svg_file=svg_file) 
+            markup_check.check_markup(svg_file=svg_file,svg_config=svg_config) 

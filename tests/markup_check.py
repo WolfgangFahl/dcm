@@ -2,6 +2,7 @@ from typing import Optional
 import xml.etree.ElementTree as ET
 import unittest
 from dcm.dcm_core import DynamicCompetenceMap
+from dcm.svg import SVGConfig
 
 class MarkupCheck:
     """
@@ -105,14 +106,34 @@ class MarkupCheck:
             self.test_case.assertIn(title.text, [aspect.name for aspect in self.dcm.competence_tree.competence_aspects.values()],
                                     "A title element has an unexpected text.")
     
-    def check_markup(self, svg_content: Optional[str] = None, svg_file: Optional[str] = None) -> None:
+    def check_svg_config(self, root: ET.Element, expected_config: Optional[SVGConfig] = None) -> None:
         """
-        Conduct all checks on the SVG content.
+        Check if the SVG root has the correct width and height as specified in the SVGConfig.
+
+        Args:
+            root (ET.Element): The root element of the SVG content.
+            expected_config (SVGConfig, optional): The expected SVG configuration.
+        """
+        if expected_config:
+            # Check if the 'width' and 'height' of the SVG match the expected configuration
+            svg_width = root.get('width')
+            svg_height = root.get('height')
+            self.test_case.assertEqual(svg_width, str(expected_config.width),
+                                       f"SVG width is {svg_width} but expected {expected_config.width}")
+            self.test_case.assertEqual(svg_height, str(expected_config.total_height),
+                                       f"SVG height is {svg_height} but expected {expected_config.height}")
+
+    def check_markup(self, svg_content: Optional[str] = None, svg_file: Optional[str] = None,
+                 svg_config: Optional[SVGConfig] = None) -> None:
+        """
+        Conduct all checks on the SVG content, including configuration checks.
 
         Args:
             svg_content (str, optional): The SVG content as a text string.
             svg_file (str, optional): The file path of the SVG file to parse.
+            svg_config (SVGConfig, optional): The expected SVG configuration.
         """
         root = self.parse_svg(svg_content=svg_content, svg_file=svg_file)
         self.check_svg_elements(root)
         self.check_svg_titles(root)
+        self.check_svg_config(root, svg_config)  # Include the config check

@@ -1,6 +1,6 @@
 from math import cos, sin, radians
 from typing import List, Tuple
-from dataclasses import dataclass
+from pydantic.dataclasses import dataclass
 
 @dataclass
 class SVGConfig:
@@ -37,6 +37,8 @@ class SVG:
     SVG drawing class
     """
     def __init__(self, config:SVGConfig):  
+        if config is None:
+            config=SVGConfig()
         self.config=config
         self.width = config.width
         self.height = config.height

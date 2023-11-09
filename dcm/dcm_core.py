@@ -186,7 +186,7 @@ class DynamicCompetenceMap:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
     
-    def generate_svg_markup(self, competence_tree: CompetenceTree, config: SVGConfig=None) -> str:
+    def generate_svg_markup(self, competence_tree: CompetenceTree=None, config: SVGConfig=None) -> str:
         """
         Generate SVG markup based on the provided competence tree and configuration.
 
