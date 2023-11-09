@@ -202,6 +202,8 @@ class DynamicCompetenceMap:
         competence_aspects = competence_tree.competence_aspects
         # Instantiate the SVG class
         svg = SVG(config)
+        # use default config incase config was None
+        config=svg.config
     
         # Center of the donut
         # Center of the donut chart should be in the middle of the main SVG area, excluding the legend
