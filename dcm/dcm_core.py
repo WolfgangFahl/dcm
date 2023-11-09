@@ -87,7 +87,7 @@ class CompetenceTree:
         # y position for the legends, starting 20 pixels from the bottom edge
         y = svg.config.total_height - svg.config.legend_height + 20
         # Width and height of each legend color box
-        box_width, box_height = 20, 20
+        box_width, box_height = 30, 20
         # Padding between legend items and between the color box and the text
         padding = 5
     
@@ -210,8 +210,8 @@ class DynamicCompetenceMap:
         cx = svg.width // 2
         cy = (config.total_height - config.legend_height) // 2  # Adjusted for legend
         
-        outer_radius = min(cx, cy) * 0.8  # Leave some margin
-        inner_radius = outer_radius * 0.5  # Choose a suitable inner radius
+        outer_radius = min(cx, cy) * 0.9  # Leave some margin
+        inner_radius = outer_radius * 0.33  # Choose a suitable inner radius
     
         # Total number of facets
         total_facets = sum(len(aspect.facets) for aspect in competence_aspects.values())

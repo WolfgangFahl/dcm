@@ -15,9 +15,9 @@ class SVGConfig:
         font_size (int): The font size in points for text elements.
         indent(str): the indentation to be used default is two spaces
     """
-    width: int = 500
-    height: int = 500
-    legend_height: int = 200
+    width: int = 600
+    height: int = 600
+    legend_height: int = 150
     font: str = "Arial"
     font_size: int = 12  # Default font size in points
     indent:str ="  "
@@ -104,22 +104,24 @@ class SVG:
             self.add_rectangle(x, y + index * (height + 5), width, height, color)  # Using width for the rectangle's width
             self.add_text(x + width + 10, y + index * (height + 5) + height / 2, label)
 
-    def add_text(self, x: int, y: int, text: str, fill: str = "black", font_weight:str="normal") -> None:
+    def add_text(self, x: int, y: int, text: str, fill: str = "black", font_weight: str = "normal", text_anchor: str = "start") -> None:
         """
         Add text to the SVG.
 
         Args:
-            x (int): The x position of the text.
-            y (int): The y position of the text.
-            text (str): The text content.
-            fill (str): The fill color of the text.
-            font_weight(str): normal or bold
+            x: The x position of the text.
+            y: The y position of the text.
+            text: The text content.
+            fill: The fill color of the text.
+            font_weight: The font weight (normal, bold, etc.).
+            text_anchor: Text alignment (start, middle, end).
         """
         text_element = (
             f'<text x="{x}" y="{y}" fill="{fill}" '
             f'font-family="{self.config.font}" '
             f'font-size="{self.config.font_size}" '
-            f'font-weight="{font_weight}">'
+            f'font-weight="{font_weight}" '
+            f'text-anchor="{text_anchor}">'
             f'{text}</text>\n'
         )
         self._add_element(text_element)
