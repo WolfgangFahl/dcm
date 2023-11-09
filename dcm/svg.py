@@ -50,9 +50,10 @@ class SVG:
         Define styles for the SVG elements.
         """
         return (
-            '<style>\n'
+            '  <style>\n'
+            '    .hoverable { fill-opacity: 1; stroke: black; stroke-width: 0.5; } \n' 
             '    .hoverable:hover { fill-opacity: 0.7; }\n'
-            '</style>\n'
+            '  </style>\n'
         )
         
     def get_text_width(self, text: str) -> int:
@@ -84,7 +85,7 @@ class SVG:
         rect = f'    <rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{fill}" />\n'
         self._add_element(rect)
         
-    def add_legend(self, items: List[Tuple[str, str]], title: str, x: int, y: int, width: int, height: int) -> None:
+    def add_legend_column(self, items: List[Tuple[str, str]], title: str, x: int, y: int, width: int, height: int) -> None:
         """
         Add a legend to the SVG.
 
