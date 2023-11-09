@@ -1,10 +1,15 @@
 {
+  "element_names": {
+    "tree": "Kompetenzbilanz",
+    "aspect": "Kompetenzaspekt",
+    "facet": "Kompetenzfacette",
+    "level": "Lernfortschritt"
+  },
   "competence_aspects": {
     "BPWK": {
       "name": "Berufspraktisches Wissen und Können",
       "color_code": "#B5B0A8",
-      "facets": [
-        {
+      "facets": [{
           "name": "Lerninhalte und -ziele",
           "color_code": "#DEEFF7"
         },
@@ -49,8 +54,7 @@
     "FFW": {
       "name": "Fach- und feldspezifisches Wissen",
       "color_code": "#D1CFC7",
-      "facets": [
-        {
+      "facets": [{
           "name": "Adressatinnen und Adressaten",
           "color_code": "#DEEFF7"
         },
@@ -67,8 +71,7 @@
     "PWAU": {
       "name": "Professionelle Werthaltungen und Überzeugungen",
       "color_code": "#EBE8E5",
-      "facets": [
-        {
+      "facets": [{
           "name": "Menschenbilder",
           "color_code": "#DEEFF7"
         },
@@ -89,8 +92,7 @@
     "PSS": {
       "name": "Professionelle Selbststeuerung",
       "color_code": "#918F82",
-      "facets": [
-        {
+      "facets": [{
           "name": "Selbstwirksamkeitsüberzeugungen",
           "color_code": "#DEEFF7"
         },
@@ -117,8 +119,7 @@
       ]
     }
   },
-  "competence_levels": [
-    {
+  "competence_levels": [{
       "name": "Basisstufe",
       "level": 1,
       "color_code": "#A0A0A0"

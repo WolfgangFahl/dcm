@@ -1,14 +1,47 @@
 from math import cos, sin, radians
+from typing import List, Tuple
+from dataclasses import dataclass
 
+@dataclass
+class SVGConfig:
+    """
+    A class to hold the configuration parameters for SVG generation.
+
+    Attributes:
+        width (int): The width of the SVG canvas in pixels.
+        height (int): The height of the SVG canvas in pixels.
+        legend_height (int): The height reserved for the legend in pixels.
+        font (str): The font family to use for text elements.
+        font_size (int): The font size in points for text elements.
+        indent(str): the indentation to be used default is two spaces
+    """
+    width: int = 500
+    height: int = 500
+    legend_height: int = 200
+    font: str = "Arial"
+    font_size: int = 12  # Default font size in points
+    indent:str ="  "
+    
+    @property
+    def total_height(self) -> int:
+        """
+        Calculate the total height of the SVG canvas including the legend.
+
+        Returns:
+            int: The total height of the SVG canvas.
+        """
+        return self.height + self.legend_height
+    
 class SVG:
     """
     SVG drawing class
     """
-    def __init__(self, width=300, height=300, indent="  "):  # Default is two spaces
-        self.width = width
-        self.height = height
+    def __init__(self, config:SVGConfig):  
+        self.config=config
+        self.width = config.width
+        self.height = config.height
         self.elements = []
-        self.indent = indent
+        self.indent = config.indent
         
     def get_svg_style(self):
         """
@@ -19,6 +52,22 @@ class SVG:
             '    .hoverable:hover { fill-opacity: 0.7; }\n'
             '</style>\n'
         )
+        
+    def get_text_width(self, text: str) -> int:
+        """
+        Estimate the width of a text string in the SVG based on the font size and font name.
+
+        Args:
+            text (str): The text content.
+
+        Returns:
+            int: The estimated width of the text in pixels.
+        """
+        # Use a simple estimation for text width: average character width for the font
+        # This is an approximation and should be adjusted based on the specific font metrics if needed
+        average_char_width_factor = 0.6  # Arial is fairly narrow; adjust for other fonts
+        average_char_width = average_char_width_factor * self.config.font_size
+        return int(average_char_width * len(text))
 
     def _add_element(self, element,level:int=1):
         # Prepend the indent to the element according to its level
@@ -32,6 +81,43 @@ class SVG:
     def add_rectangle(self, x, y, width, height, fill):
         rect = f'    <rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{fill}" />\n'
         self._add_element(rect)
+        
+    def add_legend(self, items: List[Tuple[str, str]], title: str, x: int, y: int, width: int, height: int) -> None:
+        """
+        Add a legend to the SVG.
+
+        Args:
+            items (List[Tuple[str, str]]): A list of tuples, each with a color code and a label.
+            title (str): The title of the legend.
+            x (int): The x position of the legend.
+            y (int): The y position of the legend.
+            width (int): The width of the color box in the legend.
+            height (int): The height of each legend item.
+        """
+        # Add the title
+        self.add_text(x, y - height, title)
+        
+        # Add the color boxes and labels
+        for index, (color, label) in enumerate(items):
+            self.add_rectangle(x, y + index * (height + 5), width, height, color)  # Using width for the rectangle's width
+            self.add_text(x + width + 10, y + index * (height + 5) + height / 2, label)
+
+    def add_text(self, x: int, y: int, text: str, fill: str = "black") -> None:
+        """
+        Add text to the SVG.
+
+        Args:
+            x (int): The x position of the text.
+            y (int): The y position of the text.
+            text (str): The text content.
+            fill (str): The fill color of the text.
+        """
+        text_element = (
+            f'<text x="{x}" y="{y}" fill="{fill}" '
+            f'font-family="{self.config.font}" font-size="{self.config.font_size}">'
+            f'{text}</text>\n'
+        )
+        self._add_element(text_element)
 
     def add_group(self, content, group_id=None, group_class=None, level=1):
         # Create the attribute string for the group, if any attributes are present
@@ -138,7 +224,7 @@ class SVG:
         header = (
             f'<svg xmlns="http://www.w3.org/2000/svg" '
             f'xmlns:xlink="http://www.w3.org/1999/xlink" '
-            f'width="{self.width}" height="{self.height}">\n'
+            f'width="{self.width}" height="{self.config.total_height}">\n'
         )
         styles = self.get_svg_style()  # Get the styles for the SVG
         body = "".join(self.elements)  # Combine all elements into one string

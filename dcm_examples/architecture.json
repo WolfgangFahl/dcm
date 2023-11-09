@@ -1,4 +1,10 @@
 {
+  "element_names": {
+    "tree": "Architectural Proficiency Framework",
+    "aspect": "Domain of Expertise",
+    "facet": "Skill Area",
+    "level": "Proficiency Stage"
+  },
   "competence_aspects": {
     "DandP": {
       "name": "Design and Planning",

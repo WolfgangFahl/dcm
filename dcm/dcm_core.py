@@ -7,7 +7,7 @@ import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from dataclasses_json import dataclass_json
-from dcm.svg import SVG
+from dcm.svg import SVG, SVGConfig
 from json.decoder import JSONDecodeError
 
 @dataclass_json
@@ -70,10 +70,37 @@ class CompetenceTree:
     Attributes:
         competence_aspects (Dict[str, CompetenceAspect]): A dictionary mapping aspect IDs to CompetenceAspect objects.
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
+        element_names (Dict[str, Dict[str, str]]): A dictionary holding the internationalized names for tree, aspects, facets, and levels. The first key is the language code (e.g., "en", "de"), and the second key is the type ("tree", "aspect", "facet", "level").
     """
     competence_aspects: Dict[str, CompetenceAspect]
     competence_levels: List[CompetenceLevel]
+    element_names: Dict[str, str] = field(default_factory=dict)
 
+    def add_legend(self, svg: SVG) -> None:
+        """
+        Add a legend to the SVG explaining the color codes for levels and aspects.
+        Args:
+            svg (SVG): The SVG object to which the legend will be added.
+        """
+        # Starting x position for the legends, starting 10 pixels from the left edge
+        x_start = 10
+        # y position for the legends, starting 20 pixels from the bottom edge
+        y = svg.config.total_height - svg.config.legend_height + 20
+        # Width and height of each legend color box
+        box_width, box_height = 20, 20
+        # Padding between legend items and between the color box and the text
+        padding = 5
+    
+        # Add the competence level legend
+        level_items = [(level.color_code, level.name) for level in self.competence_levels]
+        svg.add_legend(level_items, self.element_names.get("level", "Level"), x_start, y, box_width, box_height)
+    
+        # Calculate the x position for the aspect legend based on the width of the level legend
+        x_aspect_start = x_start + box_width + padding + max(svg.get_text_width(level.name) for level in self.competence_levels) + padding
+    
+        # Add the competence aspect legend
+        aspect_items = [(aspect.color_code, aspect.name) for aspect in self.competence_aspects.values()]
+        svg.add_legend(aspect_items, self.element_names.get("aspect", "Aspect"), x_aspect_start, y, box_width, box_height)
 
 class DynamicCompetenceMap:
     """
@@ -140,33 +167,32 @@ class DynamicCompetenceMap:
             error_message=f"error in {name}.json: {str(ex)}"
             raise ValueError(error_message)
 
-    def generate_svg(self, filename: Optional[str] = None, width: int = 600, height: int = 600) -> str:
+    def generate_svg(self, filename: Optional[str] = None, config: Optional[SVGConfig] = None) -> str:
         """
         Generate the SVG markup and optionally save it to a file. If a filename is given, the method
         will also save the SVG to that file. The SVG is generated based on internal state not shown here.
 
         Args:
             filename (str, optional): The path to the file where the SVG should be saved. Defaults to None.
-            width (int): The width of the SVG canvas in pixels. Defaults to 600.
-            height (int): The height of the SVG canvas in pixels. Defaults to 600.
+            config (SVGConfig, optional): The configuration for the SVG canvas and legend. Defaults to default values.
 
         Returns:
             str: The SVG markup.
         """
-        svg_markup = self.generate_svg_markup(self.competence_tree,width, height)  # Assuming this is defined to generate the SVG content.
+        if config is None:
+            config = SVGConfig()  # Use default configuration if none provided
+        svg_markup = self.generate_svg_markup(self.competence_tree, config)
         if filename:
-            self.save_svg_to_file(svg_markup, filename)  # Assuming this is defined to handle file saving.
+            self.save_svg_to_file(svg_markup, filename)
         return svg_markup
     
-    def generate_svg_markup(self,competence_tree=None, width: int = 600, height: int = 600) -> str:
+    def generate_svg_markup(self, competence_tree: CompetenceTree, config: SVGConfig=None) -> str:
         """
-        Generate SVG markup based on the provided competence tree. The exact details of how the competence
-        tree is used to generate the SVG are not shown here.
+        Generate SVG markup based on the provided competence tree and configuration.
 
         Args:
-            competence_tree (Any): The competence tree structure containing the necessary data.
-            width (int): The width of the SVG canvas in pixels. Defaults to 600.
-            height (int): The height of the SVG canvas in pixels. Defaults to 600.
+            competence_tree (CompetenceTree): The competence tree structure containing the necessary data.
+            config (SVGConfig): The configuration for the SVG canvas and legend.
 
         Returns:
             str: The generated SVG markup.
@@ -174,12 +200,14 @@ class DynamicCompetenceMap:
         if competence_tree is None:
             competence_tree=self.competence_tree
         competence_aspects = competence_tree.competence_aspects
-    
         # Instantiate the SVG class
-        svg = SVG(width=width, height=height)
+        svg = SVG(config)
     
         # Center of the donut
-        cx, cy = svg.width // 2, svg.height // 2
+        # Center of the donut chart should be in the middle of the main SVG area, excluding the legend
+        cx = svg.width // 2
+        cy = (config.total_height - config.legend_height) // 2  # Adjusted for legend
+        
         outer_radius = min(cx, cy) * 0.8  # Leave some margin
         inner_radius = outer_radius * 0.5  # Choose a suitable inner radius
     
@@ -227,6 +255,10 @@ class DynamicCompetenceMap:
                 facet_start_angle += angle_per_facet
     
             aspect_start_angle += aspect_angle
+            
+        # optionally add legend
+        if config.legend_height>0:
+            self.competence_tree.add_legend(svg)
     
         # Return the SVG markup
         return svg.get_svg_markup()
