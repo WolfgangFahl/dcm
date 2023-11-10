@@ -1,4 +1,9 @@
 {
+  "name": "PorfolioPlus",
+  "id": "portfolio_plus",
+  "url": "https://www.greta-die.de/webpages/projektergebnisse/portfolioplus",
+  "description": "Online-Tool, mit dem Lehrende ihre oftmals informell und non-formal erworbenen pädagogischen Kompetenzen strukturiert identifizieren, dokumentieren und von dafür geschulten GRETA-Gutachterinnen und GRETA-Gutachtern begutachten lassen können.",
+  
   "element_names": {
     "tree": "Kompetenzbilanz",
     "aspect": "Kompetenzaspekt",

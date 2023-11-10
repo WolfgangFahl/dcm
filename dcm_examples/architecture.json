@@ -1,6 +1,10 @@
 {
+  "name": "Architectural Proficiency Framework",
+  "id": "arch_proficiency_framework",
+  "url": "https://example.com/architectural_proficiency_framework",
+  "description": "A framework defining different levels and areas of expertise in the field of architecture.",
   "element_names": {
-    "tree": "Architectural Proficiency Framework",
+    "tree": "Proficiency Hierarchy",
     "aspect": "Domain of Expertise",
     "facet": "Skill Area",
     "level": "Proficiency Stage"

@@ -9,7 +9,7 @@ from typing import Dict, List, Optional
 from dataclasses_json import dataclass_json
 from dcm.svg import SVG, SVGConfig
 from json.decoder import JSONDecodeError
-
+import json
 
 @dataclass_json
 @dataclass
@@ -72,18 +72,18 @@ class CompetenceLevel(CompetenceElement):
 
 @dataclass_json
 @dataclass
-class CompetenceTree:
+class CompetenceTree(CompetenceElement):
     """
     Represents the entire structure of competencies, including various aspects and levels.
 
     Attributes:
         competence_aspects (Dict[str, CompetenceAspect]): A dictionary mapping aspect IDs to CompetenceAspect objects.
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
-        element_names (Dict[str, Dict[str, str]]): A dictionary holding the internationalized names for tree, aspects, facets, and levels. The first key is the language code (e.g., "en", "de"), and the second key is the type ("tree", "aspect", "facet", "level").
+        element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
 
-    competence_aspects: Dict[str, CompetenceAspect]
-    competence_levels: List[CompetenceLevel]
+    competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=list)
+    competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
 
     def add_legend(self, svg: SVG) -> None:
@@ -136,7 +136,39 @@ class CompetenceTree:
             box_width,
             box_height,
         )
+        
+@dataclass_json
+@dataclass
+class Achievement:
+    """
+    Class representing an individual's achievement level for a specific competence facet.
 
+    Attributes:
+        facet_id (str): Identifier for the competence facet.
+        level (int): The achieved level for this facet.
+        percent(float): how well was the achievement reached?
+        evidence (Optional[str]): Optional evidence supporting the achievement.
+        date_assessed (Optional[str]): Optional date when the achievement was assessed (ISO-Format).
+    """
+
+    facet_id: str
+    level: int
+    percent: float
+    evidence: Optional[str] = None
+    date_assessed: Optional[str] = None
+
+@dataclass
+@dataclass_json
+class Student:
+    """
+    A student with their achievements.
+    Attributes:
+        student_id (str): Identifier for the student.
+        achievements (Dict[str, List[Achievement]]): A dictionary where each key is a competence tree identifier
+                                                     and the value is a list of Achievement instances for that tree.
+    """
+    student_id: str
+    achievements: Dict[str, List[Achievement]]
 
 class DynamicCompetenceMap:
     """
@@ -169,8 +201,18 @@ class DynamicCompetenceMap:
                 with open(filepath, "r") as json_file:
                     file_prefix = filename.replace(".json", "")
                     json_text = json_file.read()
-                    example_jsons[file_prefix] = json_text
+                    try:
+                        json_data = json.loads(json_text)
+                        if cls.is_valid_json(json_data):
+                            example_jsons[file_prefix] = json_text
+                    except Exception as ex:
+                        cls.handle_json_issue(filename,json_text,ex)
         return example_jsons
+    
+    @classmethod
+    def is_valid_json(cls,json_data):
+        required_keys = {"name", "id", "url", "description", "element_names"}
+        return all(key in json_data for key in required_keys)
 
     @classmethod
     def get_examples(cls) -> dict:
@@ -180,28 +222,33 @@ class DynamicCompetenceMap:
             examples[name] = dcm
         return examples
 
-    @staticmethod
-    def from_json(name, json_string: str) -> "DynamicCompetenceMap":
+    @classmethod
+    def from_json(cls,name:str, json_string: str) -> "DynamicCompetenceMap":
         """
         Load a DynamicCompetenceMap instance from a JSON string.
         """
         try:
             competence_tree = CompetenceTree.from_json(json_string)
             return DynamicCompetenceMap(competence_tree)
-        except JSONDecodeError as e:
+        except Exception as ex:
+            cls.handle_json_issue(name,json_string,ex)
+            
+    @classmethod
+    def handle_json_issue(cls,name:str,json_string:str,ex):
+        if isinstance(ex,JSONDecodeError):
             lines = json_string.splitlines()  # Split the string into lines
-            err_line = lines[e.lineno - 1]  # JSONDecodeError gives 1-based lineno
+            err_line = lines[ex.lineno - 1]  # JSONDecodeError gives 1-based lineno
             pointer = (
-                " " * (e.colno - 1) + "^"
+                " " * (ex.colno - 1) + "^"
             )  # Create a pointer string to indicate the error position
             error_message = (
-                f"{name}:JSON parsing error on line {e.lineno} column {e.colno}:\n"
+                f"{name}:JSON parsing error on line {ex.lineno} column {ex.colno}:\n"
                 f"{err_line}\n"
                 f"{pointer}\n"
-                f"{e.msg}"
+                f"{ex.msg}"
             )
             raise ValueError(error_message)  # Raise a new exception with this message
-        except Exception as ex:
+        else:
             error_message = f"error in {name}.json: {str(ex)}"
             raise ValueError(error_message)
 

@@ -1,0 +1,40 @@
+#!/bin/bash
+# WF 2023-11-10
+# get all Modulhandbuch example in XML format from RWTH
+# uncomment to debug
+# set -x
+content_base=https://online.rwth-aachen.de/RWTHonline
+content_list=WBRWTHMHB.WB_LIST
+dcm_dir=$HOME/.dcm
+
+if [ ! -d $dcm_dir ]
+then
+  echo "creating $dcm_dir"
+  mkdir -p $dcm_dir
+fi
+cd $dcm_dir
+if [ ! -f $content_list ]
+then
+  echo "Downloading Modulehandbuch XML Verzeichnis from $content_base"
+  curl -o "$content_list" "$content_base/$content_list"
+fi
+
+# Read the access token from the file
+access_token=$(cat "$HOME/.dcm/rwth_online_accesstoken")
+access_token="gFI41ax1Y6B1tkcP_G3kx3cvWBAxiHwDshcA1ovAS7M="  # Replace with the actual token
+
+mhs=$(grep '<td class=" L"' WBRWTHMHB.WB_LIST | cut -f4 -d ":" | cut -f2 -d'(' | cut -f1 -d ')' | cut -f 1,6 -d"'")
+
+while IFS=',' read -r stp_stp_nr filename
+do
+  # Remove single quotes from filename
+  filename=${filename//\'/}
+  if [ ! -f $filename ]
+  then
+     # Construct the URL
+     url="/GenMHB/ModHB4STP?&STP_STP_NR=$stp_stp_nr&LANGUAGE=en&FILENAME=$filename&XMLCACHE=300&access_token=$access_token"
+
+     echo "Downloading $stp_stp_nr $filename ..."
+     curl -o "$filename" "$content_base$url"
+  fi
+done <<< "$mhs"
