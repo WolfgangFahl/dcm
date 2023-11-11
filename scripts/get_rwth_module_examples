@@ -21,7 +21,6 @@ fi
 
 # Read the access token from the file
 access_token=$(cat "$HOME/.dcm/rwth_online_accesstoken")
-access_token="gFI41ax1Y6B1tkcP_G3kx3cvWBAxiHwDshcA1ovAS7M="  # Replace with the actual token
 
 mhs=$(grep '<td class=" L"' WBRWTHMHB.WB_LIST | cut -f4 -d ":" | cut -f2 -d'(' | cut -f1 -d ')' | cut -f 1,6 -d"'")
 
