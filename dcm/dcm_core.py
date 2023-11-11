@@ -31,7 +31,6 @@ class CompetenceElement:
     description: Optional[str] = None
     color_code: Optional[str] = "#C0C0C0"
 
-
 @dataclass_json
 @dataclass
 class CompetenceFacet(CompetenceElement):
@@ -40,9 +39,7 @@ class CompetenceFacet(CompetenceElement):
 
     This class can include additional properties or methods specific to a competence facet.
     """
-
     # Since all properties are inherited, no additional properties are defined here.
-
 
 @dataclass_json
 @dataclass
@@ -53,9 +50,7 @@ class CompetenceAspect(CompetenceElement):
     Attributes:
         facets (List[CompetenceFacet]): A list of CompetenceFacet objects representing individual facets of this aspect.
     """
-
     facets: List[CompetenceFacet] = field(default_factory=list)
-
 
 @dataclass_json
 @dataclass
@@ -66,7 +61,6 @@ class CompetenceLevel(CompetenceElement):
     Attributes:
         level (int): level number starting from 1 as the lowest and going up to as many level as defined for the CompetenceTree
     """
-
     level: int = 1
 
 @dataclass_json
@@ -80,7 +74,6 @@ class CompetenceTree(CompetenceElement):
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
-
     competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=dict)
     competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)

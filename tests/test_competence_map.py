@@ -4,7 +4,7 @@ Created on 2023-11-06
 @author: wf
 '''
 from ngwidgets.basetest import Basetest
-from dcm.dcm_core import DynamicCompetenceMap
+from dcm.dcm_core import DynamicCompetenceMap,CompetenceAspect,CompetenceElement,CompetenceFacet
 from tests.markup_check import MarkupCheck
 from dcm.svg import SVGConfig
 
@@ -17,6 +17,20 @@ class TestDynamicCompetenceMap(Basetest):
         Basetest.setUp(self, debug=debug, profile=profile)
         self.examples = DynamicCompetenceMap.get_examples()
   
+    def testDefaultColor(self):
+        """
+        test the default Color
+        """
+        element = CompetenceElement(name="Element 1")
+        aspect = CompetenceAspect(name="Aspect 1")
+        facet = CompetenceFacet(name="Facet 1")
+        
+        # Printing the color_code attribute for each instance
+        if self.debug:
+            print(f"default color code is: {element.color_code}")  # Output: "#C0C0C0"
+        self.assertEqual(element.color_code,aspect.color_code)   # Output: "#C0C0C0"
+        self.assertEqual(element.color_code,facet.color_code)    # Output: "#C0C0C0"
+        
     def testCompetenceMap(self):
         """
         test the competence map
