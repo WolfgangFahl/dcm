@@ -85,6 +85,9 @@ class MarkupCheck:
         }
 
         for aspect_id, aspect in self.dcm.competence_tree.competence_aspects.items():
+            # ignore aspects without facets ..
+            if len(aspect.facets)==0:
+                continue
             element = root.find(f"svg:g[@id='{aspect_id}']", namespaces=namespaces)
             self.test_case.assertIsNotNone(element, f"Aspect with ID '{aspect_id}' not found in SVG.")
 

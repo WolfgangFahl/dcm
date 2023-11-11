@@ -1,0 +1,73 @@
+{
+  "student_id": "arch_student_123",
+  "achievements": {
+    "DandP": [
+      {
+        "facet_id": "ArchDesign",
+        "level": 2,
+        "percent": 75.0,
+        "date_assessed": "2023-06-15"
+      },
+      {
+        "facet_id": "UrbanPlanning",
+        "level": 1,
+        "percent": 60.0,
+        "date_assessed": "2023-06-12"
+      },
+      {
+        "facet_id": "BuildCodes",
+        "level": 1,
+        "percent": 50.0,
+        "date_assessed": "2023-06-10"
+      },
+      {
+        "facet_id": "SustainDesign",
+        "level": 2,
+        "percent": 80.0,
+        "date_assessed": "2023-06-18"
+      }
+    ],
+    "TandC": [
+      {
+        "facet_id": "StructEng",
+        "level": 1,
+        "percent": 65.0,
+        "date_assessed": "2023-06-11"
+      },
+      {
+        "facet_id": "BuildTech",
+        "level": 2,
+        "percent": 70.0,
+        "date_assessed": "2023-06-14"
+      }
+    ],
+    "PMandA": [
+      {
+        "facet_id": "ProjMan",
+        "level": 1,
+        "percent": 55.0,
+        "date_assessed": null
+      },
+      {
+        "facet_id": "CostEst",
+        "level": 1,
+        "percent": 50.0,
+        "date_assessed": "2023-06-09"
+      }
+    ],
+    "PCandC": [
+      {
+        "facet_id": "InterpSkills",
+        "level": 2,
+        "percent": 85.0,
+        "date_assessed": "2023-06-20"
+      },
+      {
+        "facet_id": "TeamCollab",
+        "level": 1,
+        "percent": 70.0,
+        "date_assessed": "2023-06-17"
+      }
+    ]
+  }
+}

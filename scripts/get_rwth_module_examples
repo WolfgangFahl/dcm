@@ -5,35 +5,118 @@
 # set -x
 content_base=https://online.rwth-aachen.de/RWTHonline
 content_list=WBRWTHMHB.WB_LIST
-dcm_dir=$HOME/.dcm
+dcm_dir=$HOME/.dcm/rwth_aachen
+
+#ansi colors
+#http://www.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
+blue='\033[0;34m'
+red='\033[0;31m'
+green='\033[0;32m' # '\e[1;32m' is too bright for white bg.
+endColor='\033[0m'
+
+#
+# a colored message
+#   params:
+#     1: l_color - the color of the message
+#     2: l_msg - the message to display
+#
+color_msg() {
+  local l_color="$1"
+  local l_msg="$2"
+  echo -e "${l_color}$l_msg${endColor}"
+}
+
+#
+# error
+#
+# show the given error message on stderr and exit
+#
+#   params:
+#     1: l_msg - the error message to display
+#
+error() {
+  local l_msg="$1"
+  # use ansi red for error
+  color_msg $red "Error:" 1>&2
+  color_msg $red "\t$l_msg" 1>&2
+  exit 1
+}
+
+# show usage
+#
+usage() {
+  echo "$0 [-h|--help]"
+  echo "-h  | --help:  show this usage"
+  echo "-d  | --download: download RWTH Aachen module handbooks"
+  exit 1
+}
 
 if [ ! -d $dcm_dir ]
 then
-  echo "creating $dcm_dir"
+  color_msg $blue "creating $dcm_dir"
   mkdir -p $dcm_dir
 fi
 cd $dcm_dir
 if [ ! -f $content_list ]
 then
-  echo "Downloading Modulehandbuch XML Verzeichnis from $content_base"
+  color_msg $blue "Downloading Modulehandbuch XML Verzeichnis from $content_base"
   curl -o "$content_list" "$content_base/$content_list"
+else
+  color_msg $green "$content_list already downloaded"
+  color_msg $green "from $content_base to $dcm_dir"
 fi
 
-# Read the access token from the file
-access_token=$(cat "$HOME/.dcm/rwth_online_accesstoken")
-
-mhs=$(grep '<td class=" L"' WBRWTHMHB.WB_LIST | cut -f4 -d ":" | cut -f2 -d'(' | cut -f1 -d ')' | cut -f 1,6 -d"'")
-
-while IFS=',' read -r stp_stp_nr filename
-do
-  # Remove single quotes from filename
-  filename=${filename//\'/}
-  if [ ! -f $filename ]
+#
+# download module handbooks
+#
+download_module_handbooks() {
+  # Read the access token from the file
+  access_token_file=$dcm_dir/rwth_online_accesstoken
+  if [ ! -f $access_token_file ]
   then
-     # Construct the URL
-     url="/GenMHB/ModHB4STP?&STP_STP_NR=$stp_stp_nr&LANGUAGE=en&FILENAME=$filename&XMLCACHE=300&access_token=$access_token"
-
-     echo "Downloading $stp_stp_nr $filename ..."
-     curl -o "$filename" "$content_base$url"
+    error "access token in file $access_token_file needed for download"
   fi
-done <<< "$mhs"
+  access_token=$(cat "$access_token_file")
+  mhs=$(grep '<td class=" L"' WBRWTHMHB.WB_LIST | cut -f4 -d ":" | cut -f2 -d'(' | cut -f1 -d ')' | cut -f 1,6 -d"'")
+
+  while IFS=',' read -r stp_stp_nr filename
+  do
+    # Remove single quotes from filename
+    filename=${filename//\'/}
+    bf=$(basename $filename .xml)
+    if [ ! -f $filename ]
+    then
+       # Construct the URL
+       url="/GenMHB/ModHB4STP?&STP_STP_NR=$stp_stp_nr&LANGUAGE=en&FILENAME=$filename&XMLCACHE=300&access_token=$access_token"
+
+       color_msg $blue "Downloading $stp_stp_nr $filename ..."
+       curl -o "$filename" "$content_base$url"
+    else
+       color_msg $green "$bf.xml ($stp_stp_nr) already downloaded"
+       if [ ! -f $bf.json ]
+       then
+          color_msg $blue "converting $bf.xml to json ..."
+          xq . $bf.xml > $bf.json
+       fi
+    fi
+  done <<< "$mhs"
+}
+
+if [ $# -lt 1 ]
+then
+  usage
+else
+  while [  "$1" != ""  ]
+  do
+    option="$1"
+    case $option in
+      -h|--help)
+        usage;;
+      -d|--download)
+        download_module_handbooks;;
+      *)
+        usage;;
+    esac
+    shift
+  done
+fi

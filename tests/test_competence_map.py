@@ -24,8 +24,8 @@ class TestDynamicCompetenceMap(Basetest):
         for example_name, dcm in self.examples.items():   
             # Now you can perform assertions to verify that the data was loaded correctly
             self.assertIsNotNone(dcm.competence_tree)
-            self.assertTrue(any(key in dcm.competence_tree.competence_aspects for key in ["BPWK", "DandP"]))
             svg_config=SVGConfig()
+            svg_config.legend_height=40*len(dcm.competence_tree.competence_levels)
             svg_file=f"/tmp/{example_name}_competence_map.svg"
             dcm.generate_svg(svg_file,config=svg_config)
             markup_check=MarkupCheck(self,dcm)

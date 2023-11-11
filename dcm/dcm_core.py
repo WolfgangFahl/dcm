@@ -29,7 +29,7 @@ class CompetenceElement:
     id: Optional[str] = None
     url: Optional[str] = None
     description: Optional[str] = None
-    color_code: Optional[str] = None
+    color_code: Optional[str] = "#C0C0C0"
 
 
 @dataclass_json
@@ -69,7 +69,6 @@ class CompetenceLevel(CompetenceElement):
 
     level: int = 1
 
-
 @dataclass_json
 @dataclass
 class CompetenceTree(CompetenceElement):
@@ -82,7 +81,7 @@ class CompetenceTree(CompetenceElement):
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
 
-    competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=list)
+    competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=dict)
     competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
 
@@ -310,6 +309,10 @@ class DynamicCompetenceMap:
 
         for aspect_code, aspect in competence_aspects.items():
             num_facets_in_aspect = len(aspect.facets)
+    
+            # Skip aspects with no facets
+            if num_facets_in_aspect == 0:
+                continue
             aspect_angle = (num_facets_in_aspect / total_facets) * 360
             # Draw the aspect segment as a donut segment
             svg.add_donut_segment(

@@ -1,6 +1,7 @@
 from math import cos, sin, radians
 from typing import List, Tuple
 from pydantic.dataclasses import dataclass
+import html
 
 @dataclass
 class SVGConfig:
@@ -117,13 +118,14 @@ class SVG:
             font_weight: The font weight (normal, bold, etc.).
             text_anchor: Text alignment (start, middle, end).
         """
+        escaped_text = html.escape(text)  # Escape special characters
         text_element = (
             f'<text x="{x}" y="{y}" fill="{fill}" '
             f'font-family="{self.config.font}" '
             f'font-size="{self.config.font_size}" '
             f'font-weight="{font_weight}" '
             f'text-anchor="{text_anchor}">'
-            f'{text}</text>\n'
+            f'{escaped_text}</text>\n'
         )
         self._add_element(text_element)
 
@@ -169,7 +171,9 @@ class SVG:
         
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        title_element = f'<title>{segment_name}</title>'
+        escaped_title = html.escape(segment_name)  # Escape special characters
+ 
+        title_element = f'<title>{escaped_title}</title>'
 
         # Combine path and title into one string without adding indentation here
         group_content = f"{path_element}{title_element}"
@@ -213,7 +217,9 @@ class SVG:
     
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        title_element = f'<title>{segment_name}</title>'
+        escaped_title = html.escape(segment_name)  # Escape special characters
+ 
+        title_element = f'<title>{escaped_title}</title>'
     
         # Combine path and title into one string without adding indentation here
         group_content = f"{path_element}{title_element}"
