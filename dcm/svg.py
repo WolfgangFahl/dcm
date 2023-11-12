@@ -183,7 +183,27 @@ class SVG:
         group_str = f"{self.indent * level}<g {attrs_str}>\n{indented_content}\n{self.indent * level}</g>\n"
         self._add_element(group_str, level=0)
     
-    def add_pie_segment(self, cx, cy, radius, start_angle_deg, end_angle_deg, color, segment_name:str, segment_id=None, segment_class=None, segment_url=None):
+    def add_pie_segment(self, cx: int, cy: int, radius: int, start_angle_deg: float, end_angle_deg: float, color: str, segment_name: str, segment_id: str = None, segment_class: str = None, segment_url: str = None) -> None:
+        """
+        Add a pie segment to the SVG.
+
+        Args:
+            cx (int): X-coordinate of the center of the pie.
+            cy (int): Y-coordinate of the center of the pie.
+            radius (int): Radius of the pie.
+            start_angle_deg (float): Start angle of the segment in degrees.
+            end_angle_deg (float): End angle of the segment in degrees.
+            color (str): Fill color of the segment.
+            segment_name (str): Name of the segment, used for the tooltip.
+            segment_id (str, optional): ID for the segment group. Defaults to None.
+            segment_class (str, optional): Class for the segment group. Defaults to None.
+            segment_url (str, optional): URL linked to the segment. Defaults to None.
+
+        Returns:
+            None
+        """        
+        if color is None:
+            color=self.config.default_color
         # Convert angles from degrees to radians for calculations
         start_angle_rad = radians(start_angle_deg)
         end_angle_rad = radians(end_angle_deg)
@@ -221,7 +241,27 @@ class SVG:
         # Use add_group to add the pie segment with proper indentation
         self.add_group(group_content, group_id=segment_id, group_class=segment_class, level=2)
 
-    def add_donut_segment(self, cx, cy, inner_radius, outer_radius, start_angle_deg, end_angle_deg, color, segment_name:str, segment_id=None, segment_class="hoverable", segment_url=None):
+    def add_donut_segment(self, cx: int, cy: int, inner_radius: int, outer_radius: int, start_angle_deg: float, end_angle_deg: float, color: str, segment_name: str, segment_id: str = None, segment_class: str = "hoverable", segment_url: str = None) -> None:
+        """
+        Add a donut segment to the SVG.
+
+        Args:
+            cx (int): X-coordinate of the center of the donut.
+            cy (int): Y-coordinate of the center of the donut.
+            inner_radius (int): Inner radius of the donut segment.
+            outer_radius (int): Outer radius of the donut segment.
+            start_angle_deg (float): Start angle of the segment in degrees.
+            end_angle_deg (float): End angle of the segment in degrees.
+            color (str): Fill color of the segment.
+            segment_name (str): Name of the segment, used for the tooltip.
+            segment_id (str, optional): ID for the segment group. Defaults to None.
+            segment_class (str, optional): Class for the segment group. Defaults to "hoverable".
+            segment_url (str, optional): URL linked to the segment. Defaults to None.
+
+        Returns:
+            None
+        """       if color is None:
+            color=self.config.default_color
         # Convert angles from degrees to radians for calculations
         start_angle_rad = radians(start_angle_deg)
         end_angle_rad = radians(end_angle_deg)
