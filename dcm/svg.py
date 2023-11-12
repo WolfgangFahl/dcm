@@ -260,7 +260,8 @@ class SVG:
 
         Returns:
             None
-        """       if color is None:
+        """       
+        if color is None:
             color=self.config.default_color
         # Convert angles from degrees to radians for calculations
         start_angle_rad = radians(start_angle_deg)
