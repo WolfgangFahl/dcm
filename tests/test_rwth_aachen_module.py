@@ -13,14 +13,26 @@ class TestModule(Basetest):
     test RWTH Aachen Modulhandbuch
     """
     
-    def get_name(self,json_node):
+    def get_name(self, json_node: dict, lang: str = "en") -> str:
+        """
+        Retrieves the name of a specified JSON node in the specified language.
+    
+        Args:
+            json_node (dict): The JSON node from which the name is to be extracted.
+            lang (str, optional): The language in which the name should be retrieved. Defaults to "en" (English).
+    
+        Returns:
+            str: The name of the JSON node in the specified language. The result might be german (de) if 
+            there is only a single name specified in the Modulhandbuch XML input which is germany by default
+        """
+
         names=json_node.get("NAME",[])
         name="?"
         if isinstance(names,list):
             for lang_name in names:
                 if isinstance(lang_name,dict):
-                    lang=lang_name.get("@LANG",None)
-                    if lang and lang=="en":
+                    node_lang=lang_name.get("@LANG",None)
+                    if node_lang and node_lang==lang:
                         name=lang_name.get("#text","?")
         else:
             # what's up here?
@@ -43,6 +55,8 @@ class TestModule(Basetest):
         """
         competence_element=None
         lvl = json_node.get("@LVL","?")
+        credits_str =json_node.get("@CREDITS",None)
+        credits=int(credits_str) if credits_str else None
         level = int(lvl)
         nr = json_node.get("@NR")
         desc=""
@@ -58,7 +72,7 @@ class TestModule(Basetest):
             competence_element=tree
         elif lvl == "2":
             # Level 2 - CompetenceAspects
-            aspect = CompetenceAspect(name=name, id=nr,url=url)
+            aspect = CompetenceAspect(name=name, id=nr,url=url,credits=credits)
             parent.competence_aspects[name] = aspect
             competence_element=aspect
         elif lvl == "3":
@@ -86,7 +100,7 @@ class TestModule(Basetest):
         tree=self.create_competence_element(parent=None,json_node=json_node, url=url)
         return tree
     
-    def test_Informatik(self):
+    def test_master_informatik(self):
         """
         Modulhandbuch Master Informatik 2023 RWTH Aachen
         """
@@ -112,6 +126,6 @@ class TestModule(Basetest):
             # Pretty print the JSON with specified indentation
             pretty_json = json.dumps(json_dict, indent=2)
             debug=self.debug
-            #debug=True
+            debug=True
             if debug:
                 print(pretty_json)

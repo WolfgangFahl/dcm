@@ -29,7 +29,7 @@ class CompetenceElement:
     id: Optional[str] = None
     url: Optional[str] = None
     description: Optional[str] = None
-    color_code: Optional[str] = "#C0C0C0"
+    color_code: Optional[str] = None
 
 @dataclass_json
 @dataclass
@@ -51,6 +51,7 @@ class CompetenceAspect(CompetenceElement):
         facets (List[CompetenceFacet]): A list of CompetenceFacet objects representing individual facets of this aspect.
     """
     facets: List[CompetenceFacet] = field(default_factory=list)
+    credits: Optional[int]=None
 
 @dataclass_json
 @dataclass
