@@ -30,6 +30,22 @@ class CompetenceElement:
     url: Optional[str] = None
     description: Optional[str] = None
     color_code: Optional[str] = None
+    
+    def to_svg_node_config(self,**kwargs)->SVGNodeConfig:
+        """
+        convert me to an SVGNode Configuration
+        """
+        element_type=f"{self.__class__.__name__}"
+        comment=f"{element_type}:{self.description}"
+        svg_node_config=SVGNodeConfig(
+            # @TODO prepend {element_type}: 
+            id=f"{self.id}",
+            url=self.url,
+            fill=self.color_code,
+            title=self.name,
+            comment=comment,
+            **kwargs)
+        return svg_node_config
 
 @dataclass_json
 @dataclass
@@ -164,7 +180,6 @@ class Achievement:
         evidence (Optional[str]): Optional evidence supporting the achievement.
         date_assessed (Optional[str]): Optional date when the achievement was assessed (ISO-Format).
     """
-    
     facet_id: str
     level: int
     percent: float
@@ -317,9 +332,7 @@ class DynamicCompetenceMap:
         tree_radius = cx / 9
         
         # Add the central circle representing the CompetenceTree
-        comment=f"Competence Tree: {competence_tree.description}"
-        circle_id=f"CompetenceTree:{competence_tree.id}"
-        circle_config=SVGNodeConfig(x=cx,y=cy,width=tree_radius,fill=competence_tree.color_code, id=circle_id,url=competence_tree.url,comment=comment)
+        circle_config=competence_tree.to_svg_node_config(x=cx,y=cy,width=tree_radius)
         svg.add_circle(config=circle_config)
     
         facet_radius = min(cx, cy) * 0.9  # Leave some margin
@@ -338,18 +351,18 @@ class DynamicCompetenceMap:
             if num_facets_in_aspect == 0:
                 continue
             aspect_angle = (num_facets_in_aspect / total_facets) * 360
+            aspect_config = aspect.to_svg_node_config(
+                x=cx,
+                y=cy,
+                width=tree_radius,  # inner radius
+                height=aspect_radius,  # outer radius
+            )
+            # fix id
+            aspect_config.id=aspect_code
             # Draw the aspect segment as a donut segment
-            svg.add_donut_segment(
-                cx=cx,
-                cy=cy,
-                inner_radius=tree_radius,
-                outer_radius=aspect_radius,
+            svg.add_donut_segment(config=aspect_config,
                 start_angle_deg=aspect_start_angle,
                 end_angle_deg=aspect_start_angle + aspect_angle,
-                color=aspect.color_code,
-                segment_name=aspect.name,
-                segment_id=aspect_code,
-                segment_url=aspect.url,
             )
     
             facet_start_angle = (
@@ -361,17 +374,16 @@ class DynamicCompetenceMap:
     
             for facet in aspect.facets:
                 # Add the facet segment as a donut segment
+                facet_config = facet.to_svg_node_config(
+                    x=cx,
+                    y=cy,
+                    width=aspect_radius,  # inner radius
+                    height=facet_radius,  # outer radius
+                )
                 svg.add_donut_segment(
-                    cx=cx,
-                    cy=cy,
-                    inner_radius=aspect_radius,
-                    outer_radius=facet_radius,
+                    config=facet_config,
                     start_angle_deg=facet_start_angle,
                     end_angle_deg=facet_start_angle + angle_per_facet,
-                    color=facet.color_code,
-                    segment_name=facet.name,
-                    segment_id=facet.id,
-                    segment_url=facet.url,
                 )
                 facet_start_angle += angle_per_facet
     

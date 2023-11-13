@@ -44,6 +44,7 @@ class SVGNodeConfig:
     fill: Optional[str]="black"
     indent_level: int=1
     id: Optional[str]=None
+    title: Optional[str]=None
     url: Optional[str]=None
     comment: Optional[str]=None
     element_class: Optional[str]="hoverable"
@@ -96,29 +97,20 @@ class SVG:
         average_char_width = average_char_width_factor * self.config.font_size
         return int(average_char_width * len(text))
 
-    def _add_element(self, element: str, level: int = 1):
+    def add_element(self, element: str, level: int = 1,comment:str=None):
         """
         Add an SVG element to the elements list with proper indentation.
 
         Args:
             element (str): SVG element to be added.
-            indent_level (int): Indentation level for the element.
-        """
-        indented_element = f'{self.indent * level}{element}\n'
-        self.elements.append(indented_element)
-        
-    def add_element(self, element: str, config: SVGNodeConfig):
-        """
-        Add an SVG element to the elements list with proper indentation and optional comment.
-
-        Args:
-            element (str): SVG element to be added.
-            config (SVGNodeConfig): Configuration for the element, including indentation level and comment.
-        """
-        if config.comment:
-            comment = f"{self.indent * config.indent_level}<!-- {config.comment} -->\n"
-            self.elements.append(comment)
-        indented_element = f'{self.indent * config.indent_level}{element}\n'
+            level (int): Indentation level for the element.
+            comment(str): optional comment to add
+        """   
+        base_indent=f"{self.indent * level}"
+        if comment:
+            indented_comment = f"{base_indent}<!-- {comment} -->\n"
+            self.elements.append(indented_comment)
+        indented_element = f'{base_indent}{element}\n'
         self.elements.append(indented_element)
         
     def add_circle(self, config: SVGNodeConfig):
@@ -138,8 +130,8 @@ class SVG:
 {circle_indent}{circle_element}
 </a>'''
         
-        # Use add_group to add the pie segment with proper indentation
-        self.add_group(circle_element, group_id=config.id, group_class=config.element_class, level=config.indent_level)
+        # Use add_group to add the circle element with proper indentation
+        self.add_group(circle_element, group_id=config.id, group_class=config.element_class, level=config.indent_level,comment=config.comment)
 
     def add_rectangle(self, x: int, y: int, width: int, height: int, fill: str = None,indent_level: int=1):
         """
@@ -155,7 +147,7 @@ class SVG:
         """
         color = fill if fill else self.config.default_color
         rect = f'{self.indent * 3}<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
-        self._add_element(rect)
+        self.add_element(rect)
 
     def add_legend_column(self, items: List[Tuple[str, str]], title: str, x: int, y: int, width: int, height: int) -> None:
         """
@@ -195,9 +187,9 @@ class SVG:
             f'text-anchor="{text_anchor}">'
             f'{escaped_text}</text>\n'
         )
-        self._add_element(text_element)
+        self.add_element(text_element)
 
-    def add_group(self, content: str, group_id: str = None, group_class: str = None, level: int = 1):
+    def add_group(self, content: str, group_id: str = None, group_class: str = None, level: int = 1,comment:str=None):
         """
         Add a group of elements to the SVG.
 
@@ -215,7 +207,7 @@ class SVG:
         attrs_str = " ".join(group_attrs)
         indented_content = "\n".join(f"{self.indent * (level + 1)}{line}" for line in content.strip().split("\n"))
         group_str = f"{self.indent * level}<g {attrs_str}>\n{indented_content}\n{self.indent * level}</g>\n"
-        self._add_element(group_str, level=0)
+        self.add_element(group_str, level=level,comment=comment)
     
     def add_pie_segment(self, cx: int, cy: int, radius: int, start_angle_deg: float, end_angle_deg: float, color: str, segment_name: str, segment_id: str = None, segment_class: str = None, segment_url: str = None) -> None:
         """
@@ -275,26 +267,20 @@ class SVG:
         # Use add_group to add the pie segment with proper indentation
         self.add_group(group_content, group_id=segment_id, group_class=segment_class, level=2)
 
-    def add_donut_segment(self, cx: int, cy: int, inner_radius: int, outer_radius: int, start_angle_deg: float, end_angle_deg: float, color: str, segment_name: str, segment_id: str = None, segment_class: str = "hoverable", segment_url: str = None) -> None:
+    def add_donut_segment(self, config: SVGNodeConfig, start_angle_deg: float, end_angle_deg: float) -> None:
         """
         Add a donut segment to the SVG.
-
+    
         Args:
-            cx (int): X-coordinate of the center of the donut.
-            cy (int): Y-coordinate of the center of the donut.
-            inner_radius (int): Inner radius of the donut segment.
-            outer_radius (int): Outer radius of the donut segment.
+            config (SVGNodeConfig): Configuration for the donut segment.
             start_angle_deg (float): Start angle of the segment in degrees.
             end_angle_deg (float): End angle of the segment in degrees.
-            color (str): Fill color of the segment.
-            segment_name (str): Name of the segment, used for the tooltip.
-            segment_id (str, optional): ID for the segment group. Defaults to None.
-            segment_class (str, optional): Class for the segment group. Defaults to "hoverable".
-            segment_url (str, optional): URL linked to the segment. Defaults to None.
+        """
+        cx, cy = config.x, config.y
+        segment_url = config.url
+        inner_radius, outer_radius = config.width, config.height
+        color = config.fill if config.fill else self.config.default_color
 
-        Returns:
-            None
-        """       
         if color is None:
             color=self.config.default_color
         # Convert angles from degrees to radians for calculations
@@ -328,7 +314,7 @@ class SVG:
     
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        escaped_title = html.escape(segment_name)  # Escape special characters
+        escaped_title = html.escape(config.title)  # Escape special characters
  
         title_element = f'<title>{escaped_title}</title>'
     
@@ -340,7 +326,7 @@ class SVG:
             group_content = f'<a xlink:href="{segment_url}" target="_blank">\n{group_content}</a>\n'
     
         # Use add_group to add the pie segment with proper indentation
-        self.add_group(group_content, group_id=segment_id, group_class=segment_class, level=2)
+        self.add_group(group_content, group_id=config.id, group_class=config.element_class, level=2,comment=config.comment)
 
     def get_svg_markup(self) -> str:
         """
