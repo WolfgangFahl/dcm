@@ -122,6 +122,6 @@ class TestModule(Basetest):
             # Pretty print the JSON with specified indentation
             pretty_json = competence_tree.to_pretty_json()
             debug=self.debug
-            debug=True
+            #debug=True
             if debug:
                 print(pretty_json)
