@@ -94,7 +94,7 @@ class SVG:
         average_char_width = average_char_width_factor * self.config.font_size
         return int(average_char_width * len(text))
 
-    def _add_element(self, element: str, indent_level: int = 1):
+    def _add_element(self, element: str, level: int = 1):
         """
         Add an SVG element to the elements list with proper indentation.
 
@@ -102,7 +102,7 @@ class SVG:
             element (str): SVG element to be added.
             indent_level (int): Indentation level for the element.
         """
-        indented_element = f'{self.indent * indent_level}{element}\n'
+        indented_element = f'{self.indent * level}{element}\n'
         self.elements.append(indented_element)
 
     def add_circle(self, cx: int, cy: int, r: int, fill: str = None, url: str = None, circle_id:str=None, circle_class: str = "hoverable",indent_level:int=3):
