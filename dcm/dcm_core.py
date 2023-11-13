@@ -7,7 +7,7 @@ import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from dataclasses_json import dataclass_json
-from dcm.svg import SVG, SVGConfig
+from dcm.svg import SVG, SVGConfig, SVGNodeConfig
 from json.decoder import JSONDecodeError
 import json
     
@@ -317,7 +317,10 @@ class DynamicCompetenceMap:
         tree_radius = cx / 9
         
         # Add the central circle representing the CompetenceTree
-        svg.add_circle(cx=cx, cy=cy, r=tree_radius, fill=competence_tree.color_code, circle_id=competence_tree.id,url=competence_tree.url)
+        comment=f"Competence Tree: {competence_tree.description}"
+        circle_id=f"CompetenceTree:{competence_tree.id}"
+        circle_config=SVGNodeConfig(x=cx,y=cy,width=tree_radius,fill=competence_tree.color_code, id=circle_id,url=competence_tree.url,comment=comment)
+        svg.add_circle(config=circle_config)
     
         facet_radius = min(cx, cy) * 0.9  # Leave some margin
         aspect_radius = facet_radius / 3   # Choose a suitable inner radius

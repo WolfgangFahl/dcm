@@ -36,13 +36,15 @@ class SVGConfig:
         return self.height + self.legend_height
     
 @dataclass
-class ElementConfig:
-    x:int
-    y:int
-    width: int
-    height: int
+class SVGNodeConfig:
+    x:float
+    y:float
+    width: Optional[float]=None
+    height: Optional[float]=None
+    fill: Optional[str]="black"
     indent_level: int=1
     id: Optional[str]=None
+    url: Optional[str]=None
     comment: Optional[str]=None
     element_class: Optional[str]="hoverable"
  
@@ -104,31 +106,40 @@ class SVG:
         """
         indented_element = f'{self.indent * level}{element}\n'
         self.elements.append(indented_element)
+        
+    def add_element(self, element: str, config: SVGNodeConfig):
+        """
+        Add an SVG element to the elements list with proper indentation and optional comment.
 
-    def add_circle(self, cx: int, cy: int, r: int, fill: str = None, url: str = None, circle_id:str=None, circle_class: str = "hoverable",indent_level:int=3):
+        Args:
+            element (str): SVG element to be added.
+            config (SVGNodeConfig): Configuration for the element, including indentation level and comment.
+        """
+        if config.comment:
+            comment = f"{self.indent * config.indent_level}<!-- {config.comment} -->\n"
+            self.elements.append(comment)
+        indented_element = f'{self.indent * config.indent_level}{element}\n'
+        self.elements.append(indented_element)
+        
+    def add_circle(self, config: SVGNodeConfig):
         """
         Add a circle element to the SVG, optionally making it clickable and with a hover effect.
-    
+
         Args:
-            cx (int): X-coordinate of the circle's center.
-            cy (int): Y-coordinate of the circle's center.
-            r (int): Radius of the circle.
-            fill (str, optional): Fill color of the circle. Defaults to the default color.
-            url (str, optional): URL to link the circle. If provided, the circle becomes clickable. Defaults to None.
-            circle_class (str, optional): Class for the circle element, for styling and hover effect. Defaults to "hoverable".
-            indent_level(int): the indentation level - default: 3
+            config (SVGNodeConfig): Configuration for the circle element.
         """
-        color = fill if fill else self.config.default_color
-        circle_element = f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{color}" class="{circle_class}" />'
+        color = config.fill if config.fill else self.config.default_color
+        circle_element = f'<circle cx="{config.x}" cy="{config.y}" r="{config.width}" fill="{color}" class="{config.element_class}" />'
+
         # If URL is provided, wrap the circle in an anchor tag to make it clickable
-        if url:
-            circle_indent=self.indent* (indent_level+1)
-            circle_element = f'''<a xlink:href="{url}" target="_blank">
+        if config.url:
+            circle_indent=self.indent* (config.indent_level+1)
+            circle_element = f'''<a xlink:href="{config.url}" target="_blank">
 {circle_indent}{circle_element}
 </a>'''
         
         # Use add_group to add the pie segment with proper indentation
-        self.add_group(circle_element, group_id=circle_id, group_class=circle_class, level=3)
+        self.add_group(circle_element, group_id=config.id, group_class=config.element_class, level=config.indent_level)
 
     def add_rectangle(self, x: int, y: int, width: int, height: int, fill: str = None,indent_level: int=1):
         """
