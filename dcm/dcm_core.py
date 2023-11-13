@@ -313,8 +313,14 @@ class DynamicCompetenceMap:
         cx = svg.width // 2
         cy = (config.total_height - config.legend_height) // 2  # Adjusted for legend
     
-        outer_radius = min(cx, cy) * 0.9  # Leave some margin
-        inner_radius = outer_radius * 0.33  # Choose a suitable inner radius
+        # Calculate the radius for the central circle (10% of the width)
+        tree_radius = cx / 9
+        
+        # Add the central circle representing the CompetenceTree
+        svg.add_circle(cx=cx, cy=cy, r=tree_radius, fill=competence_tree.color_code, circle_id=competence_tree.id,url=competence_tree.url)
+    
+        facet_radius = min(cx, cy) * 0.9  # Leave some margin
+        aspect_radius = facet_radius / 3   # Choose a suitable inner radius
     
         # Total number of facets
         total_facets = sum(len(aspect.facets) for aspect in competence_aspects.values())
@@ -333,8 +339,8 @@ class DynamicCompetenceMap:
             svg.add_donut_segment(
                 cx=cx,
                 cy=cy,
-                inner_radius=0,
-                outer_radius=inner_radius,
+                inner_radius=tree_radius,
+                outer_radius=aspect_radius,
                 start_angle_deg=aspect_start_angle,
                 end_angle_deg=aspect_start_angle + aspect_angle,
                 color=aspect.color_code,
@@ -355,8 +361,8 @@ class DynamicCompetenceMap:
                 svg.add_donut_segment(
                     cx=cx,
                     cy=cy,
-                    inner_radius=inner_radius,
-                    outer_radius=outer_radius,
+                    inner_radius=aspect_radius,
+                    outer_radius=facet_radius,
                     start_angle_deg=facet_start_angle,
                     end_angle_deg=facet_start_angle + angle_per_facet,
                     color=facet.color_code,

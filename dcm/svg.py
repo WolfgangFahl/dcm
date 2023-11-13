@@ -1,5 +1,5 @@
 from math import cos, sin, radians
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from pydantic.dataclasses import dataclass
 import html
 
@@ -34,7 +34,18 @@ class SVGConfig:
             int: Total height of the SVG canvas.
         """
         return self.height + self.legend_height
-
+    
+@dataclass
+class ElementConfig:
+    x:int
+    y:int
+    width: int
+    height: int
+    indent_level: int=1
+    id: Optional[str]=None
+    comment: Optional[str]=None
+    element_class: Optional[str]="hoverable"
+ 
 class SVG:
     """
     Class for creating SVG drawings.
@@ -83,32 +94,43 @@ class SVG:
         average_char_width = average_char_width_factor * self.config.font_size
         return int(average_char_width * len(text))
 
-    def _add_element(self, element: str, level: int = 1):
+    def _add_element(self, element: str, indent_level: int = 1):
         """
         Add an SVG element to the elements list with proper indentation.
 
         Args:
             element (str): SVG element to be added.
-            level (int): Indentation level for the element.
+            indent_level (int): Indentation level for the element.
         """
-        indented_element = f'{self.indent * level}{element}\n'
+        indented_element = f'{self.indent * indent_level}{element}\n'
         self.elements.append(indented_element)
 
-    def add_circle(self, cx: int, cy: int, r: int, fill: str = None):
+    def add_circle(self, cx: int, cy: int, r: int, fill: str = None, url: str = None, circle_id:str=None, circle_class: str = "hoverable",indent_level:int=3):
         """
-        Add a circle element to the SVG.
-
+        Add a circle element to the SVG, optionally making it clickable and with a hover effect.
+    
         Args:
             cx (int): X-coordinate of the circle's center.
             cy (int): Y-coordinate of the circle's center.
             r (int): Radius of the circle.
             fill (str, optional): Fill color of the circle. Defaults to the default color.
+            url (str, optional): URL to link the circle. If provided, the circle becomes clickable. Defaults to None.
+            circle_class (str, optional): Class for the circle element, for styling and hover effect. Defaults to "hoverable".
+            indent_level(int): the indentation level - default: 3
         """
         color = fill if fill else self.config.default_color
-        circle = f'{self.indent * 3}<circle cx="{cx}" cy="{cy}" r="{r}" fill="{color}" />\n'
-        self._add_element(circle)
+        circle_element = f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{color}" class="{circle_class}" />'
+        # If URL is provided, wrap the circle in an anchor tag to make it clickable
+        if url:
+            circle_indent=self.indent* (indent_level+1)
+            circle_element = f'''<a xlink:href="{url}" target="_blank">
+{circle_indent}{circle_element}
+</a>'''
+        
+        # Use add_group to add the pie segment with proper indentation
+        self.add_group(circle_element, group_id=circle_id, group_class=circle_class, level=3)
 
-    def add_rectangle(self, x: int, y: int, width: int, height: int, fill: str = None):
+    def add_rectangle(self, x: int, y: int, width: int, height: int, fill: str = None,indent_level: int=1):
         """
         Add a rectangle element to the SVG.
 
@@ -118,6 +140,7 @@ class SVG:
             width (int): Width of the rectangle.
             height (int): Height of the rectangle.
             fill (str, optional): Fill color of the rectangle. Defaults to the default color.
+            indent_level (int): Indentation level for the rectangle.
         """
         color = fill if fill else self.config.default_color
         rect = f'{self.indent * 3}<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
