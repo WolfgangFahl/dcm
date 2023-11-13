@@ -4,7 +4,7 @@ Created on 2023-11-06
 @author: wf
 '''
 from ngwidgets.basetest import Basetest
-from dcm.dcm_core import DynamicCompetenceMap,CompetenceAspect,CompetenceElement,CompetenceFacet
+from dcm.dcm_core import DynamicCompetenceMap,CompetenceAspect,CompetenceElement,CompetenceFacet, Student
 from tests.markup_check import MarkupCheck
 from dcm.svg import SVGConfig
 
@@ -30,6 +30,12 @@ class TestDynamicCompetenceMap(Basetest):
             print(f"default color code is: {element.color_code}")  # Output: "#C0C0C0"
         self.assertEqual(element.color_code,aspect.color_code)   # Output: "#C0C0C0"
         self.assertEqual(element.color_code,facet.color_code)    # Output: "#C0C0C0"
+        
+    #def testStudent(self):
+     #   """
+     #   test the student json handling
+     #   """
+      #  student_examples=DynamicCompetenceMap.get_examples(content_class=Student)
         
     def testCompetenceMap(self):
         """

@@ -3,11 +3,10 @@ Created on 2023-11-08
 
 @author: wf
 """
-import json
 from ngwidgets.webserver_test import WebserverTest
 from dcm.dcm_webserver import DynamiceCompentenceMapWebServer
 from dcm.dcm_cmd import CompetenceCmd
-from dcm.dcm_core import DynamicCompetenceMap
+from dcm.dcm_core import DynamicCompetenceMap, CompetenceTree
 from tests.markup_check import MarkupCheck
 from dcm.svg import SVGConfig
 
@@ -20,7 +19,7 @@ class TestAPI(WebserverTest):
         server_class=DynamiceCompentenceMapWebServer
         cmd_class=CompetenceCmd
         WebserverTest.setUp(self, debug=debug, profile=profile,server_class=server_class,cmd_class=cmd_class)
-        self.example_jsons = DynamicCompetenceMap.get_example_json_strings()
+        self.example_jsons = DynamicCompetenceMap.get_example_json_strings(required_keys=CompetenceTree.required_keys())
     
     def test_svg_render(self):
         """
@@ -37,6 +36,6 @@ class TestAPI(WebserverTest):
                 "config": svg_config.__dict__
             }
             svg_markup=self.get_html_for_post(path, data)
-            dcm=DynamicCompetenceMap.from_json(name, json_string)
+            dcm=DynamicCompetenceMap.from_json(name, json_string,content_class=CompetenceTree)
             markup_check=MarkupCheck(self,dcm)
             markup_check.check_markup(svg_content=svg_markup,svg_config=svg_config)

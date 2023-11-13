@@ -10,7 +10,7 @@ from ngwidgets.webserver import WebserverConfig
 from dcm.version import Version
 from nicegui import app,ui,Client
 from ngwidgets.file_selector import FileSelector
-from dcm.dcm_core import DynamicCompetenceMap
+from dcm.dcm_core import DynamicCompetenceMap, CompetenceTree
 from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from dcm.svg import SVGConfig
@@ -52,7 +52,7 @@ class DynamiceCompentenceMapWebServer(InputWebserver):
         render the given request
         """
         r=svg_render_request 
-        dcm=DynamicCompetenceMap.from_json(r.name, r.json_string)
+        dcm=DynamicCompetenceMap.from_json(r.name, r.json_string,content_class=CompetenceTree)
         svg_markup=dcm.generate_svg_markup(config=r.config)
         response=HTMLResponse(content=svg_markup)
         return response

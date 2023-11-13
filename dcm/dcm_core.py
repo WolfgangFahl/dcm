@@ -5,7 +5,7 @@ Created on 2023-06-11
 """
 import os
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List,Tuple, Optional
 from dataclasses_json import dataclass_json
 from dcm.svg import SVG, SVGConfig, SVGNodeConfig
 from json.decoder import JSONDecodeError
@@ -95,6 +95,11 @@ class CompetenceTree(CompetenceElement):
     competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
     
+    @classmethod
+    def required_keys(cls)->Tuple:
+        keys={"name", "id", "url", "description", "element_names"}
+        return keys
+   
     def to_pretty_json(self):
         """
         Converts the CompetenceTree object to a pretty JSON string, handling null values.
@@ -182,7 +187,8 @@ class Achievement:
     """
     facet_id: str
     level: int
-    percent: float
+    score: float
+    score_unit: Optional[str]="%"
     evidence: Optional[str] = None
     date_assessed: Optional[str] = None
     
@@ -190,7 +196,7 @@ class Achievement:
 @dataclass_json
 class Student:
     """
-    A student with their achievements.
+    A student with achievements.
     Attributes:
         student_id (str): Identifier for the student.
         achievements (Dict[str, List[Achievement]]): A dictionary where each key is a competence tree identifier
@@ -198,6 +204,11 @@ class Student:
     """
     student_id: str
     achievements: Dict[str, List[Achievement]]
+    
+    @classmethod
+    def required_keys(cls):
+        keys={"achievements"}
+        return keys
     
 class DynamicCompetenceMap:
     """
@@ -218,7 +229,7 @@ class DynamicCompetenceMap:
         return path
     
     @classmethod
-    def get_example_json_strings(cls) -> dict:
+    def get_example_json_strings(cls,required_keys:Tuple) -> dict:
         """
         get example json strings
         """
@@ -232,33 +243,32 @@ class DynamicCompetenceMap:
                     json_text = json_file.read()
                     try:
                         json_data = json.loads(json_text)
-                        if cls.is_valid_json(json_data):
+                        if cls.is_valid_json(json_data,required_keys):
                             example_jsons[file_prefix] = json_text
                     except Exception as ex:
                         cls.handle_json_issue(filename,json_text,ex)
         return example_jsons
     
     @classmethod
-    def is_valid_json(cls,json_data):
-        required_keys = {"name", "id", "url", "description", "element_names"}
+    def is_valid_json(cls,json_data,required_keys:Tuple):
         return all(key in json_data for key in required_keys)
     
     @classmethod
-    def get_examples(cls) -> dict:
+    def get_examples(cls,content_class=CompetenceTree) -> dict:
         examples = {}
-        for name, json_string in cls.get_example_json_strings().items():
-            dcm = DynamicCompetenceMap.from_json(name, json_string)
+        for name, json_string in cls.get_example_json_strings(required_keys=content_class.required_keys()).items():
+            dcm = cls.from_json(name, json_string,content_class)
             examples[name] = dcm
         return examples
     
     @classmethod
-    def from_json(cls,name:str, json_string: str) -> "DynamicCompetenceMap":
+    def from_json(cls,name:str, json_string: str,content_class) -> "DynamicCompetenceMap":
         """
         Load a DynamicCompetenceMap instance from a JSON string.
         """
         try:
-            competence_tree = CompetenceTree.from_json(json_string)
-            return DynamicCompetenceMap(competence_tree)
+            content = content_class.from_json(json_string)
+            return DynamicCompetenceMap(content)
         except Exception as ex:
             cls.handle_json_issue(name,json_string,ex)
             
