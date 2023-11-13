@@ -59,7 +59,7 @@ class TestModule(Basetest):
         credits=int(credits_str) if credits_str else None
         level = int(lvl)
         nr = json_node.get("@NR")
-        desc=""
+        desc=None
         name=self.get_name(json_node)
         if lvl=="1":
             tree = CompetenceTree(
@@ -119,12 +119,8 @@ class TestModule(Basetest):
 
             # Create the competence tree
             competence_tree = self.create_competence_tree(competence_elements,url=url)
-            json_str=competence_tree.to_json()
-            # Parse the JSON string back into a dictionary
-            json_dict = json.loads(json_str)
-
             # Pretty print the JSON with specified indentation
-            pretty_json = json.dumps(json_dict, indent=2)
+            pretty_json = competence_tree.to_pretty_json()
             debug=self.debug
             debug=True
             if debug:

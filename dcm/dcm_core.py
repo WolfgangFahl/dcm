@@ -10,7 +10,7 @@ from dataclasses_json import dataclass_json
 from dcm.svg import SVG, SVGConfig
 from json.decoder import JSONDecodeError
 import json
-
+    
 @dataclass_json
 @dataclass
 class CompetenceElement:
@@ -78,7 +78,28 @@ class CompetenceTree(CompetenceElement):
     competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=dict)
     competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
+    
+    def to_pretty_json(self):
+        """
+        Converts the CompetenceTree object to a pretty JSON string, handling null values.
+        """
+        json_str = self.to_json()
+        json_dict = json.loads(json_str)
 
+        def remove_none_values(data):
+            """
+            Recursively removes keys with None values from a dictionary, list, or nested structure.
+            """
+            if isinstance(data, dict):
+                return {k: remove_none_values(v) for k, v in data.items() if v is not None}
+            elif isinstance(data, list):
+                return [remove_none_values(item) for item in data]
+            return data
+
+        none_free_dict = remove_none_values(json_dict)
+        null_free_json_str=json.dumps(none_free_dict, indent=2)
+        return null_free_json_str
+    
     def add_legend(self, svg: SVG) -> None:
         """
         Add a legend to the SVG explaining the color codes for levels and aspects.
@@ -93,7 +114,7 @@ class CompetenceTree(CompetenceElement):
         box_width, box_height = 30, 20
         # Padding between legend items and between the color box and the text
         padding = 5
-
+    
         # Add the competence level legend
         level_items = [
             (level.color_code, level.name) for level in self.competence_levels
@@ -106,7 +127,7 @@ class CompetenceTree(CompetenceElement):
             box_width,
             box_height,
         )
-
+    
         # Calculate the x position for the aspect legend based on the width of the level legend
         x_aspect_start = (
             x_start
@@ -115,7 +136,7 @@ class CompetenceTree(CompetenceElement):
             + max(svg.get_text_width(level.name) for level in self.competence_levels)
             + padding
         )
-
+    
         # Add the competence aspect legend
         aspect_items = [
             (aspect.color_code, aspect.name)
@@ -135,7 +156,7 @@ class CompetenceTree(CompetenceElement):
 class Achievement:
     """
     Class representing an individual's achievement level for a specific competence facet.
-
+    
     Attributes:
         facet_id (str): Identifier for the competence facet.
         level (int): The achieved level for this facet.
@@ -143,13 +164,13 @@ class Achievement:
         evidence (Optional[str]): Optional evidence supporting the achievement.
         date_assessed (Optional[str]): Optional date when the achievement was assessed (ISO-Format).
     """
-
+    
     facet_id: str
     level: int
     percent: float
     evidence: Optional[str] = None
     date_assessed: Optional[str] = None
-
+    
 @dataclass
 @dataclass_json
 class Student:
@@ -162,25 +183,25 @@ class Student:
     """
     student_id: str
     achievements: Dict[str, List[Achievement]]
-
+    
 class DynamicCompetenceMap:
     """
     a visualization of a competence map
     """
-
+    
     def __init__(self, competence_tree: CompetenceTree):
         """
         constructor
         """
         self.competence_tree = competence_tree
-
+    
     @classmethod
     def examples_path(cls) -> str:
         # the root directory (default: examples)
         path = os.path.join(os.path.dirname(__file__), "../dcm_examples")
         path = os.path.abspath(path)
         return path
-
+    
     @classmethod
     def get_example_json_strings(cls) -> dict:
         """
@@ -206,7 +227,7 @@ class DynamicCompetenceMap:
     def is_valid_json(cls,json_data):
         required_keys = {"name", "id", "url", "description", "element_names"}
         return all(key in json_data for key in required_keys)
-
+    
     @classmethod
     def get_examples(cls) -> dict:
         examples = {}
@@ -214,7 +235,7 @@ class DynamicCompetenceMap:
             dcm = DynamicCompetenceMap.from_json(name, json_string)
             examples[name] = dcm
         return examples
-
+    
     @classmethod
     def from_json(cls,name:str, json_string: str) -> "DynamicCompetenceMap":
         """
@@ -244,18 +265,18 @@ class DynamicCompetenceMap:
         else:
             error_message = f"error in {name}.json: {str(ex)}"
             raise ValueError(error_message)
-
+    
     def generate_svg(
         self, filename: Optional[str] = None, config: Optional[SVGConfig] = None
     ) -> str:
         """
         Generate the SVG markup and optionally save it to a file. If a filename is given, the method
         will also save the SVG to that file. The SVG is generated based on internal state not shown here.
-
+    
         Args:
             filename (str, optional): The path to the file where the SVG should be saved. Defaults to None.
             config (SVGConfig, optional): The configuration for the SVG canvas and legend. Defaults to default values.
-
+    
         Returns:
             str: The SVG markup.
         """
@@ -265,17 +286,17 @@ class DynamicCompetenceMap:
         if filename:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
-
+    
     def generate_svg_markup(
         self, competence_tree: CompetenceTree = None, config: SVGConfig = None
     ) -> str:
         """
         Generate SVG markup based on the provided competence tree and configuration.
-
+    
         Args:
             competence_tree (CompetenceTree): The competence tree structure containing the necessary data.
             config (SVGConfig): The configuration for the SVG canvas and legend.
-
+    
         Returns:
             str: The generated SVG markup.
         """
@@ -286,21 +307,21 @@ class DynamicCompetenceMap:
         svg = SVG(config)
         # use default config incase config was None
         config = svg.config
-
+    
         # Center of the donut
         # Center of the donut chart should be in the middle of the main SVG area, excluding the legend
         cx = svg.width // 2
         cy = (config.total_height - config.legend_height) // 2  # Adjusted for legend
-
+    
         outer_radius = min(cx, cy) * 0.9  # Leave some margin
         inner_radius = outer_radius * 0.33  # Choose a suitable inner radius
-
+    
         # Total number of facets
         total_facets = sum(len(aspect.facets) for aspect in competence_aspects.values())
-
+    
         # Starting angle for the first aspect
         aspect_start_angle = 0
-
+    
         for aspect_code, aspect in competence_aspects.items():
             num_facets_in_aspect = len(aspect.facets)
     
@@ -321,14 +342,14 @@ class DynamicCompetenceMap:
                 segment_id=aspect_code,
                 segment_url=aspect.url,
             )
-
+    
             facet_start_angle = (
                 aspect_start_angle  # Facets start where the aspect starts
             )
             angle_per_facet = (
                 aspect_angle / num_facets_in_aspect
             )  # Equal angle for each facet
-
+    
             for facet in aspect.facets:
                 # Add the facet segment as a donut segment
                 svg.add_donut_segment(
@@ -344,16 +365,16 @@ class DynamicCompetenceMap:
                     segment_url=facet.url,
                 )
                 facet_start_angle += angle_per_facet
-
+    
             aspect_start_angle += aspect_angle
-
+    
         # optionally add legend
         if config.legend_height > 0:
             self.competence_tree.add_legend(svg)
-
+    
         # Return the SVG markup
         return svg.get_svg_markup()
-
+    
     def save_svg_to_file(self, svg_markup: str, filename: str):
         # Save the SVG content to a file
         with open(filename, "w") as file:
