@@ -78,7 +78,7 @@ class DynamiceCompentenceMapWebServer(InputWebserver):
                 name=self.get_basename_without_extension(input_source)
                 ui.notify(f"rendering {name}") 
                 json_string=self.do_read_input(input_source)
-                dcm=DynamicCompetenceMap.from_json(name, json_string)
+                dcm=DynamicCompetenceMap.from_json(name, json_string,content_class=CompetenceTree)
                 svg=dcm.generate_svg_markup()
                 self.svg_view.content=svg
         except BaseException as ex:
