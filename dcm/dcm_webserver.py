@@ -107,7 +107,7 @@ class DynamiceCompentenceMapWebServer(InputWebserver):
         
     def configure_run(self):
         """
-        configure the allowe urls
+        configure the allowed urls
         """
         self.allowed_urls=[
             #"https://raw.githubusercontent.com/JuanIrache/DJI_SRT_Parser/master/samples/",
