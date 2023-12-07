@@ -1,0 +1,90 @@
+# 
+# Portofolio Plus Dynamic Competence Map
+# 
+# https://github.com/WolfgangFahl/dcm
+# 
+name: PortfolioPlus
+id: portfolio_plus
+url: https://www.greta-die.de/webpages/projektergebnisse/portfolioplus
+description: Online-Tool, mit dem Lehrende ihre oftmals informell und non-formal
+  erworbenen pädagogischen Kompetenzen strukturiert identifizieren, dokumentieren
+  und von dafür geschulten GRETA-Gutachterinnen und GRETA-Gutachtern begutachten
+  lassen können.
+element_names:
+  tree: Kompetenzbilanz
+  aspect: Kompetenzaspekt
+  facet: Kompetenzfacette
+  level: Lernfortschritt
+competence_aspects:
+  BPWK:
+    name: Berufspraktisches Wissen und Können
+    color_code: '#B5B0A8'
+    facets:
+    - name: Lerninhalte und -ziele
+      color_code: '#DEEFF7'
+    - name: Methoden, Medien und Lernmaterialien
+      color_code: '#DEEFF7'
+    - name: Rahmenbedingungen und Lernumgebungen
+      color_code: '#DEEFF7'
+    - name: Outcomeorientierung
+      color_code: '#DEEFF7'
+    - name: Teilnehmendenorientierung
+      color_code: '#DEEFF7'
+    - name: Diagnostik und Lernberatung
+      color_code: '#DEEFF7'
+    - name: Moderation und Steuerung von Gruppen
+      color_code: '#DEEFF7'
+    - name: Professionelle Kommunikation
+      color_code: '#DEEFF7'
+    - name: Kooperation mit den Auftraggebenden/Arbeitgebenden
+      color_code: '#DEEFF7'
+    - name: Kollegiale Zusammenarbeit/Netzwerken
+      color_code: '#DEEFF7'
+  FFW:
+    name: Fach- und feldspezifisches Wissen
+    color_code: '#D1CFC7'
+    facets:
+    - name: Adressatinnen und Adressaten
+      color_code: '#DEEFF7'
+    - name: Feldspezifisches Wissen
+      color_code: '#DEEFF7'
+    - name: Curriculare und institutionelle Rahmenbedingungen
+      color_code: '#DEEFF7'
+  PWAU:
+    name: Professionelle Werthaltungen und Überzeugungen
+    color_code: '#EBE8E5'
+    facets:
+    - name: Menschenbilder
+      color_code: '#DEEFF7'
+    - name: Wertvorstellungen
+      color_code: '#DEEFF7'
+    - name: Berufliche Weiterentwicklung
+      color_code: '#DEEFF7'
+    - name: Subjektive Annahmen über das Lehren und Lernen
+      color_code: '#DEEFF7'
+  PSS:
+    name: Professionelle Selbststeuerung
+    color_code: '#918F82'
+    facets:
+    - name: Selbstwirksamkeitsüberzeugungen
+      color_code: '#DEEFF7'
+    - name: Enthusiasmus
+      color_code: '#DEEFF7'
+    - name: Eigenes Rollenbewusstsein
+      color_code: '#DEEFF7'
+    - name: Reflexion des eigenen Lehrhandelns
+      color_code: '#DEEFF7'
+    - name: Umgang mit Feedback und Kritik
+      color_code: '#DEEFF7'
+    - name: Engagement und Distanz
+      color_code: '#DEEFF7'
+competence_levels:
+- name: Basisstufe
+  level: 1
+  color_code: '#9FB429'
+- name: Ausbaustufe
+  level: 2
+  color_code: '#0079C3'
+- name: Nicht erfasst
+  level: 3
+  color_code: '#C3E3F2'

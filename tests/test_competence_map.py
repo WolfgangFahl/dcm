@@ -32,10 +32,10 @@ class TestDynamicCompetenceMap(Basetest):
         self.assertEqual(element.color_code,facet.color_code)    # Output: "#C0C0C0"
         
     #def testStudent(self):
-     #   """
-     #   test the student json handling
-     #   """
-      #  student_examples=DynamicCompetenceMap.get_examples(content_class=Student)
+    #   """
+    #   test the student json handling
+    #   """
+    #  student_examples=DynamicCompetenceMap.get_examples(content_class=Student)
         
     def testCompetenceMap(self):
         """

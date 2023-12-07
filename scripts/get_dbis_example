@@ -1,0 +1,42 @@
+#!/bin/bash
+# WF 2023-10-08
+
+# Define the source wiki id as 'dbis-vl'
+SOURCE_WIKI_ID="dbis-vl"
+
+# Define the limit of the query
+LIMIT=200
+
+# Define the format for output, set to 'json' for JSON format
+FORMAT="json"
+
+# Define the name of the entities as 'LearningGoal'
+ENTITY_NAME="LearningGoal"
+
+# Assign the multi-line query to a variable using heredoc
+read -r -d '' QUERY <<'EOF'
+{{#ask: [[Concept:LearningGoal]]
+|mainlabel=LearningGoal
+|?LearningGoal key = key
+|?LearningGoal qKey = qKey
+|?LearningGoal id = id
+|?LearningGoal chapter = chapter
+|?LearningGoal chapterKey = chapterKey
+|?LearningGoal subChapter = subChapter
+|?LearningGoal subChapterKey = subChapterKey
+|?LearningGoal relevance = relevance
+|?LearningGoal keywords = keywords
+|?LearningGoal since = since
+|?LearningGoal until = until
+| limit=200
+|sort=LearningGoal chapter,LearningGoal subChapter
+|order=ascending,ascending
+}}
+EOF
+
+# Run the wikiquery command with the multi-line query
+wikiquery --source "$SOURCE_WIKI_ID" \
+          --format "$FORMAT" \
+          --entityName "$ENTITY_NAME" \
+          --limit "$LIMIT" \
+          --query "$QUERY"
