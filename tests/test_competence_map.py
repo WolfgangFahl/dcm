@@ -38,10 +38,11 @@ class TestDynamicCompetenceMap(Basetest):
         examples = DynamicCompetenceMap.get_examples(markup='yaml')
         example_name="portfolio_plus"
         aspect_id="PSS"
-        facet_id="Enthusiasmus"
+        facet_id="enthusiasm"
         self.assertTrue(example_name in examples)
         example=examples[example_name]
         facet=example.lookup(aspect_id,facet_id)
+        self.assertIsNotNone(facet)
         html=facet.as_html()
         debug=self.debug
         #debug=True

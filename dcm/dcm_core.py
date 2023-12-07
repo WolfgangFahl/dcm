@@ -4,17 +4,17 @@ Created on 2023-06-11
 @author: wf
 """
 import json
-import markdown2
 import os
 from dataclasses import dataclass, field
 from json.decoder import JSONDecodeError
 from typing import Dict, List, Optional, Tuple, Union
+from urllib.parse import quote_plus
 
+import markdown2
 import yaml
 from dataclasses_json import dataclass_json
 
 from dcm.svg import SVG, SVGConfig, SVGNodeConfig
-from dns.rdataclass import NONE
 
 
 @dataclass_json
@@ -25,7 +25,7 @@ class CompetenceElement:
 
     Attributes:
         name (str): The name of the competence element.
-        id (Optional[str]): An optional identifier for the competence element.
+        id (Optional[str]): An optional identifier for the competence element will be set to the name if id is None.
         url (Optional[str]): An optional URL for more information about the competence element.
         description (Optional[str]): An optional description of the competence element.
         color_code (str): A string representing a color code associated with the competence element.
@@ -36,30 +36,32 @@ class CompetenceElement:
     url: Optional[str] = None
     description: Optional[str] = None
     color_code: Optional[str] = None
-    
-    def as_html(self)->str:
+
+    def as_html(self) -> str:
         """
         convert me to html
-        
+
         Returns:
             str: html markup
         """
-        html=f"<h2>{self.name}</h2>"
+        html = f"<h2>{self.name}</h2>"
         if self.description:
-            desc_html=markdown2.markdown(self.description, extras=["fenced-code-blocks", "tables", "spoiler"])
-            html=html+"\n"+desc_html
-        return html    
+            desc_html = markdown2.markdown(
+                self.description, extras=["fenced-code-blocks", "tables", "spoiler"]
+            )
+            html = html + "\n" + desc_html
+        return html
 
-    def to_svg_node_config(self,url:str=None, **kwargs) -> SVGNodeConfig:
+    def to_svg_node_config(self, url: str = None, **kwargs) -> SVGNodeConfig:
         """
         convert me to an SVGNode Configuration
-        
+
         Args:
             url(str): the url to use for clicking this svg node - if None use
             my configured url
         """
         if url is None:
-            url=self.url
+            url = self.url
         element_type = f"{self.__class__.__name__}"
         comment = f"{element_type}:{self.description}"
         svg_node_config = SVGNodeConfig(
@@ -83,7 +85,11 @@ class CompetenceFacet(CompetenceElement):
     This class can include additional properties or methods specific to a competence facet.
     """
 
-    # Since all properties are inherited, no additional properties are defined here.
+    def __post_init__(self):
+        # Set the id to the name if id is None
+        if self.id is None:
+            self.id = self.name
+
 
 @dataclass_json
 @dataclass
@@ -123,10 +129,16 @@ class CompetenceTree(CompetenceElement):
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
-    lookup_url: Optional[str]=None
+
+    lookup_url: Optional[str] = None
     competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=dict)
     competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
+
+    def __post_init__(self):
+        for aspect_id, aspect in self.competence_aspects.items():
+            if aspect.id is None:
+                aspect.id = aspect_id
 
     @classmethod
     def required_keys(cls) -> Tuple:
@@ -260,31 +272,36 @@ class DynamicCompetenceMap:
         constructor
         """
         self.competence_tree = competence_tree
-        
-    def lookup(self, aspect_name: str=None, facet_name: str=None) -> Optional[CompetenceFacet]:
+
+    def lookup(
+        self, aspect_id: str = None, facet_id: str = None
+    ) -> Optional[CompetenceElement]:
         """
-        Look up an element of my competence tree
-            if aspect_name and facet_name is None return the competence tree
-            if only aspect_name is given return the corresponding aspect
-            if also the facet_name is given return the 
-            facet within the specified aspect by its names.
+        Look up an element of the competence tree by aspect ID and facet ID.
+        - Returns the entire competence tree if both aspect_id and facet_id are None.
+        - Returns a specific aspect if only aspect_id is provided.
+        - Returns a specific facet within an aspect if both aspect_id and facet_id are provided.
 
         Args:
-            aspect_name (str): The name of the aspect to search within.
-            facet_name (str): The name of the facet to find.
+            aspect_id (str, optional): The ID of the aspect to search within.
+            facet_id (str, optional): The ID of the facet to find within the specified aspect.
 
         Returns:
-            Optional[CompetenceElement]: The found facet, or None if not found.
+            Optional[CompetenceElement]: The found competence aspect, facet, or the entire competence tree.
         """
-        ct=self.competence_tree
-        if aspect_name is None:
+        ct = self.competence_tree
+        if aspect_id is None:
             return ct
-        aspect = ct.competence_aspects.get(aspect_name)
+        aspect = ct.competence_aspects.get(aspect_id)
+        if aspect is None:
+            for ct_aspect in ct.competence_aspects.values():
+                if aspect.id == aspect_id:
+                    aspect = ct_aspect
         if aspect:
-            if facet_name is None:
+            if facet_id is None:
                 return aspect
             for facet in aspect.facets:
-                if facet.name == facet_name:
+                if facet.id == facet_id:
                     return facet
         return None
 
@@ -296,23 +313,28 @@ class DynamicCompetenceMap:
         return path
 
     @classmethod
-    def get_example_dcm_definitions(cls, markup: str = 'json', required_keys: Optional[Tuple] = None, as_text: bool = True) -> dict:
+    def get_example_dcm_definitions(
+        cls,
+        markup: str = "json",
+        required_keys: Optional[Tuple] = None,
+        as_text: bool = True,
+    ) -> dict:
         """
         Retrieve example Dynamic Competence Map (DCM) definitions from files in the specified markup format (either JSON or YAML).
-    
+
         Args:
             markup (str): The markup format of the input files. Defaults to 'json'. Supported values are 'json' and 'yaml'.
             required_keys (Optional[Tuple]): A tuple of keys required to validate the data. If not provided, all keys will be considered valid.
             as_text (bool): If True, returns the file content as text; if False, returns parsed data. Defaults to True.
-    
+
         Returns:
             dict: A dictionary where each key is the prefix of the file name and the value is the file content as text or parsed data, depending on the value of 'as_text'.
-    
+
         Raises:
             Exception: If there's an error in reading or parsing the file, or if the file does not meet the required validation criteria.
         """
         example_dcm_defs = {}
-        file_ext=f".{markup}"
+        file_ext = f".{markup}"
         examples_path = cls.examples_path()
         for dirpath, _dirnames, filenames in os.walk(examples_path):
             for filename in filenames:
@@ -327,34 +349,33 @@ class DynamicCompetenceMap:
                                 if as_text:
                                     example_dcm_defs[file_prefix] = definition_text
                                 else:
-                                    example_dcm_defs[file_prefix] = definition_data   
+                                    example_dcm_defs[file_prefix] = definition_data
                         except Exception as ex:
                             cls.handle_markup_issue(filename, definition_text, ex)
         return example_dcm_defs
-    
+
     @classmethod
     def parse_markup(cls, text: str, markup: str) -> Union[dict, list]:
         """
         Parse the given text as JSON or YAML based on the specified markup type.
-    
+
         Args:
             text (str): The string content to be parsed.
             markup (str): The type of markup to use for parsing. Supported values are 'json' and 'yaml'.
-    
+
         Returns:
             Union[dict, list]: The parsed data, which can be either a dictionary or a list, depending on the content.
-    
+
         Raises:
             ValueError: If an unsupported markup format is specified.
         """
-        if markup == 'json':
+        if markup == "json":
             return json.loads(text)
-        elif markup == 'yaml':
+        elif markup == "yaml":
             return yaml.safe_load(text)
         else:
             raise ValueError(f"Unsupported markup format: {markup}")
 
-    
     @classmethod
     def handle_markup_issue(cls, name: str, definition_string: str, ex, markup):
         if isinstance(ex, JSONDecodeError):
@@ -379,18 +400,21 @@ class DynamicCompetenceMap:
         return all(key in definition_data for key in required_keys)
 
     @classmethod
-    def get_examples(cls, content_class=CompetenceTree, markup:str='json') -> dict:
+    def get_examples(cls, content_class=CompetenceTree, markup: str = "json") -> dict:
         examples = {}
         for name, definition_string in cls.get_example_dcm_definitions(
-            required_keys=content_class.required_keys(),
-            markup=markup
+            required_keys=content_class.required_keys(), markup=markup
         ).items():
-            dcm = cls.from_definition_string(name, definition_string, content_class,markup=markup)
+            dcm = cls.from_definition_string(
+                name, definition_string, content_class, markup=markup
+            )
             examples[name] = dcm
         return examples
-            
+
     @classmethod
-    def from_definition_string(cls, name: str, definition_string: str, content_class, markup: str = 'json') -> "DynamicCompetenceMap":
+    def from_definition_string(
+        cls, name: str, definition_string: str, content_class, markup: str = "json"
+    ) -> "DynamicCompetenceMap":
         """
         Load a DynamicCompetenceMap instance from a definition string (either JSON or YAML).
 
@@ -412,7 +436,6 @@ class DynamicCompetenceMap:
             return DynamicCompetenceMap(content)
         except Exception as ex:
             cls.handle_markup_issue(name, definition_string, ex, markup)
-
 
     def generate_svg(
         self, filename: Optional[str] = None, config: Optional[SVGConfig] = None
@@ -436,22 +459,27 @@ class DynamicCompetenceMap:
         return svg_markup
 
     def generate_svg_markup(
-        self, competence_tree: CompetenceTree = None,lookup_url:str="", config: SVGConfig = None
+        self,
+        competence_tree: CompetenceTree = None,
+        config: SVGConfig = None,
+        lookup_url: str = "",
     ) -> str:
         """
         Generate SVG markup based on the provided competence tree and configuration.
 
         Args:
             competence_tree (CompetenceTree): The competence tree structure containing the necessary data.
-            lookup_url(str): the lookup_url to use if there is none defined in the CompetenceTree
             config (SVGConfig): The configuration for the SVG canvas and legend.
+            lookup_url(str): the lookup_url to use if there is none defined in the CompetenceTree
 
         Returns:
             str: The generated SVG markup.
         """
         if competence_tree is None:
             competence_tree = self.competence_tree
-        lookup_url = competence_tree.lookup_url if competence_tree.lookup_url else lookup_url
+        lookup_url = (
+            competence_tree.lookup_url if competence_tree.lookup_url else lookup_url
+        )
         competence_aspects = competence_tree.competence_aspects
         # Instantiate the SVG class
         svg = SVG(config)
@@ -488,8 +516,14 @@ class DynamicCompetenceMap:
             if num_facets_in_aspect == 0:
                 continue
             aspect_angle = (num_facets_in_aspect / total_facets) * 360
-            aspect_url = aspect.url if aspect.url else f"{lookup_url}/description/{competence_tree.name}/{aspect_code}" if lookup_url else None
-     
+            aspect_url = (
+                aspect.url
+                if aspect.url
+                else f"{lookup_url}/description/{quote_plus(competence_tree.id)}/{quote_plus(aspect_code)}"
+                if lookup_url is not None
+                else None
+            )
+
             aspect_config = aspect.to_svg_node_config(
                 url=aspect_url,
                 x=cx,
@@ -515,7 +549,14 @@ class DynamicCompetenceMap:
 
             for facet in aspect.facets:
                 # Add the facet segment as a donut segment
-                facet_url = facet.url if facet.url else f"{lookup_url}/description/{competence_tree.name}/{aspect_code}/{facet.name}" if lookup_url else None
+                facet_url = (
+                    facet.url
+                    if facet.url
+                    else f"{lookup_url}/description/{quote_plus(competence_tree.id)}/{quote_plus(aspect_code)}/{quote_plus(str(facet.id))}"
+                    if lookup_url is not None
+                    else None
+                )
+
                 facet_config = facet.to_svg_node_config(
                     url=facet_url,
                     x=cx,

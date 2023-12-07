@@ -48,7 +48,7 @@ class TestAPI(WebserverTest):
         """
         example_name = "portfolio_plus"  
         aspect_id = "PSS"
-        facet_id = "Enthusiasmus"  
+        facet_id = "enthusiasm"  
         test_cases = [
             # Test case for a specific facet
             (f"/description/{example_name}/{aspect_id}/{facet_id}",
