@@ -365,6 +365,11 @@ class SVG:
                 iframe.setAttribute('src', '');
             }
         }
+        
+        function closePopup() {
+            var popup = document.getElementById('popup');
+            popup.setAttribute('visibility', 'hidden');
+        }
     </script>
     """
         return popup_script
@@ -387,10 +392,11 @@ class SVG:
         )
         popup ="""
         <!-- Add a foreignObject for the popup -->
-    <foreignObject id="popup" class="popup" width="500" height="354" x="150" y="260" visibility="hidden">
+    <foreignObject id="popup" class="popup" width="500" height="500" x="150" y="260" visibility="hidden">
         <body xmlns="http://www.w3.org/1999/xhtml">
             <!-- Content of your popup goes here -->
             <div class="popup" style="background-color: white; border: 1px solid black; padding: 10px;">
+                <span onclick="closePopup()" style="cursor: pointer; position: absolute; top: 5px; right: 10px;">×</span>
                 <iframe id="popup-iframe" width="100%" height="100%" frameborder="0"></iframe>
             </div>
         </body>
