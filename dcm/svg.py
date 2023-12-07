@@ -74,22 +74,36 @@ class SVG:
     def get_svg_style(self) -> str:
         """
         Define styles for SVG elements.
-
+    
         Returns:
             str: String containing style definitions for SVG.
         """
         return (
             f'{self.indent}<style>\n'
-            f'{self.indent * 2}.hoverable {{ fill-opacity: 1; stroke: black; stroke-width: 0.5; }}\n'
+            f'{self.indent * 2}.hoverable {{ cursor: pointer; fill-opacity: 1; stroke: black; stroke-width: 0.5; }}\n'
             f'{self.indent * 2}.hoverable:hover {{ fill-opacity: 0.7; }}\n'
             f'{self.indent * 2}.popup {{\n'
             f'{self.indent * 3}border: 2px solid black;\n'
             f'{self.indent * 3}border-radius: 15px;\n'
-            f'{self.indent * 3}overflow: auto;\n'
+            f'{self.indent * 3}overflow: auto;\n'  # changed to 'auto' to allow scrolling only if needed
             f'{self.indent * 3}background: white;\n'
+            f'{self.indent * 3}box-sizing: border-box;\n'  # ensures padding and border are included
+            f'{self.indent * 3}padding: 10px;\n'  # optional padding inside the popup
+            f'{self.indent * 3}height: 100%;\n'  # adjusts height relative to foreignObject
+            f'{self.indent * 3}width: 100%;\n'  # adjusts width relative to foreignObject
+            f'{self.indent * 2}}}\n'
+            f'{self.indent * 2}.close-btn {{\n'  # style for the close button
+            f'{self.indent * 3}cursor: pointer;\n'
+            f'{self.indent * 3}position: absolute;\n'
+            f'{self.indent * 3}top: 0;\n'
+            f'{self.indent * 3}right: 0;\n'
+            f'{self.indent * 3}padding: 5px;\n'
+            f'{self.indent * 3}font-size: 20px;\n'
+            f'{self.indent * 3}user-select: none;\n'  # prevents text selection on click
             f'{self.indent * 2}}}\n'
             f'{self.indent}</style>\n'
         )
+
 
     def get_text_width(self, text: str) -> int:
         """
@@ -331,7 +345,7 @@ class SVG:
         # Check if the segment should be shown as a popup
         if config.show_as_popup:
             # Add JavaScript to handle popup logic
-            onclick_action = f'onclick="togglePopup(\'{config.url}\', evt)"'
+            onclick_action = f'onclick="showPopup(\'{config.url}\', evt)"'
             group_content = f'<g {onclick_action}>{group_content}</g>'
         elif config.url:
             # Regular link behavior
@@ -343,7 +357,7 @@ class SVG:
     def get_java_script(self)->str:
         popup_script = """
     <script>
-         function togglePopup(url, evt) {
+         function showPopup(url, evt) {
             var popup = document.getElementById('popup');
             var iframe = document.getElementById('popup-iframe');
             var svgRect = evt.target.getBoundingClientRect();
@@ -355,15 +369,9 @@ class SVG:
             // Position the popup near the click event
             popup.setAttribute('x', svgPoint.x);
             popup.setAttribute('y', svgPoint.y);
-        
-            // Toggle visibility and set the iframe src
-            if (popup.getAttribute('visibility') === 'hidden') {
-                iframe.setAttribute('src', url);
-                popup.setAttribute('visibility', 'visible');
-            } else {
-                popup.setAttribute('visibility', 'hidden');
-                iframe.setAttribute('src', '');
-            }
+            // Set the iframe src and make the popup visible
+            iframe.setAttribute('src', url);
+            popup.setAttribute('visibility', 'visible');
         }
         
         function closePopup() {
@@ -392,15 +400,16 @@ class SVG:
         )
         popup ="""
         <!-- Add a foreignObject for the popup -->
-    <foreignObject id="popup" class="popup" width="500" height="500" x="150" y="260" visibility="hidden">
-        <body xmlns="http://www.w3.org/1999/xhtml">
-            <!-- Content of your popup goes here -->
-            <div class="popup" style="background-color: white; border: 1px solid black; padding: 10px;">
-                <span onclick="closePopup()" style="cursor: pointer; position: absolute; top: 5px; right: 5px;">ⓧ</span>
-                <iframe id="popup-iframe" width="100%" height="100%" frameborder="0"></iframe>
-            </div>
-        </body>
-    </foreignObject>"""
+<foreignObject id="popup" class="popup" width="500" height="354" x="150" y="260" visibility="hidden">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+        <!-- Content of your popup goes here -->
+        <div class="popup" style="background-color: white; border: 1px solid black; padding: 10px; box-sizing: border-box; width: 500px; height: 354px; position: relative;">
+            <span onclick="closePopup()" class="close-btn">ⓧ</span>
+            <iframe id="popup-iframe" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </body>
+</foreignObject>
+"""
         
         styles = self.get_svg_style()
         body = "".join(self.elements)
