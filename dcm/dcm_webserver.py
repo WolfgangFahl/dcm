@@ -7,6 +7,7 @@ import markdown2
 import os
 from urllib.parse import urlparse
 
+from fastapi import HTTPException
 from fastapi.responses import HTMLResponse
 from ngwidgets.file_selector import FileSelector
 from ngwidgets.input_webserver import InputWebserver
@@ -59,7 +60,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         InputWebserver.__init__(
             self, config=DynamicCompentenceMapWebServer.get_config()
         )
-        self.examples = DynamicCompetenceMap.get_examples()
+        self.examples = DynamicCompetenceMap.get_examples(markup='yaml')
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -68,14 +69,35 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             """
             return await self.render_svg(svg_render_request)
 
-        @app.get("/description/{example_name}/{aspect_id}")
-        async def get_aspect_description(example_name: str, aspect_id: str) -> HTMLResponse:
-            return await self.show_description(example_name, aspect_id)
+        @app.get("/description/{example_name}/{aspect_id}/{facet_id}")
+        async def get_aspect_description(example_name: str, aspect_id: str, facet_id:str) -> HTMLResponse:
+            return await self.show_description(example_name, aspect_id, facet_id)
 
-    async def show_description(self, example_name: str, aspect_id: str) -> HTMLResponse:
+    async def show_description(self, example_name: str, aspect_id: str, facet_id: str) -> HTMLResponse:
+        """
+        Show the HTML description of a specific facet of a competence aspect from an example.
+
+        Args:
+            example_name (str): The name of the example from which to retrieve the facet description.
+            aspect_id (str): The identifier of the competence aspect.
+            facet_id (str): The identifier of the competence facet.
+
+        Returns:
+            HTMLResponse: The response object containing the HTML-formatted description.
+
+        Raises:
+            HTTPException: If the example name provided does not exist in the examples collection.
+        """
         if example_name in self.examples:
             example=self.examples[example_name]
-            content = ""
+            facet=example.lookup(aspect_id,facet_id)
+            if facet is None:
+                msg=f"facet {facet_id} of aspect {aspect_id} not found in {example_name}"
+                raise HTTPException(status_code=404, detail=msg)
+            content=facet.as_html()
+        else:
+            msg=f"unknown example {example_name}"
+            raise HTTPException(status_code=404, detail=msg)
         return HTMLResponse(content=content)
 
     async def render_svg(self, svg_render_request: SVGRenderRequest) -> HTMLResponse:

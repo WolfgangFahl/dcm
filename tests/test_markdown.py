@@ -14,15 +14,19 @@ class TestMarkdown2(Basetest):
     
     def test_markdown2(self):
         """
+        test markdown2 markdown to html conversion
         """
         markdown_text = """
-        # Your Markdown Here
-        * Example
-        * GitHub-Flavored
-        * Markdown
+# Your Markdown Here
+* Example
+* GitHub-Flavored
+* Markdown
         """
         
         # Convert Markdown to HTML using markdown2
         html = markdown2.markdown(markdown_text, extras=["fenced-code-blocks", "tables", "spoiler"])
-        if self.debug:
+        debug=self.debug
+        #debug=True
+        if debug:
             print(html)
+        self.assertTrue("<li>Example</li>" in html)

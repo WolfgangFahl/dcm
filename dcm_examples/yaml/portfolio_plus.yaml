@@ -18,6 +18,8 @@ element_names:
 competence_aspects:
   BPWK:
     name: Berufspraktisches Wissen und Können
+    description: |
+       Für das berufspraktische Wissen ...
     color_code: '#B5B0A8'
     facets:
     - name: Lerninhalte und -ziele
@@ -72,6 +74,7 @@ competence_aspects:
       color_code: '#DEEFF7'
       description: |
         Kompetenzanforderungen:
+        
           - Freude an der Ausübung der eigenen Tätigkeit und dem Fach.
           - Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln.
     - name: Eigenes Rollenbewusstsein
@@ -82,6 +85,7 @@ competence_aspects:
       color_code: '#DEEFF7'
       description: |
         Kompetenzanforderungen:
+        
           - Professionelle und konstruktive Reaktion auf Kritik und Feedback.
           - Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten.
           - Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird.

@@ -31,6 +31,24 @@ class TestDynamicCompetenceMap(Basetest):
         self.assertEqual(element.color_code,aspect.color_code)   # Output: "#C0C0C0"
         self.assertEqual(element.color_code,facet.color_code)    # Output: "#C0C0C0"
         
+    def test_element_lookup(self):
+        """
+        test looking up an element
+        """
+        examples = DynamicCompetenceMap.get_examples(markup='yaml')
+        example_name="portfolio_plus"
+        aspect_id="PSS"
+        facet_id="Enthusiasmus"
+        self.assertTrue(example_name in examples)
+        example=examples[example_name]
+        facet=example.lookup(aspect_id,facet_id)
+        html=facet.as_html()
+        debug=self.debug
+        #debug=True
+        if debug:
+            print(html)
+        self.assertIn("Kompetenzanforderungen:",html)
+        self.assertIn("<li>Freude",html)
     #def testStudent(self):
     #   """
     #   test the student json handling

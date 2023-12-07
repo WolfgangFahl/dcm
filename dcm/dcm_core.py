@@ -4,6 +4,7 @@ Created on 2023-06-11
 @author: wf
 """
 import json
+import markdown2
 import os
 from dataclasses import dataclass, field
 from json.decoder import JSONDecodeError
@@ -34,6 +35,19 @@ class CompetenceElement:
     url: Optional[str] = None
     description: Optional[str] = None
     color_code: Optional[str] = None
+    
+    def as_html(self)->str:
+        """
+        convert me to html
+        
+        Returns:
+            str: html markup
+        """
+        html=f"<h2>{self.name}</h2>"
+        if self.description:
+            desc_html=markdown2.markdown(self.description, extras=["fenced-code-blocks", "tables", "spoiler"])
+            html=html+"\n"+desc_html
+        return html
 
     def to_svg_node_config(self, **kwargs) -> SVGNodeConfig:
         """
@@ -63,7 +77,6 @@ class CompetenceFacet(CompetenceElement):
     """
 
     # Since all properties are inherited, no additional properties are defined here.
-
 
 @dataclass_json
 @dataclass
@@ -240,6 +253,25 @@ class DynamicCompetenceMap:
         constructor
         """
         self.competence_tree = competence_tree
+        
+    def lookup(self, aspect_name: str, facet_name: str) -> Optional[CompetenceFacet]:
+        """
+        Look up a facet within a specified aspect by their names.
+
+        Args:
+            aspect_name (str): The name of the aspect to search within.
+            facet_name (str): The name of the facet to find.
+
+        Returns:
+            Optional[CompetenceFacet]: The found facet, or None if not found.
+        """
+        ct=self.competence_tree
+        aspect = ct.competence_aspects.get(aspect_name)
+        if aspect:
+            for facet in aspect.facets:
+                if facet.name == facet_name:
+                    return facet
+        return None
 
     @classmethod
     def examples_path(cls) -> str:
@@ -267,21 +299,22 @@ class DynamicCompetenceMap:
         example_dcm_defs = {}
         file_ext=f".{markup}"
         examples_path = cls.examples_path()
-        for filename in os.listdir(examples_path):
-            if filename.endswith(file_ext):
-                filepath = os.path.join(examples_path, filename)
-                with open(filepath, "r") as definition_file:
-                    file_prefix = filename.replace(file_ext, "")
-                    definition_text = definition_file.read()
-                    try:
-                        definition_data = cls.parse_markup(definition_text, markup)
-                        if cls.is_valid_definition(definition_data, required_keys):
-                            if as_text:
-                                example_dcm_defs[file_prefix] = definition_text
-                            else:
-                                example_dcm_defs[file_prefix] = definition_data   
-                    except Exception as ex:
-                        cls.handle_markup_issue(filename, definition_text, ex)
+        for dirpath, _dirnames, filenames in os.walk(examples_path):
+            for filename in filenames:
+                if filename.endswith(file_ext):
+                    filepath = os.path.join(dirpath, filename)
+                    with open(filepath, "r") as definition_file:
+                        file_prefix = filename.replace(file_ext, "")
+                        definition_text = definition_file.read()
+                        try:
+                            definition_data = cls.parse_markup(definition_text, markup)
+                            if cls.is_valid_definition(definition_data, required_keys):
+                                if as_text:
+                                    example_dcm_defs[file_prefix] = definition_text
+                                else:
+                                    example_dcm_defs[file_prefix] = definition_data   
+                        except Exception as ex:
+                            cls.handle_markup_issue(filename, definition_text, ex)
         return example_dcm_defs
     
     @classmethod
@@ -308,7 +341,7 @@ class DynamicCompetenceMap:
 
     
     @classmethod
-    def handle_markup_issue(cls, name: str, definition_string: str, ex):
+    def handle_markup_issue(cls, name: str, definition_string: str, ex, markup):
         if isinstance(ex, JSONDecodeError):
             lines = definition_string.splitlines()  # Split the string into lines
             err_line = lines[ex.lineno - 1]  # JSONDecodeError gives 1-based lineno
@@ -331,12 +364,13 @@ class DynamicCompetenceMap:
         return all(key in definition_data for key in required_keys)
 
     @classmethod
-    def get_examples(cls, content_class=CompetenceTree) -> dict:
+    def get_examples(cls, content_class=CompetenceTree, markup:str='json') -> dict:
         examples = {}
-        for name, json_string in cls.get_example_dcm_definitions(
-            required_keys=content_class.required_keys()
+        for name, definition_string in cls.get_example_dcm_definitions(
+            required_keys=content_class.required_keys(),
+            markup=markup
         ).items():
-            dcm = cls.from_definition_string(name, json_string, content_class)
+            dcm = cls.from_definition_string(name, definition_string, content_class,markup=markup)
             examples[name] = dcm
         return examples
             
