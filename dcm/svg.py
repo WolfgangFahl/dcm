@@ -47,6 +47,7 @@ class SVGNodeConfig:
     id: Optional[str]=None
     title: Optional[str]=None
     url: Optional[str]=None
+    show_as_popup: bool = False  # Flag to indicate if the link should opened as a popup
     comment: Optional[str]=None
     element_class: Optional[str]="hoverable"
  
@@ -81,6 +82,12 @@ class SVG:
             f'{self.indent}<style>\n'
             f'{self.indent * 2}.hoverable {{ fill-opacity: 1; stroke: black; stroke-width: 0.5; }}\n'
             f'{self.indent * 2}.hoverable:hover {{ fill-opacity: 0.7; }}\n'
+            f'{self.indent * 2}.popup {{\n'
+            f'{self.indent * 3}border: 2px solid black;\n'
+            f'{self.indent * 3}border-radius: 15px;\n'
+            f'{self.indent * 3}overflow: auto;\n'
+            f'{self.indent * 3}background: white;\n'
+            f'{self.indent * 2}}}\n'
             f'{self.indent}</style>\n'
         )
 
@@ -278,7 +285,6 @@ class SVG:
             end_angle_deg (float): End angle of the segment in degrees.
         """
         cx, cy = config.x, config.y
-        segment_url = config.url
         inner_radius, outer_radius = config.width, config.height
         color = config.fill if config.fill else self.config.default_color
 
@@ -322,16 +328,53 @@ class SVG:
         # Combine path and title into one string without adding indentation here
         group_content = f"{path_element}{title_element}"
     
-        # If an URL is provided, wrap the content within an anchor
-        if segment_url:
-            group_content = f'<a xlink:href="{segment_url}" target="_blank">\n{group_content}</a>\n'
-    
+        # Check if the segment should be shown as a popup
+        if config.show_as_popup:
+            # Add JavaScript to handle popup logic
+            onclick_action = f'onclick="togglePopup(\'{config.url}\', evt)"'
+            group_content = f'<g {onclick_action}>{group_content}</g>'
+        elif config.url:
+            # Regular link behavior
+            group_content = f'<a xlink:href="{config.url}" target="_blank">{group_content}</a>'
+       
         # Use add_group to add the pie segment with proper indentation
         self.add_group(group_content, group_id=config.id, group_class=config.element_class, level=2,comment=config.comment)
 
-    def get_svg_markup(self) -> str:
+    def get_java_script(self)->str:
+        popup_script = f"""
+    <script><![CDATA[
+    function togglePopup(url, evt) {{
+        var popup = document.getElementById('popup');
+        var iframe = document.getElementById('popup-iframe');
+        var svgRect = evt.target.getBoundingClientRect();
+        var svg = document.querySelector('svg');
+        var svgPoint = svg.createSVGPoint();
+        svgPoint.x = evt.clientX - svgRect.left;
+        svgPoint.y = evt.clientY - svgRect.top;
+        
+        // Position the popup near the click event
+        popup.setAttribute('x', svgPoint.x);
+        popup.setAttribute('y', svgPoint.y);
+
+        if (popup.getAttribute('visibility') === 'hidden') {{
+            iframe.setAttribute('src', url);
+            popup.setAttribute('visibility', 'visible');
+        }} else {{
+            popup.setAttribute('visibility', 'hidden');
+            iframe.setAttribute('src', '');
+        }}
+    }}
+    ]]></script>
+    """
+        return popup_script
+    
+    def get_svg_markup(self,with_java_script:bool=True) -> str:
         """
         Generate the complete SVG markup.
+        
+        Args:
+            with_java_script(bool): if True(default) the javascript code is included otherwise 
+            it's available via the get_java_script function
 
         Returns:
             str: String containing the complete SVG markup.
@@ -341,10 +384,23 @@ class SVG:
             f'xmlns:xlink="http://www.w3.org/1999/xlink" '
             f'width="{self.width}" height="{self.config.total_height}">\n'
         )
+        popup ="""
+        <!-- Add a foreignObject for the popup -->
+    <foreignObject id="popup" width="300" height="200" x="150" y="260" visibility="hidden">
+        <body xmlns="http://www.w3.org/1999/xhtml">
+            <!-- Content of your popup goes here -->
+            <div style="background-color: white; border: 1px solid black; padding: 10px;">
+                <iframe id="popup-iframe" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </body>
+    </foreignObject>"""
+        
         styles = self.get_svg_style()
         body = "".join(self.elements)
         footer = '</svg>'
-        return f"{header}{styles}{body}{footer}"
+        java_script=self.get_java_script() if with_java_script else ""
+        svg_markup=f"{header}{java_script}{styles}{body}{popup}{footer}"
+        return svg_markup
 
     def save(self, filename: str):
         """

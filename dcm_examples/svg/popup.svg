@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="720">
+  <style>
+    .hoverable { cursor: pointer; fill-opacity: 1; stroke: black; stroke-width: 0.5; }
+    .hoverable:hover { fill-opacity: 0.7; }
+    .popup {
+      border: 2px solid black;
+      border-radius: 15px;
+      overflow: auto; /* In case content is larger than the iframe */
+      background: white; /* Background color for the popup */
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.2); /* Optional: adds shadow for depth */
+    }
+  </style>
+
+  <script><![CDATA[
+    function togglePopup(evt) {
+        var popup = document.getElementById('popup');
+        var iframe = document.getElementById('popup-iframe');
+        var svg = evt.target.ownerSVGElement;
+        var matrix = evt.target.getScreenCTM();
+
+        var point = svg.createSVGPoint();
+        point.x = evt.clientX;
+        point.y = evt.clientY;
+
+        var svgPoint = point.matrixTransform(matrix.inverse());
+
+        // Set the iframe src to the absolute URL
+        iframe.setAttribute('src', 'http://dcm.bitplan.com/description/portfolio_plus/PSS/enthusiasm');
+
+        // Position the popup near the click event, adjust as necessary
+        popup.setAttribute('x', svgPoint.x);
+        popup.setAttribute('y', svgPoint.y);
+
+        // Toggle visibility
+        var visibility = popup.getAttribute('visibility');
+        popup.setAttribute('visibility', visibility === 'visible' ? 'hidden' : 'visible');
+    }
+  ]]></script>
+
+  <!-- Enthusiasmus element -->
+  <g id="Enthusiasmus" class="hoverable" onclick="togglePopup(evt)">
+    <path d="M 318.31104117473706 211.88243210859093 L 354.9331235242112 35.64729632577286 A 270.0 270.0 0 0 1 424.21756018741115 60.27099103135873 L 341.4058533958037 220.09033034378623 A 90.0 90.0 0 0 0 318.31104117473706 211.88243210859093 Z" fill="#DEEFF7" />
+    <title>Enthusiasmus</title>
+  </g>
+
+  <!-- ForeignObject for the popup -->
+  <foreignObject id="popup" width="400" height="300" visibility="hidden">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+      <div class="popup">
+        <iframe id="popup-iframe" width="100%" height="100%" frameborder="0"></iframe>
+      </div>
+    </body>
+  </foreignObject>
+</svg>

@@ -272,6 +272,7 @@ class DynamicCompetenceMap:
         constructor
         """
         self.competence_tree = competence_tree
+        self.svg=None
 
     def lookup(
         self, aspect_id: str = None, facet_id: str = None
@@ -462,6 +463,7 @@ class DynamicCompetenceMap:
         self,
         competence_tree: CompetenceTree = None,
         config: SVGConfig = None,
+        with_java_script: bool = True,
         lookup_url: str = "",
     ) -> str:
         """
@@ -483,6 +485,7 @@ class DynamicCompetenceMap:
         competence_aspects = competence_tree.competence_aspects
         # Instantiate the SVG class
         svg = SVG(config)
+        self.svg=svg
         # use default config incase config was None
         config = svg.config
 
@@ -516,6 +519,7 @@ class DynamicCompetenceMap:
             if num_facets_in_aspect == 0:
                 continue
             aspect_angle = (num_facets_in_aspect / total_facets) * 360
+
             aspect_url = (
                 aspect.url
                 if aspect.url
@@ -523,9 +527,11 @@ class DynamicCompetenceMap:
                 if lookup_url is not None
                 else None
             )
+            show_as_popup = aspect.url is None
 
             aspect_config = aspect.to_svg_node_config(
                 url=aspect_url,
+                show_as_popup=show_as_popup,
                 x=cx,
                 y=cy,
                 width=tree_radius,  # inner radius
@@ -556,9 +562,10 @@ class DynamicCompetenceMap:
                     if lookup_url is not None
                     else None
                 )
-
+                show_as_popup = facet.url is None
                 facet_config = facet.to_svg_node_config(
                     url=facet_url,
+                    show_as_popup=show_as_popup,
                     x=cx,
                     y=cy,
                     width=aspect_radius,  # inner radius
@@ -578,7 +585,7 @@ class DynamicCompetenceMap:
             self.competence_tree.add_legend(svg)
 
         # Return the SVG markup
-        return svg.get_svg_markup()
+        return svg.get_svg_markup(with_java_script=with_java_script)
 
     def save_svg_to_file(self, svg_markup: str, filename: str):
         # Save the SVG content to a file
