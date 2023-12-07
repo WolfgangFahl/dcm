@@ -15,7 +15,7 @@ from nicegui import Client, app, ui
 from pydantic import BaseModel
 
 from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap
-from dcm.svg import SVGConfig
+from dcm.svg import SVGConfig, SVG
 from dcm.version import Version
 
 from typing import Optional
@@ -160,10 +160,6 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 )
                 svg = dcm.generate_svg_markup(with_java_script=False)
                 # Use the new get_java_script method to get the JavaScript
-                java_script = dcm.svg.get_java_script()
-
-                # Add the script using ui.add_body_html()
-                ui.add_body_html(java_script)
                 self.svg_view.content = svg
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
@@ -172,6 +168,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """Generates the home page with a selection of examples and
         svg display
         """
+        svg=SVG()
+        java_script = svg.get_java_script()
+
+        # Add the script using ui.add_head_html()
+        ui.add_head_html(java_script)
+
         self.setup_menu()
 
         with ui.element("div").classes("w-full"):

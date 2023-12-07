@@ -58,7 +58,7 @@ class SVG:
     Attributes:
         config (SVGConfig): Configuration for the SVG drawing.
     """
-    def __init__(self, config: SVGConfig):
+    def __init__(self, config: SVGConfig=None):
         """
         Initialize SVG object with given configuration.
 
@@ -342,7 +342,7 @@ class SVG:
 
     def get_java_script(self)->str:
         popup_script = f"""
-    <script><![CDATA[
+    <script>
     function togglePopup(url, evt) {{
         var popup = document.getElementById('popup');
         var iframe = document.getElementById('popup-iframe');
@@ -364,7 +364,7 @@ class SVG:
             iframe.setAttribute('src', '');
         }}
     }}
-    ]]></script>
+    </script>
     """
         return popup_script
     
