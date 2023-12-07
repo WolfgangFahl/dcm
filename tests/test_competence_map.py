@@ -4,7 +4,7 @@ Created on 2023-11-06
 @author: wf
 '''
 from ngwidgets.basetest import Basetest
-from dcm.dcm_core import DynamicCompetenceMap,CompetenceAspect,CompetenceElement,CompetenceFacet, Student
+from dcm.dcm_core import DynamicCompetenceMap,CompetenceTree,CompetenceAspect,CompetenceElement,CompetenceFacet, Student
 from tests.markup_check import MarkupCheck
 from dcm.svg import SVGConfig
 
@@ -15,8 +15,10 @@ class TestDynamicCompetenceMap(Basetest):
     
     def setUp(self, debug=False, profile=True):
         Basetest.setUp(self, debug=debug, profile=profile)
-        self.examples = DynamicCompetenceMap.get_examples()
-  
+        self.example_definitions = {}
+        for markup in ["json","yaml"]:
+            self.example_definitions[markup] = DynamicCompetenceMap.get_examples(CompetenceTree, markup)
+     
     def testDefaultColor(self):
         """
         test the default Color
@@ -50,6 +52,7 @@ class TestDynamicCompetenceMap(Basetest):
             print(html)
         self.assertIn("Kompetenzanforderungen:",html)
         self.assertIn("<li>Freude",html)
+        
     #def testStudent(self):
     #   """
     #   test the student json handling
@@ -60,12 +63,14 @@ class TestDynamicCompetenceMap(Basetest):
         """
         test the competence map
         """
-        for example_name, dcm in self.examples.items():   
-            # Now you can perform assertions to verify that the data was loaded correctly
-            self.assertIsNotNone(dcm.competence_tree)
-            svg_config=SVGConfig()
-            svg_config.legend_height=40*len(dcm.competence_tree.competence_levels)
-            svg_file=f"/tmp/{example_name}_competence_map.svg"
-            dcm.generate_svg(svg_file,config=svg_config)
-            markup_check=MarkupCheck(self,dcm)
-            markup_check.check_markup(svg_file=svg_file,svg_config=svg_config) 
+        for markup, examples in self.example_definitions.items():
+       
+            for example_name, dcm in examples.items():  
+                # Now you can perform assertions to verify that the data was loaded correctly
+                self.assertIsNotNone(dcm.competence_tree)
+                svg_config=SVGConfig()
+                svg_config.legend_height=40*len(dcm.competence_tree.competence_levels)
+                svg_file=f"/tmp/{example_name}_competence_map_{markup}.svg"
+                dcm.generate_svg(svg_file,config=svg_config)
+                markup_check=MarkupCheck(self,dcm)
+                markup_check.check_markup(svg_file=svg_file,svg_config=svg_config) 

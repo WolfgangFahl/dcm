@@ -341,29 +341,30 @@ class SVG:
         self.add_group(group_content, group_id=config.id, group_class=config.element_class, level=2,comment=config.comment)
 
     def get_java_script(self)->str:
-        popup_script = f"""
+        popup_script = """
     <script>
-    function togglePopup(url, evt) {{
-        var popup = document.getElementById('popup');
-        var iframe = document.getElementById('popup-iframe');
-        var svgRect = evt.target.getBoundingClientRect();
-        var svg = document.querySelector('svg');
-        var svgPoint = svg.createSVGPoint();
-        svgPoint.x = evt.clientX - svgRect.left;
-        svgPoint.y = evt.clientY - svgRect.top;
+         function togglePopup(url, evt) {
+            var popup = document.getElementById('popup');
+            var iframe = document.getElementById('popup-iframe');
+            var svgRect = evt.target.getBoundingClientRect();
+            var svg = document.querySelector('svg');
+            var svgPoint = svg.createSVGPoint();
+            svgPoint.x = evt.clientX - svgRect.left;
+            svgPoint.y = evt.clientY - svgRect.top;
         
-        // Position the popup near the click event
-        popup.setAttribute('x', svgPoint.x);
-        popup.setAttribute('y', svgPoint.y);
-
-        if (popup.getAttribute('visibility') === 'hidden') {{
-            iframe.setAttribute('src', url);
-            popup.setAttribute('visibility', 'visible');
-        }} else {{
-            popup.setAttribute('visibility', 'hidden');
-            iframe.setAttribute('src', '');
-        }}
-    }}
+            // Position the popup near the click event
+            popup.setAttribute('x', svgPoint.x);
+            popup.setAttribute('y', svgPoint.y);
+        
+            // Toggle visibility and set the iframe src
+            if (popup.getAttribute('visibility') === 'hidden') {
+                iframe.setAttribute('src', url);
+                popup.setAttribute('visibility', 'visible');
+            } else {
+                popup.setAttribute('visibility', 'hidden');
+                iframe.setAttribute('src', '');
+            }
+        }
     </script>
     """
         return popup_script
@@ -386,10 +387,10 @@ class SVG:
         )
         popup ="""
         <!-- Add a foreignObject for the popup -->
-    <foreignObject id="popup" width="300" height="200" x="150" y="260" visibility="hidden">
+    <foreignObject id="popup" class="popup" width="500" height="354" x="150" y="260" visibility="hidden">
         <body xmlns="http://www.w3.org/1999/xhtml">
             <!-- Content of your popup goes here -->
-            <div style="background-color: white; border: 1px solid black; padding: 10px;">
+            <div class="popup" style="background-color: white; border: 1px solid black; padding: 10px;">
                 <iframe id="popup-iframe" width="100%" height="100%" frameborder="0"></iframe>
             </div>
         </body>
