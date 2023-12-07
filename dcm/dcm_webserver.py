@@ -3,6 +3,7 @@ Created on 2023-11-06
 
 @author: wf
 """
+import markdown2
 import os
 from urllib.parse import urlparse
 
@@ -19,6 +20,7 @@ from dcm.version import Version
 
 from typing import Optional
 
+
 class SVGRenderRequest(BaseModel):
     """
     A request for rendering an SVG.
@@ -34,6 +36,7 @@ class SVGRenderRequest(BaseModel):
     definition: str
     markup: str
     config: Optional[SVGConfig] = None
+
 
 class DynamicCompentenceMapWebServer(InputWebserver):
     """
@@ -56,6 +59,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         InputWebserver.__init__(
             self, config=DynamicCompentenceMapWebServer.get_config()
         )
+        self.examples = DynamicCompetenceMap.get_examples()
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -63,6 +67,16 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             render the given request
             """
             return await self.render_svg(svg_render_request)
+
+        @app.get("/description/{example_name}/{aspect_id}")
+        async def get_aspect_description(example_name: str, aspect_id: str) -> HTMLResponse:
+            return await self.show_description(example_name, aspect_id)
+
+    async def show_description(self, example_name: str, aspect_id: str) -> HTMLResponse:
+        if example_name in self.examples:
+            example=self.examples[example_name]
+            content = ""
+        return HTMLResponse(content=content)
 
     async def render_svg(self, svg_render_request: SVGRenderRequest) -> HTMLResponse:
         """
@@ -98,7 +112,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 ui.notify(f"rendering {name}")
                 definition = self.do_read_input(input_source)
                 # Determine the format based on the file extension
-                markup = 'json' if input_source.endswith('.json') else 'yaml'
+                markup = "json" if input_source.endswith(".json") else "yaml"
                 dcm = DynamicCompetenceMap.from_definition_string(
                     name, definition, content_class=CompetenceTree, markup=markup
                 )

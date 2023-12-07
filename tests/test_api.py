@@ -41,3 +41,17 @@ class TestAPI(WebserverTest):
                 dcm = DynamicCompetenceMap.from_definition_string(name, definition, content_class=CompetenceTree, markup=markup)
                 markup_check=MarkupCheck(self,dcm)
                 markup_check.check_markup(svg_content=svg_markup,svg_config=svg_config)
+                
+    def test_aspect_description(self):
+        """
+        Test the aspect description endpoint
+        """
+        example_name = "portfolio_plus"  # Replace with an actual example name
+        aspect_id = "Enthusiasmus"  # Example aspect ID for testing
+        path = f"/description/{example_name}/{aspect_id}"
+        
+        response = self.get_html(path)
+        # Here, we expect a specific content in the response.
+        # This expected content will be based on what you intend to implement in the endpoint.
+        expected_content = "Expected description for Enthusiasmus in example some_example"
+        self.assertIn(expected_content, response)

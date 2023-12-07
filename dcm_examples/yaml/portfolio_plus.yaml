@@ -70,12 +70,21 @@ competence_aspects:
       color_code: '#DEEFF7'
     - name: Enthusiasmus
       color_code: '#DEEFF7'
+      description: |
+        Kompetenzanforderungen:
+          - Freude an der Ausübung der eigenen Tätigkeit und dem Fach.
+          - Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln.
     - name: Eigenes Rollenbewusstsein
       color_code: '#DEEFF7'
     - name: Reflexion des eigenen Lehrhandelns
       color_code: '#DEEFF7'
     - name: Umgang mit Feedback und Kritik
       color_code: '#DEEFF7'
+      description: |
+        Kompetenzanforderungen:
+          - Professionelle und konstruktive Reaktion auf Kritik und Feedback.
+          - Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten.
+          - Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird.
     - name: Engagement und Distanz
       color_code: '#DEEFF7'
 competence_levels:
