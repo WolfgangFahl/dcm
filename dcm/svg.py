@@ -43,6 +43,7 @@ class SVGNodeConfig:
     height: Optional[float]=None
     fill: Optional[str]="black"
     indent_level: int=1
+    element_type: Optional[str]=None
     id: Optional[str]=None
     title: Optional[str]=None
     url: Optional[str]=None

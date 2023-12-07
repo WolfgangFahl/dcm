@@ -42,20 +42,32 @@ class TestAPI(WebserverTest):
                 markup_check=MarkupCheck(self,dcm)
                 markup_check.check_markup(svg_content=svg_markup,svg_config=svg_config)
                 
-    def test_aspect_description(self):
+    def test_element_description(self):
         """
-        Test the aspect description endpoint
+        Test the element description endpoint
         """
-        # setup a 
         example_name = "portfolio_plus"  
         aspect_id = "PSS"
         facet_id = "Enthusiasmus"  
-        path = f"/description/{example_name}/{aspect_id}/{facet_id}"
-        
-        html= self.get_html(path)
-        debug=self.debug
+        test_cases = [
+            # Test case for a specific facet
+            (f"/description/{example_name}/{aspect_id}/{facet_id}",
+             ["Kompetenzanforderungen:", "<li>Freude"]),
+    
+            # Test case for a whole aspect
+            (f"/description/{example_name}/{aspect_id}",
+             ["<h2>Professionelle Selbststeuerung</h2>"]),
+    
+            # Test case for the whole tree
+            (f"/description/{example_name}",
+             ["<h2>PortfolioPlus</h2>"]),
+        ]
+
+        debug = self.debug
         #debug=True
-        if debug:
-            print(html)
-        self.assertIn("Kompetenzanforderungen:",html)
-        self.assertIn("<li>Freude",html)
+        for path, expected_contents in test_cases:
+            html = self.get_html(path)
+            if debug:
+                print(f"{path}:\n{html}")
+            for expected_content in expected_contents:
+                self.assertIn(expected_content, html)

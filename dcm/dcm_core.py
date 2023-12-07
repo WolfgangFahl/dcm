@@ -14,6 +14,7 @@ import yaml
 from dataclasses_json import dataclass_json
 
 from dcm.svg import SVG, SVGConfig, SVGNodeConfig
+from dns.rdataclass import NONE
 
 
 @dataclass_json
@@ -47,18 +48,24 @@ class CompetenceElement:
         if self.description:
             desc_html=markdown2.markdown(self.description, extras=["fenced-code-blocks", "tables", "spoiler"])
             html=html+"\n"+desc_html
-        return html
+        return html    
 
-    def to_svg_node_config(self, **kwargs) -> SVGNodeConfig:
+    def to_svg_node_config(self,url:str=None, **kwargs) -> SVGNodeConfig:
         """
         convert me to an SVGNode Configuration
+        
+        Args:
+            url(str): the url to use for clicking this svg node - if None use
+            my configured url
         """
+        if url is None:
+            url=self.url
         element_type = f"{self.__class__.__name__}"
         comment = f"{element_type}:{self.description}"
         svg_node_config = SVGNodeConfig(
-            # @TODO prepend {element_type}:
+            element_type=f"{element_type}",
             id=f"{self.id}",
-            url=self.url,
+            url=url,
             fill=self.color_code,
             title=self.name,
             comment=comment,
@@ -116,7 +123,7 @@ class CompetenceTree(CompetenceElement):
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
-
+    lookup_url: Optional[str]=None
     competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=dict)
     competence_levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
@@ -254,20 +261,28 @@ class DynamicCompetenceMap:
         """
         self.competence_tree = competence_tree
         
-    def lookup(self, aspect_name: str, facet_name: str) -> Optional[CompetenceFacet]:
+    def lookup(self, aspect_name: str=None, facet_name: str=None) -> Optional[CompetenceFacet]:
         """
-        Look up a facet within a specified aspect by their names.
+        Look up an element of my competence tree
+            if aspect_name and facet_name is None return the competence tree
+            if only aspect_name is given return the corresponding aspect
+            if also the facet_name is given return the 
+            facet within the specified aspect by its names.
 
         Args:
             aspect_name (str): The name of the aspect to search within.
             facet_name (str): The name of the facet to find.
 
         Returns:
-            Optional[CompetenceFacet]: The found facet, or None if not found.
+            Optional[CompetenceElement]: The found facet, or None if not found.
         """
         ct=self.competence_tree
+        if aspect_name is None:
+            return ct
         aspect = ct.competence_aspects.get(aspect_name)
         if aspect:
+            if facet_name is None:
+                return aspect
             for facet in aspect.facets:
                 if facet.name == facet_name:
                     return facet
@@ -421,13 +436,14 @@ class DynamicCompetenceMap:
         return svg_markup
 
     def generate_svg_markup(
-        self, competence_tree: CompetenceTree = None, config: SVGConfig = None
+        self, competence_tree: CompetenceTree = None,lookup_url:str="", config: SVGConfig = None
     ) -> str:
         """
         Generate SVG markup based on the provided competence tree and configuration.
 
         Args:
             competence_tree (CompetenceTree): The competence tree structure containing the necessary data.
+            lookup_url(str): the lookup_url to use if there is none defined in the CompetenceTree
             config (SVGConfig): The configuration for the SVG canvas and legend.
 
         Returns:
@@ -435,6 +451,7 @@ class DynamicCompetenceMap:
         """
         if competence_tree is None:
             competence_tree = self.competence_tree
+        lookup_url = competence_tree.lookup_url if competence_tree.lookup_url else lookup_url
         competence_aspects = competence_tree.competence_aspects
         # Instantiate the SVG class
         svg = SVG(config)
@@ -471,7 +488,10 @@ class DynamicCompetenceMap:
             if num_facets_in_aspect == 0:
                 continue
             aspect_angle = (num_facets_in_aspect / total_facets) * 360
+            aspect_url = aspect.url if aspect.url else f"{lookup_url}/description/{competence_tree.name}/{aspect_code}" if lookup_url else None
+     
             aspect_config = aspect.to_svg_node_config(
+                url=aspect_url,
                 x=cx,
                 y=cy,
                 width=tree_radius,  # inner radius
@@ -495,7 +515,9 @@ class DynamicCompetenceMap:
 
             for facet in aspect.facets:
                 # Add the facet segment as a donut segment
+                facet_url = facet.url if facet.url else f"{lookup_url}/description/{competence_tree.name}/{aspect_code}/{facet.name}" if lookup_url else None
                 facet_config = facet.to_svg_node_config(
+                    url=facet_url,
                     x=cx,
                     y=cy,
                     width=aspect_radius,  # inner radius

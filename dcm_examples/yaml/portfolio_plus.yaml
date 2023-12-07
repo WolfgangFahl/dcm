@@ -5,6 +5,7 @@
 # 
 name: PortfolioPlus
 id: portfolio_plus
+lookup_url: http://dcm.bitplan.com
 url: https://www.greta-die.de/webpages/projektergebnisse/portfolioplus
 description: Online-Tool, mit dem Lehrende ihre oftmals informell und non-formal
   erworbenen pädagogischen Kompetenzen strukturiert identifizieren, dokumentieren
