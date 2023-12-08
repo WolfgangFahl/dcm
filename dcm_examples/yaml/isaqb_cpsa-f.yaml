@@ -1,0 +1,609 @@
+name: iSAQB e.V. CPSA-F Self Assessment
+id: iSAQB_CPSA-F
+lookup_url: http://dcm.bitplan.com
+url: https://github.com/isaqb-org
+description: International Software Architecture Qualification Board Certified Professional
+  for Software Architecture Foundation Level Mock Exam Self Assessment
+competence_aspects:
+  basics:
+    name: basics
+    id: basics
+    description: Basics
+    facets:
+    - name: Discuss Definitions of Software Architecture (R1)
+      id: 1-01
+      description: |2+
+
+
+        Software architects know several definitions of software architecture (incl. ISO 42010/IEEE 1471, SEI, Booch etc.) and can name their similarities:
+
+        * components/building blocks with interfaces and relationships
+        * building blocks as a general term, components as a special form thereof
+        * structures, cross-cutting concepts, principles
+        * architecture decisions and their consequences on the entire systems and its lifecycle
+
+    - name: Understand and Explain the Goals and Benefits of Software Architecture
+        (R1)
+      id: 1-02
+      description: "\n\n\nSoftware architects can justify the following essential\
+        \ goals and benefits of software architecture:\n\n* support the design, implementation,\
+        \ maintenance, and operation of systems\n* achieve functional requirements\
+        \ or ensure that they can be met\n* achieve requirements such as reliability,\
+        \ maintainability, changeability, security, energy efficiency etc.\n* ensure\
+        \ that the system's structures and concepts are understood by all relevant\
+        \ stakeholders\n* systematically reduce complexity\n* specify architecturally\
+        \ relevant guidelines for implementation and operation\n \n"
+    - name: Understand Software Architecture as Part of the Software Lifecycle (R2)
+      id: 1-03
+      description: |2+
+
+
+        Software architects understand their tasks and can integrate their results into the overall lifecycle of IT systems.
+        They can:
+
+        * identify the consequences of changes in requirements, technologies, or the system environment in relation to software architecture
+        * elaborate on relationships between IT-systems and the supported business and operational processes
+
+    - name: Understand Software Architects' Tasks and Responsibilities (R1)
+      id: 1-04
+      description: |2+
+
+        Software architects are responsible for meeting requirements and creating the architecture design of a solution.
+        Depending on the actual approach or process model used, they must align this responsibility with the overall responsibilities of project management and/or other roles.
+
+        Tasks and responsibilities of software architects:
+
+        * clarify and scrutinize requirements and constraints, and refine them if necessary,
+          including _required features_ and _required constraints_
+        * decide how to decompose the system into building blocks, while determining dependencies and interfaces between the building blocks
+        * determine and decide on cross-cutting concepts (for instance persistence, communication, GUI etc.)
+        * communicate and document software architecture based on views, architectural patterns, cross-cutting and technical concepts
+        * accompany the realization and implementation of the architecture; integrate feedback from relevant stakeholders into the architecture if necessary; review and ensure the consistency of source code and software architecture
+        * analyze and evaluate software architecture, especially with respect to risks that involve meeting the requirements, see <<LG-4-3>> and <<LG-4-4>>,
+        * identify, highlight, and justify the consequences of architectural decisions to other stakeholders
+
+        They should independently recognize the necessity of iterations in all tasks and point out possibilities for appropriate and relevant feedback.
+
+    - name: Relate the Role of Software Architects to Other Stakeholders (R1)
+      id: 1-05
+      description: "\nSoftware architects are able to explain their role. \nThey should\
+        \ adapt their contribution to a software development in a specific context\
+        \ and in relation to other stakeholders and organizational units, in particular\
+        \ to:\n\n* product management and product owners\n* project managers\n* requirement\
+        \ engineers (requirements- or business analysts, requirements managers, system\
+        \ analysts, business owners, subject-matter experts, etc.)\n* developers\n\
+        * quality assurance and testers\n* IT operators and administrators (applies\
+        \ primarily to production environment or data centers for information systems),\n\
+        * hardware developers\n* enterprise architects and architecture board members\n\
+        \n"
+    - name: Can Explain the Correlation between Development Approaches and Software
+        Architecture (R2)
+      id: 1-06
+      description: |2+
+
+
+        * software architects are able to explain the influence of iterative approaches on architectural decisions (with regard to risks and predictability).
+        * due to inherent uncertainty, software architects often have to work and make decisions iteratively. To do so, they have to systematically obtain feedback from other stakeholders.
+
+    - name: Differentiate between Short- and Long-Term Goals (R2)
+      id: 1-07
+      description: |2+
+
+
+        Software architects can explain potential conflicts between short-term and long-term goals, in order to find a suitable solution for all stakeholders
+
+    - name: Distinguish Explicit Statements and Implicit Assumptions (R1)
+      id: 1-08
+      description: |2+
+
+
+        Software architects:
+
+        * should explicitly present assumptions or prerequisites, therefore avoiding implicit assumptions
+        * know that implicit assumptions can lead to potential misunderstandings between stakeholders
+
+    - name: Responsibilities of Software Architects within the Greater Architectural
+        Context (R3)
+      id: 1-09
+      description: |2
+
+
+        The focus of the iSAQB CPSA Foundation Level is on structures and concepts of individual software systems.
+
+        In addition, software architects are familiar with other architectural domains, for example:
+
+        * enterprise IT architecture: Structure of application landscapes
+        * business and process architecture: Structure of, among other things, business processes
+        * information architecture: cross-system structure and use of information and data
+        * infrastructure or technology architecture: Structure of the technical infrastructure, hardware, networks, etc.
+        * hardware or processor architecture (for hardware-related systems)
+
+        These architectural domains are not the content focus of CPSA-F.
+    - name: Differentiate Types of IT Systems (R3)
+      id: 1-10
+      description: |2+
+
+
+        Software architects know different types of IT systems, for example:
+
+        * information systems
+        * decision support, data warehouse or business intelligence systems
+        * mobile systems
+        * _cloud native_ systems (refer to <<cncf>>)
+        * batch processes or systems
+        * systems based upon machine learning or artificial intelligence
+        * hardware-related systems; here they understand the necessity of hardware/software co-design (temporal and content-related dependencies of hardware and software design)
+
+    - name: Challenges of Distributed Systems (R3)
+      id: 1-11
+      description: |2
+
+
+        Software architects are able to:
+
+        * identify distribution in a given software architecture
+        * analyze consistency criteria for a given business problem
+        * explain causality of events in a distributed system
+
+        Software architects know:
+
+        * communication may fail in a distributed system
+        * limitations regarding consistency in real-world databases
+        * what the "split-brain" problem is and why it is difficult
+        * that it is impossible to determine the temporal order of events in a distributed system
+  design:
+    name: design
+    id: design
+    description: Design
+    facets:
+    - name: Select and Use Approaches and Heuristics for Architecture Development
+        (R1,R3)
+      id: 2-01
+      description: "\nSoftware architects are able to name, explain, and use fundamental\
+        \ approaches of architecture development, for example:\n\n* top-down and bottom-up\
+        \ approaches to design (R1)\n* view-based architecture development (R1)\n\
+        * iterative and incremental design (R1)\n** necessity of iterations, especially\
+        \ when decision-making is affected by uncertainties (R1)\n** necessity of\
+        \ feedback on design decisions (R1)\n* domain-driven design, see <<evans>>\
+        \ (R3)\n* evolutionary architecture, see <<ford>> (R3)\n* global analysis,\
+        \ see <<hofmeister>> (R3) \n* model-driven architecture (R3)\n\n"
+    - name: Design Software Architectures (R1)
+      id: 2-02
+      description: |2+
+
+
+        Software architects are able to:
+
+        * design and appropriately communicate and document software architectures based upon known functional and quality requirements for software systems that are neither safety- nor business-critical
+        * make structure-relevant decisions regarding system decomposition and building-block structure and deliberately design dependencies between building blocks
+        * recognize and justify interdependencies and trade-offs of design decisions
+        * explain the terms _black box_ and _white box_ and apply them purposefully
+        * apply stepwise refinement and specify building blocks
+        * design architecture views, especially building-block view, runtime view and deployment view
+        * explain the consequences of these decisions on the corresponding source code
+        * separate technical and domain-related elements of architectures and justify these decisions
+        * identify risks related to architecture decisions.
+
+    - name: Identify and Consider Factors Influencing Software Architecture (R1-R3)
+      id: 2-03
+      description: "\n\n\nSoftware architects are able to clarify and consider requirements\
+        \ (including constraints that restrict their decisions).\nThey understand\
+        \ that their decisions can lead to additional requirements (including constraints)\
+        \ on the system being designed, its architecture, or the development process.\
+        \ \n\n\nThey should recognize and account for the impact of:\n\n* product-related\
+        \ requirements such as (R1)\n** functional requirements\n** quality requirements\n\
+        \n\n* technological constraints such as \n** existing or planned hardware\
+        \ and software infrastructure (R1)\n** technological constraints on data structures\
+        \ and interfaces (R2)\n** reference architectures, libraries, components,\
+        \ and frameworks (R1)\n** programming languages (R2)\n\n* organizational constraints\
+        \ such as\n** organizational structure of the development team and of the\
+        \ customer (R1), in particular Conway's law (R2).\n** company and team cultures\
+        \ (R3)\n** partnerships and cooperation agreements (R2)\n** standards, guidelines,\
+        \ and process models (e.g. approval and release processes) (R2)\n** available\
+        \ resources like budget, time, and staff (R1)\n** availability, skill set,\
+        \ and commitment of staff (R1)\n\n* regulatory constraints such as (R2)\n\
+        ** local and international legal constraints\n** contract and liability issues\n\
+        ** data protection​ and privacy laws\n** compliance issues or obligations\
+        \ to provide burden of proof​\n\n* trends such as (R3)\n** market trends\n\
+        ** technology trends (e.g. blockchain, microservices)\n** methodology trends\
+        \ (e.g. agile)\n** (potential) impact of further stakeholder concerns and\
+        \ mandated design decisions\n\nSoftware architects are able to describe how\
+        \ those factors can influence design decisions and can elaborate on the consequences\
+        \ of changing influencing factors by providing examples for some of them (R2).\n\
+        \n"
+    - name: Design and Implement Cross-Cutting Concepts (R1)
+      id: 2-04
+      description: |2+
+
+
+        Software architects are able to:
+
+        * explain the significance of such cross-cutting concepts
+        * decide on and design cross-cutting concepts, for example persistence, communication, GUI, error handling, concurrency, energy efficiency
+        * identify and assess potential interdependencies between these decisions.
+
+        Software architects know that such cross-cutting concepts may be re-used throughout the system.
+
+    - name: Describe, Explain and Appropriately Apply Important Solution Patterns
+        (R1, R3)
+      id: 2-05
+      description: |2+
+
+
+
+        Software architects know:
+
+        * various architectural patterns and can apply them when appropriate
+        * that patterns are a way to achieve certain qualities for given problems and requirements within given contexts
+        * that various categories of patterns exist (R3)
+        * additional sources for patterns related to their specific technical or application domain (R3)
+
+
+        Software architects can explain and provide examples for the following patterns (R1):
+
+        * _layers_:
+        ** abstraction layers hide details, example: ISO/OSI network layers, or "hardware abstraction layer". See https://en.wikipedia.org/wiki/Hardware_abstraction
+        ** another interpretation are Layers to (physically) separate functionality or responsibility, see https://en.wikipedia.org/wiki/Multitier_architecture
+
+        * _pipes and filters_: representative for data flow patterns, breaking down stepwise processing into a series of processing-activities ("Filters") and associated data transport/buffering capabilities ("Pipes").
+        * _microservices_ split applications into separate executables that communicate via a network
+        * _dependency injection_ as a possible solution for the Dependency-Inversion-Principle <<newman>>
+
+
+        Software architects can explain several of the following patterns, explain their relevance for concrete systems, and provide examples. (R3)
+
+        * _blackboard_: handle problems that cannot be solved by deterministic algorithms but require diverse knowledge
+        * _broker_:  responsible for coordinating communication between provider(s) and consumer(s), applied in distributed systems. Responsible for forwarding requests and/or transmitting results and exceptions
+        * _combinator_ (synonym: closure of operations), for domain object of type T, look for operations with both input and output type T. See <<yorgey>>
+        * _CQRS_ (Command-Query-Responsibility-Segregation): separates read from write concerns in information systems. Requires some context on database-/persistence technology to understand the different properties and requirements of "read" versus "write" operations
+        * _event sourcing_:  handle operations on data by a sequence of events, each of which is recorded in an append-only store
+        * _interpreter_: represent domain object or DSL as syntax, provide function implementing a semantic interpretation of domain object separately from domain object itself
+        * integration and messaging patterns (e.g. from <<hohpe>>)
+        * the MVC (Model View Controller), MVVM (Model View ViewModel), MVU (Model View Update), PAC (Presentation Abstraction Control) family of patterns, separating external representation (view) from data, services and their coordination
+        * interfacing patterns like Adapter, Facade, Proxy. Such patterns help in integration of subsystems and/or simplification of dependencies. Architects should know that these patterns can be used independent of (object) technology
+        ** _adapter_: decouple consumer and provider - where the interface of the provider does not exactly match that of the consumer. The Adapter decouples one party from interface-changes in the other
+        ** _facade_: simplifies usage of a provider for consumer(s) by providing simplified access
+        ** _proxy_: an intermediate between consumer and provider, enabling temporal decoupling, caching of results, controlling access to the provider etc.
+        * _observer_: An interested object (observer) registers with another
+          object (the subject) so that the subject notifies the observer upon changes.
+        * _plug-in_: extend the behaviour of a component
+        * _ports & adapters_ (syn. Onion-Architecture, Hexagonal-Architecture, Clean-Architecture): concentrate domain logic in the center of the system, have connections to the outside world (database, UI) at the edges, dependencies only outside-in, never inside-out <<lange21>> <<martin17>>
+        * _remote procedure call_: make a function or algorithm execute in a different address space
+        * _SOA_ (Service-Oriented Architecture): an approach to provide abstract services rather than concrete implementations to users of the system to promote reuse of services across departments and between companies
+        * _template and strategy_: make specific algorithms flexible by encapsulating them
+        * _visitor_: separate data-structure traversal from specific processing
+
+        Software architects know essential sources for architectural patterns, such as POSA (e.g. <<buschmanna>>) and PoEAA (<<fowler>>) (for information systems) (R3).
+
+    - name: Explain and Use Design Principles (R1-R3)
+      id: 2-06
+      description: |2
+
+
+        Software architects are able to explain what design principles are.
+        They can outline their general objectives and applications with regard to software architecture. (R2)
+
+        Software architects are able to:
+
+        * explain the design principles listed below and can illustrate them with examples
+        * explain how those principles are to be applied
+        * explain how the requirements determine which principles should be applied
+        * explain the impact of design principles on the implementation
+        * analyze source code and architecture designs to evaluate whether these design principles have been applied or should be applied
+
+        **Abstraction** (R1)
+
+        * in the sense of a means for deriving useful generalizations
+        * as a design technique, where building blocks are dependent on the abstractions rather than depending on implementations
+        * interfaces as abstractions
+
+        **Modularization** (R1-R3)
+
+        * information hiding and encapsulation (R1)
+        * separation of concerns - SoC (R1)
+        * loose, but functionally sufficient, coupling (R1) of building blocks, see <<LG-2-7, LG 2-7>>
+        * high cohesion (R1)
+        * SOLID principles (R1-R3), which have, to a certain extent, relevance at the architectural level
+        ** S: Single responsibility principle (R1) and its relation to SoC
+        ** O: Open/closed principle (R1)
+        ** L: Liskov substitution principle (R3) as a way to achieve consistency and conceptual integrity in OO design
+        ** I: Interface segregation principle (R2), including its relation to <<LG-2-9, LG 2-9>>
+        ** D: Dependency inversion principle (R1) by means of interfaces or similar abstractions
+
+        **Conceptual integrity** (R2)
+
+        * meaning uniformity (homogeneity, consistency) of solutions for similar problems (R2)
+        * as a means to achieve the principle of least surprise (R3)
+
+        **Simplicity** (R1-R2)
+
+        * as a means to reduce complexity (R1)
+        * as the driving factor behind KISS (R3) and YAGNI (R3)
+
+        **Expect errors** (R1-R2)
+
+        * as a means to design for robust and resilient systems (R1)
+        * as a generalization of the robustness principle (_Postel's law_) (R2)
+
+        **Other principles** (R3)
+
+        Software architects know other principles (such as CUPID, see <<nygard-cupid>>), and can apply them.
+    - name: Manage Dependencies between Building Blocks (R1)
+      id: 2-07
+      description: |2+
+
+
+        Software architects understand dependencies and coupling between building blocks and can use them in a targeted manner. They:
+
+        * know and understand different types of dependencies of building blocks (e.g. coupling via use/delegation, messaging/events, composition, creation, inheritance, temporal coupling, coupling via data, data types or hardware)
+        * understand how dependencies increase coupling
+        * can use such types of coupling in a targeted manner and can assess the consequences of such dependencies
+        * know and can apply possibilities to reduce or eliminate coupling, for example:
+        ** patterns (see <<LG-2-5, LG 2-5>>)
+        ** fundamental design principles (see <<LG-2-6, LG 2-6>>)
+        ** externalization of dependencies, i.e. defining concrete dependencies at installation- or runtime, for example by using _Dependency Injection_.
+
+    - name: Achieve Quality Requirements with Appropriate Approaches and Techniques
+        (R1)
+      id: 2-08
+      description: |2+
+
+
+
+        Software architects understand and consider the considerable influence of quality requirements in architecture and design decisions, e.g. for:
+
+        * efficiency, runtime performance
+        * availability
+        * maintainability, modifiability, extensibility, adaptability
+        * energy efficiency
+
+        They can:
+
+        * explain and apply solution options, _Architectural Tactics_, suitable practices as well as technical possibilities to achieve important quality requirements of software systems (different for embedded systems or information systems)
+        * identify and communicate possible trade-offs between such solutions and their associated risks
+
+
+    - name: Design and Define Interfaces (R1-R3)
+      id: 2-09
+      description: "\n\nSoftware architects know about the importance of interfaces.\
+        \ They are able to design or specify interfaces between architectural building\
+        \ blocks as well as external interfaces between the system and elements outside\
+        \ of the system.\n\nThey know: \n\n* desired characteristics of interfaces\
+        \ and can use them in the design:\n** easy to learn, easy to use, easy to\
+        \ extend\n** hard to misuse\n** functionally complete from the perspective\
+        \ of users or building blocks using them.\n* the necessity to treat internal\
+        \ and external interfaces differently\n* different approaches for implementing\
+        \ interfaces (R3):\n** resource oriented approach (REST, Representational\
+        \ State Transfer)\n** service oriented approach (see WS-*/SOAP-based web services.\n\
+        \n"
+    - name: Know Fundamental Principles of Software Deployment (R3)
+      id: 2-10
+      description: |2+
+
+
+
+        Software architects:
+
+        * know that software deployment is the process of making new or updated software available to its users
+        * are able to name and explain fundamental concepts of software deployment, for example:
+        ** automated deployments
+        ** repeatable builds
+        ** consistent environments (e.g. use immutable and disposable infrastructure)
+        ** put everything under version-control
+        ** releases are easy-to-undo
+
+
+  documentation:
+    name: documentation
+    id: documentation
+    description: Documentation
+    facets:
+    - name: Explain and Consider the Requirements of Technical Documentation (R1)
+      id: 3-01
+      description: |2+
+
+        Software architects know the requirements of technical documentation and can consider and fulfil them when documenting systems:
+
+        * understandability, correctness, efficiency, appropriateness, maintainability
+        * form, content, and level of detail tailored to the stakeholders
+
+        They know that only the target audiences can assess the understandability of technical documentation.
+
+    - name: Describe and Communicate Software Architectures (R1-R3)
+      id: 3-02
+      description: |2+
+
+
+        Software architects use documentation to support the design, implementation and further development (also called _maintenance_ or _evolution_) of systems (R2)
+
+        Software architects are able to (R1):
+
+        * document and communicate architectures for corresponding stakeholders, thereby addressing different target groups, e.g. management, development teams, QA, other software architects, and possibly additional stakeholders
+        * consolidate and harmonise the style and content of contributions from different groups of authors
+        * develop and implement measures to support the convergence of written and verbal communication, and balance one against the other appropriately
+
+        Software architects know (R1):
+
+        * the benefits of template-based documentation
+        * that various properties of documentation depend on specific properties of the system, its requirements, risks, development process, organization or other factors.
+
+        For example, software architects can adjust the following documentation characteristics according to the situation (R3):
+
+        * the amount and level of detail of documentation needed
+        * the documentation format
+        * the accessibility of the documentation
+        * formality of documentation (e.g. diagrams compliant to a meta model or simple drawings)
+        * formal reviews and sign-off processes for documentation
+
+
+    - name: Explain and Apply Notations/Models to Describe Software Architecture (R2-R3)
+      id: 3-03
+      description: |2+
+
+
+        Software architects know at least the following UML (see <<uml>>) diagrams to describe architectural views:
+
+        * class, package, component (all R2) and composite-structure diagrams (R3)
+        * deployment diagrams (R2)
+        * sequence and activity diagrams (R2)
+        * state machine diagrams (R3)
+
+        Software architects know alternative notations to UML diagrams, for example: (R3)
+
+        * Archimate, see <<archimate>>
+        * for runtime views for example flow charts, numbered lists or business-process-modeling-notation (BPMN).
+
+    - name: Explain and Use Architectural Views (R1)
+      id: 3-04
+      description: "\nSoftware architects are able to use the following architectural\
+        \ views:\n\n* context view \n* building block or component view (composition\
+        \ of software building blocks) \n* runtime view (dynamic view, interaction\
+        \ between software building blocks at runtime, state machines) \n* deployment\
+        \ view (hardware and technical infrastructure as well as the mapping of software\
+        \ building blocks onto the infrastructure)\n\n"
+    - name: Explain and Apply Context View of Systems (R1)
+      id: 3-05
+      description: |2+
+
+        Software architects are able to:
+
+        * depict the context of systems, e.g. in the form of context diagrams with explanations
+        * represent external interfaces of systems in the context view
+        * differentiate business and technical context.
+
+    - name: Document and Communicate Cross-Cutting Concepts (R2)
+      id: 3-06
+      description: |2+
+
+
+        Software architects are able to adequately document and communicate typical cross-cutting concepts (synonym: _principles_, _aspects_), e. g., persistence, workflow management, UI, deployment/integration, logging.
+
+    - name: Describe Interfaces (R1)
+      id: 3-07
+      description: |2+
+
+
+        Software architects are able to describe and specify both internal and external interfaces.
+
+    - name: Explain and Document Architectural Decisions (R1-R2)
+      id: 3-08
+      description: |2+
+
+
+        Software architects are able to:
+
+        * systematically take, justify, communicate, and document architectural decisions
+        * identify, communicate, and document interdependencies between design decisions
+
+        Software architects know about Architecture-Decision-Records (ADR, see <<nygard>>) and can apply these to document decisions (R2).
+
+    - name: Know Additional Resources and Tools for Documentation (R3)
+      id: 3-09
+      description: |2+
+
+
+        Software architects know:
+
+        * basics of several published frameworks for the description of software architectures, for example:
+        ** ISO/IEEE-42010 (formerly 1471), see <<iso42010>>
+        ** arc42, see <<arc42>>
+        ** C4, see <<brownc4>>
+        ** FMC, see <<fmc>>
+        * ideas and examples of checklists for the creation, documentation, and testing of software architectures
+        * possible tools for creating and maintaining architectural documentation
+
+  examples:
+    name: examples
+    id: examples
+    description: Examples
+    facets:
+    - name: Know the Relation between Requirements, Constraints, and Solutions (R3)
+      id: 5-01
+      description: |2+
+
+        Software architects are expected to recognize and comprehend the correlation between requirements and constraints, and the chosen solutions using at least one example.
+
+    - name: Know the Rationale of a Solution's Technical Implementation (R3)
+      id: 5-02
+      description: |2+
+
+        Software architects understand the technical realization (implementation, technical concepts, products used, architectural decisions, solution strategies) of at least one solution.
+
+  quality:
+    name: quality
+    id: quality
+    description: Quality
+    facets:
+    - name: Discuss Quality Models and Quality Characteristics (R1)
+      id: 4-01
+      description: |2+
+
+
+        Software architects can explain:
+
+        * the concept of quality and quality characteristics  (based on e.g. <<iso25010>> or <<bass>>)
+        * generic quality models (such as <<iso25010>>, <<bass>>, or <<q42>>)
+        * correlations and trade-offs of quality characteristics, for example:
+        ** configurability versus reliability
+        ** memory requirements versus performance efficiency
+        ** security versus usability
+        ** runtime flexibility versus maintainability.
+
+    - name: Clarify Quality Requirements for Software Architectures (R1)
+      id: 4-02
+      description: |2+
+
+
+        Software architects can:
+
+        * clarify and formulate specific quality requirements for the software to be developed and its architectures, for example in the form of scenarios and quality trees
+        * explain and apply scenarios and quality trees.
+
+    - name: Qualitative Analysis of Software Architectures (R2-R3)
+      id: 4-03
+      description: |2+
+
+        Software architects:
+
+        * know methodical approaches for the qualitative analysis of software architectures (R2), for example, as specified by ATAM (R3);
+        * can qualitatively analyze smaller systems (R2)
+        * know that the following sources of information can help in the qualitative analysis of architectures (R2):
+        ** quality requirements, e.g. in the form of quality trees and scenarios
+        ** architecture documentation
+        ** architecture and design models
+        ** source code
+        ** metrics
+        ** other documentation of the system, such as requirements, operational or test documentation.
+
+    - name: Quantitative Evaluation of Software Architectures (R2)
+      id: 4-04
+      description: |2+
+
+
+        Software architects know approaches for the quantitative analysis and evaluation (measurement) of software.
+
+        They know that:
+
+        * quantitative evaluation can help to identify critical parts within systems
+        * further information can be helpful for the evaluation of architectures, for example:
+        ** requirements and architecture documentation
+        ** source code and related metrics such as lines of code, (cyclomatic) complexity, inbound and outbound dependencies
+        ** known errors in source code, especially error clusters
+        ** test cases and test results.
+        * the use of a metric as a target can lead to its invalidation (R2), as described, e.g., by Goodhart's law (R3).
+
+competence_levels:
+- name: Need to Learn
+  color_code: '#FF0000'
+  level: 1
+- name: Need to Lookup
+  color_code: '#0000FF'
+  level: 2
+- name: Already Known
+  color_code: '#008000'
+  level: 3
+element_names:
+  tree: Syllabus
+  aspect: Chapter
+  facet: Learning Goal
+  level: Self Assessment

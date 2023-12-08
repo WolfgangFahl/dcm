@@ -5,14 +5,15 @@ Created on 2023-06-11
 """
 import json
 import os
-from dataclasses import dataclass, field
+import yaml
+from dataclasses import asdict, dataclass, field
 from json.decoder import JSONDecodeError
 from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import quote_plus
 
 import markdown2
-import yaml
 from dataclasses_json import dataclass_json
+from ngwidgets.yaml import Yaml
 
 from dcm.svg import SVG, SVGConfig, SVGNodeConfig
 
@@ -136,6 +137,8 @@ class CompetenceTree(CompetenceElement):
     element_names: Dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self):
+        # prepare yaml dumping
+        self.yaml=Yaml()
         for aspect_id, aspect in self.competence_aspects.items():
             if aspect.id is None:
                 aspect.id = aspect_id
@@ -167,6 +170,13 @@ class CompetenceTree(CompetenceElement):
         none_free_dict = remove_none_values(json_dict)
         null_free_json_str = json.dumps(none_free_dict, indent=2)
         return null_free_json_str
+
+    def to_yaml(self):
+        """
+        Converts the CompetenceTree object to a YAML string.
+        """
+        yaml_str=self.yaml.to_yaml(self)
+        return yaml_str
 
     def add_legend(self, svg: SVG) -> None:
         """
@@ -272,7 +282,7 @@ class DynamicCompetenceMap:
         constructor
         """
         self.competence_tree = competence_tree
-        self.svg=None
+        self.svg = None
 
     def lookup(
         self, aspect_id: str = None, facet_id: str = None
@@ -485,7 +495,7 @@ class DynamicCompetenceMap:
         competence_aspects = competence_tree.competence_aspects
         # Instantiate the SVG class
         svg = SVG(config)
-        self.svg=svg
+        self.svg = svg
         # use default config incase config was None
         config = svg.config
 
