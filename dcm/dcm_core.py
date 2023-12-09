@@ -419,7 +419,7 @@ class DynamicCompetenceMap:
             dcm = cls.from_definition_string(
                 name, definition_string, content_class, markup=markup
             )
-            examples[name] = dcm
+            examples[dcm.competence_tree.id] = dcm
         return examples
 
     @classmethod
