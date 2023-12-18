@@ -59,6 +59,21 @@ class TestDynamicCompetenceMap(Basetest):
     #   """
     #  student_examples=DynamicCompetenceMap.get_examples(content_class=Student)
         
+    def test_convert_to_yaml(self):
+        """
+        test json to yaml conversion
+        """
+        for markup in ["json"]:
+            json_definitions = DynamicCompetenceMap.get_examples(CompetenceTree, markup)
+        for def_id,definition in json_definitions.items():
+            ct=definition.competence_tree
+            yaml_str=ct.to_yaml()
+            debug=True
+            if debug:
+                print(yaml_str)
+            pass    
+
+
     def testCompetenceMap(self):
         """
         test the competence map

@@ -1,0 +1,9 @@
+# Components
+# WF 2023-12-18
+version=0.0.1
+components:
+- name: dcm_core.py
+  source: /dcm/dcm_core.py
+  issue: 10
+  demo_url: http://dcm.bitplan.com/
+  demo_image_url: https://github.com/WolfgangFahl/dcm/assets/1336221/c606201d-7a96-465e-829c-b00b901078da

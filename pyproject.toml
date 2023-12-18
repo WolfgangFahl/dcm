@@ -5,7 +5,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dynamic_competence_map"
-description = "dcm: visualization of dynamic competence map"
+description = "dcm: nicegui based visualization of dynamic competence map"
+keywords = [ "nicegui", "skills", "competence"]
 home-page = "https://github.com/WolfgangFahl/dcm"
 authors = [
   {name = "Wolfgang Fahl", email = "wf@WolfgangFahl.com"}
@@ -17,7 +18,7 @@ readme = "README.md"
 license = {text = "Apache-2.0"} 
 dependencies = [
 	# https://github.com/WolfgangFahl/nicegui_widgets
-	"ngwidgets>=0.5.7",
+	"ngwidgets>=0.6.3",
 	# https://pypi.org/project/dataclasses-json/
 	"dataclasses-json>=0.6.1",
 	# https://github.com/trentm/python-markdown2
