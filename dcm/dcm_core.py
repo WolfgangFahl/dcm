@@ -13,7 +13,7 @@ from urllib.parse import quote_plus
 
 import markdown2
 from dataclasses_json import dataclass_json
-from ngwidgets.yaml import Yaml
+from ngwidgets.yamlable import YamlAble
 
 from dcm.svg import SVG, SVGConfig, SVGNodeConfig
 
@@ -121,7 +121,7 @@ class CompetenceLevel(CompetenceElement):
 
 @dataclass_json
 @dataclass
-class CompetenceTree(CompetenceElement):
+class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
     """
     Represents the entire structure of competencies, including various aspects and levels.
 
@@ -138,7 +138,6 @@ class CompetenceTree(CompetenceElement):
 
     def __post_init__(self):
         # prepare yaml dumping
-        self.yaml=Yaml()
         for aspect_id, aspect in self.competence_aspects.items():
             if aspect.id is None:
                 aspect.id = aspect_id
@@ -170,13 +169,6 @@ class CompetenceTree(CompetenceElement):
         none_free_dict = remove_none_values(json_dict)
         null_free_json_str = json.dumps(none_free_dict, indent=2)
         return null_free_json_str
-
-    def to_yaml(self):
-        """
-        Converts the CompetenceTree object to a YAML string.
-        """
-        yaml_str=self.yaml.to_yaml(self)
-        return yaml_str
 
     def add_legend(self, svg: SVG) -> None:
         """
