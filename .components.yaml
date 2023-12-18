@@ -1,6 +1,6 @@
 # Components
 # WF 2023-12-18
-version=0.0.1
+version: 0.0.1
 components:
 - name: dcm_core.py
   source: /dcm/dcm_core.py
