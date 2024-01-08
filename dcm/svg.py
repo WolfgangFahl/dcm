@@ -375,7 +375,7 @@ class SVG:
         }
         
         function closePopup() {
-            var popup = document.getElementById('popup');
+            var popup = document.getElementById('dcm-svg-popup');
             popup.setAttribute('visibility', 'hidden');
         }
     </script>
