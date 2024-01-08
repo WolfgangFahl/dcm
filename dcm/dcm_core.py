@@ -9,7 +9,7 @@ import yaml
 from dataclasses import asdict, dataclass, field
 from json.decoder import JSONDecodeError
 from typing import Dict, List, Optional, Tuple, Union
-from urllib.parse import quote_plus
+from urllib.parse import quote
 
 import markdown2
 from dataclasses_json import dataclass_json
@@ -525,7 +525,7 @@ class DynamicCompetenceMap:
             aspect_url = (
                 aspect.url
                 if aspect.url
-                else f"{lookup_url}/description/{quote_plus(competence_tree.id)}/{quote_plus(aspect_code)}"
+                else f"{lookup_url}/description/{quote(competence_tree.id)}/{quote(aspect_code)}"
                 if lookup_url is not None
                 else None
             )
@@ -560,7 +560,7 @@ class DynamicCompetenceMap:
                 facet_url = (
                     facet.url
                     if facet.url
-                    else f"{lookup_url}/description/{quote_plus(competence_tree.id)}/{quote_plus(aspect_code)}/{quote_plus(str(facet.id))}"
+                    else f"{lookup_url}/description/{quote(competence_tree.id)}/{quote(aspect_code)}/{quote(str(facet.id))}"
                     if lookup_url is not None
                     else None
                 )
