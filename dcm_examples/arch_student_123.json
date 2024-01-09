@@ -3,24 +3,28 @@
   "achievements": {
     "DandP": [
       {
+        "tree_id": "architecture",
         "facet_id": "ArchDesign",
         "level": 2,
         "score": 75.0,
         "date_assessed": "2023-06-15"
       },
       {
+        "tree_id": "architecture",
         "facet_id": "UrbanPlanning",
         "level": 1,
         "score": 60.0,
         "date_assessed": "2023-06-12"
       },
       {
+        "tree_id": "architecture",
         "facet_id": "BuildCodes",
         "level": 1,
         "score": 50.0,
         "date_assessed": "2023-06-10"
       },
       {
+        "tree_id": "architecture",
         "facet_id": "SustainDesign",
         "level": 2,
         "score": 80.0,
@@ -29,12 +33,14 @@
     ],
     "TandC": [
       {
+        "tree_id": "architecture",
         "facet_id": "StructEng",
         "level": 1,
         "score": 65.0,
         "date_assessed": "2023-06-11"
       },
       {
+        "tree_id": "architecture",
         "facet_id": "BuildTech",
         "level": 2,
         "score": 70.0,
@@ -43,12 +49,14 @@
     ],
     "PMandA": [
       {
+        "tree_id": "architecture",
         "facet_id": "ProjMan",
         "level": 1,
         "score": 55.0,
         "date_assessed": null
       },
       {
+        "tree_id": "architecture",
         "facet_id": "CostEst",
         "level": 1,
         "score": 50.0,
@@ -57,12 +65,14 @@
     ],
     "PCandC": [
       {
+        "tree_id": "architecture",
         "facet_id": "InterpSkills",
         "level": 2,
         "score": 85.0,
         "date_assessed": "2023-06-20"
       },
       {
+        "tree_id": "architecture",
         "facet_id": "TeamCollab",
         "level": 1,
         "score": 70.0,

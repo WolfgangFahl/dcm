@@ -5,13 +5,13 @@ Created on 2023-06-11
 """
 import json
 import os
-import yaml
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from json.decoder import JSONDecodeError
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 import markdown2
+import yaml
 from dataclasses_json import dataclass_json
 from ngwidgets.yamlable import YamlAble
 
@@ -229,13 +229,14 @@ class Achievement:
     Class representing an individual's achievement level for a specific competence facet.
 
     Attributes:
+        tree_id(str): Identifier for the competence tree
         facet_id (str): Identifier for the competence facet.
         level (int): The achieved level for this facet.
         percent(float): how well was the achievement reached?
         evidence (Optional[str]): Optional evidence supporting the achievement.
         date_assessed (Optional[str]): Optional date when the achievement was assessed (ISO-Format).
     """
-
+    tree_id: str
     facet_id: str
     level: int
     score: float
@@ -244,8 +245,8 @@ class Achievement:
     date_assessed: Optional[str] = None
 
 
-@dataclass
 @dataclass_json
+@dataclass
 class Student:
     """
     A student with achievements.
@@ -254,15 +255,18 @@ class Student:
         achievements (Dict[str, List[Achievement]]): A dictionary where each key is a competence tree identifier
                                                      and the value is a list of Achievement instances for that tree.
     """
-
     student_id: str
-    achievements: Dict[str, List[Achievement]]
+    achievements: Optional[Dict[str, List[Achievement]]] = field(default=None)
 
     @classmethod
     def required_keys(cls):
         keys = {"achievements"}
         return keys
-
+    
+    @property
+    def main_id(self):
+        main_id=self.student_id
+        return main_id
 
 class DynamicCompetenceMap:
     """
@@ -275,6 +279,11 @@ class DynamicCompetenceMap:
         """
         self.competence_tree = competence_tree
         self.svg = None
+        
+    @property
+    def main_id(self):
+        main_id=self.competence_tree.id
+        return main_id
 
     def lookup(
         self, aspect_id: str = None, facet_id: str = None
@@ -408,18 +417,20 @@ class DynamicCompetenceMap:
         for name, definition_string in cls.get_example_dcm_definitions(
             required_keys=content_class.required_keys(), markup=markup
         ).items():
-            dcm = cls.from_definition_string(
+            example = cls.from_definition_string(
                 name, definition_string, content_class, markup=markup
             )
-            examples[dcm.competence_tree.id] = dcm
+            # check the type of the example
+            example_id=example.main_id
+            examples[example_id] = example
         return examples
 
     @classmethod
     def from_definition_string(
         cls, name: str, definition_string: str, content_class, markup: str = "json"
-    ) -> "DynamicCompetenceMap":
+    ) -> Any:
         """
-        Load a DynamicCompetenceMap instance from a definition string (either JSON or YAML).
+        Load a DynamicCompetenceMap or Student instance from a definition string (either JSON or YAML).
 
         Args:
             name (str): A name identifier for the data source.
@@ -436,7 +447,10 @@ class DynamicCompetenceMap:
         try:
             data = cls.parse_markup(definition_string, markup)
             content = content_class.from_dict(data)
-            return DynamicCompetenceMap(content)
+            if isinstance(content,CompetenceTree):
+                return DynamicCompetenceMap(content)
+            else:
+                return content
         except Exception as ex:
             cls.handle_markup_issue(name, definition_string, ex, markup)
 

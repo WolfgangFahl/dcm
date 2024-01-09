@@ -4,6 +4,7 @@ Created on 2023-11-06
 @author: wf
 """
 import os
+from typing import Optional
 from urllib.parse import urlparse
 
 from fastapi import HTTPException
@@ -15,10 +16,8 @@ from nicegui import Client, app, ui
 from pydantic import BaseModel
 
 from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap
-from dcm.svg import SVGConfig, SVG
+from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
-
-from typing import Optional
 
 
 class SVGRenderRequest(BaseModel):
@@ -59,7 +58,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         InputWebserver.__init__(
             self, config=DynamicCompentenceMapWebServer.get_config()
         )
-        self.examples = DynamicCompetenceMap.get_examples(markup='yaml')
+        self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -69,30 +68,35 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             return await self.render_svg(svg_render_request)
 
         @app.get("/description/{example_name}/{aspect_id}/{facet_id}")
-        async def get_description_for_facet(example_name: str, aspect_id: str = None, facet_id: str = None) -> HTMLResponse:
+        async def get_description_for_facet(
+            example_name: str, aspect_id: str = None, facet_id: str = None
+        ) -> HTMLResponse:
             """
             Endpoints to get the description of a competence element (competence tree, aspect, or facet).
-        
+
             Args:
                 example_name (str): Name of the example.
                 aspect_id (str, optional): ID of the aspect. Defaults to None.
                 facet_id (str, optional): ID of the facet. Defaults to None.
-        
+
             Returns:
                 HTMLResponse: HTML content of the description.
             """
             return await self.show_description(example_name, aspect_id, facet_id)
 
         @app.get("/description/{example_name}/{aspect_id}")
-        async def get_description_with_aspect(example_name: str, aspect_id: str) -> HTMLResponse:
+        async def get_description_with_aspect(
+            example_name: str, aspect_id: str
+        ) -> HTMLResponse:
             return await self.show_description(example_name, aspect_id)
 
         @app.get("/description/{example_name}")
         async def get_tree_description_with_example(example_name: str) -> HTMLResponse:
             return await self.show_description(example_name)
 
-
-    async def show_description(self, example_name: str, aspect_id: str=None, facet_id: str=None) -> HTMLResponse:
+    async def show_description(
+        self, example_name: str, aspect_id: str = None, facet_id: str = None
+    ) -> HTMLResponse:
         """
         Show the HTML description of a specific facet of a competence aspect from an example.
 
@@ -108,18 +112,20 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             HTTPException: If the example name provided does not exist in the examples collection.
         """
         if example_name in self.examples:
-            example=self.examples[example_name]
+            example = self.examples[example_name]
             element = example.lookup(aspect_id, facet_id)
             if element:
                 content = element.as_html()
                 return HTMLResponse(content=content)
             else:
-                content = f"No element found for {aspect_id}/{facet_id} in {example_name}"
+                content = (
+                    f"No element found for {aspect_id}/{facet_id} in {example_name}"
+                )
                 return HTMLResponse(content=content, status_code=404)
         else:
-            msg=f"unknown example {example_name}"
+            msg = f"unknown example {example_name}"
             raise HTTPException(status_code=404, detail=msg)
-     
+
     async def render_svg(self, svg_render_request: SVGRenderRequest) -> HTMLResponse:
         """
         render the given request
@@ -128,7 +134,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         dcm = DynamicCompetenceMap.from_definition_string(
             r.name, r.definition, content_class=CompetenceTree, markup=r.markup
         )
-        svg_markup = dcm.generate_svg_markup(config=r.config,with_java_script=True)       
+        svg_markup = dcm.generate_svg_markup(config=r.config, with_java_script=True)
         response = HTMLResponse(content=svg_markup)
         return response
 
@@ -168,7 +174,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """Generates the home page with a selection of examples and
         svg display
         """
-        svg=SVG()
+        svg = SVG()
         java_script = svg.get_java_script()
 
         # Add the script using ui.add_head_html()
