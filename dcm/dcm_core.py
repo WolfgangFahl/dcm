@@ -247,15 +247,16 @@ class Achievement:
 
 @dataclass_json
 @dataclass
-class Student:
+class Learner:
     """
-    A student with achievements.
+    A learner with achievements.
     Attributes:
-        student_id (str): Identifier for the student.
-        achievements (Dict[str, List[Achievement]]): A dictionary where each key is a competence tree identifier
-                                                     and the value is a list of Achievement instances for that tree.
+        learner_id (str): Identifier for the learner.
+        achievements (Dict[str, List[Achievement]]): 
+            A dictionary where each key is a competence element identifier
+            and the value is a list of Achievement instances for that tree.
     """
-    student_id: str
+    learner_id: str
     achievements: Optional[Dict[str, List[Achievement]]] = field(default=None)
 
     @classmethod
@@ -265,7 +266,7 @@ class Student:
     
     @property
     def main_id(self):
-        main_id=self.student_id
+        main_id=self.learner_id
         return main_id
 
 class DynamicCompetenceMap:
@@ -430,7 +431,7 @@ class DynamicCompetenceMap:
         cls, name: str, definition_string: str, content_class, markup: str = "json"
     ) -> Any:
         """
-        Load a DynamicCompetenceMap or Student instance from a definition string (either JSON or YAML).
+        Load a DynamicCompetenceMap or Learner instance from a definition string (either JSON or YAML).
 
         Args:
             name (str): A name identifier for the data source.

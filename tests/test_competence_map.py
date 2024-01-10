@@ -6,7 +6,7 @@ Created on 2023-11-06
 from ngwidgets.basetest import Basetest
 
 from dcm.dcm_core import (CompetenceAspect, CompetenceElement, CompetenceFacet,
-                          CompetenceTree, DynamicCompetenceMap, Student)
+                          CompetenceTree, DynamicCompetenceMap, Learner)
 from dcm.svg import SVGConfig
 from tests.markup_check import MarkupCheck
 
@@ -58,15 +58,15 @@ class TestDynamicCompetenceMap(Basetest):
         self.assertIn("Kompetenzanforderungen:", html)
         self.assertIn("<li>Freude", html)
 
-    def test_student_examples(self):
+    def test_learner_examples(self):
         """
-        test the student markup handling
+        test the Learner markup handling
         """
-        _student=Student(student_id="test_id")
-        student_examples = DynamicCompetenceMap.get_examples(content_class=Student)
+        _learner=Learner(learner_id="test_id")
+        student_examples = DynamicCompetenceMap.get_examples(content_class=Learner)
         self.assertEqual(1,len(student_examples))
         for student_example in student_examples.values():
-            self.assertTrue(isinstance(student_example,Student))
+            self.assertTrue(isinstance(student_example,Learner))
         pass
 
     def test_convert_to_yaml(self):
