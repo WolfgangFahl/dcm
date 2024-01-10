@@ -11,13 +11,18 @@ defined competence aspects.
 [![GitHub issues](https://img.shields.io/github/issues-closed/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues/?q=is%3Aissue+is%3Aclosed)
 [![GitHub](https://img.shields.io/github/license/WolfgangFahl/dcm)](https://www.apache.org/licenses/LICENSE-2.0)
 
-### Demo
+## Demo
 * [demo](http://dcm.bitplan.com)
 
-### Documentation
+## Documentation
 * [Wiki](http://wiki.bitplan.com/index.php/dcm)
 
+## API
+* [API documentation](http://dcm.bitplan.com/docs)
 
-### Authors
+### Model
+![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/WolfgangFahl/dcm/main/dcm.puml)
+
+## Authors
 * [Wolfgang Fahl](http://www.bitplan.com/Wolfgang_Fahl)
 
