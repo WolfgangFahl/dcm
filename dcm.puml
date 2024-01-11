@@ -33,6 +33,7 @@ class dcm.dcm_core.CompetenceFacet {
 }
 class dcm.dcm_core.CompetenceLevel {
   level: int
+  icon: str
 }
 class dcm.dcm_core.CompetenceTree {
   lookup_url: Optional[str]

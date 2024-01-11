@@ -8,8 +8,12 @@ import os
 
 from ngwidgets.basetest import Basetest
 
-from dcm.dcm_core import (CompetenceAspect, CompetenceElement, CompetenceFacet,
-                          CompetenceTree)
+from dcm.dcm_core import (
+    CompetenceAspect,
+    CompetenceElement,
+    CompetenceFacet,
+    CompetenceTree,
+)
 
 
 class TestModule(Basetest):

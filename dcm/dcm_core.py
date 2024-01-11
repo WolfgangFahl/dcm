@@ -114,9 +114,11 @@ class CompetenceLevel(CompetenceElement):
 
     Attributes:
         level (int): level number starting from 1 as the lowest and going up to as many level as defined for the CompetenceTree
+        icon(str): the name of an icon to be shown for this level
     """
 
     level: int = 1
+    icon: Optional[str] = None
 
 
 @dataclass_json
@@ -146,6 +148,54 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
     def required_keys(cls) -> Tuple:
         keys = {"name", "id", "url", "description", "element_names"}
         return keys
+
+    def lookup_by_path(
+        self, path: str, lenient: bool = True
+    ) -> Optional[CompetenceElement]:
+        """
+        Look up and return a competence element (tree,aspect of facet)
+        based on the given path.
+
+        The path is expected to be in the format "tree_id/aspect_id/facet_id".
+        This method parses the path and retrieves the corresponding competence aspect or facet.
+
+        Args:
+            path (str): The path in the format "tree_id/aspect_id/facet_id".
+
+            lenient(bool): if not lenient raise Exceptions for invalid paths and ids
+        Returns:
+            Optional[CompetenceElement]: The competence aspect or facet corresponding to the given path.
+        """
+
+        def handle_error(msg):
+            if not lenient:
+                raise ValueError(msg)
+
+        parts = path.split("/")
+        if len(parts) < 1:
+            return None
+
+        tree_id = parts[0]
+        if tree_id != self.id:
+            handle_error(f"invalid tree_id for lookup {tree_id}")
+            return None
+        if len(parts) == 1:
+            return self
+        if len(parts) > 1:
+            aspect_id = parts[1]
+            # Retrieve the aspect
+            aspect = self.competence_aspects.get(aspect_id, None)
+        if aspect:
+            if len(parts) == 2:
+                return aspect
+            if len(parts) > 2:
+                facet_id = parts[2]
+                # Retrieve the facet within the aspect
+                for facet in aspect.facets:
+                    if facet.id == facet_id:
+                        return facet
+        handle_error(f"invalid path for lookup {path}")
+        return None
 
     def to_pretty_json(self):
         """
@@ -229,20 +279,35 @@ class Achievement:
     Class representing an individual's achievement level for a specific competence facet.
 
     Attributes:
-        tree_id(str): Identifier for the competence tree
-        facet_id (str): Identifier for the competence facet.
+        path (str): The path in the CompetenceTree, used to derive tree_id, aspect_id, and facet_id.
         level (int): The achieved level for this facet.
-        percent(float): how well was the achievement reached?
+        score (float): How well the achievement was reached.
+        score_unit (str): Unit of the score, default is "%".
         evidence (Optional[str]): Optional evidence supporting the achievement.
         date_assessed (Optional[str]): Optional date when the achievement was assessed (ISO-Format).
     """
-    tree_id: str
-    facet_id: str
-    level: int
-    score: float
+
+    path: str
+    level: int = None
+    score: float = None
     score_unit: Optional[str] = "%"
     evidence: Optional[str] = None
-    date_assessed: Optional[str] = None
+    date_assessed_iso: Optional[str] = None
+
+    @property
+    def tree_id(self):
+        parts = self.path.split("/")
+        return parts[0] if parts else None
+
+    @property
+    def aspect_id(self):
+        parts = self.path.split("/")
+        return parts[1] if len(parts) > 1 else None
+
+    @property
+    def facet_id(self):
+        parts = self.path.split("/")
+        return parts[2] if len(parts) > 2 else None
 
 
 @dataclass_json
@@ -252,22 +317,48 @@ class Learner:
     A learner with achievements.
     Attributes:
         learner_id (str): Identifier for the learner.
-        achievements (Dict[str, List[Achievement]]): 
+        achievements (Dict[str, List[Achievement]]):
             A dictionary where each key is a competence element identifier
             and the value is a list of Achievement instances for that tree.
     """
+
     learner_id: str
-    achievements: Optional[Dict[str, List[Achievement]]] = field(default=None)
+    achievements: Optional[List[Achievement]] = field(default=None)
 
     @classmethod
     def required_keys(cls):
         keys = {"achievements"}
         return keys
-    
+
     @property
     def main_id(self):
-        main_id=self.learner_id
+        main_id = self.learner_id
         return main_id
+
+    def get_competence_tree_ids(self) -> List[str]:
+        """
+        Get all unique competence tree IDs of my achievements.
+
+        Returns:
+            List[str]: A list of unique competence tree IDs.
+        """
+        # Assuming that the learner's achievements are stored in a list called self.achievements
+        # You can modify this part according to your actual data structure.
+
+        # Create a set to store unique competence tree IDs
+        unique_tree_ids = set()
+
+        # Iterate through the learner's achievements
+        for achievement in self.achievements:
+            # Assuming each achievement has a tree_id attribute
+            tree_id = achievement.tree_id
+
+            # Add the tree_id to the set
+            unique_tree_ids.add(tree_id)
+
+        # Convert the set to a list and return
+        return list(unique_tree_ids)
+
 
 class DynamicCompetenceMap:
     """
@@ -280,10 +371,10 @@ class DynamicCompetenceMap:
         """
         self.competence_tree = competence_tree
         self.svg = None
-        
+
     @property
     def main_id(self):
-        main_id=self.competence_tree.id
+        main_id = self.competence_tree.id
         return main_id
 
     def lookup(
@@ -422,7 +513,7 @@ class DynamicCompetenceMap:
                 name, definition_string, content_class, markup=markup
             )
             # check the type of the example
-            example_id=example.main_id
+            example_id = example.main_id
             examples[example_id] = example
         return examples
 
@@ -448,7 +539,7 @@ class DynamicCompetenceMap:
         try:
             data = cls.parse_markup(definition_string, markup)
             content = content_class.from_dict(data)
-            if isinstance(content,CompetenceTree):
+            if isinstance(content, CompetenceTree):
                 return DynamicCompetenceMap(content)
             else:
                 return content

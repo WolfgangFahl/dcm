@@ -5,8 +5,15 @@ Created on 2023-11-06
 """
 from ngwidgets.basetest import Basetest
 
-from dcm.dcm_core import (CompetenceAspect, CompetenceElement, CompetenceFacet,
-                          CompetenceTree, DynamicCompetenceMap, Learner)
+from dcm.dcm_core import (
+    Achievement,
+    CompetenceAspect,
+    CompetenceElement,
+    CompetenceFacet,
+    CompetenceTree,
+    DynamicCompetenceMap,
+    Learner,
+)
 from dcm.svg import SVGConfig
 from tests.markup_check import MarkupCheck
 
@@ -62,25 +69,29 @@ class TestDynamicCompetenceMap(Basetest):
         """
         test the Learner markup handling
         """
-        _learner=Learner(learner_id="test_id")
+        _learner = Learner(learner_id="test_id")
         learner_examples = DynamicCompetenceMap.get_examples(content_class=Learner)
-        self.assertEqual(1,len(learner_examples))
+        self.assertEqual(1, len(learner_examples))
         for learner_example in learner_examples.values():
-            self.assertTrue(isinstance(learner_example,Learner))
+            self.assertIsInstance(learner_example, Learner)
+            self.assertTrue(len(learner_example.achievements) > 0)
+            self.assertIsInstance(learner_example.achievements[0], Achievement)
         pass
 
     def test_convert_to_yaml(self):
         """
         test json to yaml conversion
         """
+        debug = self.debug
+        # debug = True
         for markup in ["json"]:
             json_definitions = DynamicCompetenceMap.get_examples(CompetenceTree, markup)
-        for def_id, definition in json_definitions.items():
+        for _def_id, definition in json_definitions.items():
             ct = definition.competence_tree
             yaml_str = ct.to_yaml()
-            debug = True
             if debug:
                 print(yaml_str)
+            self.assertTrue("competence_levels:" in yaml_str)
             pass
 
     def testCompetenceMap(self):

@@ -223,16 +223,19 @@
   "competence_levels": [
     {
       "name": "Need to Learn",
+      "icon": "thumb_down",
       "color_code": "#FF0000",
       "level": 1
     },
     {
       "name": "Need to Lookup",
+      "icon": "question_mark",
       "color_code": "#0000FF",
       "level": 2
     },
     {
       "name": "Already Known",
+      "icon": "thumb_up",
       "color_code": "#008000",
       "level": 3
     }

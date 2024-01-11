@@ -117,21 +117,24 @@ competence_levels:
   url: https://en.wikipedia.org/wiki/Novice
   description: Individuals at this level are just starting and have no or limited
     prior experience in the competence area.
-  color_code: '#A0A0A0'
+  color_code: '#FFA0A0'
+  icon: 'circle'
   level: 1
 - name: Intermediate
   id: Level2
   url: https://en.wikipedia.org/wiki/Skill_level
   description: Individuals have a moderate amount of experience and can perform tasks
     with some guidance.
-  color_code: '#A0A0A0'
+  color_code: '#A0A0FF'
+  icon: 'build_circle'
   level: 2
 - name: Expert
   id: Level3
   url: https://en.wikipedia.org/wiki/Expert
   description: Individuals at this level are highly experienced and can perform tasks
     independently.
-  color_code: '#A0A0A0'
+  color_code: '#A0FFA0'
+  icon: 'star'
   level: 3
 element_names:
   tree: Proficiency Hierarchy

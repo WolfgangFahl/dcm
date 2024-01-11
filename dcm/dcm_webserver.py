@@ -15,7 +15,8 @@ from ngwidgets.webserver import WebserverConfig
 from nicegui import Client, app, ui
 from pydantic import BaseModel
 
-from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap
+from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap, Learner
+from dcm.dcm_sela import SelfAssessment
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
 
@@ -30,6 +31,7 @@ class SVGRenderRequest(BaseModel):
         markup (str): The format of the definition ('json' or 'yaml').
         config (SVGConfig): Optional configuration for SVG rendering. Defaults to None, which uses default settings.
     """
+
     name: str
     definition: str
     markup: str
@@ -161,15 +163,18 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 # Determine the format based on the file extension
                 markup = "json" if input_source.endswith(".json") else "yaml"
                 if "learner_id" in definition:
-                    content_class=Learner
+                    content_class = Learner
                 else:
-                    
-                dcm = DynamicCompetenceMap.from_definition_string(
-                    name, definition, content_class=CompetenceTree, markup=markup
+                    content_class = CompetenceTree
+                item = DynamicCompetenceMap.from_definition_string(
+                    name, definition, content_class=content_class, markup=markup
                 )
-                svg = dcm.generate_svg_markup(with_java_script=False)
-                # Use the new get_java_script method to get the JavaScript
-                self.svg_view.content = svg
+                if isinstance(item, DynamicCompetenceMap):
+                    svg = item.generate_svg_markup(with_java_script=False)
+                    # Use the new get_java_script method to get the JavaScript
+                    self.svg_view.content = svg
+                else:
+                    self.self_assess(item)
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
 
@@ -207,6 +212,23 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 with splitter.after:
                     self.svg_view = ui.html("")
         await self.setup_footer()
+
+    def self_assess(self, learner: Learner):
+        """
+        run a self assessment for the given learner
+        """
+        tree_ids = learner.get_competence_tree_ids()
+        if len(tree_ids) != 1:
+            raise Exception(
+                f"There must be exactly one competence tree referenced but there are: {tree_ids}"
+            )
+        tree_id = tree_ids[0]
+        if not tree_id in self.examples:
+            raise Exception(f"invalid competence tree_id {tree_id}")
+        dcm = self.examples[tree_id]
+        self.sela = SelfAssessment(
+            self, competence_tree=dcm.competence_tree, learner=learner
+        )
 
     def configure_run(self):
         """
