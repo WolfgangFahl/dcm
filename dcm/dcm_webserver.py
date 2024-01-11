@@ -30,7 +30,6 @@ class SVGRenderRequest(BaseModel):
         markup (str): The format of the definition ('json' or 'yaml').
         config (SVGConfig): Optional configuration for SVG rendering. Defaults to None, which uses default settings.
     """
-
     name: str
     definition: str
     markup: str
@@ -47,7 +46,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """
         get the configuration for this Webserver
         """
-        copy_right = "(c)2023 Wolfgang Fahl"
+        copy_right = "(c)2023-2024 Wolfgang Fahl"
         config = WebserverConfig(
             copy_right=copy_right, version=Version(), default_port=8885
         )
@@ -161,6 +160,10 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 definition = self.do_read_input(input_source)
                 # Determine the format based on the file extension
                 markup = "json" if input_source.endswith(".json") else "yaml"
+                if "learner_id" in definition:
+                    content_class=Learner
+                else:
+                    
                 dcm = DynamicCompetenceMap.from_definition_string(
                     name, definition, content_class=CompetenceTree, markup=markup
                 )

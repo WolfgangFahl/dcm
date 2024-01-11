@@ -63,10 +63,10 @@ class TestDynamicCompetenceMap(Basetest):
         test the Learner markup handling
         """
         _learner=Learner(learner_id="test_id")
-        student_examples = DynamicCompetenceMap.get_examples(content_class=Learner)
-        self.assertEqual(1,len(student_examples))
-        for student_example in student_examples.values():
-            self.assertTrue(isinstance(student_example,Learner))
+        learner_examples = DynamicCompetenceMap.get_examples(content_class=Learner)
+        self.assertEqual(1,len(learner_examples))
+        for learner_example in learner_examples.values():
+            self.assertTrue(isinstance(learner_example,Learner))
         pass
 
     def test_convert_to_yaml(self):
