@@ -60,6 +60,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self, config=DynamicCompentenceMapWebServer.get_config()
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
+        self.dcm=None
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -170,7 +171,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                     name, definition, content_class=content_class, markup=markup
                 )
                 if isinstance(item, DynamicCompetenceMap):
-                    svg = item.generate_svg_markup(with_java_script=False)
+                    self.dcm=item
+                    self.sela_button.enable()
+                    svg = self.dcm.generate_svg_markup(with_java_script=False)
                     # Use the new get_java_script method to get the JavaScript
                     self.svg_view.content = svg
                 else:
@@ -202,27 +205,45 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                     self.input_input = ui.input(
                         value=self.input, on_change=self.input_changed
                     ).props("size=100")
-                    self.tool_button(
-                        tooltip="reload", icon="refresh", handler=self.reload_file
-                    )
-                    if self.is_local:
+                    with ui.row() as self.button_row:
                         self.tool_button(
-                            tooltip="open", icon="file_open", handler=self.open_file
+                            tooltip="reload", icon="refresh", handler=self.reload_file
                         )
+                        self.sela_button=self.tool_button(
+                            tooltip="self assessment",icon="query_stats",handler=self.new_self_assess)
+                        self.sela_button.disable()
+                        if self.is_local:
+                            self.tool_button(
+                                tooltip="open", icon="file_open", handler=self.open_file
+                            )
                 with splitter.after:
                     self.svg_view = ui.html("")
         await self.setup_footer()
+        
+    def new_self_assess(self):
+        """
+        run a self assessment for a new learner
+        """
+        learner=Learner(learner_id="?")
+        self.sela = SelfAssessment(
+            self, competence_tree=self.dcm.competence_tree, learner=learner
+        )
 
-    def self_assess(self, learner: Learner):
+    def self_assess(self, learner: Learner,tree_id:str=None):
         """
         run a self assessment for the given learner
+        
+        Args:
+            learner(Learner): the learner to get the self assessment for
+            tree_id(str): the identifier for the competence tree
         """
-        tree_ids = learner.get_competence_tree_ids()
-        if len(tree_ids) != 1:
-            raise Exception(
-                f"There must be exactly one competence tree referenced but there are: {tree_ids}"
-            )
-        tree_id = tree_ids[0]
+        if tree_id is None:
+            tree_ids = learner.get_competence_tree_ids()
+            if len(tree_ids) != 1:
+                raise Exception(
+                    f"There must be exactly one competence tree referenced but there are: {tree_ids}"
+                )
+            tree_id = tree_ids[0]
         if not tree_id in self.examples:
             raise Exception(f"invalid competence tree_id {tree_id}")
         dcm = self.examples[tree_id]
