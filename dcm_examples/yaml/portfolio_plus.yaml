@@ -24,6 +24,7 @@ competence_aspects:
     color_code: '#B5B0A8'
     facets:
     - name: Lerninhalte und -ziele
+      id: learning_content_and_goals
       color_code: '#DEEFF7'
       description: |
           **Kompetenzanforderungen**:
@@ -35,6 +36,16 @@ competence_aspects:
             - Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden
     - name: Methoden, Medien und Lernmaterialien
       color_code: '#DEEFF7'
+      id: methods_media_and_learn_materials
+      description: |
+         **Kompetenzanforderungen**:
+         
+            - Reflektierte und kritische Auswahl, Nutzung und Gestaltung geeigneter Methoden, (digitaler) Medien und Lernmaterialien
+            - Ausrichtung der Methoden, (digitaler) Medien und Lernmaterialien an Lernzielen, Lerninhalten, Teilnehmenden und Lernsettings
+            - Berücksichtigung urheber-, datenschutzrechtlicher sowie medienethischer Aspekte bei der Auswahl, Nutzung und Gestaltung von Methoden, (digitalen) Medien und Lernmaterialien
+            - Evaluation der im Lehr-Lern-Angebot eingesetzten Methoden, (digitalen) Medien und Lernmaterialien
+            - Nutzung von (digitalen) Tools/Werkzeugen zur Evaluation des Lehr-Lern-Angebots
+         
     - name: Rahmenbedingungen und Lernumgebungen
       color_code: '#DEEFF7'
     - name: Outcomeorientierung
