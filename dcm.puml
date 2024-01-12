@@ -10,8 +10,7 @@ class dcm.dcm_core.DynamicCompetenceMap {
   svg: None
 }
 class dcm.dcm_core.Achievement {
-  tree_id: str
-  facet_id: str
+  path: str
   level: int
   score: float
   score_unit: Optional[str]
@@ -28,6 +27,7 @@ class dcm.dcm_core.CompetenceElement {
   url: Optional[str]
   description: Optional[str]
   color_code: Optional[str]
+  path: str 
 }
 class dcm.dcm_core.CompetenceFacet {
 }
