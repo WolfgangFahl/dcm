@@ -148,6 +148,7 @@ class Assessment:
         if self.learner.achievements is None:
             self.learner.achievements = []
             self.setup_achievements()
+        self.total = len(self.learner.achievements)
 
     @property
     def current_achievement(self) -> Achievement:
@@ -187,7 +188,6 @@ class Assessment:
         """
         display my competence Tree elements
         """
-        self.total = len(self.learner.achievements)
         self.progress_bar = NiceguiProgressbar(
             total=self.total, desc="self assessment", unit="facets"
         )
@@ -214,6 +214,7 @@ class Assessment:
             for achievement in self.learner.achievements
             if achievement.level is not None
         )
+        self.progress_bar.total=self.total
         self.progress_bar.update_value(count)
 
     async def step(self, step: int = 0):
