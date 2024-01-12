@@ -193,7 +193,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.dcm = dcm
         self.assessment_button.enable()
         dcm_chart=DcmChart(dcm)
-        svg = dcm_chart.dcm.generate_svg_markup(learner=learner, with_java_script=False)
+        svg = dcm_chart.generate_svg_markup(learner=learner, with_java_script=False)
         # Use the new get_java_script method to get the JavaScript
         self.svg_view.content = svg
         self.svg_view.update()
