@@ -178,7 +178,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
             
-    def render_dcm(self,dcm,clear_assessment:bool=True):
+    def render_dcm(self,dcm,learner:Learner=None,clear_assessment:bool=True):
         """
         render the dynamic competence map
         """
@@ -190,9 +190,10 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.assessment=None
         self.dcm = dcm
         self.assessment_button.enable()
-        svg = self.dcm.generate_svg_markup(with_java_script=False)
+        svg = self.dcm.generate_svg_markup(learner=learner,with_java_script=False)
         # Use the new get_java_script method to get the JavaScript
         self.svg_view.content = svg
+        self.svg_view.update()
          
     async def home(self, _client: Client):
         """Generates the home page with a selection of examples and
@@ -280,7 +281,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         if not tree_id in self.examples:
             raise Exception(f"invalid competence tree_id {tree_id}")
         dcm = self.examples[tree_id]
-        self.render_dcm(dcm)
+        # assess_learner will render ...
+        # self.render_dcm(dcm,learner=learner)
         self.assess_learner(dcm, learner)
 
     def configure_run(self):

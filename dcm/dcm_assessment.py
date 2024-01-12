@@ -184,7 +184,7 @@ class Assessment:
                 new_achievement = Achievement(
                     path=path,
                 )
-                self.learner.achievements.append(new_achievement)
+                self.learner.add_achievement(new_achievement)
 
     def get_index_str(self) -> str:
         index_str = f"{self.achievement_index+1:2}/{self.total:2}"
@@ -232,6 +232,7 @@ class Assessment:
         display the active achievement as the step indicates
         """
         self.show_progress()
+        self.webserver.render_dcm(self.dcm,self.learner,clear_assessment=False)
         if self.achievement_index + step < 0:
             ui.notify("first achievement reached!")
             step = 0
@@ -260,6 +261,6 @@ class Assessment:
                 if isinstance(competence_element, CompetenceFacet):
                     aspect = competence_element.aspect
                     description = f"### {aspect.name}\n\n**{competence_element.name}**:\n\n{description}"
-                self.markdown_view.content = description
+                self.markdown_view.content = description         
         else:
             ui.notify("Done!")

@@ -356,6 +356,11 @@ class Learner:
     def main_id(self):
         main_id = self.learner_id
         return main_id
+    
+    def add_achievement(self,new_achievement):
+        self.achievements.append(new_achievement)
+        self.achievements_by_path[new_achievement.path]=new_achievement
+        
 
     def get_competence_tree_ids(self) -> List[str]:
         """
@@ -594,7 +599,7 @@ class DynamicCompetenceMap:
         if filename:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup    
-
+    
     def generate_svg_markup(
         self,
         competence_tree: CompetenceTree = None,
@@ -709,6 +714,12 @@ class DynamicCompetenceMap:
                     width=aspect_radius,  # inner radius
                     height=facet_radius,  # outer radius
                 )
+                # check learner achievements
+                if learner:
+                    achievement=learner.achievements_by_path.get(facet.path,None)
+                    if achievement.level:
+                        facet_config.element_class="selected"
+           
                 svg.add_donut_segment(
                     config=facet_config,
                     start_angle_deg=facet_start_angle,
