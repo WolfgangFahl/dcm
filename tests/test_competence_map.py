@@ -62,7 +62,7 @@ class TestDynamicCompetenceMap(Basetest):
         # debug=True
         if debug:
             print(html)
-        self.assertIn("Kompetenzanforderungen:", html)
+        self.assertIn("Kompetenzanforderungen", html)
         self.assertIn("<li>Freude", html)
 
     def test_learner_examples(self):

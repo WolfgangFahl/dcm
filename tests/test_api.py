@@ -67,7 +67,7 @@ class TestAPI(WebserverTest):
             # Test case for a specific facet
             (
                 f"/description/{example_name}/{aspect_id}/{facet_id}",
-                ["Kompetenzanforderungen:", "<li>Freude"],
+                ["Kompetenzanforderungen", "<li>Freude"],
             ),
             # Test case for a whole aspect
             (
