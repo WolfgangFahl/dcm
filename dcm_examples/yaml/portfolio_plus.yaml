@@ -25,6 +25,14 @@ competence_aspects:
     facets:
     - name: Lerninhalte und -ziele
       color_code: '#DEEFF7'
+      description: |
+          **Kompetenzanforderungen**:
+    
+            - Festlegung und Formulierung von Lerninhalten und -zielen
+            - Kritische Prüfung und Bewertung von Lerninhalten
+            - Kritische Prüfung und Bewertung der (digitalen) Informationskanäle und -quellen bei der Erschließung von Lerninhalten
+            - Ausrichtung der Lerninhalte und -ziele an den Teilnehmenden
+            - Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden
     - name: Methoden, Medien und Lernmaterialien
       color_code: '#DEEFF7'
     - name: Rahmenbedingungen und Lernumgebungen
@@ -77,7 +85,7 @@ competence_aspects:
       id: enthusiasm
       color_code: '#DEEFF7'
       description: |
-        Kompetenzanforderungen:
+        **Kompetenzanforderungen**:
         
           - Freude an der Ausübung der eigenen Tätigkeit und dem Fach.
           - Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln.
@@ -88,7 +96,7 @@ competence_aspects:
     - name: Umgang mit Feedback und Kritik
       color_code: '#DEEFF7'
       description: |
-        Kompetenzanforderungen:
+        **Kompetenzanforderungen**:
         
           - Professionelle und konstruktive Reaktion auf Kritik und Feedback.
           - Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten.
