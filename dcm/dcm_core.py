@@ -143,6 +143,22 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         for aspect_id, aspect in self.competence_aspects.items():
             if aspect.id is None:
                 aspect.id = aspect_id
+            aspect.competence_tree = self
+            # Set the path for each aspect
+            aspect.path = f"{self.id}/{aspect.id}"
+            # Iterate through each facet in the aspect
+            for facet in aspect.facets:
+                facet.competence_tree = self
+                facet.aspect = aspect
+                if facet.id is None:
+                    facet.id = facet.name  # or any other default setting
+
+                # Set the path for each facet
+                facet.path = f"{self.id}/{aspect.id}/{facet.id}"
+
+    @property
+    def path(self) -> str:
+        return self.id
 
     @classmethod
     def required_keys(cls) -> Tuple:
@@ -547,7 +563,10 @@ class DynamicCompetenceMap:
             cls.handle_markup_issue(name, definition_string, ex, markup)
 
     def generate_svg(
-        self, filename: Optional[str] = None, config: Optional[SVGConfig] = None
+        self,
+        filename: Optional[str] = None,
+        learner: Optional[Learner] = None,
+        config: Optional[SVGConfig] = None,
     ) -> str:
         """
         Generate the SVG markup and optionally save it to a file. If a filename is given, the method
@@ -555,6 +574,7 @@ class DynamicCompetenceMap:
 
         Args:
             filename (str, optional): The path to the file where the SVG should be saved. Defaults to None.
+            learner(Learner): the learner to show the achievements for
             config (SVGConfig, optional): The configuration for the SVG canvas and legend. Defaults to default values.
 
         Returns:
@@ -562,7 +582,9 @@ class DynamicCompetenceMap:
         """
         if config is None:
             config = SVGConfig()  # Use default configuration if none provided
-        svg_markup = self.generate_svg_markup(self.competence_tree, config)
+        svg_markup = self.generate_svg_markup(
+            self.competence_tree, learner=learner, config=config
+        )
         if filename:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
@@ -570,6 +592,7 @@ class DynamicCompetenceMap:
     def generate_svg_markup(
         self,
         competence_tree: CompetenceTree = None,
+        learner: Learner = None,
         config: SVGConfig = None,
         with_java_script: bool = True,
         lookup_url: str = "",
@@ -579,6 +602,7 @@ class DynamicCompetenceMap:
 
         Args:
             competence_tree (CompetenceTree): The competence tree structure containing the necessary data.
+            learner(Learner): the learner to show the achievements for
             config (SVGConfig): The configuration for the SVG canvas and legend.
             lookup_url(str): the lookup_url to use if there is none defined in the CompetenceTree
 
@@ -696,6 +720,8 @@ class DynamicCompetenceMap:
         return svg.get_svg_markup(with_java_script=with_java_script)
 
     def save_svg_to_file(self, svg_markup: str, filename: str):
-        # Save the SVG content to a file
+        """
+        Save the SVG content to a file
+        """
         with open(filename, "w") as file:
             file.write(svg_markup)

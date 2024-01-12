@@ -154,10 +154,11 @@ class MarkupCheck:
                 str(expected_config.width),
                 f"SVG width is {svg_width} but expected {expected_config.width}",
             )
+            height = int(svg_height)
             self.test_case.assertEqual(
-                svg_height,
-                str(expected_config.total_height),
-                f"SVG height is {svg_height} but expected {expected_config.height}",
+                height,
+                expected_config.total_height,
+                f"SVG height is {svg_height} but expected  {expected_config.total_height}",
             )
 
     def check_markup(

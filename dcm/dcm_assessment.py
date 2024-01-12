@@ -5,9 +5,16 @@ Created on 2024-01-10
 """
 from ngwidgets.progress import NiceguiProgressbar
 from ngwidgets.webserver import NiceGuiWebserver
+from ngwidgets.widgets import Link
 from nicegui import ui
 
-from dcm.dcm_core import Achievement, CompetenceTree, Learner
+from dcm.dcm_core import (
+    Achievement,
+    CompetenceFacet,
+    CompetenceTree,
+    DynamicCompetenceMap,
+    Learner,
+)
 
 
 class ButtonRow:
@@ -18,7 +25,7 @@ class ButtonRow:
 
     def __init__(
         self,
-        sela: "SelfAssessment",
+        assessment: "Assessment",
         competence_tree: CompetenceTree,
         achievement: Achievement = None,
     ):
@@ -26,11 +33,11 @@ class ButtonRow:
         Construct a button row for the competence levels of the given CompetenceTree.
 
         Args:
-            sela (SelfAssessment): The SelfAssessment instance.
+            assessment (Assessment): The Assessment instance.
             competence_tree (CompetenceTree): The Competence Tree to display buttons for.
             achievement (Achievement): The current achievement of the learner.
         """
-        self.sela = sela
+        self.assessment = assessment
         self.competence_tree = competence_tree
         self.achievement = achievement
         self.setup_buttons()
@@ -91,35 +98,56 @@ class ButtonRow:
         self.row.update()
         # show achievement_view
         step = 1 if self.achievement.level else 0
-        self.sela.update_achievement_view(step)
+        self.assessment.update_achievement_view(step)
 
 
-class SelfAssessment:
+class Assessment:
     """
-    Self assessment for CompetenceTree
+    Assessment for CompetenceTree
     """
 
     def __init__(
         self,
         webserver: NiceGuiWebserver,
-        competence_tree: CompetenceTree,
+        dcm: DynamicCompetenceMap,
         learner: Learner,
         debug: bool = False,
     ):
         """
-        initialize the self assessment
+        initialize the assessment
+
+        Args:
+            webserver(NiceguiWebServer): the webserver context
+            dcm(DynamicCompetenceMap): the competence map
+            learner(Learner): the learner to get the self assessment for
+            debug(bool): if True show debugging information
         """
         self.webserver = webserver
-        self.competence_tree = competence_tree
-        self.learner = learner
         self.debug = debug
+        self.reset(dcm=dcm, learner=learner)
+        self.setup_ui()
+
+    def reset(
+        self,
+        dcm: DynamicCompetenceMap,
+        learner: Learner,
+    ):
+        """
+            (re)set the assessment
+
+        Args:
+            webserver(NiceguiWebServer): the webserver context
+            dcm(DynamicCompetenceMap): the competence map
+            learner(Learner): the learner to get the self assessment for
+        """
+        self.dcm = (dcm,)
+        self.competence_tree = dcm.competence_tree
+        self.learner = learner
         self.achievement_index = 0
         # do we need setup the achievements?
         if self.learner.achievements is None:
             self.learner.achievements = []
             self.setup_achievements()
-        self.setup_ui()
-        self.update_achievement_view()
 
     @property
     def current_achievement(self) -> Achievement:
@@ -166,13 +194,14 @@ class SelfAssessment:
         self.progress_bar.reset()
         with ui.row():
             ui.button("", icon="arrow_back", on_click=lambda _args: self.step(-1))
-            with ui.card() as self.achievement_view:
-                self.index_view = ui.label(self.get_index_str())
-                self.markdown_view = ui.markdown()
-                self.button_row = ButtonRow(
-                    self, self.competence_tree, self.current_achievement
-                )
             ui.button("", icon="arrow_forward", on_click=lambda _args: self.step(1))
+        with ui.card() as self.achievement_view:
+            self.index_view = ui.label(self.get_index_str())
+            self.link_view = ui.html()
+            self.markdown_view = ui.markdown()
+            self.button_row = ButtonRow(
+                self, self.competence_tree, self.current_achievement
+            )
 
     def show_progress(self):
         """
@@ -208,6 +237,20 @@ class SelfAssessment:
                 ui.notify("invalid path: {achievement.path}")
                 self.markdown_view.content = f"⚠️ {achievement.path}"
             else:
-                self.markdown_view.content = competence_element.description
+                if hasattr(competence_element, "path"):
+                    if competence_element.url:
+                        link = Link.create(
+                            competence_element.url, competence_element.path
+                        )
+                    else:
+                        link = competence_element.path
+                else:
+                    link = "⚠️ - competence element path missing"
+                self.link_view.content = link
+                description = competence_element.description or ""
+                if isinstance(competence_element, CompetenceFacet):
+                    aspect = competence_element.aspect
+                    description = f"### {aspect.name}\n\n**{competence_element.name}**:\n\n{description}"
+                self.markdown_view.content = description
         else:
             ui.notify("Done!")

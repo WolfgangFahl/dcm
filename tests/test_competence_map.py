@@ -94,6 +94,27 @@ class TestDynamicCompetenceMap(Basetest):
             self.assertTrue("competence_levels:" in yaml_str)
             pass
 
+    def test_path(self):
+        """
+        test that the path properties are available
+        """
+        debug = self.debug
+        # debug=True
+        for markup, examples in self.example_definitions.items():
+            for _example_name, dcm in examples.items():
+                ct = dcm.competence_tree
+                if debug:
+                    print(f"competence_tree: {ct.id}:{ct.path}")
+                self.assertEqual(ct.id, ct.path)
+                for _aspect_id, aspect in ct.competence_aspects.items():
+                    if debug:
+                        print(f"aspect: {aspect.id}:{aspect.path}")
+                    self.assertTrue(ct.id in aspect.path)
+                    for facet in aspect.facets:
+                        if debug:
+                            print(f"facet: {facet.id}:{facet.path}")
+                        self.assertTrue(aspect.path in facet.path)
+
     def testCompetenceMap(self):
         """
         test the competence map

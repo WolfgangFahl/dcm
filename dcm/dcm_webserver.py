@@ -15,8 +15,8 @@ from ngwidgets.webserver import WebserverConfig
 from nicegui import Client, app, ui
 from pydantic import BaseModel
 
+from dcm.dcm_assessment import Assessment
 from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap, Learner
-from dcm.dcm_sela import SelfAssessment
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
 
@@ -60,7 +60,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self, config=DynamicCompentenceMapWebServer.get_config()
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
-        self.dcm=None
+        self.dcm = None
+        self.assessment = None
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -171,13 +172,13 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                     name, definition, content_class=content_class, markup=markup
                 )
                 if isinstance(item, DynamicCompetenceMap):
-                    self.dcm=item
+                    self.dcm = item
                     self.sela_button.enable()
                     svg = self.dcm.generate_svg_markup(with_java_script=False)
                     # Use the new get_java_script method to get the JavaScript
                     self.svg_view.content = svg
                 else:
-                    self.self_assess(item)
+                    self.assess(item)
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
 
@@ -209,8 +210,11 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                         self.tool_button(
                             tooltip="reload", icon="refresh", handler=self.reload_file
                         )
-                        self.sela_button=self.tool_button(
-                            tooltip="self assessment",icon="query_stats",handler=self.new_self_assess)
+                        self.sela_button = self.tool_button(
+                            tooltip="self assessment",
+                            icon="query_stats",
+                            handler=self.new_assess,
+                        )
                         self.sela_button.disable()
                         if self.is_local:
                             self.tool_button(
@@ -219,20 +223,33 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 with splitter.after:
                     self.svg_view = ui.html("")
         await self.setup_footer()
-        
-    def new_self_assess(self):
-        """
-        run a self assessment for a new learner
-        """
-        learner=Learner(learner_id="?")
-        self.sela = SelfAssessment(
-            self, competence_tree=self.dcm.competence_tree, learner=learner
-        )
 
-    def self_assess(self, learner: Learner,tree_id:str=None):
+    def assess_learner(self, dcm, learner):
         """
-        run a self assessment for the given learner
-        
+        assess the given Dynamic Competence Map and learner
+
+        Args:
+            dcm(DynamicCompetenceMap): the competence map
+            learner(Learner): the learner to get the self assessment for
+
+        """
+        if self.assessment is not None:
+            self.assessment.reset(dcm=dcm, learner=learner)
+        else:
+            self.assessment = Assessment(self, dcm=dcm, learner=learner)
+        self.assessment.update_achievement_view()
+
+    def new_assess(self):
+        """
+        run a new  assessment for a new learner
+        """
+        learner = Learner(learner_id="?")
+        self.assess_learner(self.dcm, learner)
+
+    def assess(self, learner: Learner, tree_id: str = None):
+        """
+        run an assessment for the given learner
+
         Args:
             learner(Learner): the learner to get the self assessment for
             tree_id(str): the identifier for the competence tree
@@ -247,9 +264,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         if not tree_id in self.examples:
             raise Exception(f"invalid competence tree_id {tree_id}")
         dcm = self.examples[tree_id]
-        self.sela = SelfAssessment(
-            self, competence_tree=dcm.competence_tree, learner=learner
-        )
+        self.assess_learner(dcm, learner)
 
     def configure_run(self):
         """
