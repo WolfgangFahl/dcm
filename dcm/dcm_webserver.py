@@ -19,6 +19,7 @@ from dcm.dcm_assessment import Assessment
 from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap, Learner
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
+from dcm.dcm_chart import DcmChart
 
 class SVGRenderRequest(BaseModel):
     """
@@ -136,7 +137,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         dcm = DynamicCompetenceMap.from_definition_string(
             r.name, r.definition, content_class=CompetenceTree, markup=r.markup
         )
-        svg_markup = dcm.generate_svg_markup(config=r.config, with_java_script=True)
+        dcm_chart=DcmChart(dcm)
+        svg_markup = dcm_chart.generate_svg_markup(config=r.config, with_java_script=True)
         response = HTMLResponse(content=svg_markup)
         return response
 
@@ -173,12 +175,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 if isinstance(item, DynamicCompetenceMap):
                     self.render_dcm(item)
                 else:
-                    self.learner=item
+                    self.learner = item
                     self.assess(item)
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
-            
-    def render_dcm(self,dcm,learner:Learner=None,clear_assessment:bool=True):
+
+    def render_dcm(self, dcm, learner: Learner = None, clear_assessment: bool = True):
         """
         render the dynamic competence map
         """
@@ -187,14 +189,14 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 self.assessment_row.clear()
             except Exception as ex:
                 ui.notify(str(ex))
-            self.assessment=None
+            self.assessment = None
         self.dcm = dcm
         self.assessment_button.enable()
-        svg = self.dcm.generate_svg_markup(learner=learner,with_java_script=False)
+        svg = self.dcm.generate_svg_markup(learner=learner, with_java_script=False)
         # Use the new get_java_script method to get the JavaScript
         self.svg_view.content = svg
         self.svg_view.update()
-         
+
     async def home(self, _client: Client):
         """Generates the home page with a selection of examples and
         svg display
@@ -223,7 +225,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                             ).props("size=100")
                         with ui.row() as self.button_row:
                             self.tool_button(
-                                tooltip="reload", icon="refresh", handler=self.reload_file
+                                tooltip="reload",
+                                icon="refresh",
+                                handler=self.reload_file,
                             )
                             self.assessment_button = self.tool_button(
                                 tooltip="assessment",
@@ -233,7 +237,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                             self.assessment_button.disable()
                             if self.is_local:
                                 self.tool_button(
-                                    tooltip="open", icon="file_open", handler=self.open_file
+                                    tooltip="open",
+                                    icon="file_open",
+                                    handler=self.open_file,
                                 )
                 with splitter.after:
                     self.svg_view = ui.html("")

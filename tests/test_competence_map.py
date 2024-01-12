@@ -14,6 +14,7 @@ from dcm.dcm_core import (
     DynamicCompetenceMap,
     Learner,
 )
+from dcm.dcm_chart import DcmChart
 from dcm.svg import SVGConfig
 from tests.markup_check import MarkupCheck
 
@@ -129,6 +130,7 @@ class TestDynamicCompetenceMap(Basetest):
                     dcm.competence_tree.competence_levels
                 )
                 svg_file = f"/tmp/{example_name}_competence_map_{markup}.svg"
-                dcm.generate_svg(svg_file, config=svg_config)
+                dcm_chart=DcmChart(dcm)
+                dcm_chart.generate_svg(svg_file, config=svg_config)
                 markup_check = MarkupCheck(self, dcm)
                 markup_check.check_markup(svg_file=svg_file, svg_config=svg_config)

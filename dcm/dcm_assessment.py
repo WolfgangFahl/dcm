@@ -149,7 +149,7 @@ class Assessment:
             self.learner.achievements = []
             self.setup_achievements()
         self.total = len(self.learner.achievements)
-        
+
     def clear(self):
         """
         clear the ui
@@ -221,7 +221,7 @@ class Assessment:
             for achievement in self.learner.achievements
             if achievement.level is not None
         )
-        self.progress_bar.total=self.total
+        self.progress_bar.total = self.total
         self.progress_bar.update_value(count)
 
     async def step(self, step: int = 0):
@@ -232,7 +232,7 @@ class Assessment:
         display the active achievement as the step indicates
         """
         self.show_progress()
-        self.webserver.render_dcm(self.dcm,self.learner,clear_assessment=False)
+        self.webserver.render_dcm(self.dcm, self.learner, clear_assessment=False)
         if self.achievement_index + step < 0:
             ui.notify("first achievement reached!")
             step = 0
@@ -261,6 +261,6 @@ class Assessment:
                 if isinstance(competence_element, CompetenceFacet):
                     aspect = competence_element.aspect
                     description = f"### {aspect.name}\n\n**{competence_element.name}**:\n\n{description}"
-                self.markdown_view.content = description         
+                self.markdown_view.content = description
         else:
             ui.notify("Done!")
