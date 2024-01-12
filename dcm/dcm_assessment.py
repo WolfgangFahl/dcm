@@ -140,7 +140,7 @@ class Assessment:
             dcm(DynamicCompetenceMap): the competence map
             learner(Learner): the learner to get the self assessment for
         """
-        self.dcm = (dcm,)
+        self.dcm = dcm
         self.competence_tree = dcm.competence_tree
         self.learner = learner
         self.achievement_index = 0

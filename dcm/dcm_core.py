@@ -341,6 +341,12 @@ class Learner:
     learner_id: str
     achievements: Optional[List[Achievement]] = field(default=None)
 
+    def __post_init__(self):
+        self.achievements_by_path={}
+        if self.achievements:
+            for achievement in self.achievements:
+                self.achievements_by_path[achievement.path]=achievement
+        
     @classmethod
     def required_keys(cls):
         keys = {"achievements"}
@@ -587,7 +593,7 @@ class DynamicCompetenceMap:
         )
         if filename:
             self.save_svg_to_file(svg_markup, filename)
-        return svg_markup
+        return svg_markup    
 
     def generate_svg_markup(
         self,
@@ -666,7 +672,7 @@ class DynamicCompetenceMap:
                 show_as_popup=show_as_popup,
                 x=cx,
                 y=cy,
-                width=tree_radius,  # inner radius
+                width=tree_radius,     # inner radius
                 height=aspect_radius,  # outer radius
             )
             # fix id

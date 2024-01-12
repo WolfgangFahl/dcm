@@ -11,7 +11,6 @@ from ngwidgets.cmd import WebserverCmd
 from dcm.dcm_core import DynamicCompetenceMap
 from dcm.dcm_webserver import DynamicCompentenceMapWebServer
 
-
 class CompetenceCmd(WebserverCmd):
     """
     Command line for diagrams server

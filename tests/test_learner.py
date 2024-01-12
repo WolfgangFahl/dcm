@@ -35,3 +35,5 @@ class TestLearner(Basetest):
                 print(tree_ids)
             self.assertEqual(1, len(tree_ids))
             self.assertEqual("architecture", tree_ids[0])
+            for achievement in learner.achievements:
+                self.assertTrue(achievement.path in learner.achievements_by_path)

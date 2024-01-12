@@ -20,7 +20,6 @@ from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap, Learner
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
 
-
 class SVGRenderRequest(BaseModel):
     """
     A request for rendering an SVG.
