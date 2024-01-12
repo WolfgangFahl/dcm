@@ -149,6 +149,12 @@ class Assessment:
             self.learner.achievements = []
             self.setup_achievements()
         self.total = len(self.learner.achievements)
+        
+    def clear(self):
+        """
+        clear the ui
+        """
+        self.container.clear()
 
     @property
     def current_achievement(self) -> Achievement:
@@ -188,21 +194,22 @@ class Assessment:
         """
         display my competence Tree elements
         """
-        self.progress_bar = NiceguiProgressbar(
-            total=self.total, desc="self assessment", unit="facets"
-        )
-        self.progress_bar.reset()
-        with ui.row():
-            ui.button("", icon="arrow_back", on_click=lambda _args: self.step(-1))
-            ui.button("", icon="arrow_forward", on_click=lambda _args: self.step(1))
-        with ui.row():
-            with ui.card() as self.achievement_view:
-                self.index_view = ui.label(self.get_index_str())
-                self.link_view = ui.html()
-                self.markdown_view = ui.markdown()
-                self.button_row = ButtonRow(
-                    self, self.competence_tree, self.current_achievement
-                )
+        with ui.grid(columns=1).classes("w-full") as self.container:
+            self.progress_bar = NiceguiProgressbar(
+                total=self.total, desc="self assessment", unit="facets"
+            )
+            self.progress_bar.reset()
+            with ui.row():
+                ui.button("", icon="arrow_back", on_click=lambda _args: self.step(-1))
+                ui.button("", icon="arrow_forward", on_click=lambda _args: self.step(1))
+            with ui.row():
+                with ui.card() as self.achievement_view:
+                    self.index_view = ui.label(self.get_index_str())
+                    self.link_view = ui.html()
+                    self.markdown_view = ui.markdown()
+                    self.button_row = ButtonRow(
+                        self, self.competence_tree, self.current_achievement
+                    )
 
     def show_progress(self):
         """

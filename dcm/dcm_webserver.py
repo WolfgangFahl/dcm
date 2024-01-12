@@ -171,16 +171,29 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                     name, definition, content_class=content_class, markup=markup
                 )
                 if isinstance(item, DynamicCompetenceMap):
-                    self.dcm = item
-                    self.sela_button.enable()
-                    svg = self.dcm.generate_svg_markup(with_java_script=False)
-                    # Use the new get_java_script method to get the JavaScript
-                    self.svg_view.content = svg
+                    self.render_dcm(item)
                 else:
+                    self.learner=item
                     self.assess(item)
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
-
+            
+    def render_dcm(self,dcm,clear_assessment:bool=True):
+        """
+        render the dynamic competence map
+        """
+        if clear_assessment and self.assessment:
+            try:
+                self.assessment_row.clear()
+            except Exception as ex:
+                ui.notify(str(ex))
+            self.assessment=None
+        self.dcm = dcm
+        self.assessment_button.enable()
+        svg = self.dcm.generate_svg_markup(with_java_script=False)
+        # Use the new get_java_script method to get the JavaScript
+        self.svg_view.content = svg
+         
     async def home(self, _client: Client):
         """Generates the home page with a selection of examples and
         svg display
@@ -202,23 +215,25 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                         extensions=extensions,
                         handler=self.read_and_optionally_render,
                     )
-                    self.input_input = ui.input(
-                        value=self.input, on_change=self.input_changed
-                    ).props("size=100")
-                    with ui.row() as self.button_row:
-                        self.tool_button(
-                            tooltip="reload", icon="refresh", handler=self.reload_file
-                        )
-                        self.sela_button = self.tool_button(
-                            tooltip="self assessment",
-                            icon="query_stats",
-                            handler=self.new_assess,
-                        )
-                        self.sela_button.disable()
-                        if self.is_local:
+                    with ui.grid(columns=1).classes("w-full") as self.left_grid:
+                        with ui.row() as self.input_row:
+                            self.input_input = ui.input(
+                                value=self.input, on_change=self.input_changed
+                            ).props("size=100")
+                        with ui.row() as self.button_row:
                             self.tool_button(
-                                tooltip="open", icon="file_open", handler=self.open_file
+                                tooltip="reload", icon="refresh", handler=self.reload_file
                             )
+                            self.assessment_button = self.tool_button(
+                                tooltip="assessment",
+                                icon="query_stats",
+                                handler=self.new_assess,
+                            )
+                            self.assessment_button.disable()
+                            if self.is_local:
+                                self.tool_button(
+                                    tooltip="open", icon="file_open", handler=self.open_file
+                                )
                 with splitter.after:
                     self.svg_view = ui.html("")
         await self.setup_footer()
@@ -235,7 +250,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         if self.assessment is not None:
             self.assessment.reset(dcm=dcm, learner=learner)
         else:
-            self.assessment = Assessment(self, dcm=dcm, learner=learner)
+            with ui.row() as self.assessment_row:
+                self.assessment = Assessment(self, dcm=dcm, learner=learner)
         self.assessment.update_achievement_view()
 
     def new_assess(self):
@@ -263,6 +279,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         if not tree_id in self.examples:
             raise Exception(f"invalid competence tree_id {tree_id}")
         dcm = self.examples[tree_id]
+        self.render_dcm(dcm)
         self.assess_learner(dcm, learner)
 
     def configure_run(self):
