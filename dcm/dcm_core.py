@@ -717,7 +717,7 @@ class DynamicCompetenceMap:
                 # check learner achievements
                 if learner:
                     achievement=learner.achievements_by_path.get(facet.path,None)
-                    if achievement.level:
+                    if achievement and achievement.level:
                         facet_config.element_class="selected"
            
                 svg.add_donut_segment(
