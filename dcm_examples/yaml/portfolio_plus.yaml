@@ -40,8 +40,10 @@ competence_aspects:
     - name: Professionelle Kommunikation
       color_code: '#DEEFF7'
     - name: Kooperation mit den Auftraggebenden/Arbeitgebenden
+      id: cooperation_with_client
       color_code: '#DEEFF7'
     - name: Kollegiale Zusammenarbeit/Netzwerken
+      id: cooperation_and_networking
       color_code: '#DEEFF7'
   FFW:
     name: Fach- und feldspezifisches Wissen
