@@ -250,8 +250,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         if self.assessment is not None:
             self.assessment.reset(dcm=dcm, learner=learner)
         else:
-            with ui.row() as self.assessment_row:
-                self.assessment = Assessment(self, dcm=dcm, learner=learner)
+            with self.left_grid:
+                with ui.row() as self.assessment_row:
+                    self.assessment = Assessment(self, dcm=dcm, learner=learner)
         self.assessment.update_achievement_view()
 
     def new_assess(self):
