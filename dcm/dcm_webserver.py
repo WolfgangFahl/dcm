@@ -16,10 +16,11 @@ from nicegui import Client, app, ui
 from pydantic import BaseModel
 
 from dcm.dcm_assessment import Assessment
+from dcm.dcm_chart import DcmChart
 from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap, Learner
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
-from dcm.dcm_chart import DcmChart
+
 
 class SVGRenderRequest(BaseModel):
     """
@@ -70,63 +71,109 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             """
             return await self.render_svg(svg_render_request)
 
-        @app.get("/description/{example_name}/{aspect_id}/{facet_id}")
+        @app.get("/description/{tree_id}/{aspect_id}/{area_id}/{facet_id}")
         async def get_description_for_facet(
-            example_name: str, aspect_id: str = None, facet_id: str = None
+            tree_id: str, aspect_id: str = None, area_id:str=None, facet_id: str = None
         ) -> HTMLResponse:
             """
-            Endpoints to get the description of a competence element (competence tree, aspect, or facet).
+            Endpoints to get the description of a competence facet
+            
 
             Args:
-                example_name (str): Name of the example.
+                tree_id (str): ID of the tree
+                area_id (str): ID of the area
                 aspect_id (str, optional): ID of the aspect. Defaults to None.
                 facet_id (str, optional): ID of the facet. Defaults to None.
 
             Returns:
                 HTMLResponse: HTML content of the description.
             """
-            return await self.show_description(example_name, aspect_id, facet_id)
+            path=f"{tree_id}/{aspect_id}/{area_id}/{facet_id}"
+            return await self.show_description(path)
 
-        @app.get("/description/{example_name}/{aspect_id}")
-        async def get_description_with_aspect(
-            example_name: str, aspect_id: str
+        @app.get("/description/{tree_id}/{aspect_id}/{area_id}")
+        async def get_description_for_area(
+            tree_id: str, aspect_id: str = None, area_id:str=None
         ) -> HTMLResponse:
-            return await self.show_description(example_name, aspect_id)
+            """
+            Endpoints to get the description of a 
+            competence area
 
-        @app.get("/description/{example_name}")
-        async def get_tree_description_with_example(example_name: str) -> HTMLResponse:
-            return await self.show_description(example_name)
+            Args:
+                tree_id (str): ID of the tree
+                area_id (str): ID of the area
+                aspect_id (str, optional): ID of the aspect. Defaults to None.
+   
+            Returns:
+                HTMLResponse: HTML content of the description.
+            """
+            path=f"{tree_id}/{aspect_id}/{area_id}"
+            return await self.show_description(path)
+
+        @app.get("/description/{tree_id}/{aspect_id}")
+        async def get_description_for_aspect(
+            tree_id: str, aspect_id: str = None
+        ) -> HTMLResponse:
+            """
+            Endpoint to get the description of a competence aspect
+
+            Args:
+                tree_id (str): ID of the tree
+                area_id (str): ID of the area
+   
+            Returns:
+                HTMLResponse: HTML content of the description.
+            """
+            path=f"{tree_id}/{aspect_id}"
+            return await self.show_description(path)
+        
+        @app.get("/description/{tree_id}")
+        async def get_description_for_tree(
+            tree_id: str
+        ) -> HTMLResponse:
+            """
+            Endpoint to get the description of a competence tree
+
+            Args:
+                tree_id (str): ID of the tree
+     
+            Returns:
+                HTMLResponse: HTML content of the description.
+            """
+            path=f"{tree_id}"
+            return await self.show_description(path)
 
     async def show_description(
-        self, example_name: str, aspect_id: str = None, facet_id: str = None
+        self, path:str=None
     ) -> HTMLResponse:
         """
-        Show the HTML description of a specific facet of a competence aspect from an example.
+        Show the HTML description of a specific 
+        competence element given by the path
 
         Args:
-            example_name (str): The name of the example from which to retrieve the facet description.
-            aspect_id (str): The identifier of the competence aspect.
-            facet_id (str): The identifier of the competence facet.
-
+            path(str): the path identifying the element
+       
         Returns:
             HTMLResponse: The response object containing the HTML-formatted description.
 
         Raises:
             HTTPException: If the example name provided does not exist in the examples collection.
         """
-        if example_name in self.examples:
-            example = self.examples[example_name]
-            element = example.lookup(aspect_id, facet_id)
+        path_parts=path.split("/")
+        tree_id=path_parts[0]
+        if tree_id in self.examples:
+            example = self.examples[tree_id]
+            element = example.competence_tree.lookup_by_path(path)
             if element:
                 content = element.as_html()
                 return HTMLResponse(content=content)
             else:
                 content = (
-                    f"No element found for {aspect_id}/{facet_id} in {example_name}"
+                    f"No element found for {path} in {tree_id}"
                 )
                 return HTMLResponse(content=content, status_code=404)
         else:
-            msg = f"unknown example {example_name}"
+            msg = f"unknown competence tree {tree_id}"
             raise HTTPException(status_code=404, detail=msg)
 
     async def render_svg(self, svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -137,8 +184,10 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         dcm = DynamicCompetenceMap.from_definition_string(
             r.name, r.definition, content_class=CompetenceTree, markup=r.markup
         )
-        dcm_chart=DcmChart(dcm)
-        svg_markup = dcm_chart.generate_svg_markup(config=r.config, with_java_script=True)
+        dcm_chart = DcmChart(dcm)
+        svg_markup = dcm_chart.generate_svg_markup(
+            config=r.config, with_java_script=True
+        )
         response = HTMLResponse(content=svg_markup)
         return response
 
@@ -192,7 +241,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.assessment = None
         self.dcm = dcm
         self.assessment_button.enable()
-        dcm_chart=DcmChart(dcm)
+        dcm_chart = DcmChart(dcm)
         svg = dcm_chart.generate_svg_markup(learner=learner, with_java_script=False)
         # Use the new get_java_script method to get the JavaScript
         self.svg_view.content = svg

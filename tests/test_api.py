@@ -60,28 +60,28 @@ class TestAPI(WebserverTest):
         """
         Test the element description endpoint
         """
-        example_name = "portfolio_plus"
-        aspect_id = "PSS"
-        facet_id = "enthusiasm"
         test_cases = [
             # Test case for a specific facet
             (
-                f"/description/{example_name}/{aspect_id}/{facet_id}",
-                ["Kompetenzanforderungen", "<li>Freude"],
+                "greta/4/1/2",
+                ["<h2>Enthusiasmus</h2>", "<li>Freude"],
             ),
             # Test case for a whole aspect
             (
-                f"/description/{example_name}/{aspect_id}",
-                ["<h2>Professionelle Selbststeuerung</h2>"],
+                "greta/4/1",
+                ["<h2>Motivationale Orientierungen</h2>"],
             ),
             # Test case for the whole tree
-            (f"/description/{example_name}", ["<h2>PortfolioPlus</h2>"]),
+            (   
+                "greta", 
+                ["<h2>GRETA</h2>"]
+            ),
         ]
 
         debug = self.debug
-        # debug=True
+        #debug=True
         for path, expected_contents in test_cases:
-            html = self.get_html(path)
+            html = self.get_html(f"/description/{path}")
             if debug:
                 print(f"{path}:\n{html}")
             for expected_content in expected_contents:

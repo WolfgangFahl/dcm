@@ -11,6 +11,7 @@ from nicegui import ui
 from dcm.dcm_core import (
     Achievement,
     CompetenceFacet,
+    CompetenceArea,
     CompetenceTree,
     DynamicCompetenceMap,
     Learner,
@@ -49,7 +50,7 @@ class ButtonRow:
         """
         self.buttons = {}
         with ui.row() as self.row:
-            for level in self.competence_tree.competence_levels:
+            for level in self.competence_tree.levels:
                 button = ui.button(
                     level.name,
                     icon=level.icon,
@@ -174,17 +175,21 @@ class Assessment:
         based on the path. These achievements are then added to the learner's
         achievements list.
         """
-        competence_aspects = self.competence_tree.competence_aspects
-        for aspect_code, aspect in competence_aspects.items():
-            for facet in aspect.facets:
-                # Construct the path for the facet
-                path: str = f"{self.competence_tree.id}/{aspect_code}/{facet.id}"
-
-                # Create a new Achievement instance with the constructed path
-                new_achievement = Achievement(
-                    path=path,
-                )
-                self.learner.add_achievement(new_achievement)
+        for aspect in self.competence_tree.aspects:
+            for area in aspect.areas:
+                area_path: str = f"{self.competence_tree.id}/{aspect.id}"
+                self.add_achievement(area_path)
+                for facet in area.facets:
+                    # Construct the path for the facet
+                    facet_path=f"{area_path}/{facet.id}"
+                    self.add_achievement(facet_path)
+                    
+    def add_achievement(self,path):
+        # Create a new Achievement instance with the constructed path
+        new_achievement = Achievement(
+            path=path,
+        )
+        self.learner.add_achievement(new_achievement)
 
     def get_index_str(self) -> str:
         index_str = f"{self.achievement_index+1:2}/{self.total:2}"
@@ -258,9 +263,12 @@ class Assessment:
                     link = "⚠️ - competence element path missing"
                 self.link_view.content = link
                 description = competence_element.description or ""
-                if isinstance(competence_element, CompetenceFacet):
+                if isinstance(competence_element, CompetenceArea):
                     aspect = competence_element.aspect
                     description = f"### {aspect.name}\n\n**{competence_element.name}**:\n\n{description}"
+                if isinstance(competence_element, CompetenceFacet):
+                    area = competence_element.area
+                    description = f"### {area.name}\n\n**{competence_element.name}**:\n\n{description}"
                 self.markdown_view.content = description
         else:
             ui.notify("Done!")

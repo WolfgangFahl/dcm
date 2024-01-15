@@ -9,9 +9,11 @@ import os
 from ngwidgets.basetest import Basetest
 
 from dcm.dcm_core import (
+    CompetenceArea,
     CompetenceAspect,
     CompetenceElement,
     CompetenceFacet,
+    CompetenceLevel,
     CompetenceTree,
 )
 
@@ -79,13 +81,13 @@ class TestModule(Basetest):
         elif lvl == "2":
             # Level 2 - CompetenceAspects
             aspect = CompetenceAspect(name=name, id=nr, url=url, credits=credits)
-            parent.competence_aspects[name] = aspect
+            parent.aspects.append(aspect)
             competence_element = aspect
         elif lvl == "3":
-            # Level 3 - CompetenceFacets
-            facet = CompetenceFacet(name=name, id=nr, url=url)
-            parent.facets.append(facet)
-            competence_element = facet
+            # Level 3 - CompetenceAreas
+            area = CompetenceArea(name=name, id=nr, url=url)
+            parent.areas.append(area)
+            competence_element = area
         if level < 3:
             for subnode in json_node["STP_KNOTEN"]:
                 if isinstance(subnode, dict):
@@ -104,6 +106,28 @@ class TestModule(Basetest):
             url(str): the base url to use
         """
         tree = self.create_competence_element(parent=None, json_node=json_node, url=url)
+        tree.levels = [
+            CompetenceLevel(name="1,0 - 95%", level=10),
+            CompetenceLevel(name="1,3 - 90%", level=9),
+            CompetenceLevel(name="1,7 - 85%", level=8),
+            CompetenceLevel(name="2,0 - 80%", level=7),
+            CompetenceLevel(name="2,3 - 75%", level=6),
+            CompetenceLevel(name="2,7 - 70%", level=5),
+            CompetenceLevel(name="3,0 - 65%", level=4),
+            CompetenceLevel(name="3,3 - 60%", level=3),
+            CompetenceLevel(name="3,7 - 55%", level=2),
+            CompetenceLevel(name="4,0 - 50%", level=1),
+        ]
+        tree.element_names = (
+            {
+                "tree": "Study plan",
+                "aspect": "Study area",
+                "area": "Module",
+                "facet": "Module element",
+                "level": "Grade",
+            },
+        )
+
         return tree
 
     def test_master_informatik(self):
@@ -127,7 +151,10 @@ class TestModule(Basetest):
             competence_tree = self.create_competence_tree(competence_elements, url=url)
             # Pretty print the JSON with specified indentation
             pretty_json = competence_tree.to_pretty_json()
+            yaml_str = competence_tree.to_yaml()
             debug = self.debug
             # debug=True
             if debug:
-                print(pretty_json)
+                print(yaml_str)
+            with open("/tmp/rwth_aachen_master_informatik.yaml", "w") as yaml_file:
+                yaml_file.write(yaml_str)

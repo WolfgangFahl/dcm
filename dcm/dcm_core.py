@@ -9,11 +9,11 @@ from dataclasses import dataclass, field
 from json.decoder import JSONDecodeError
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-
 import markdown2
 import yaml
 from dataclasses_json import dataclass_json
 from ngwidgets.yamlable import YamlAble
+from slugify import slugify
 
 from dcm.svg import SVG, SVGConfig, SVGNodeConfig
 
@@ -37,6 +37,11 @@ class CompetenceElement:
     url: Optional[str] = None
     description: Optional[str] = None
     color_code: Optional[str] = None
+
+    def __post_init__(self):
+        # Set the id to the the slug of the name if id is None
+        if self.id is None:
+            self.id = slugify(self.name)
 
     def as_html(self) -> str:
         """
@@ -86,23 +91,28 @@ class CompetenceFacet(CompetenceElement):
     This class can include additional properties or methods specific to a competence facet.
     """
 
-    def __post_init__(self):
-        # Set the id to the name if id is None
-        if self.id is None:
-            self.id = self.name
+@dataclass_json
+@dataclass
+class CompetenceArea(CompetenceElement):
+    """
+    Represents a specific area within a competence aspect, containing various facets.
 
+    Attributes:
+        facets (List[CompetenceFacet]): A list of CompetenceFacet objects representing individual facets of this area.
+    """
+    facets: List[CompetenceFacet] = field(default_factory=list)
 
 @dataclass_json
 @dataclass
 class CompetenceAspect(CompetenceElement):
     """
-    Represents a broader category of competence, which includes various facets.
+    Represents a broader category of competence, which includes various areas.
 
     Attributes:
-        facets (List[CompetenceFacet]): A list of CompetenceFacet objects representing individual facets of this aspect.
+        areas (List[CompetenceArea]): A list of CompetenceArea objects representing individual areas of this aspect.
     """
 
-    facets: List[CompetenceFacet] = field(default_factory=list)
+    areas: List[CompetenceArea] = field(default_factory=list)
     credits: Optional[int] = None
 
 
@@ -114,11 +124,13 @@ class CompetenceLevel(CompetenceElement):
 
     Attributes:
         level (int): level number starting from 1 as the lowest and going up to as many level as defined for the CompetenceTree
-        icon(str): the name of an icon to be shown for this level
+        icon(str): the name of a google mdi icon to be shown for this level
+        utf8_icon(str): utf-8 char string to be used as icon
     """
 
     level: int = 1
     icon: Optional[str] = None
+    utf8_icon: Optional[str] = None
 
 
 @dataclass_json
@@ -128,37 +140,34 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
     Represents the entire structure of competencies, including various aspects and levels.
 
     Attributes:
-        competence_aspects (Dict[str, CompetenceAspect]): A dictionary mapping aspect IDs to CompetenceAspect objects.
+        competence_aspects (List[CompetenceAspect]): A list of CompetenceAspect objects.
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
 
     lookup_url: Optional[str] = None
-    competence_aspects: Dict[str, CompetenceAspect] = field(default_factory=dict)
-    competence_levels: List[CompetenceLevel] = field(default_factory=list)
+    aspects: List[CompetenceAspect] = field(default_factory=list)
+    levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self):
-        # prepare yaml dumping
-        for aspect_id, aspect in self.competence_aspects.items():
-            if aspect.id is None:
-                aspect.id = aspect_id
+        """
+        initalize the path variables of my hierarchy
+        """
+        super().__post_init__()
+        self.path = self.id
+        # Loop through each competence aspect and set their paths and parent references
+        for aspect in self.aspects:
             aspect.competence_tree = self
-            # Set the path for each aspect
             aspect.path = f"{self.id}/{aspect.id}"
-            # Iterate through each facet in the aspect
-            for facet in aspect.facets:
-                facet.competence_tree = self
-                facet.aspect = aspect
-                if facet.id is None:
-                    facet.id = facet.name  # or any other default setting
-
-                # Set the path for each facet
-                facet.path = f"{self.id}/{aspect.id}/{facet.id}"
-
-    @property
-    def path(self) -> str:
-        return self.id
+            for area in aspect.areas:
+                area.competence_tree = self
+                area.aspect = aspect
+                area.path = f"{self.id}/{aspect.id}/{area.id}"
+                for facet in area.facets:
+                    facet.competence_tree = self
+                    facet.area = area
+                    facet.path = f"{self.id}/{aspect.id}/{area.id}/{facet.id}"
 
     @classmethod
     def required_keys(cls) -> Tuple:
@@ -200,15 +209,22 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         if len(parts) > 1:
             aspect_id = parts[1]
             # Retrieve the aspect
-            aspect = self.competence_aspects.get(aspect_id, None)
+            aspect = next((aspect for aspect in self.aspects if aspect.id==aspect_id), None)
         if aspect:
             if len(parts) == 2:
                 return aspect
             if len(parts) > 2:
-                facet_id = parts[2]
-                # Retrieve the facet within the aspect
-                for facet in aspect.facets:
-                    if facet.id == facet_id:
+                area_id = parts[2]
+                area = next((area for area in aspect.areas if area.id == area_id), None)
+                if area:
+                    if len(parts) == 3:
+                        return area
+                if len(parts) > 3:
+                    facet_id = parts[3]
+                    facet = next(
+                        (facet for facet in area.facets if facet.id == facet_id), None
+                    )
+                    if facet:
                         return facet
         handle_error(f"invalid path for lookup {path}")
         return None
@@ -252,9 +268,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         padding = 5
 
         # Add the competence level legend
-        level_items = [
-            (level.color_code, level.name) for level in self.competence_levels
-        ]
+        level_items = [(level.color_code, level.name) for level in self.levels]
         svg.add_legend_column(
             level_items,
             self.element_names.get("level", "Level"),
@@ -269,15 +283,12 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             x_start
             + box_width
             + padding
-            + max(svg.get_text_width(level.name) for level in self.competence_levels)
+            + max(svg.get_text_width(level.name) for level in self.levels)
             + padding
         )
 
         # Add the competence aspect legend
-        aspect_items = [
-            (aspect.color_code, aspect.name)
-            for aspect in self.competence_aspects.values()
-        ]
+        aspect_items = [(aspect.color_code, aspect.name) for aspect in self.aspects]
         svg.add_legend_column(
             aspect_items,
             self.element_names.get("aspect", "Aspect"),
@@ -321,9 +332,14 @@ class Achievement:
         return parts[1] if len(parts) > 1 else None
 
     @property
-    def facet_id(self):
+    def area_id(self):
         parts = self.path.split("/")
         return parts[2] if len(parts) > 2 else None
+
+    @property
+    def facet_id(self):
+        parts = self.path.split("/")
+        return parts[3] if len(parts) > 3 else None
 
 
 @dataclass_json
@@ -403,38 +419,6 @@ class DynamicCompetenceMap:
         main_id = self.competence_tree.id
         return main_id
 
-    def lookup(
-        self, aspect_id: str = None, facet_id: str = None
-    ) -> Optional[CompetenceElement]:
-        """
-        Look up an element of the competence tree by aspect ID and facet ID.
-        - Returns the entire competence tree if both aspect_id and facet_id are None.
-        - Returns a specific aspect if only aspect_id is provided.
-        - Returns a specific facet within an aspect if both aspect_id and facet_id are provided.
-
-        Args:
-            aspect_id (str, optional): The ID of the aspect to search within.
-            facet_id (str, optional): The ID of the facet to find within the specified aspect.
-
-        Returns:
-            Optional[CompetenceElement]: The found competence aspect, facet, or the entire competence tree.
-        """
-        ct = self.competence_tree
-        if aspect_id is None:
-            return ct
-        aspect = ct.competence_aspects.get(aspect_id)
-        if aspect is None:
-            for ct_aspect in ct.competence_aspects.values():
-                if aspect.id == aspect_id:
-                    aspect = ct_aspect
-        if aspect:
-            if facet_id is None:
-                return aspect
-            for facet in aspect.facets:
-                if facet.id == facet_id:
-                    return facet
-        return None
-
     @classmethod
     def examples_path(cls) -> str:
         # the root directory (default: examples)
@@ -481,7 +465,9 @@ class DynamicCompetenceMap:
                                 else:
                                     example_dcm_defs[file_prefix] = definition_data
                         except Exception as ex:
-                            cls.handle_markup_issue(filename, definition_text, ex)
+                            cls.handle_markup_issue(
+                                filename, definition_text, ex, markup
+                            )
         return example_dcm_defs
 
     @classmethod
@@ -500,14 +486,16 @@ class DynamicCompetenceMap:
             ValueError: If an unsupported markup format is specified.
         """
         if markup == "json":
-            return json.loads(text)
+            data=json.loads(text)
+            return data
         elif markup == "yaml":
-            return yaml.safe_load(text)
+            data=yaml.safe_load(text)
+            return data
         else:
             raise ValueError(f"Unsupported markup format: {markup}")
 
     @classmethod
-    def handle_markup_issue(cls, name: str, definition_string: str, ex, markup):
+    def handle_markup_issue(cls, name: str, definition_string: str, ex, markup: str):
         if isinstance(ex, JSONDecodeError):
             lines = definition_string.splitlines()  # Split the string into lines
             err_line = lines[ex.lineno - 1]  # JSONDecodeError gives 1-based lineno
@@ -571,4 +559,3 @@ class DynamicCompetenceMap:
                 return content
         except Exception as ex:
             cls.handle_markup_issue(name, definition_string, ex, markup)
-

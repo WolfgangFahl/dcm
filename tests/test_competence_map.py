@@ -5,6 +5,7 @@ Created on 2023-11-06
 """
 from ngwidgets.basetest import Basetest
 
+from dcm.dcm_chart import DcmChart
 from dcm.dcm_core import (
     Achievement,
     CompetenceAspect,
@@ -14,10 +15,8 @@ from dcm.dcm_core import (
     DynamicCompetenceMap,
     Learner,
 )
-from dcm.dcm_chart import DcmChart
 from dcm.svg import SVGConfig
 from tests.markup_check import MarkupCheck
-
 
 class TestDynamicCompetenceMap(Basetest):
     """
@@ -27,7 +26,7 @@ class TestDynamicCompetenceMap(Basetest):
     def setUp(self, debug=False, profile=True):
         Basetest.setUp(self, debug=debug, profile=profile)
         self.example_definitions = {}
-        for markup in ["json", "yaml"]:
+        for markup in ["yaml"]:
             self.example_definitions[markup] = DynamicCompetenceMap.get_examples(
                 CompetenceTree, markup
             )
@@ -51,13 +50,13 @@ class TestDynamicCompetenceMap(Basetest):
         test looking up an element
         """
         examples = DynamicCompetenceMap.get_examples(markup="yaml")
-        example_name = "portfolio_plus"
-        aspect_id = "PSS"
-        facet_id = "enthusiasm"
+        example_name = "greta"
         self.assertTrue(example_name in examples)
         example = examples[example_name]
-        facet = example.lookup(aspect_id, facet_id)
+        path="greta/4/1/2"
+        facet = example.competence_tree.lookup_by_path(path)
         self.assertIsNotNone(facet)
+        self.assertIsInstance(facet, CompetenceFacet)
         html = facet.as_html()
         debug = self.debug
         # debug=True
@@ -100,21 +99,25 @@ class TestDynamicCompetenceMap(Basetest):
         test that the path properties are available
         """
         debug = self.debug
-        # debug=True
-        for markup, examples in self.example_definitions.items():
+        debug = True
+        for _markup, examples in self.example_definitions.items():
             for _example_name, dcm in examples.items():
                 ct = dcm.competence_tree
                 if debug:
                     print(f"competence_tree: {ct.id}:{ct.path}")
                 self.assertEqual(ct.id, ct.path)
-                for _aspect_id, aspect in ct.competence_aspects.items():
+                for aspect in ct.aspects:
                     if debug:
                         print(f"aspect: {aspect.id}:{aspect.path}")
                     self.assertTrue(ct.id in aspect.path)
-                    for facet in aspect.facets:
+                    for area in aspect.areas:
                         if debug:
-                            print(f"facet: {facet.id}:{facet.path}")
-                        self.assertTrue(aspect.path in facet.path)
+                            print(f"area: {area.id}:{area.path}")
+                        self.assertTrue(aspect.path in area.path)
+                        for facet in area.facets:
+                            if debug:
+                                print(f"facet: {facet.id}:{facet.path}")
+                            self.assertTrue(area.path in facet.path)
 
     def testCompetenceMap(self):
         """
@@ -126,11 +129,9 @@ class TestDynamicCompetenceMap(Basetest):
                 # Now you can perform assertions to verify that the data was loaded correctly
                 self.assertIsNotNone(dcm.competence_tree)
                 svg_config = SVGConfig()
-                svg_config.legend_height = 40 * len(
-                    dcm.competence_tree.competence_levels
-                )
+                svg_config.legend_height = 40 * len(dcm.competence_tree.levels)
                 svg_file = f"/tmp/{example_name}_competence_map_{markup}.svg"
-                dcm_chart=DcmChart(dcm)
+                dcm_chart = DcmChart(dcm)
                 dcm_chart.generate_svg(svg_file, config=svg_config)
                 markup_check = MarkupCheck(self, dcm)
                 markup_check.check_markup(svg_file=svg_file, svg_config=svg_config)

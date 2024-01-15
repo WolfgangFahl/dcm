@@ -4,7 +4,6 @@ title Dynamic Competence Map
 header see https://github.com/WolfgangFahl/dcm
 !pragma useIntermediatePackages false
 
-
 class dcm.dcm_core.DynamicCompetenceMap {
   competence_tree: CompetenceTree
   svg: None
@@ -17,9 +16,16 @@ class dcm.dcm_core.Achievement {
   evidence: Optional[str]
   date_assessed: Optional[str]
 }
+note top of Achievement
+A single result of an [[https://en.wikipedia.org/wiki/Achievement_test achievement test]]
+end note
+
 class dcm.dcm_core.CompetenceAspect {
-  facets: List[CompetenceFacet]
+  areas: List[CompetenceArea]
   credits: Optional[int]
+}
+class dcm.dcm_core.CompetenceArea {
+  facets: List[CompetenceFacet]
 }
 class dcm.dcm_core.CompetenceElement {
   name: str
@@ -29,28 +35,73 @@ class dcm.dcm_core.CompetenceElement {
   color_code: Optional[str]
   path: str 
 }
+
 class dcm.dcm_core.CompetenceFacet {
 }
 class dcm.dcm_core.CompetenceLevel {
   level: int
   icon: str
 }
+
 class dcm.dcm_core.CompetenceTree {
   lookup_url: Optional[str]
   competence_aspects: Dict[str, CompetenceAspect]
   competence_levels: List[CompetenceLevel]
   element_names: Dict[str, str]
 }
+note top of CompetenceElement
+Generic element to allow consistent
+attributes for the CompetenceTree hierarchy
+end note
+
+note top of CompetenceAspect
+Defines a broad category or domain of competence
+end note
+
+note top of CompetenceArea
+Represents a subdivision within 
+a competence aspect, 
+containing multiple facets. 
+end note
+
+note top of CompetenceFacet
+A specific skill or knowledge 
+area within a competence area. 
+end note
+
+note top of CompetenceLevel
+Level of [[https://en.wikipedia.org/wiki/Expert Proficiency]]
+end note
+
+note top of CompetenceTree
+Represents a hierachical [[https://en.wikipedia.org/wiki/Syllabus syllabus]]
+with the hierarchy levels:
+# CompetenceTree
+# CompetenceAspect
+# CompetenceArea
+# CompetenceFacet
+
+end note
 
 class dcm.dcm_core.Learner {
   learner_id: str
   achievements: Optional[Dict[str, List[Achievement]]]
 }
+note top of Learner
+A person actively [[https://en.wikipedia.org/wiki/Learning learning]] to 
+achieve competences from one or more CompetenceTree instances 
+end note
+
+note top of dcm.dcm_core
+[[https://github.com/WolfgangFahl/dcm/blob/main/dcm/dcm_core.py Dynamic Competence Map\ncore entities]]
+end note
 
 dcm.dcm_core.DynamicCompetenceMap *-- dcm.dcm_core.CompetenceTree
 dcm.dcm_core.DynamicCompetenceMap -- dcm.dcm_core.Learner
-dcm.dcm_core.CompetenceAspect *-- dcm.dcm_core.CompetenceFacet
+dcm.dcm_core.CompetenceAspect *-- dcm.dcm_core.CompetenceArea
+dcm.dcm_core.CompetenceArea *-- dcm.dcm_core.CompetenceFacet
 dcm.dcm_core.CompetenceElement <|-- dcm.dcm_core.CompetenceAspect
+dcm.dcm_core.CompetenceElement <|-- dcm.dcm_core.CompetenceArea
 dcm.dcm_core.CompetenceElement <|-- dcm.dcm_core.CompetenceFacet
 dcm.dcm_core.CompetenceElement <|-- dcm.dcm_core.CompetenceLevel
 dcm.dcm_core.CompetenceTree *-- dcm.dcm_core.CompetenceAspect

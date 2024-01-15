@@ -4,48 +4,29 @@ Created on 2024-01-12
 @author: wf
 """
 from dataclasses import dataclass
-from dcm.dcm_core import CompetenceTree,CompetenceFacet, DynamicCompetenceMap, Learner
-from dcm.svg import SVG,SVGConfig
-from typing import Optional
-from urllib.parse import quote
+from typing import List, Optional
 
-@dataclass
-class DcmChartSettings(object):
-    """
-    Dynamic competence map chart settings
-    """
-    cx: float
-    cy: float
-    tree_radius: float
-    aspect_radius: float
-    facet_radius: float
-    # Starting angle for the first aspect
-    aspect_start_angle = 0
-    
-    @classmethod 
-    def from_config(cls,config:SVGConfig):
-        # Center of the donut
-        # Center of the donut chart should be in the middle of the main SVG area, excluding the legend        
-        cx = config.width // 2
-        cy = (config.total_height - config.legend_height) // 2  # Adjusted for legend
-        # Calculate the radius for the central circle (10% of the width)
-        tree_radius = cx / 9
-        facet_radius = min(cx, cy) * 0.9  # Leave some margin
-        aspect_radius = facet_radius / 3  # Choose a suitable inner radius
-        settings=DcmChartSettings(cx,cy,tree_radius,facet_radius,aspect_radius)
-        return settings
+from dcm.dcm_core import (
+    CompetenceElement,
+    CompetenceFacet,
+    CompetenceTree,
+    DynamicCompetenceMap,
+    Learner,
+)
+from dcm.svg import SVG, DonutSegment, SVGConfig
 
-class DcmChart():
+
+class DcmChart:
     """
     a Dynamic competence map chart
     """
-    
-    def __init__(self,dcm:DynamicCompetenceMap):
+
+    def __init__(self, dcm: DynamicCompetenceMap):
         """
         Constructor
         """
         self.dcm = dcm
-        
+
     def generate_svg(
         self,
         filename: Optional[str] = None,
@@ -72,38 +53,83 @@ class DcmChart():
         if filename:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
-    
-    def generate_svg_markup_for_facet(self,svg:SVG,facet:CompetenceFacet,learner:Learner,settings:DcmChartSettings):
-        # Add the facet segment as a donut segment
-        facet_url = (
-            facet.url
-            if facet.url
-            else f"{settings.lookup_url}/description/{facet.path}"
-            if settings.lookup_url is not None
+
+    def generate_donut_segment_for_element(
+        self,
+        svg: SVG,
+        element: CompetenceElement,
+        learner: Learner,
+        segment: DonutSegment,
+    ):
+        """
+        generate a donut segment for a given element of
+        the CompetenceTree
+        """
+        # Add the element segment as a donut segment
+        element_url = (
+            element.url
+            if element.url
+            else f"{self.lookup_url}/description/{element.path}"
+            if self.lookup_url is not None
             else None
         )
-        show_as_popup = facet.url is None
-        facet_config = facet.to_svg_node_config(
-            url=facet_url,
+        show_as_popup = element.url is None
+        element_config = element.to_svg_node_config(
+            url=element_url,
             show_as_popup=show_as_popup,
-            x=settings.cx,
-            y=settings.cy,
-            width=settings.aspect_radius,  # inner radius
-            height=settings.facet_radius,  # outer radius
+            x=self.cx,
+            y=self.cy,
         )
         # check learner achievements
         if learner:
-            achievement = learner.achievements_by_path.get(facet.path, None)
+            achievement = learner.achievements_by_path.get(element.path, None)
             if achievement and achievement.level:
-                facet_config.element_class = "selected"
+                element_config.element_class = "selected"
+        svg.add_donut_segment(config=element_config, segment=segment)
 
-        svg.add_donut_segment(
-            config=facet_config,
-            start_angle_deg=settings.facet_start_angle,
-            end_angle_deg=settings.facet_start_angle + settings.angle_per_facet,
-        )
-        settings.facet_start_angle += settings.angle_per_facet
-        
+    def generate_pie_elements(
+        self,
+        level: int,
+        svg: SVG,
+        parent_element: CompetenceElement,
+        learner: Learner,
+        segment: DonutSegment,
+    ):
+        """
+        generate the pie elements (donut segments) for the subelements
+        of the given parent_element at the given level
+        e.g. aspects, areas or facets - taking the learner
+        achievements into account if a corresponding achievement
+        is found. The segment limits the area in which the generation may operate
+        """
+        sub_element_name = self.levels[level]
+        # get the elements to be displayed
+        elements = getattr(parent_element, sub_element_name)
+        total = len(elements)
+        # are there any elements to be shown?
+        if total > 0:
+            angle_per_element = (segment.end_angle - segment.start_angle) / total
+            start_angle = segment.start_angle
+            for element in elements:
+                end_angle = start_angle + angle_per_element
+                sub_segment = DonutSegment(
+                    segment.outer_radius,
+                    segment.outer_radius + self.tree_radius*2,
+                    start_angle,
+                    end_angle,
+                )
+                self.generate_donut_segment_for_element(
+                    svg, element, learner, segment=sub_segment
+                )
+                start_angle = end_angle
+                if level + 1 < len(self.levels):
+                    self.generate_pie_elements(
+                        level=level + 1,
+                        svg=svg,
+                        parent_element=element,
+                        learner=learner,
+                        segment=sub_segment,
+                    )
 
     def generate_svg_markup(
         self,
@@ -114,91 +140,48 @@ class DcmChart():
         lookup_url: str = "",
     ) -> str:
         """
-        Generate SVG markup based on the provided competence tree and configuration.
+        generate the SVG markup for the given CompetenceTree and learner
 
         Args:
-            competence_tree (CompetenceTree): The competence tree structure containing the necessary data.
-            learner(Learner): the learner to show the achievements for
-            config (SVGConfig): The configuration for the SVG canvas and legend.
-            lookup_url(str): the lookup_url to use if there is none defined in the CompetenceTree
 
-        Returns:
-            str: The generated SVG markup.
         """
         if competence_tree is None:
             competence_tree = self.dcm.competence_tree
-        competence_aspects = competence_tree.competence_aspects
-        # Instantiate the SVG class
+
         svg = SVG(config)
         self.svg = svg
-        # use default config in case config was None
         config = svg.config
-        settings=DcmChartSettings.from_config(config)
-        settings.lookup_url = (
+        # center of circle
+        self.cx = config.width // 2
+        self.cy = (config.total_height - config.legend_height) // 2
+        self.levels = ["aspects", "areas", "facets"]
+        self.tree_radius = config.width / 2 / 8
+
+        self.lookup_url = (
             competence_tree.lookup_url if competence_tree.lookup_url else lookup_url
         )
-   
-        # Add the central circle representing the CompetenceTree
+
         circle_config = competence_tree.to_svg_node_config(
-            x=settings.cx, y=settings.cy, width=settings.tree_radius
+            x=self.cx, 
+            y=self.cy, 
+            width=self.tree_radius
         )
         svg.add_circle(config=circle_config)
 
-    
-        # Total number of facets
-        total_facets = sum(len(aspect.facets) for aspect in competence_aspects.values())
-
-        for aspect_code, aspect in competence_aspects.items():
-            num_facets_in_aspect = len(aspect.facets)
-
-            # Skip aspects with no facets
-            if num_facets_in_aspect == 0:
-                continue
-            settings.aspect_angle = (num_facets_in_aspect / total_facets) * 360
-
-            aspect_url = (
-                aspect.url
-                if aspect.url
-                else f"{lookup_url}/description/{quote(competence_tree.id)}/{quote(aspect_code)}"
-                if lookup_url is not None
-                else None
-            )
-            show_as_popup = aspect.url is None
-
-            aspect_config = aspect.to_svg_node_config(
-                url=aspect_url,
-                show_as_popup=show_as_popup,
-                x=settings.cx,
-                y=settings.cy,
-                width=settings.tree_radius,  # inner radius
-                height=settings.aspect_radius,  # outer radius
-            )
-            # fix id
-            aspect_config.id = aspect_code
-            # Draw the aspect segment as a donut segment
-            svg.add_donut_segment(
-                config=aspect_config,
-                start_angle_deg=settings.aspect_start_angle,
-                end_angle_deg=settings.aspect_start_angle + settings.aspect_angle,
-            )
-
-            settings.facet_start_angle = (
-                settings.aspect_start_angle  # Facets start where the aspect starts
-            )
-            settings.angle_per_facet = (
-                settings.aspect_angle / num_facets_in_aspect
-            )  # Equal angle for each facet
-
-            for facet in aspect.facets:
-                self.generate_svg_markup_for_facet(svg=svg,facet=facet,learner=learner,settings=settings)
-      
-            settings.aspect_start_angle += settings.aspect_angle
-
-        # optionally add legend
+        segment = DonutSegment(
+            inner_radius=0, 
+            outer_radius=self.tree_radius
+        )
+        self.generate_pie_elements(
+            level=0,
+            svg=svg,
+            parent_element=competence_tree,
+            learner=learner,
+            segment=segment,
+        )
         if config.legend_height > 0:
             competence_tree.add_legend(svg)
 
-        # Return the SVG markup
         return svg.get_svg_markup(with_java_script=with_java_script)
 
     def save_svg_to_file(self, svg_markup: str, filename: str):

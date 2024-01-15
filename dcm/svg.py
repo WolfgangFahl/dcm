@@ -61,6 +61,18 @@ class SVGNodeConfig:
     element_class: Optional[str] = "hoverable"
 
 
+@dataclass
+class DonutSegment:
+    """
+    a donut segment
+    """
+
+    inner_radius: float
+    outer_radius: float
+    start_angle: Optional[float] = 0.0
+    end_angle: Optional[float] = 360.0
+
+
 class SVG:
     """
     Class for creating SVG drawings.
@@ -356,7 +368,9 @@ class SVG:
         )
 
     def add_donut_segment(
-        self, config: SVGNodeConfig, start_angle_deg: float, end_angle_deg: float
+        self,
+        config: SVGNodeConfig,
+        segment: DonutSegment,
     ) -> None:
         """
         Add a donut segment to the SVG.
@@ -367,37 +381,36 @@ class SVG:
             end_angle_deg (float): End angle of the segment in degrees.
         """
         cx, cy = config.x, config.y
-        inner_radius, outer_radius = config.width, config.height
         color = config.fill if config.fill else self.config.default_color
 
         if color is None:
             color = self.config.default_color
         # Convert angles from degrees to radians for calculations
-        start_angle_rad = radians(start_angle_deg)
-        end_angle_rad = radians(end_angle_deg)
+        start_angle_rad = radians(segment.start_angle)
+        end_angle_rad = radians(segment.end_angle)
 
         # Calculate the start and end points for the outer radius
-        start_x_outer = cx + outer_radius * cos(start_angle_rad)
-        start_y_outer = cy + outer_radius * sin(start_angle_rad)
-        end_x_outer = cx + outer_radius * cos(end_angle_rad)
-        end_y_outer = cy + outer_radius * sin(end_angle_rad)
+        start_x_outer = cx + segment.outer_radius * cos(start_angle_rad)
+        start_y_outer = cy + segment.outer_radius * sin(start_angle_rad)
+        end_x_outer = cx + segment.outer_radius * cos(end_angle_rad)
+        end_y_outer = cy + segment.outer_radius * sin(end_angle_rad)
 
         # Calculate the start and end points for the inner radius
-        start_x_inner = cx + inner_radius * cos(start_angle_rad)
-        start_y_inner = cy + inner_radius * sin(start_angle_rad)
-        end_x_inner = cx + inner_radius * cos(end_angle_rad)
-        end_y_inner = cy + inner_radius * sin(end_angle_rad)
+        start_x_inner = cx + segment.inner_radius * cos(start_angle_rad)
+        start_y_inner = cy + segment.inner_radius * sin(start_angle_rad)
+        end_x_inner = cx + segment.inner_radius * cos(end_angle_rad)
+        end_y_inner = cy + segment.inner_radius * sin(end_angle_rad)
 
         # Determine if the arc should be drawn as a large-arc (values >= 180 degrees)
-        large_arc_flag = "1" if end_angle_deg - start_angle_deg >= 180 else "0"
+        large_arc_flag = "1" if segment.end_angle - segment.start_angle >= 180 else "0"
 
         # Create the path for the pie segment without indentation
         path_str = (
             f"M {start_x_inner} {start_y_inner} "  # Move to start of inner arc
             f"L {start_x_outer} {start_y_outer} "  # Line to start of outer arc
-            f"A {outer_radius} {outer_radius} 0 {large_arc_flag} 1 {end_x_outer} {end_y_outer} "  # Outer arc
+            f"A {segment.outer_radius} {segment.outer_radius} 0 {large_arc_flag} 1 {end_x_outer} {end_y_outer} "  # Outer arc
             f"L {end_x_inner} {end_y_inner} "  # Line to end of inner arc
-            f"A {inner_radius} {inner_radius} 0 {large_arc_flag} 0 {start_x_inner} {start_y_inner} "  # Inner arc (reverse)
+            f"A {segment.inner_radius} {segment.inner_radius} 0 {large_arc_flag} 0 {start_x_inner} {start_y_inner} "  # Inner arc (reverse)
             "Z"
         )
 
