@@ -1,0 +1,64 @@
+{
+  "learner_id": "arch_student_123",
+  "achievements": [{
+      "path": "architecture/DandP/ArchDesign",
+      "level": 2,
+      "score": 75.0,
+      "date_assessed_iso": "2023-06-15"
+    },
+    {
+      "path": "architecture/DandP/UrbanPlanning",
+      "level": 1,
+      "score": 60.0,
+      "date_assessed_iso": "2023-06-12"
+    },
+    {
+      "path": "architecture/DandP/BuildCodes",
+      "level": 1,
+      "score": 50.0,
+      "date_assessed_iso": "2023-06-10"
+    },
+    {
+      "path": "architecture/DandP/SustainDesign",
+      "level": 2,
+      "score": 80.0,
+      "date_assessed_iso": "2023-06-18"
+    },
+    {
+      "path": "architecture/TandC/StructEng",
+      "level": 1,
+      "score": 65.0,
+      "date_assessed_iso": "2023-06-11"
+    },
+    {
+      "path": "architecture/TandC/BuildTech",
+      "level": 2,
+      "score": 70.0,
+      "date_assessed_iso": "2023-06-14"
+    },
+    {
+      "path": "architecture/PMandA/ProjMan",
+      "level": 1,
+      "score": 55.0,
+      "date_assessed_iso": "2023-06-09"
+    },
+    {
+      "path": "architecture/PMandA/CostEst",
+      "level": 1,
+      "score": 50.0,
+      "date_assessed_iso": "2023-06-09"
+    },
+    {
+      "path": "architecture/PCandC/InterpSkills",
+      "level": 2,
+      "score": 85.0,
+      "date_assessed_iso": "2023-06-20"
+    },
+    {
+      "path": "architecture/PCandC/TeamCollab",
+      "level": 1,
+      "score": 70.0,
+      "date_assessed_iso": "2023-06-17"
+    }
+  ]
+}

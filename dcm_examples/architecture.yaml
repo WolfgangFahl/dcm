@@ -1,0 +1,140 @@
+# see https://github.com/WolfgangFahl/dcm/issues/10
+# created 2023-12-18 by WF
+name: architecture
+id: architecture
+lookup_url: http://dcm.bitplan.com
+url: https://en.wikipedia.org/wiki/Bachelor_of_Architecture
+description: fictious architeture education example for dynamic competence map
+aspects:
+-   name: Design and Planning
+    id: DandP
+    url: https://en.wikipedia.org/wiki/Architectural_design_and_planning
+    description: Design and planning competence in architecture and urban development.
+    color_code: '#8ca9c7'
+    areas:
+    - name: Architectural Design
+      id: ArchDesign
+      url: https://en.wikipedia.org/wiki/Architectural_design
+      description: The art and science of designing buildings and structures.
+      color_code: '#719bc0'
+    - name: Urban Planning
+      id: UrbanPlanning
+      url: https://en.wikipedia.org/wiki/Urban_planning
+      description: The technical and political process concerned with the development
+        and design of land use.
+      color_code: '#6b96bf'
+    - name: Building Codes and Regulations
+      id: BuildCodes
+      url: https://en.wikipedia.org/wiki/Building_code
+      description: The set of standards for the construction of buildings to ensure
+        safety and health for the occupants.
+      color_code: '#6590bd'
+    - name: Sustainable Design
+      id: SustainDesign
+      url: https://en.wikipedia.org/wiki/Sustainable_design
+      description: Design that seeks to reduce negative impacts on the environment,
+        and the health and comfort of building occupants.
+      color_code: '#5f8bbc'
+-   name: Technical Competence
+    id: TandC
+    url: https://en.wikipedia.org/wiki/Technical_competence_in_engineering
+    description: Technical skills and knowledge in engineering disciplines.
+    color_code: '#b59a7b'
+    areas:
+    - name: Structural Engineering
+      id: StructEng
+      url: https://en.wikipedia.org/wiki/Structural_engineering
+      description: Engineering discipline concerned with the structural integrity
+        and strength of buildings or structures.
+      color_code: '#a48b70'
+    - name: Building Technology
+      id: BuildTech
+      url: https://en.wikipedia.org/wiki/Building_technology
+      description: The application of technology to the design and construction of
+        buildings.
+      color_code: '#9e856b'
+    - name: Material Science
+      id: MatScience
+      url: https://en.wikipedia.org/wiki/Material_science
+      description: The study of the properties and applications of materials of construction
+        or manufacture.
+      color_code: '#987f65'
+-   name: Project Management and Administration
+    id: PMandA
+    url: https://en.wikipedia.org/wiki/Project_management
+    description: Skills and knowledge required for effectively planning, organizing,
+      and administering projects and resources.
+    color_code: '#d0c0a4'
+    areas:
+    - name: Project Management
+      id: ProjMan
+      url: https://en.wikipedia.org/wiki/Project_management
+      description: The process of leading the work of a team to achieve all project
+        goals within the given constraints.
+      color_code: '#b9aa8d'
+    - name: Cost Estimation
+      id: CostEst
+      url: https://en.wikipedia.org/wiki/Cost_estimate
+      description: The approximate prediction of the cost of a program, project, or
+        operation.
+      color_code: '#b4a588'
+    - name: Risk Management
+      id: RiskMan
+      url: https://en.wikipedia.org/wiki/Risk_management
+      description: The identification, evaluation, and prioritization of risks followed
+        by coordinated and economical application of resources to minimize, monitor,
+        and control the probability or impact of unfortunate events.
+      color_code: '#afa083'
+-   name: Professional Communication and Collaboration
+    id: PCandC
+    url: https://en.wikipedia.org/wiki/Collaboration
+    description: Competence in effectively conveying ideas, engaging in discussions,
+      and collaborating with others in a professional setting.
+    color_code: '#ebd3b0'
+    areas:
+    - name: Interpersonal Skills
+      id: InterpSkills
+      url: https://en.wikipedia.org/wiki/Soft_skills#Interpersonal_skills
+      description: The skills used by a person to interact with others properly.
+      color_code: '#d4be9d'
+    - name: Team Collaboration
+      id: TeamCollab
+      url: https://en.wikipedia.org/wiki/Collaboration
+      description: Working jointly with others, especially in an intellectual endeavor.
+      color_code: '#cfb998'
+    - name: Leadership
+      id: Leadership
+      url: https://en.wikipedia.org/wiki/Leadership
+      description: The action of leading a group of people or an organization.
+      color_code: '#cab493'
+levels:
+- name: Novice
+  id: Level1
+  url: https://en.wikipedia.org/wiki/Novice
+  description: Individuals at this level are just starting and have no or limited
+    prior experience in the competence area.
+  color_code: '#FFA0A0'
+  icon: 'circle'
+  level: 1
+- name: Intermediate
+  id: Level2
+  url: https://en.wikipedia.org/wiki/Skill_level
+  description: Individuals have a moderate amount of experience and can perform tasks
+    with some guidance.
+  color_code: '#A0A0FF'
+  icon: 'build_circle'
+  level: 2
+- name: Expert
+  id: Level3
+  url: https://en.wikipedia.org/wiki/Expert
+  description: Individuals at this level are highly experienced and can perform tasks
+    independently.
+  color_code: '#A0FFA0'
+  icon: 'star'
+  level: 3
+element_names:
+  tree: Proficiency Hierarchy
+  aspect: Domain of Expertise
+  area: Skill Area
+  face: Skill Facet
+  level: Proficiency Stage

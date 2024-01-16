@@ -1,0 +1,293 @@
+{
+  "Kompetenzmodell": {
+    "Name": "GRETA-Kompetenzmodell 2.0",
+    "Kompetenzaspekte": [
+      {
+        "Name": "Berufspraktisches Wissen und Können",
+        "Kompetenzbereiche": [
+          {
+            "Name": "Didaktik und Methodik",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-1-1-1",
+                "Name": "Lerninhalte und -ziele",
+                "Kompetenzanforderungen": [
+                  "Festlegung und Formulierung von Lerninhalten und -zielen",
+                  "Kritische Prüfung und Bewertung von Lerninhalten",
+                  "Kritische Prüfung und Bewertung der (digitalen) Informationskanäle und -quellen bei der Erschließung von Lerninhalten",
+                  "Ausrichtung der Lerninhalte und -ziele an den Teilnehmenden",
+                  "Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden"
+                ]
+              },
+              {
+                "ID": "GRETA-1-1-2",
+                "Name": "Methoden, Medien und Lernmaterialien",
+                "Kompetenzanforderungen": [
+                  "Reflektierte und kritische Auswahl, Nutzung und Gestaltung geeigneter Methoden, (digitaler) Medien und Lernmaterialien",
+                  "Ausrichtung der Methoden, (digitaler) Medien und Lernmaterialien an Lernzielen, Lerninhalten, Teilnehmenden und Lernsettings",
+                  "Berücksichtigung urheber-, datenschutzrechtlicher sowie medienethischer Aspekte bei der Auswahl, Nutzung und Gestaltung von Methoden, (digitalen) Medien und Lernmaterialien",
+                  "Evaluation der im Lehr-Lern-Angebot eingesetzten Methoden, (digitalen) Medien und Lernmaterialien",
+                  "Nutzung von (digitalen) Tools/Werkzeugen zur Evaluation des Lehr-Lern-Angebots"
+                ]
+              },
+              {
+                "ID": "GRETA-1-1-3",
+                "Name": "Rahmenbedingungen und Lernumgebungen",
+                "Kompetenzanforderungen": [
+                  "Berücksichtigung der räumlichen, zeitlich, personellen, medial und organisatorischen Rahmenbedingungen in (digital-gestützten) Lernumgebungen",
+                  "Anpassung der beeinflussbaren Rahmenbedingungen in (digital-gestützten) Lernumgebungen",
+                  "Schaffung einer konstruktiv-unterstützenden (digital-gestützten) Lernumgebung durch Ausschöpfung der Rahmenbedingungen"
+                ]
+              },
+              {
+                "ID": "GRETA-1-1-4",
+                "Name": "Outcomeorientierung",
+                "Kompetenzanforderungen": [
+                  "Ausrichtung des Lehrhandelns an Lernergebnissen",
+                  "Auswahl und Anwendung geeigneter Methoden und (digitaler) Tools/Werkzeuge zur Lernerfolgskontrolle unter Berücksichtigung datenschutzrechtlicher Aspekte und des gegebenen Kontexts"
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Beratung/Individualisierte Lernunterstützung",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-1-2-1",
+                "Name": "Teilnehmendenorientierung",
+                "Kompetenzanforderungen": [
+                  "Angebotsausrichtung auf die Merkmale der tatsächlichen Teilnehmenden (z.B. demografische Merkmale, soziokulturelle Prägungen, Vorkenntnisse, (Lern-)Interessen, Ressourcen oder limitierende Faktoren)",
+                  "Aktive Einbeziehung der Teilnehmenden bei der Gestaltung von Lehr-Lern-Angeboten",
+                  "Nutzung von (digitalen) Medien und Tools/Werkzeugen, die den Erwartungen, Voraussetzungen, kontextuellen Beschränkungen (z.B. Verfügbarkeit) der Lernenden entsprechen",
+                  "Stärkung der Selbststeuerungs- und Selbstlernkompetenzen der Teilnehmenden durch den Einsatz lernaktivierender (digitaler) Medien und Tools/Werkzeugen",
+                  "Berücksichtigung der Diversität der Teilnehmenden (Alter, Geschlecht, Bildungstand etc.)",
+                  "Ermöglichung der Differenzierung und Individualisierung im Unterricht mithilfe (digitaler) Medien und Tools/Werkzeugen"
+                ]
+              },
+              {
+                "ID": "GRETA-1-2-2",
+                "Name": "Diagnostik und Lernberatung",
+                "Kompetenzanforderungen": [
+                  "Einsatz geeigneter Instrumente und digitaler Tools/Werkzeuge zur Analyse der Lernausgangslage, Lernvoraussetzung, Lernmotivation, Lernhindernisse, Lernschwierigkeiten für diagnostische Zwecke",
+                  "Auswertung und Interpretation diagnostischer Daten und Informationen",
+                  "Nutzung von diagnostischen Daten und Informationen bei der individuellen Beratung von Lernenden",
+                  "Setzung von Lernimpulsen in Beratungsgesprächen"
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Kommunikation und Interaktion",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-1-3-1",
+                "Name": "Moderation und Steuerung von Gruppen",
+                "Kompetenzanforderungen": [
+                  "Kenntnis von Gruppendynamiken und -strukturen",
+                  "Leitung sowie Steuerung von Gruppen und (synchronen & asynchronen) Kommunikationsprozessen",
+                  "Nutzung (digitaler) Tools/Werkzeuge und Techniken zur Moderation und Steuerung von Gruppen",
+                  "Unterstützung der Vernetzung der Lernenden",
+                  "Schaffung einer vertrauensvollen Gesprächsatmosphäre",
+                  "Konstruktiver Umgang mit technischen Problemen und Störungen innerhalb der Gruppe"
+                ]
+              },
+              {
+                "ID": "GRETA-1-3-2",
+                "Name": "Professionelle Kommunikation",
+                "Kompetenzanforderungen": [
+                  "Professionelle Gesprächsführung unter Beachtung allgemeiner Umgangsformen und -regeln",
+                  "Gestaltung einer kooperativen Gesprächskultur",
+                  "Steuerung organisatorischer Kommunikationsabläufe",
+                  "Austausch mit Teilnehmenden mithilfe von digitalen Kommunikationstools unter Beachtung der Netiquette",
+                  "Berücksichtigung von Besonderheiten verbaler und non-verbaler Kommunikation in digitalen Lernumgebungen"
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Organisation",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-1-4-1",
+                "Name": "Kooperation mit den Auftraggebenden/Arbeitgebenden",
+                "Kompetenzanforderungen": [
+                  "Beschaffung relevanter Informationen über (potenzielle) Auftraggebende/Arbeitgebende für die Akquise von Lehraufträgen (z.B. Ziele, Adressatinnen und Adressaten, Honorarkorridore, Organisationskultur)",
+                  "Vermarktung des eigenen Angebots über geeignete (digitale) Medien und Tools/Werkzeuge (z.B. über Soziale Medien)",
+                  "Zusammenarbeit und Austausch mit Auftraggebenden/Arbeitgebenden bei der Neukonzipierung und Erweiterung von Angeboten sowie zur Problemlösung"
+                ]
+              },
+              {
+                "ID": "GRETA-1-4-2",
+                "Name": "Kollegiale Zusammenarbeit/Netzwerken",
+                "Kompetenzanforderungen": [
+                  "Verortung des eigenen Angebots im Gesamtprogramm einer Einrichtung sowie Herstellung von Querverbindungen zu anderen Angeboten",
+                  "Kollegiale Zusammenarbeit mit anderen Lehrenden innerhalb und außerhalb von beauftragenden Einrichtungen",
+                  "Zusammenarbeit in interdisziplinären Teams oder kollegialen Netzwerken über unterschiedliche Formate (z.B. kollegialer Austausch, Fachtagungen, Lerngemeinschaften, Soziale Medien)",
+                  "Austausch von freien Lern- und Lehrmaterialien (OER)"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "Fach- und Feldspezifisches Wissen",
+        "Kompetenzbereiche": [
+          {
+            "Name": "Feldbezug",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-2-1-1",
+                "Name": "Adressatinnen und Adressaten",
+                "Kompetenzanforderungen": [
+                  "Wissen über Adressatinnen und Adressaten eigener Angebote (z.B. Interessen, Gewohnheiten, Vorlieben, Bedürfnisse, Ängste, vorhandene Ressourcen, bestehende Einschränkungen und Barrieren)",
+                  "Wissen über Einstellungen, Nutzungsgewohnheiten, Barrieren und Kompetenzen der Adressatinnen und Adressaten in Bezug auf digitale Medien und Tools"
+                ]
+              },
+              {
+                "ID": "GRETA-2-1-2",
+                "Name": "Feldspezifisches Wissen",
+                "Kompetenzanforderungen": [
+                  "Wissen über handlungsspezifische Ziele und Prinzipien",
+                  "Handlungsfeldspezifisches Wissen über organisatorische und rechtliche Rahmenbedingungen",
+                  "Wissen über die Besonderheiten des Lernens Erwachsener sowie über die Strukturen und Ansprüche der Erwachsenenbildung insgesamt in Abgrenzung zum formalen Bildungsbereich"
+                ]
+              },
+              {
+                "ID": "GRETA-2-1-3",
+                "Name": "Curriculare und institutionelle Rahmenbedingungen",
+                "Kompetenzanforderungen": [
+                  "Wissen über einrichtungsinterne Rahmenlehrpläne bzw. Modulpläne",
+                  "Wissen über die Beratungs- und Supportkapazitäten des spezifischen Weiterbildungsfeldes, der Weiterbildungseinrichtung",
+                  "Wissen über einrichtungsinterne digitale Ausstattung sowie die Vorgaben und Erwartungen der Weiterbildungseinrichtung bzgl. der Softwarenutzung"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "Professionelle Werthaltungen und Überzeugungen",
+        "Kompetenzbereiche": [
+          {
+            "Name": "Berufsethos",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-3-1-1",
+                "Name": "Menschenbilder",
+                "Kompetenzanforderungen": [
+                  "Bewusstsein über den Einfluss des eigenen Menschenbildes auf den Lehr-Lern-Prozess",
+                  "Innehaben eines Menschenbilds, das eigene weltanschauliche und theoretische Orientierungen widerspiegelt"
+                ]
+              },
+              {
+                "ID": "GRETA-3-1-2",
+                "Name": "Wertvorstellungen",
+                "Kompetenzanforderungen": [
+                  "Verinnerlichung von Werten wie Empathie, Achtung, Respekt und Wertschätzung gegenüber den Teilnehmenden",
+                  "Bewusstsein und Verantwortungsübernahme für das Wohlergehen der Teilnehmenden",
+                  "Verinnerlichung berufsethischer Standards und Prinzipien"
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Berufsbezogene Überzeugungen",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-3-2-1",
+                "Name": "Eigenes Rollenbewusstsein",
+                "Kompetenzanforderungen": [
+                  "Bewusstsein über die eigene professionelle Rolle",
+                  "Kritische Auseinandersetzung mit Erwartungen und Anforderungen an die eigene Rolle (u.a. von Teilnehmenden, Auftraggebenden)",
+                  "Identifikation mit der Rolle als Lehrperson in der EB/WB",
+                  "Flexibler Wechsel der eigenen Rolle je nach Lehr-Lern-Situation (Begleiten, Wissen vermitteln etc.) und Lehr-Lern-Setting (hybrid, Präsenz, digital)"
+                ]
+              },
+              {
+                "ID": "GRETA-3-2-2",
+                "Name": "Subjektive Annahmen über das Lehren und Lernen",
+                "Kompetenzanforderungen": [
+                  "Bewusstsein über eigene subjektive Lehr-Lern-Theorien und deren Einfluss auf Lehr-Lern-Prozesse",
+                  "Bewusstsein über die eigenen Vorstellungen darüber, unter welchen Voraussetzungen Lernen gelingt"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "Professionelle Selbststeuerung",
+        "Kompetenzbereiche": [
+          {
+            "Name": "Motivationale Orientierungen",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-4-1-1",
+                "Name": "Selbstwirksamkeitsüberzeugungen",
+                "Kompetenzanforderungen": [
+                  "Überzeugung, über die Fähigkeiten und Mittel zu verfügen, die für die erfolgreiche Bewältigung gegebener Anforderungen notwendig sind",
+                  "Überzeugung, auch schwierige Situationen aufgrund der eigenen Kompetenzen bewältigen zu können"
+                ]
+              },
+              {
+                "ID": "GRETA-4-1-2",
+                "Name": "Enthusiasmus",
+                "Kompetenzanforderungen": [
+                  "Freude an der Ausübung der eigenen Tätigkeit und dem Fach",
+                  "Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln"
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Selbstregulation",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-4-2-1",
+                "Name": "Umgang mit Feedback und Kritik",
+                "Kompetenzanforderungen": [
+                  "Professionelle und konstruktive Reaktion auf Kritik und Feedback",
+                  "Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten",
+                  "Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird"
+                ]
+              },
+              {
+                "ID": "GRETA-4-2-2",
+                "Name": "Engagement und Distanz",
+                "Kompetenzanforderungen": [
+                  "Bewusster Umgang mit eigenen Ressourcen",
+                  "Ausbalancieren von hohem Engagement und guter Distanzierungsfähigkeit"
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "Berufspraktische Erfahrung",
+            "Kompetenzfacetten": [
+              {
+                "ID": "GRETA-4-3-1",
+                "Name": "Reflexion des eigenen Lehrhandelns",
+                "Kompetenzanforderungen": [
+                  "Bewusstsein über die Wichtigkeit der Reflexion des eigenen Lehrhandelns",
+                  "Bereitschaft zur Reflexion des eigenen pädagogischen Handelns während oder nach einer Handlungssituation",
+                  "Bereitschaft zur Übernahme der Perspektive der Teilnehmenden"
+                ]
+              },
+              {
+                "ID": "GRETA-4-3-2",
+                "Name": "Berufliche Weiterentwicklung",
+                "Kompetenzanforderungen": [
+                  "Bewusstsein über die Notwendigkeit der beruflichen Weiterentwicklung",
+                  "Bereitschaft zur kontinuierlichen Weiterentwicklung im Hinblick auf fachliche, pädagogische und gesamtgesellschaftliche Themen",
+                  "Aufgeschlossenheit gegenüber neuen fachlichen, pädagogischen und gesamtgesellschaftlichen Themen",
+                  "Kritische Auseinandersetzung mit fachlichen, pädagogischen und gesamtgesellschaftlichen Themen"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
