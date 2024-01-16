@@ -177,12 +177,10 @@ class Assessment:
         """
         for aspect in self.competence_tree.aspects:
             for area in aspect.areas:
-                area_path: str = f"{self.competence_tree.id}/{aspect.id}"
-                self.add_achievement(area_path)
+                self.add_achievement(area.path)
                 for facet in area.facets:
                     # Construct the path for the facet
-                    facet_path=f"{area_path}/{facet.id}"
-                    self.add_achievement(facet_path)
+                    self.add_achievement(facet.path)
                     
     def add_achievement(self,path):
         # Create a new Achievement instance with the constructed path
@@ -192,6 +190,9 @@ class Assessment:
         self.learner.add_achievement(new_achievement)
 
     def get_index_str(self) -> str:
+        """
+        get the current achievement index
+        """
         index_str = f"{self.achievement_index+1:2}/{self.total:2}"
         return index_str
 
@@ -230,6 +231,9 @@ class Assessment:
         self.progress_bar.update_value(count)
 
     async def step(self, step: int = 0):
+        """
+        step with the achievement view
+        """
         self.update_achievement_view(step)
 
     def update_achievement_view(self, step: int = 0):
