@@ -54,7 +54,9 @@ class TestDynamicCompetenceMap(Basetest):
         self.assertTrue(example_name in examples)
         example = examples[example_name]
         path="greta/4/1/2"
-        facet = example.competence_tree.lookup_by_path(path)
+        ct=example.competence_tree
+        self.assertEqual(4,ct.total_valid_levels)
+        facet = ct.lookup_by_path(path)
         self.assertIsNotNone(facet)
         self.assertIsInstance(facet, CompetenceFacet)
         html = facet.as_html()

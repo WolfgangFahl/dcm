@@ -233,6 +233,33 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                         return facet
         handle_error(f"invalid path for lookup {path}")
         return None
+    
+    @property
+    def total_valid_levels(self) -> int:
+        """
+        Calculate the total number of levels excluding 
+        levels with a level of 0.
+
+        Returns:
+            int: The total number of valid levels.
+        """
+        level_count= len([level for level in self.levels if level.level != 0])
+        return level_count
+    
+    def get_level_color(self, achievement_level: int) -> Optional[str]:
+        """
+        Retrieve the color associated with a specific achievement level.
+
+        Args:
+            achievement_level (int): The level of achievement to get the color for.
+
+        Returns:
+            Optional[str]: The color code associated with the given level, or None if not found.
+        """
+        for level in self.levels:
+            if level.level == achievement_level:
+                return level.color_code
+        return None
 
     def to_pretty_json(self):
         """

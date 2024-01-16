@@ -204,8 +204,8 @@ class Assessment:
                 total=self.total, desc="self assessment", unit="facets"
             )
             self.progress_bar.reset()
-            facet_element_name=self.competence_tree.element_names["facet"]
-            area_element_name=self.competence_tree.element_names["area"]
+            facet_element_name=self.competence_tree.element_names.get("facet") or "facet"
+            area_element_name=self.competence_tree.element_names.get("area") or "area"
             
             with ui.row() as self.navigation_row:
                 ui.button("", 
@@ -305,7 +305,6 @@ class Assessment:
         display the active achievement as the step indicates
         """
         self.show_progress()
-        self.webserver.render_dcm(self.dcm, self.learner, clear_assessment=False)
         if self.achievement_index + step < 0:
             ui.notify("first achievement reached!")
             step = 0
@@ -313,6 +312,12 @@ class Assessment:
             self.achievement_index += step
             self.index_view.text = self.get_index_str()
             achievement = self.current_achievement
+            self.webserver.render_dcm(
+                self.dcm, 
+                self.learner, 
+                selected_paths=[achievement.path],
+                clear_assessment=False
+            )
             self.button_row.achievement = achievement
             self.button_row.set_button_states(achievement)
             competence_element = self.competence_tree.lookup_by_path(achievement.path)

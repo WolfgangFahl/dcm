@@ -3,8 +3,8 @@ Created on 2024-01-12
 
 @author: wf
 """
-from dataclasses import dataclass
 from typing import List, Optional
+import copy
 
 from dcm.dcm_core import (
     CompetenceElement,
@@ -53,19 +53,18 @@ class DcmChart:
         if filename:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
-
-    def generate_donut_segment_for_element(
-        self,
-        svg: SVG,
-        element: CompetenceElement,
-        learner: Learner,
-        segment: DonutSegment,
-    ):
+    
+    def add_donut_segment(self, 
+            svg: SVG, 
+            element: CompetenceElement, 
+            segment: DonutSegment, 
+            level_color=None, 
+            achievement_level=None
+        )->DonutSegment:
         """
-        generate a donut segment for a given element of
-        the CompetenceTree
+        create a donut segment for the 
+        given competence element and add it to the given SVG
         """
-        # Add the element segment as a donut segment
         element_url = (
             element.url
             if element.url
@@ -80,13 +79,73 @@ class DcmChart:
             x=self.cx,
             y=self.cy,
         )
+    
+        if level_color:
+            element_config.fill = level_color  # Set the color
+        if element.path in self.selected_paths:
+            element_config.element_class = "selected"
+            
+        if achievement_level is not None:
+            total_levels = self.dcm.competence_tree.total_valid_levels
+            relative_radius = (segment.outer_radius - segment.inner_radius) * (achievement_level / total_levels)
+            segment.outer_radius = segment.inner_radius + relative_radius
+    
+        result=svg.add_donut_segment(config=element_config, segment=segment)
+        return result
+    
+    def generate_donut_segment_for_achievement(
+        self,
+        svg: SVG,
+        learner: Learner,
+        element: CompetenceElement,
+        segment: DonutSegment,
+    )->DonutSegment:
+        """
+        generate a donut segment for the 
+        learner's achievements
+        corresponding to the given path and return it's segment definition
+        """
+        achievement = learner.achievements_by_path.get(element.path, None)
+        result=None
+        if achievement and achievement.level:
+            # Retrieve the color for the achievement level
+            level_color = self.dcm.competence_tree.get_level_color(achievement.level)
+    
+            if level_color:
+                # set the color and radius of 
+                # the segment for achievement
+                # make sure we don't interfere with the segment calculations
+                segment=copy.deepcopy(segment)
+                result=self.add_donut_segment(svg, element, segment, level_color, achievement.level)
+        return result    
+
+    def generate_donut_segment_for_element(
+        self,
+        svg: SVG,
+        element: CompetenceElement,
+        learner: Learner,
+        segment: DonutSegment,
+    )->DonutSegment:
+        """
+        generate a donut segment for a given element of
+        the CompetenceTree
+        """
+        # Simply create the donut segment without considering the achievement
+        result=self.add_donut_segment(
+            svg=svg, 
+            element=element,
+            segment=segment
+        )
         # check learner achievements
         if learner:
-            achievement = learner.achievements_by_path.get(element.path, None)
-            if achievement and achievement.level:
-                element_config.element_class = "selected"
-        svg.add_donut_segment(config=element_config, segment=segment)
-
+            _learner_segment=self.generate_donut_segment_for_achievement(
+                svg=svg,
+                learner=learner,
+                element=element,
+                segment=segment
+            )
+        return result   
+     
     def generate_pie_elements(
         self,
         level: int,
@@ -119,7 +178,10 @@ class DcmChart:
                     end_angle,
                 )
                 self.generate_donut_segment_for_element(
-                    svg, element, learner, segment=sub_segment
+                    svg, 
+                    element, 
+                    learner, 
+                    segment=sub_segment
                 )
                 start_angle = end_angle
                 if level + 1 < len(self.levels):
@@ -135,19 +197,45 @@ class DcmChart:
         self,
         competence_tree: CompetenceTree = None,
         learner: Learner = None,
+        selected_paths: List=[],
         config: SVGConfig = None,
         with_java_script: bool = True,
         lookup_url: str = "",
     ) -> str:
         """
-        generate the SVG markup for the given CompetenceTree and learner
+    Generate the SVG markup for the given CompetenceTree and Learner. This method 
+    creates an SVG representation of the competence map, which visualizes the 
+    structure and levels of competencies, along with highlighting the learner's 
+    achievements if provided.
 
-        Args:
+    Args:
+        competence_tree (CompetenceTree, optional): The competence tree structure 
+            to be visualized. If None, the competence tree of the DcmChart instance 
+            will be used. Defaults to None.
+        learner (Learner, optional): The learner whose achievements are to be 
+            visualized on the competence tree. If None, no learner-specific 
+            information will be included in the SVG. Defaults to None.
+        selected_paths (List, optional): A list of paths that should be highlighted 
+            in the SVG. These paths typically represent specific competencies or 
+            achievements. Defaults to an empty list.
+        config (SVGConfig, optional): Configuration for the SVG canvas and legend. 
+            If None, default configuration settings are used. Defaults to None.
+        with_java_script (bool, optional): Indicates whether to include JavaScript 
+            in the SVG for interactivity. Defaults to True.
+        lookup_url (str, optional): Base URL for linking to detailed descriptions 
+            or information about the competence elements. If not provided, links 
+            will not be generated. Defaults to an empty string.
 
-        """
+    Returns:
+        str: A string containing the SVG markup for the competence map.
+
+    Raises:
+        ValueError: If there are inconsistencies or issues with the provided data
+            that prevent the creation of a valid SVG.
+    """
         if competence_tree is None:
             competence_tree = self.dcm.competence_tree
-
+        self.selected_paths=selected_paths
         svg = SVG(config)
         self.svg = svg
         config = svg.config

@@ -4,7 +4,7 @@ Created on 2023-11-06
 @author: wf
 """
 import os
-from typing import Optional
+from typing import List,Optional
 from urllib.parse import urlparse
 
 from fastapi import HTTPException
@@ -229,23 +229,42 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         except BaseException as ex:
             self.handle_exception(ex, self.do_trace)
 
-    def render_dcm(self, dcm, learner: Learner = None, clear_assessment: bool = True):
+    def render_dcm(self, 
+        dcm, 
+        learner: Learner = None, 
+        selected_paths: List=[],
+        clear_assessment: bool = True
+    ):
         """
         render the dynamic competence map
+        
+        Args:
+            dcm(DynamicCompetenceMap)
+            selected_paths (List, optional): A list of paths that should be highlighted 
+            in the SVG. These paths typically represent specific competencies or 
+            achievements. Defaults to an empty list.
+     
         """
-        if clear_assessment and self.assessment:
-            try:
-                self.assessment_row.clear()
-            except Exception as ex:
-                ui.notify(str(ex))
-            self.assessment = None
-        self.dcm = dcm
-        self.assessment_button.enable()
-        dcm_chart = DcmChart(dcm)
-        svg = dcm_chart.generate_svg_markup(learner=learner, with_java_script=False)
-        # Use the new get_java_script method to get the JavaScript
-        self.svg_view.content = svg
-        self.svg_view.update()
+        try:
+            if clear_assessment and self.assessment:
+                try:
+                    self.assessment_row.clear()
+                except Exception as ex:
+                    ui.notify(str(ex))
+                self.assessment = None
+            self.dcm = dcm
+            self.assessment_button.enable()
+            dcm_chart = DcmChart(dcm)
+            svg = dcm_chart.generate_svg_markup(
+                learner=learner, 
+                selected_paths=selected_paths,
+                with_java_script=False
+            )
+            # Use the new get_java_script method to get the JavaScript
+            self.svg_view.content = svg
+            self.svg_view.update()
+        except Exception as ex:
+            self.handle_exception(ex, self.do_trace)
 
     async def home(self, _client: Client):
         """Generates the home page with a selection of examples and
