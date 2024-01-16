@@ -101,7 +101,6 @@ class ButtonRow:
         step = 1 if self.achievement.level else 0
         self.assessment.update_achievement_view(step)
 
-
 class Assessment:
     """
     Assessment for CompetenceTree
@@ -208,15 +207,15 @@ class Assessment:
             with ui.row():
                 ui.button("", icon="arrow_back", on_click=lambda _args: self.step(-1))
                 ui.button("", icon="arrow_forward", on_click=lambda _args: self.step(1))
+                self.button_row = ButtonRow(
+                    self, self.competence_tree, self.current_achievement
+                )
             with ui.row():
                 with ui.card() as self.achievement_view:
                     self.index_view = ui.label(self.get_index_str())
                     self.link_view = ui.html()
                     self.markdown_view = ui.markdown()
-                    self.button_row = ButtonRow(
-                        self, self.competence_tree, self.current_achievement
-                    )
-
+    
     def show_progress(self):
         """
         Update the progress bar based on the
