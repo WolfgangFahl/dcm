@@ -204,13 +204,40 @@ class Assessment:
                 total=self.total, desc="self assessment", unit="facets"
             )
             self.progress_bar.reset()
-            with ui.row():
-                ui.button("", icon="arrow_back", on_click=lambda _args: self.step(-1))
-                ui.button("", icon="arrow_forward", on_click=lambda _args: self.step(1))
+            facet_element_name=self.competence_tree.element_names["facet"]
+            area_element_name=self.competence_tree.element_names["area"]
+            
+            with ui.row() as self.navigation_row:
+                ui.button("", 
+                    icon="first_page", 
+                    on_click=lambda _args: self.goto(0)
+                ).tooltip("to first")
+                ui.button("", 
+                    icon="fast_rewind", 
+                    on_click=lambda _args: 
+                    self.step_area(-1)
+                ).tooltip(f"previous {area_element_name}")
+                ui.button("", 
+                    icon="arrow_back", 
+                    on_click=lambda _args: self.step(-1)
+                ).tooltip(f"previous {facet_element_name}")
+                ui.button("", 
+                    icon="arrow_forward", 
+                    on_click=lambda _args: self.step(1)
+                ).tooltip(f"next {facet_element_name}")
+                ui.button("", 
+                    icon="fast_forward", 
+                    on_click=lambda _args: self.step_area(1)
+                ).tooltip(f"next {area_element_name}")
+                ui.button("", 
+                    icon="last_page", 
+                    on_click=lambda _args: self.goto(self.total-1)
+                ).tooltip("to last")
+            with ui.row() as self.button_row_row:
                 self.button_row = ButtonRow(
                     self, self.competence_tree, self.current_achievement
                 )
-            with ui.row():
+            with ui.row() as self.card_row:
                 with ui.card() as self.achievement_view:
                     self.index_view = ui.label(self.get_index_str())
                     self.link_view = ui.html()
@@ -228,6 +255,44 @@ class Assessment:
         )
         self.progress_bar.total = self.total
         self.progress_bar.update_value(count)
+        
+    async def step_area(self, area_step: int):
+        """
+        Step towards the area given in area_step.
+        For example, 1 means next area, -1 means previous area.
+        """
+        if area_step == 0:
+            return  # No movement required
+    
+        direction = 1 if area_step > 0 else -1
+        area_count = 0
+    
+        # Start with the next/previous achievement based on the direction
+        new_index = self.achievement_index + direction
+    
+        # Loop through achievements until the desired area count is reached
+        while 0 <= new_index < len(self.learner.achievements):
+            achievement = self.learner.achievements[new_index]
+            element = self.competence_tree.lookup_by_path(achievement.path)
+    
+            if isinstance(element, CompetenceArea):
+                area_count += 1
+                if area_count == abs(area_step):
+                    # Found the required area, update the index
+                    self.achievement_index = new_index
+                    self.update_achievement_view(0)
+                    return
+    
+            # Move to the next/previous achievement
+            new_index += direction
+    
+        # Notify if no more areas in the direction
+        ui.notify("Reached the end of the areas in this direction.")
+    
+            
+    async def goto(self,index:int):
+        self.achievement_index=index
+        self.update_achievement_view(0)
 
     async def step(self, step: int = 0):
         """
