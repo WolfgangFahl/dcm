@@ -15,7 +15,7 @@ from dataclasses_json import dataclass_json
 from ngwidgets.yamlable import YamlAble
 from slugify import slugify
 
-from dcm.svg import SVG, SVGConfig, SVGNodeConfig
+from dcm.svg import SVG, SVGNodeConfig
 
 
 @dataclass_json
@@ -41,7 +41,12 @@ class CompetenceElement:
     def __post_init__(self):
         # Set the id to the the slug of the name if id is None
         if self.id is None:
-            self.id = slugify(self.name)
+            # https://pypi.org/project/python-slugify/
+            self.id = slugify(
+                self.name,
+                lowercase=False,
+                regex_pattern=r'[^\w\s\-]'
+            )
 
     def as_html(self) -> str:
         """

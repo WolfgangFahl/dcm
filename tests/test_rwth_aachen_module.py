@@ -17,7 +17,6 @@ from dcm.dcm_core import (
     CompetenceTree,
 )
 
-
 class TestModule(Basetest):
     """
     test RWTH Aachen Modulhandbuch
