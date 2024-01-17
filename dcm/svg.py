@@ -446,7 +446,11 @@ class SVG:
         )
 
     def add_text_to_donut_segment(
-        self, segment: DonutSegment, text: str, direction: str = "horizontal"
+        self, 
+        segment: DonutSegment, 
+        text: str, 
+        direction: str = "horizontal",
+        color: str = "white"
     ) -> None:
         """
         Add text to a donut segment with various direction options.
@@ -456,6 +460,8 @@ class SVG:
             text (str): The text content to be added.
             direction (str): The direction in which the text should be drawn.
                              Options are "horizontal", "angled", or "curved".
+            color (str): The color of the text. Default is "white".
+                      
         """
         # Common calculations
         mid_angle = (segment.start_angle + segment.end_angle) / 2
@@ -478,7 +484,7 @@ class SVG:
             # Add text element
             escaped_text = html.escape(text)
             text_element = (
-                f'<text x="{text_x}" y="{text_y}" fill="black" '
+                f'<text x="{text_x}" y="{text_y}" fill="{color}" '
                 f'font-family="{self.config.font}" '
                 f'font-size="{self.config.font_size}" '
                 f'text-anchor="{text_anchor}" '
@@ -508,7 +514,7 @@ class SVG:
 
             # Add text along the path
             text_path_element = (
-                f'<text fill="black" font-family="{self.config.font}" font-size="{self.config.font_size}">'
+                f'<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">'
                 f'<textPath xlink:href="#{path_id}" startOffset="50%" text-anchor="middle">{html.escape(text)}</textPath>'
                 f"</text>"
             )
