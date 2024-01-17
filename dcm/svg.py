@@ -64,13 +64,14 @@ class SVGNodeConfig:
 @dataclass
 class DonutSegment:
     """
-    a donut segment
+    A donut segment representing a 
+    section of a donut chart.
     """
-
     inner_radius: float
     outer_radius: float
     start_angle: Optional[float] = 0.0
     end_angle: Optional[float] = 360.0
+    fill: Optional[str] = None  # Optional fill color for the segment
 
 
 class SVG:

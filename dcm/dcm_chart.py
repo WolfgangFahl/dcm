@@ -13,7 +13,7 @@ from dcm.dcm_core import (
     DynamicCompetenceMap,
     Learner,
 )
-from dcm.svg import SVG, DonutSegment, SVGConfig
+from dcm.svg import SVG, DonutSegment, SVGConfig, SVGNodeConfig
 
 
 class DcmChart:
@@ -26,6 +26,107 @@ class DcmChart:
         Constructor
         """
         self.dcm = dcm
+        
+    def precalculate_segments(self, competence_tree: CompetenceTree) -> dict:
+        """
+        Pre-calculate the DonutSegment for each element in the CompetenceTree
+        and store it in a dictionary by path for quick lookup.
+
+        Args:
+            competence_tree (CompetenceTree): The competence tree to precalculate the segments for.
+
+        Returns:
+            dict: A dictionary mapping paths to their corresponding DonutSegment.
+        """
+        segment_by_path = {}
+        full_circle = 360
+        aspect_angle = full_circle / len(competence_tree.aspects) if competence_tree.aspects else full_circle
+        
+        for aspect in competence_tree.aspects:
+            start_angle_aspect = 0
+            for area_index, area in enumerate(aspect.areas):
+                end_angle_aspect = start_angle_aspect + aspect_angle
+                
+                # Create a DonutSegment for the area
+                segment_by_path[area.path] = DonutSegment(
+                    inner_radius=self.tree_radius,
+                    outer_radius=self.tree_radius * 2,  # Modify as needed
+                    start_angle=start_angle_aspect,
+                    end_angle=end_angle_aspect,
+                    fill="white"  # Default fill color for segments with no elements
+                )
+                
+                # Calculate and store segments for sub-elements (facets)
+                for facet_index, facet in enumerate(area.facets):
+                    facet_angle = aspect_angle / len(area.facets)
+                    start_angle_facet = start_angle_aspect + (facet_index * facet_angle)
+                    end_angle_facet = start_angle_facet + facet_angle
+                    
+                    segment_by_path[facet.path] = DonutSegment(
+                        inner_radius=self.tree_radius * 2,  # Modify as needed
+                        outer_radius=self.tree_radius * 3,  # Modify as needed
+                        start_angle=start_angle_facet,
+                        end_angle=end_angle_facet,
+                        fill=facet.color_code if facet.color_code else "white"
+                    )
+                
+                # Update the start angle for the next area within the same aspect.
+                start_angle_aspect = end_angle_aspect
+
+        return segment_by_path
+    
+    def generate_svg_from_segments(self, 
+        competence_tree:CompetenceTree,
+        config: Optional[SVGConfig] = None) -> str:
+        """
+        Generate the SVG markup using pre-calculated DonutSegment objects stored in segments_by_path.
+
+        Args:
+            competence_tree(CompetenceTree): a competence tree
+            segments_by_path (dict): A dictionary mapping element paths to their corresponding DonutSegment objects.
+            config (SVGConfig, optional): The configuration for the SVG canvas and legend. Defaults to default values.
+            
+        Returns:
+            str: The SVG markup.
+        """
+        if config is None:
+            config = SVGConfig()  # Use default configuration if none provided
+        svg=self.prepare_and_add_inner_circle(config, competence_tree=competence_tree)
+        # Pre-calculate segments for the competence tree
+        segments_by_path = self.precalculate_segments(competence_tree)
+        # Iterate over the segments and add them to the SVG
+        for path, segment in segments_by_path.items():
+            element=competence_tree.lookup_by_path(path)
+            config=self.get_element_config(element)
+            svg.add_donut_segment(config, segment)
+        return svg.get_svg_markup()    
+    
+    def prepare_and_add_inner_circle(self,
+            config,
+            competence_tree:CompetenceTree,
+            lookup_url:str=None):
+        """
+        prepare the SVG markup generation and add 
+        the inner_circle
+        """
+        self.lookup_url = (
+            competence_tree.lookup_url if competence_tree.lookup_url else lookup_url
+        )
+    
+        svg = SVG(config)
+        self.svg = svg
+        config = svg.config
+        # center of circle
+        self.cx = config.width // 2
+        self.cy = (config.total_height - config.legend_height) // 2
+        self.tree_radius = config.width / 2 / 8
+        self.circle_config = competence_tree.to_svg_node_config(
+            x=self.cx, 
+            y=self.cy, 
+            width=self.tree_radius
+        )
+        svg.add_circle(config=self.circle_config)
+        return svg
 
     def generate_svg(
         self,
@@ -54,6 +155,25 @@ class DcmChart:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
     
+    def get_element_config(self,element:CompetenceElement)->SVGNodeConfig:
+        """
+        """
+        element_url = (
+            element.url
+            if element.url
+            else f"{self.lookup_url}/description/{element.path}"
+            if self.lookup_url is not None
+            else None
+        )
+        show_as_popup = element.url is None
+        element_config = element.to_svg_node_config(
+                url=element_url,
+                show_as_popup=show_as_popup,
+                x=self.cx,
+                y=self.cy,
+        )
+        return element_config
+    
     def add_donut_segment(self, 
             svg: SVG, 
             element: CompetenceElement, 
@@ -65,20 +185,7 @@ class DcmChart:
         create a donut segment for the 
         given competence element and add it to the given SVG
         """
-        element_url = (
-            element.url
-            if element.url
-            else f"{self.lookup_url}/description/{element.path}"
-            if self.lookup_url is not None
-            else None
-        )
-        show_as_popup = element.url is None
-        element_config = element.to_svg_node_config(
-            url=element_url,
-            show_as_popup=show_as_popup,
-            x=self.cx,
-            y=self.cy,
-        )
+        element_config=self.get_element_config(element)
     
         if level_color:
             element_config.fill = level_color  # Set the color
@@ -236,25 +343,12 @@ class DcmChart:
         if competence_tree is None:
             competence_tree = self.dcm.competence_tree
         self.selected_paths=selected_paths
-        svg = SVG(config)
-        self.svg = svg
-        config = svg.config
-        # center of circle
-        self.cx = config.width // 2
-        self.cy = (config.total_height - config.legend_height) // 2
         self.levels = ["aspects", "areas", "facets"]
-        self.tree_radius = config.width / 2 / 8
-
-        self.lookup_url = (
-            competence_tree.lookup_url if competence_tree.lookup_url else lookup_url
-        )
-
-        circle_config = competence_tree.to_svg_node_config(
-            x=self.cx, 
-            y=self.cy, 
-            width=self.tree_radius
-        )
-        svg.add_circle(config=circle_config)
+     
+        svg=self.prepare_and_add_inner_circle(
+            config, 
+            competence_tree,
+            lookup_url)
 
         segment = DonutSegment(
             inner_radius=0, 
@@ -267,7 +361,7 @@ class DcmChart:
             learner=learner,
             segment=segment,
         )
-        if config.legend_height > 0:
+        if svg.config.legend_height > 0:
             competence_tree.add_legend(svg)
 
         return svg.get_svg_markup(with_java_script=with_java_script)

@@ -310,38 +310,45 @@ class Assessment:
             step = 0
         if self.achievement_index + step < len(self.learner.achievements):
             self.achievement_index += step
-            self.index_view.text = self.get_index_str()
-            achievement = self.current_achievement
-            self.webserver.render_dcm(
-                self.dcm, 
-                self.learner, 
-                selected_paths=[achievement.path],
-                clear_assessment=False
-            )
-            self.button_row.achievement = achievement
-            self.button_row.set_button_states(achievement)
-            competence_element = self.competence_tree.lookup_by_path(achievement.path)
-            if not competence_element:
-                ui.notify("invalid path: {achievement.path}")
-                self.markdown_view.content = f"⚠️ {achievement.path}"
-            else:
-                if hasattr(competence_element, "path"):
-                    if competence_element.url:
-                        link = Link.create(
-                            competence_element.url, competence_element.path
-                        )
-                    else:
-                        link = competence_element.path
-                else:
-                    link = "⚠️ - competence element path missing"
-                self.link_view.content = link
-                description = competence_element.description or ""
-                if isinstance(competence_element, CompetenceArea):
-                    aspect = competence_element.aspect
-                    description = f"### {aspect.name}\n\n**{competence_element.name}**:\n\n{description}"
-                if isinstance(competence_element, CompetenceFacet):
-                    area = competence_element.area
-                    description = f"### {area.name}\n\n**{competence_element.name}**:\n\n{description}"
-                self.markdown_view.content = description
         else:
             ui.notify("Done!")
+        self.update_current_achievement_view()
+        
+    def update_current_achievement_view(self):
+        """
+        show the current achievement
+        """
+        self.index_view.text = self.get_index_str()
+        achievement = self.current_achievement
+        self.webserver.render_dcm(
+            self.dcm, 
+            self.learner, 
+            selected_paths=[achievement.path],
+            clear_assessment=False
+        )
+        self.button_row.achievement = achievement
+        self.button_row.set_button_states(achievement)
+        competence_element = self.competence_tree.lookup_by_path(achievement.path)
+        if not competence_element:
+            ui.notify("invalid path: {achievement.path}")
+            self.markdown_view.content = f"⚠️ {achievement.path}"
+        else:
+            if hasattr(competence_element, "path"):
+                if competence_element.url:
+                    link = Link.create(
+                        competence_element.url, competence_element.path
+                    )
+                else:
+                    link = competence_element.path
+            else:
+                link = "⚠️ - competence element path missing"
+            self.link_view.content = link
+            description = competence_element.description or ""
+            if isinstance(competence_element, CompetenceArea):
+                aspect = competence_element.aspect
+                description = f"### {aspect.name}\n\n**{competence_element.name}**:\n\n{description}"
+            if isinstance(competence_element, CompetenceFacet):
+                area = competence_element.area
+                description = f"### {area.name}\n\n**{competence_element.name}**:\n\n{description}"
+            self.markdown_view.content = description
+   

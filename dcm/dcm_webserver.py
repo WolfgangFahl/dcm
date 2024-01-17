@@ -210,7 +210,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             input_source = self.input
             if input_source:
                 name = self.get_basename_without_extension(input_source)
-                ui.notify(f"rendering {name}")
+                with self.container:
+                    ui.notify(f"rendering {name}")
                 definition = self.do_read_input(input_source)
                 # Determine the format based on the file extension
                 markup = "json" if input_source.endswith(".json") else "yaml"
@@ -278,7 +279,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
 
         self.setup_menu()
 
-        with ui.element("div").classes("w-full"):
+        with ui.element("div").classes("w-full") as self.container:
             with ui.splitter() as splitter:
                 with splitter.before:
                     extensions = {"json": ".json", "yaml": ".yaml"}
