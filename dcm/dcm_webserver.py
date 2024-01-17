@@ -63,6 +63,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
         self.assessment = None
+        self.text_mode="none"
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
