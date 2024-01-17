@@ -41,6 +41,7 @@ class dcm.dcm_core.CompetenceFacet {
 class dcm.dcm_core.CompetenceLevel {
   level: int
   icon: str
+  utf8_icon: str
 }
 
 class dcm.dcm_core.CompetenceTree {

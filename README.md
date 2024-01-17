@@ -21,7 +21,7 @@ defined competence aspects.
 * [API documentation](http://dcm.bitplan.com/docs)
 
 ### Model
-![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/WolfgangFahl/dcm/main/dcm.puml?fmt=svg&version=4)
+![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/WolfgangFahl/dcm/main/dcm.puml?fmt=svg&version=5)
 
 ## Authors
 * [Wolfgang Fahl](http://www.bitplan.com/Wolfgang_Fahl)

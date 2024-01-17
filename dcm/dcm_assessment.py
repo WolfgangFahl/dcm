@@ -51,8 +51,12 @@ class ButtonRow:
         self.buttons = {}
         with ui.row() as self.row:
             for level in self.competence_tree.levels:
+                # generate a button to represent the level
+                button_label=level.name
+                if level.utf8_icon:
+                    button_label=f"{level.utf8_icon} {level.name}"
                 button = ui.button(
-                    level.name,
+                    button_label,
                     icon=level.icon,
                     color=level.color_code,
                     on_click=lambda _args, l=level.level: self.handle_selection(l),
