@@ -72,14 +72,11 @@ class TestAPI(WebserverTest):
                 ["<h2>Motivationale Orientierungen</h2>"],
             ),
             # Test case for the whole tree
-            (   
-                "greta", 
-                ["<h2>GRETA</h2>"]
-            ),
+            ("greta", ["<h2>GRETA</h2>"]),
         ]
 
         debug = self.debug
-        #debug=True
+        # debug=True
         for path, expected_contents in test_cases:
             html = self.get_html(f"/description/{path}")
             if debug:

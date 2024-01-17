@@ -26,6 +26,7 @@ class CompetenceElement:
 
     Attributes:
         name (str): The name of the competence element.
+        short_name(Optional[str]): the label to be displayed 
         id (Optional[str]): An optional identifier for the competence element will be set to the name if id is None.
         url (Optional[str]): An optional URL for more information about the competence element.
         description (Optional[str]): An optional description of the competence element.
@@ -33,6 +34,7 @@ class CompetenceElement:
     """
 
     name: str
+    short_name: Optional[str] = None
     id: Optional[str] = None
     url: Optional[str] = None
     description: Optional[str] = None
@@ -42,11 +44,9 @@ class CompetenceElement:
         # Set the id to the the slug of the name if id is None
         if self.id is None:
             # https://pypi.org/project/python-slugify/
-            self.id = slugify(
-                self.name,
-                lowercase=False,
-                regex_pattern=r'[^\w\s\-]'
-            )
+            self.id = slugify(self.name, lowercase=False, regex_pattern=r"[^\w\s\-]")
+        if self.short_name is None:
+            self.short_name = self.name[:10]
 
     def as_html(self) -> str:
         """
@@ -96,6 +96,7 @@ class CompetenceFacet(CompetenceElement):
     This class can include additional properties or methods specific to a competence facet.
     """
 
+
 @dataclass_json
 @dataclass
 class CompetenceArea(CompetenceElement):
@@ -105,7 +106,9 @@ class CompetenceArea(CompetenceElement):
     Attributes:
         facets (List[CompetenceFacet]): A list of CompetenceFacet objects representing individual facets of this area.
     """
+
     facets: List[CompetenceFacet] = field(default_factory=list)
+
 
 @dataclass_json
 @dataclass
@@ -149,7 +152,6 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
-
     lookup_url: Optional[str] = None
     aspects: List[CompetenceAspect] = field(default_factory=list)
     levels: List[CompetenceLevel] = field(default_factory=list)
@@ -214,7 +216,9 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         if len(parts) > 1:
             aspect_id = parts[1]
             # Retrieve the aspect
-            aspect = next((aspect for aspect in self.aspects if aspect.id==aspect_id), None)
+            aspect = next(
+                (aspect for aspect in self.aspects if aspect.id == aspect_id), None
+            )
         if aspect:
             if len(parts) == 2:
                 return aspect
@@ -233,19 +237,19 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                         return facet
         handle_error(f"invalid path for lookup {path}")
         return None
-    
+
     @property
     def total_valid_levels(self) -> int:
         """
-        Calculate the total number of levels excluding 
+        Calculate the total number of levels excluding
         levels with a level of 0.
 
         Returns:
             int: The total number of valid levels.
         """
-        level_count= len([level for level in self.levels if level.level != 0])
+        level_count = len([level for level in self.levels if level.level != 0])
         return level_count
-    
+
     def get_level_color(self, achievement_level: int) -> Optional[str]:
         """
         Retrieve the color associated with a specific achievement level.
@@ -518,10 +522,10 @@ class DynamicCompetenceMap:
             ValueError: If an unsupported markup format is specified.
         """
         if markup == "json":
-            data=json.loads(text)
+            data = json.loads(text)
             return data
         elif markup == "yaml":
-            data=yaml.safe_load(text)
+            data = yaml.safe_load(text)
             return data
         else:
             raise ValueError(f"Unsupported markup format: {markup}")
@@ -565,12 +569,12 @@ class DynamicCompetenceMap:
 
     @classmethod
     def from_definition_string(
-        cls, 
-        name: str, 
-        definition_string: str, 
-        content_class, 
+        cls,
+        name: str,
+        definition_string: str,
+        content_class,
         markup: str = "json",
-        debug:bool = False
+        debug: bool = False,
     ) -> Any:
         """
         Load a DynamicCompetenceMap or Learner instance from a definition string (either JSON or YAML).
@@ -591,9 +595,9 @@ class DynamicCompetenceMap:
             data = cls.parse_markup(definition_string, markup)
             if debug:
                 # Save the parsed data to a JSON file in /tmp directory
-                debug_file_path = os.path.join('/tmp', f'{name}.json')
-                with open(debug_file_path, 'w') as debug_file:
-                    json.dump(data, debug_file, indent=2,default=str)
+                debug_file_path = os.path.join("/tmp", f"{name}.json")
+                with open(debug_file_path, "w") as debug_file:
+                    json.dump(data, debug_file, indent=2, default=str)
             content = content_class.from_dict(data)
             if isinstance(content, CompetenceTree):
                 return DynamicCompetenceMap(content)

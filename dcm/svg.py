@@ -64,9 +64,10 @@ class SVGNodeConfig:
 @dataclass
 class DonutSegment:
     """
-    A donut segment representing a 
+    A donut segment representing a
     section of a donut chart.
     """
+
     inner_radius: float
     outer_radius: float
     start_angle: Optional[float] = 0.0
@@ -443,6 +444,77 @@ class SVG:
             level=2,
             comment=config.comment,
         )
+
+    def add_text_to_donut_segment(
+        self, segment: DonutSegment, text: str, direction: str = "horizontal"
+    ) -> None:
+        """
+        Add text to a donut segment with various direction options.
+
+        Args:
+            segment (DonutSegment): The donut segment to which text will be added.
+            text (str): The text content to be added.
+            direction (str): The direction in which the text should be drawn.
+                             Options are "horizontal", "angled", or "curved".
+        """
+        # Common calculations
+        mid_angle = (segment.start_angle + segment.end_angle) / 2
+        mid_angle_rad = radians(mid_angle)
+        mid_radius = (segment.inner_radius + segment.outer_radius) / 2
+        cx, cy = self.config.width / 2, self.config.height / 2
+
+        if direction in ["horizontal", "angled"]:
+            # Calculate position for horizontal or angled text
+            text_x = cx + mid_radius * cos(mid_angle_rad)
+            text_y = cy + mid_radius * sin(mid_angle_rad)
+
+            # Adjust text anchor and rotation
+            text_anchor = "middle"
+            transform = ""
+            if direction == "angled":
+                rotation_angle = mid_angle if mid_angle <= 180 else mid_angle - 180
+                transform = f"rotate({rotation_angle}, {text_x}, {text_y})"
+
+            # Add text element
+            escaped_text = html.escape(text)
+            text_element = (
+                f'<text x="{text_x}" y="{text_y}" fill="black" '
+                f'font-family="{self.config.font}" '
+                f'font-size="{self.config.font_size}" '
+                f'text-anchor="{text_anchor}" '
+                f'transform="{transform}">'
+                f"{escaped_text}</text>"
+            )
+            self.add_element(text_element)
+
+        elif direction == "curved":
+            # Create a path for the text to follow
+            path_id = f"path{segment.start_angle}-{segment.end_angle}"
+            start_x = cx + segment.outer_radius * cos(mid_angle_rad)
+            start_y = cy + segment.outer_radius * sin(mid_angle_rad)
+            large_arc_flag = (
+                "1" if segment.end_angle - segment.start_angle >= 180 else "0"
+            )
+            path_d = (
+                f"M {start_x} {start_y} "
+                f"A {segment.outer_radius} {segment.outer_radius} 0 {large_arc_flag} 1 "
+                f"{cx + segment.outer_radius * cos(radians(segment.end_angle))} "
+                f"{cy + segment.outer_radius * sin(radians(segment.end_angle))}"
+            )
+            path_element = (
+                f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />'
+            )
+            self.add_element(path_element)
+
+            # Add text along the path
+            text_path_element = (
+                f'<text fill="black" font-family="{self.config.font}" font-size="{self.config.font_size}">'
+                f'<textPath xlink:href="#{path_id}" startOffset="50%" text-anchor="middle">{html.escape(text)}</textPath>'
+                f"</text>"
+            )
+            self.add_element(text_path_element)
+        else:
+            raise ValueError(f"invalid direction {direction}")
 
     def get_java_script(self) -> str:
         """

@@ -29,6 +29,7 @@ class dcm.dcm_core.CompetenceArea {
 }
 class dcm.dcm_core.CompetenceElement {
   name: str
+  short_name: Optional[str]
   id: Optional[str]
   url: Optional[str]
   description: Optional[str]

@@ -18,6 +18,7 @@ from dcm.dcm_core import (
 from dcm.svg import SVGConfig
 from tests.markup_check import MarkupCheck
 
+
 class TestDynamicCompetenceMap(Basetest):
     """
     test the dynamic competence map
@@ -53,9 +54,9 @@ class TestDynamicCompetenceMap(Basetest):
         example_name = "greta"
         self.assertTrue(example_name in examples)
         example = examples[example_name]
-        path="greta/4/1/2"
-        ct=example.competence_tree
-        self.assertEqual(4,ct.total_valid_levels)
+        path = "greta/4/1/2"
+        ct = example.competence_tree
+        self.assertEqual(4, ct.total_valid_levels)
         facet = ct.lookup_by_path(path)
         self.assertIsNotNone(facet)
         self.assertIsInstance(facet, CompetenceFacet)
@@ -148,10 +149,12 @@ class TestDynamicCompetenceMap(Basetest):
                 # Now you can perform assertions to verify that the data was loaded correctly
                 self.assertIsNotNone(dcm)
                 dcm_chart = DcmChart(dcm)
-   
+
                 # Generate SVG markup
-                svg_config=SVGConfig()
-                svg_markup = dcm_chart.generate_svg_from_segments(dcm.competence_tree,config=svg_config)
+                svg_config = SVGConfig()
+                svg_markup = dcm_chart.generate_svg_from_segments(
+                    dcm.competence_tree, config=svg_config
+                )
                 svg_file = f"/tmp/{example_name}_{markup}_segments.svg"
                 with open(svg_file, "w") as file:
                     file.write(svg_markup)

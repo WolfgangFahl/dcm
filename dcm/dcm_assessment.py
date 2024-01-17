@@ -10,8 +10,8 @@ from nicegui import ui
 
 from dcm.dcm_core import (
     Achievement,
-    CompetenceFacet,
     CompetenceArea,
+    CompetenceFacet,
     CompetenceTree,
     DynamicCompetenceMap,
     Learner,
@@ -52,9 +52,9 @@ class ButtonRow:
         with ui.row() as self.row:
             for level in self.competence_tree.levels:
                 # generate a button to represent the level
-                button_label=level.name
+                button_label = level.name
                 if level.utf8_icon:
-                    button_label=f"{level.utf8_icon} {level.name}"
+                    button_label = f"{level.utf8_icon} {level.name}"
                 button = ui.button(
                     button_label,
                     icon=level.icon,
@@ -104,6 +104,7 @@ class ButtonRow:
         # show achievement_view
         step = 1 if self.achievement.level else 0
         self.assessment.update_achievement_view(step)
+
 
 class Assessment:
     """
@@ -184,8 +185,8 @@ class Assessment:
                 for facet in area.facets:
                     # Construct the path for the facet
                     self.add_achievement(facet.path)
-                    
-    def add_achievement(self,path):
+
+    def add_achievement(self, path):
         # Create a new Achievement instance with the constructed path
         new_achievement = Achievement(
             path=path,
@@ -208,34 +209,31 @@ class Assessment:
                 total=self.total, desc="self assessment", unit="facets"
             )
             self.progress_bar.reset()
-            facet_element_name=self.competence_tree.element_names.get("facet") or "facet"
-            area_element_name=self.competence_tree.element_names.get("area") or "area"
-            
+            facet_element_name = (
+                self.competence_tree.element_names.get("facet") or "facet"
+            )
+            area_element_name = self.competence_tree.element_names.get("area") or "area"
+
             with ui.row() as self.navigation_row:
-                ui.button("", 
-                    icon="first_page", 
-                    on_click=lambda _args: self.goto(0)
+                ui.button(
+                    "", icon="first_page", on_click=lambda _args: self.goto(0)
                 ).tooltip("to first")
-                ui.button("", 
-                    icon="fast_rewind", 
-                    on_click=lambda _args: 
-                    self.step_area(-1)
+                ui.button(
+                    "", icon="fast_rewind", on_click=lambda _args: self.step_area(-1)
                 ).tooltip(f"previous {area_element_name}")
-                ui.button("", 
-                    icon="arrow_back", 
-                    on_click=lambda _args: self.step(-1)
+                ui.button(
+                    "", icon="arrow_back", on_click=lambda _args: self.step(-1)
                 ).tooltip(f"previous {facet_element_name}")
-                ui.button("", 
-                    icon="arrow_forward", 
-                    on_click=lambda _args: self.step(1)
+                ui.button(
+                    "", icon="arrow_forward", on_click=lambda _args: self.step(1)
                 ).tooltip(f"next {facet_element_name}")
-                ui.button("", 
-                    icon="fast_forward", 
-                    on_click=lambda _args: self.step_area(1)
+                ui.button(
+                    "", icon="fast_forward", on_click=lambda _args: self.step_area(1)
                 ).tooltip(f"next {area_element_name}")
-                ui.button("", 
-                    icon="last_page", 
-                    on_click=lambda _args: self.goto(self.total-1)
+                ui.button(
+                    "",
+                    icon="last_page",
+                    on_click=lambda _args: self.goto(self.total - 1),
                 ).tooltip("to last")
             with ui.row() as self.button_row_row:
                 self.button_row = ButtonRow(
@@ -246,7 +244,7 @@ class Assessment:
                     self.index_view = ui.label(self.get_index_str())
                     self.link_view = ui.html()
                     self.markdown_view = ui.markdown()
-    
+
     def show_progress(self):
         """
         Update the progress bar based on the
@@ -259,7 +257,7 @@ class Assessment:
         )
         self.progress_bar.total = self.total
         self.progress_bar.update_value(count)
-        
+
     async def step_area(self, area_step: int):
         """
         Step towards the area given in area_step.
@@ -267,18 +265,18 @@ class Assessment:
         """
         if area_step == 0:
             return  # No movement required
-    
+
         direction = 1 if area_step > 0 else -1
         area_count = 0
-    
+
         # Start with the next/previous achievement based on the direction
         new_index = self.achievement_index + direction
-    
+
         # Loop through achievements until the desired area count is reached
         while 0 <= new_index < len(self.learner.achievements):
             achievement = self.learner.achievements[new_index]
             element = self.competence_tree.lookup_by_path(achievement.path)
-    
+
             if isinstance(element, CompetenceArea):
                 area_count += 1
                 if area_count == abs(area_step):
@@ -286,16 +284,15 @@ class Assessment:
                     self.achievement_index = new_index
                     self.update_achievement_view(0)
                     return
-    
+
             # Move to the next/previous achievement
             new_index += direction
-    
+
         # Notify if no more areas in the direction
         ui.notify("Reached the end of the areas in this direction.")
-    
-            
-    async def goto(self,index:int):
-        self.achievement_index=index
+
+    async def goto(self, index: int):
+        self.achievement_index = index
         self.update_achievement_view(0)
 
     async def step(self, step: int = 0):
@@ -317,7 +314,7 @@ class Assessment:
         else:
             ui.notify("Done!")
         self.update_current_achievement_view()
-        
+
     def update_current_achievement_view(self):
         """
         show the current achievement
@@ -325,10 +322,10 @@ class Assessment:
         self.index_view.text = self.get_index_str()
         achievement = self.current_achievement
         self.webserver.render_dcm(
-            self.dcm, 
-            self.learner, 
+            self.dcm,
+            self.learner,
             selected_paths=[achievement.path],
-            clear_assessment=False
+            clear_assessment=False,
         )
         self.button_row.achievement = achievement
         self.button_row.set_button_states(achievement)
@@ -339,9 +336,7 @@ class Assessment:
         else:
             if hasattr(competence_element, "path"):
                 if competence_element.url:
-                    link = Link.create(
-                        competence_element.url, competence_element.path
-                    )
+                    link = Link.create(competence_element.url, competence_element.path)
                 else:
                     link = competence_element.path
             else:
@@ -355,4 +350,3 @@ class Assessment:
                 area = competence_element.area
                 description = f"### {area.name}\n\n**{competence_element.name}**:\n\n{description}"
             self.markdown_view.content = description
-   

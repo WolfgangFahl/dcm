@@ -22,7 +22,7 @@ class TestGreta(Basetest):
     test converting the Greta competence Json Model to
     DCM yaml
     """
-    
+
     def setUp(self, debug=False, profile=True):
         Basetest.setUp(self, debug=debug, profile=profile)
 

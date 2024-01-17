@@ -4,7 +4,7 @@ Created on 2023-11-06
 @author: wf
 """
 import os
-from typing import List,Optional
+from typing import List, Optional
 from urllib.parse import urlparse
 
 from fastapi import HTTPException
@@ -73,11 +73,14 @@ class DynamicCompentenceMapWebServer(InputWebserver):
 
         @app.get("/description/{tree_id}/{aspect_id}/{area_id}/{facet_id}")
         async def get_description_for_facet(
-            tree_id: str, aspect_id: str = None, area_id:str=None, facet_id: str = None
+            tree_id: str,
+            aspect_id: str = None,
+            area_id: str = None,
+            facet_id: str = None,
         ) -> HTMLResponse:
             """
             Endpoints to get the description of a competence facet
-            
+
 
             Args:
                 tree_id (str): ID of the tree
@@ -88,26 +91,26 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             Returns:
                 HTMLResponse: HTML content of the description.
             """
-            path=f"{tree_id}/{aspect_id}/{area_id}/{facet_id}"
+            path = f"{tree_id}/{aspect_id}/{area_id}/{facet_id}"
             return await self.show_description(path)
 
         @app.get("/description/{tree_id}/{aspect_id}/{area_id}")
         async def get_description_for_area(
-            tree_id: str, aspect_id: str = None, area_id:str=None
+            tree_id: str, aspect_id: str = None, area_id: str = None
         ) -> HTMLResponse:
             """
-            Endpoints to get the description of a 
+            Endpoints to get the description of a
             competence area
 
             Args:
                 tree_id (str): ID of the tree
                 area_id (str): ID of the area
                 aspect_id (str, optional): ID of the aspect. Defaults to None.
-   
+
             Returns:
                 HTMLResponse: HTML content of the description.
             """
-            path=f"{tree_id}/{aspect_id}/{area_id}"
+            path = f"{tree_id}/{aspect_id}/{area_id}"
             return await self.show_description(path)
 
         @app.get("/description/{tree_id}/{aspect_id}")
@@ -120,47 +123,43 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             Args:
                 tree_id (str): ID of the tree
                 area_id (str): ID of the area
-   
+
             Returns:
                 HTMLResponse: HTML content of the description.
             """
-            path=f"{tree_id}/{aspect_id}"
+            path = f"{tree_id}/{aspect_id}"
             return await self.show_description(path)
-        
+
         @app.get("/description/{tree_id}")
-        async def get_description_for_tree(
-            tree_id: str
-        ) -> HTMLResponse:
+        async def get_description_for_tree(tree_id: str) -> HTMLResponse:
             """
             Endpoint to get the description of a competence tree
 
             Args:
                 tree_id (str): ID of the tree
-     
+
             Returns:
                 HTMLResponse: HTML content of the description.
             """
-            path=f"{tree_id}"
+            path = f"{tree_id}"
             return await self.show_description(path)
 
-    async def show_description(
-        self, path:str=None
-    ) -> HTMLResponse:
+    async def show_description(self, path: str = None) -> HTMLResponse:
         """
-        Show the HTML description of a specific 
+        Show the HTML description of a specific
         competence element given by the path
 
         Args:
             path(str): the path identifying the element
-       
+
         Returns:
             HTMLResponse: The response object containing the HTML-formatted description.
 
         Raises:
             HTTPException: If the example name provided does not exist in the examples collection.
         """
-        path_parts=path.split("/")
-        tree_id=path_parts[0]
+        path_parts = path.split("/")
+        tree_id = path_parts[0]
         if tree_id in self.examples:
             example = self.examples[tree_id]
             element = example.competence_tree.lookup_by_path(path)
@@ -168,9 +167,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 content = element.as_html()
                 return HTMLResponse(content=content)
             else:
-                content = (
-                    f"No element found for {path} in {tree_id}"
-                )
+                content = f"No element found for {path} in {tree_id}"
                 return HTMLResponse(content=content, status_code=404)
         else:
             msg = f"unknown competence tree {tree_id}"
@@ -186,7 +183,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         dcm_chart = DcmChart(dcm)
         svg_markup = dcm_chart.generate_svg_markup(
-            config=r.config, with_java_script=True
+            config=r.config, with_java_script=True,text_mode=self.text_mode
         )
         response = HTMLResponse(content=svg_markup)
         return response
@@ -230,21 +227,22 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
 
-    def render_dcm(self, 
-        dcm, 
-        learner: Learner = None, 
-        selected_paths: List=[],
-        clear_assessment: bool = True
+    def render_dcm(
+        self,
+        dcm,
+        learner: Learner = None,
+        selected_paths: List = [],
+        clear_assessment: bool = True,
     ):
         """
         render the dynamic competence map
-        
+
         Args:
             dcm(DynamicCompetenceMap)
-            selected_paths (List, optional): A list of paths that should be highlighted 
-            in the SVG. These paths typically represent specific competencies or 
+            selected_paths (List, optional): A list of paths that should be highlighted
+            in the SVG. These paths typically represent specific competencies or
             achievements. Defaults to an empty list.
-     
+
         """
         try:
             if clear_assessment and self.assessment:
@@ -258,8 +256,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             dcm_chart = DcmChart(dcm)
             svg = dcm_chart.generate_svg_markup(
                 learner=learner, 
-                selected_paths=selected_paths,
-                with_java_script=False
+                selected_paths=selected_paths, 
+                with_java_script=False,
+                text_mode=self.text_mode
             )
             # Use the new get_java_script method to get the JavaScript
             self.svg_view.content = svg
@@ -282,12 +281,16 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         with ui.element("div").classes("w-full") as self.container:
             with ui.splitter() as splitter:
                 with splitter.before:
-                    extensions = {"json": ".json", "yaml": ".yaml"}
-                    self.example_selector = FileSelector(
-                        path=self.root_path,
-                        extensions=extensions,
-                        handler=self.read_and_optionally_render,
-                    )
+                    with ui.grid(columns=2).classes("w-full") as self.left_selection:
+                        extensions = {"json": ".json", "yaml": ".yaml"}
+                        self.example_selector = FileSelector(
+                            path=self.root_path,
+                            extensions=extensions,
+                            handler=self.read_and_optionally_render,
+                        )
+                        selection=["none","curved","horizontal","angled"]
+                        self.text_mode="curved"
+                        self.add_select("text", selection).bind_value(self,"text_mode")
                     with ui.grid(columns=1).classes("w-full") as self.left_grid:
                         with ui.row() as self.input_row:
                             self.input_input = ui.input(
