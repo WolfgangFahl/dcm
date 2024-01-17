@@ -594,7 +594,7 @@ class DynamicCompetenceMap:
                 debug_file_path = os.path.join('/tmp', f'{name}.json')
                 with open(debug_file_path, 'w') as debug_file:
                     json.dump(data, debug_file, indent=2,default=str)
-                content = content_class.from_dict(data)
+            content = content_class.from_dict(data)
             if isinstance(content, CompetenceTree):
                 return DynamicCompetenceMap(content)
             else:
