@@ -15,6 +15,7 @@ from dcm.dcm_core import (
     CompetenceFacet,
     CompetenceLevel,
     CompetenceTree,
+    DynamicCompetenceMap
 )
 
 class TestModule(Basetest):
@@ -149,11 +150,18 @@ class TestModule(Basetest):
             # Create the competence tree
             competence_tree = self.create_competence_tree(competence_elements, url=url)
             # Pretty print the JSON with specified indentation
-            pretty_json = competence_tree.to_pretty_json()
+            #pretty_json = competence_tree.to_pretty_json()
             yaml_str = competence_tree.to_yaml()
             debug = self.debug
-            # debug=True
+            debug=True
             if debug:
                 print(yaml_str)
             with open("/tmp/rwth_aachen_master_informatik.yaml", "w") as yaml_file:
                 yaml_file.write(yaml_str)
+            dcm=DynamicCompetenceMap.from_definition_string(
+                name="RWTH Aachen Master Informatik",
+                definition_string=yaml_str,
+                content_class=CompetenceTree,
+                markup="yaml",
+                debug=debug) 
+            self.assertIsNotNone(dcm) 

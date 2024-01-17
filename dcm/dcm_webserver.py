@@ -227,7 +227,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 else:
                     self.learner = item
                     self.assess(item)
-        except BaseException as ex:
+        except Exception as ex:
             self.handle_exception(ex, self.do_trace)
 
     def render_dcm(self, 

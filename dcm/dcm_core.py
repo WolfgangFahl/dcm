@@ -565,7 +565,12 @@ class DynamicCompetenceMap:
 
     @classmethod
     def from_definition_string(
-        cls, name: str, definition_string: str, content_class, markup: str = "json"
+        cls, 
+        name: str, 
+        definition_string: str, 
+        content_class, 
+        markup: str = "json",
+        debug:bool = False
     ) -> Any:
         """
         Load a DynamicCompetenceMap or Learner instance from a definition string (either JSON or YAML).
@@ -575,7 +580,7 @@ class DynamicCompetenceMap:
             definition_string (str): The string content of the definition.
             content_class (dataclass_json): The class which will be instantiated with the parsed data.
             markup (str): The markup format of the data. Defaults to 'json'. Supported values are 'json' and 'yaml'.
-
+            debug(bool): if True supply a JSON dump of the data in /tmp/{name}.json
         Returns:
             DynamicCompetenceMap: An instance of DynamicCompetenceMap loaded with the parsed data.
 
@@ -584,7 +589,12 @@ class DynamicCompetenceMap:
         """
         try:
             data = cls.parse_markup(definition_string, markup)
-            content = content_class.from_dict(data)
+            if debug:
+                # Save the parsed data to a JSON file in /tmp directory
+                debug_file_path = os.path.join('/tmp', f'{name}.json')
+                with open(debug_file_path, 'w') as debug_file:
+                    json.dump(data, debug_file, indent=2,default=str)
+                content = content_class.from_dict(data)
             if isinstance(content, CompetenceTree):
                 return DynamicCompetenceMap(content)
             else:
