@@ -118,15 +118,14 @@ class TestModule(Basetest):
             CompetenceLevel(name="3,7 - 55%", level=2),
             CompetenceLevel(name="4,0 - 50%", level=1),
         ]
-        tree.element_names = (
-            {
-                "tree": "Study plan",
-                "aspect": "Study area",
-                "area": "Module",
-                "facet": "Module element",
-                "level": "Grade",
-            },
-        )
+        tree.element_names = {
+            "tree": "Study plan",
+            "aspect": "Study area",
+            "area": "Module",
+            "facet": "Module element",
+            "level": "Grade",
+        }
+        
 
         return tree
 
