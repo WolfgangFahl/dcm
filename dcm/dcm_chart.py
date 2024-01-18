@@ -54,6 +54,8 @@ class DcmChart:
 
                 # Create a DonutSegment for the area
                 segment_by_path[area.path] = DonutSegment(
+                    cx=self.cx,
+                    cy=self.cy,
                     inner_radius=self.tree_radius,
                     outer_radius=self.tree_radius * 2,  # Modify as needed
                     start_angle=start_angle_aspect,
@@ -68,6 +70,8 @@ class DcmChart:
                     end_angle_facet = start_angle_facet + facet_angle
 
                     segment_by_path[facet.path] = DonutSegment(
+                        cx=self.cx,
+                        cy=self.cy,
                         inner_radius=self.tree_radius * 2,  # Modify as needed
                         outer_radius=self.tree_radius * 3,  # Modify as needed
                         start_angle=start_angle_facet,
@@ -287,10 +291,12 @@ class DcmChart:
             for element in elements:
                 end_angle = start_angle + angle_per_element
                 sub_segment = DonutSegment(
-                    segment.outer_radius,
-                    segment.outer_radius + self.tree_radius * 2,
-                    start_angle,
-                    end_angle,
+                    cx=self.cx,
+                    cy=self.cy,
+                    inner_radius=segment.outer_radius,
+                    outer_radius=segment.outer_radius + self.tree_radius * 2,
+                    start_angle=start_angle,
+                    end_angle=end_angle
                 )
                 self.generate_donut_segment_for_element(
                     svg, element, learner, segment=sub_segment
@@ -355,7 +361,11 @@ class DcmChart:
 
         svg = self.prepare_and_add_inner_circle(config, competence_tree, lookup_url)
 
-        segment = DonutSegment(inner_radius=0, outer_radius=self.tree_radius)
+        segment = DonutSegment(
+            cx=self.cx,
+            cy=self.cy,
+            inner_radius=0, 
+            outer_radius=self.tree_radius)
         self.generate_pie_elements(
             level=0,
             svg=svg,

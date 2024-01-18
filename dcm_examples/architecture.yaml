@@ -135,6 +135,9 @@ aspects:
     color_code: '#ebd3b0'
     areas:
     - name: Interpersonal Skills
+      short_name: |
+        Interp
+        Skills
       id: InterpSkills
       url: https://en.wikipedia.org/wiki/Soft_skills#Interpersonal_skills
       description: The skills used by a person to interact with others properly.

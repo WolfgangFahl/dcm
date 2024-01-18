@@ -1,6 +1,6 @@
 import html
 from datetime import datetime
-from math import cos, radians, sin
+import math
 from typing import List, Optional, Tuple
 
 from pydantic.dataclasses import dataclass
@@ -59,21 +59,60 @@ class SVGNodeConfig:
     comment: Optional[str] = None
     element_class: Optional[str] = "hoverable"
 
-
+@dataclass
+class Arc:
+    radius: float
+    start_x: float
+    start_y: float
+    end_x: float
+    end_y: float
+    
 @dataclass
 class DonutSegment:
     """
     A donut segment representing a
     section of a donut chart.
     """
-
+    cx: float
+    cy: float
     inner_radius: float
     outer_radius: float
     start_angle: Optional[float] = 0.0
     end_angle: Optional[float] = 360.0
     fill: Optional[str] = None  # Optional fill color for the segment
 
+    @property
+    def large_arc_flag(self) -> str:
+        """
+        Determine if the arc should be drawn as a large-arc (values >= 180 degrees).
 
+        Returns:
+            str: "1" if the arc is a large arc, otherwise "0".
+        """
+        large_arc_flag="1" if self.end_angle - self.start_angle >= 180 else "0"
+        return large_arc_flag
+    
+    @property
+    def start_angle_rad(self) -> float:
+        return math.radians(self.start_angle)
+
+    @property
+    def end_angle_rad(self) -> float:
+        return math.radians(self.end_angle)
+
+    def get_arc(self, radial_offset: float = 0.5) -> Arc:
+        # Calculate the adjusted radius within the bounds of inner and outer radii
+        adjusted_radius = self.inner_radius + (self.outer_radius - self.inner_radius) * radial_offset
+        
+        # Calculate the start and end points of the arc
+        start_x = self.cx + adjusted_radius * math.cos(self.start_angle_rad)
+        start_y = self.cy + adjusted_radius * math.sin(self.start_angle_rad)
+        end_x = self.cx + adjusted_radius * math.cos(self.end_angle_rad)
+        end_y = self.cy + adjusted_radius * math.sin(self.end_angle_rad)
+
+        return Arc(radius=adjusted_radius, start_x=start_x, start_y=start_y, end_x=end_x, end_y=end_y)
+
+        
 class SVG:
     """
     Class for creating SVG drawings.
@@ -178,60 +217,37 @@ class SVG:
         return rotation_angle
     
     def get_donut_path(self, 
-            cx: float, 
-            cy: float, 
             segment: DonutSegment,
+            radial_offset: float = 0.5,
             middle_arc:bool=False) -> str:
         """
         Create an SVG path definition for an arc using the properties of a DonutSegment.
 
         Args:
-            cx (float): X-coordinate of the circle's center.
-            cy (float): Y-coordinate of the circle's center.
             segment (DonutSegment): The segment for which to create the path.
+            radial_offset(float): 0 to 1 - useable in middle_arc mode
             middle_arc(bool): if True get the middle arc
 
         Returns:
             str: SVG path definition string for the full donut segment or the middle_arc if middle_arc is set to true.
-        """
-        # Determine if the arc should be drawn as a large-arc (values >= 180 degrees)
-        large_arc_flag = "1" if segment.end_angle - segment.start_angle >= 180 else "0"
-        # Convert angles from degrees to radians for calculations
-        start_angle_rad = radians(segment.start_angle)
-        end_angle_rad = radians(segment.end_angle)
-        
+        """ 
         if middle_arc:
-            # Calculate the start and end points for the middle arc
-            middle_radius = (segment.inner_radius + segment.outer_radius) / 2
-            start_x_middle = cx + middle_radius * cos(start_angle_rad)
-            start_y_middle = cy + middle_radius * sin(start_angle_rad)
-            end_x_middle = cx + middle_radius * cos(end_angle_rad)
-            end_y_middle = cy + middle_radius * sin(end_angle_rad)
+            arc = segment.get_arc(radial_offset=radial_offset)
             
             # Create the path for the middle arc
             path_str = (
-                f"M {start_x_middle} {start_y_middle} "  # Move to start of middle arc
-                f"A {middle_radius} {middle_radius} 0 {large_arc_flag} 1 {end_x_middle} {end_y_middle}"
+                f"M {arc.start_x} {arc.start_y} "  # Move to start of middle arc
+                f"A {arc.radius} {arc.radius} 0 {segment.large_arc_flag} 1 {arc.end_x} {arc.end_y}"
             )
         else:
-            # Create the path for the pie segment without indentation
-            # Calculate the start and end points for the outer radius
-            start_x_outer = cx + segment.outer_radius * cos(start_angle_rad)
-            start_y_outer = cy + segment.outer_radius * sin(start_angle_rad)
-            end_x_outer = cx + segment.outer_radius * cos(end_angle_rad)
-            end_y_outer = cy + segment.outer_radius * sin(end_angle_rad)
-    
-            # Calculate the start and end points for the inner radius
-            start_x_inner = cx + segment.inner_radius * cos(start_angle_rad)
-            start_y_inner = cy + segment.inner_radius * sin(start_angle_rad)
-            end_x_inner = cx + segment.inner_radius * cos(end_angle_rad)
-            end_y_inner = cy + segment.inner_radius * sin(end_angle_rad)
+            outer_arc = segment.get_arc(radial_offset=1)
+            inner_arc = segment.get_arc(radial_offset=0)
             path_str = (
-                f"M {start_x_inner} {start_y_inner} "  # Move to start of inner arc
-                f"L {start_x_outer} {start_y_outer} "  # Line to start of outer arc
-                f"A {segment.outer_radius} {segment.outer_radius} 0 {large_arc_flag} 1 {end_x_outer} {end_y_outer} "  # Outer arc
-                f"L {end_x_inner} {end_y_inner} "  # Line to end of inner arc
-                f"A {segment.inner_radius} {segment.inner_radius} 0 {large_arc_flag} 0 {start_x_inner} {start_y_inner} "  # Inner arc (reverse)
+                f"M {inner_arc.start_x} {inner_arc.start_y} "  # Move to start of inner arc
+                f"L {outer_arc.start_x} {outer_arc.start_y} "  # Line to start of outer arc
+                f"A {segment.outer_radius} {segment.outer_radius} 0 {segment.large_arc_flag} 1 {outer_arc.end_x} {outer_arc.end_y} "  # Outer arc
+                f"L {inner_arc.end_x} {inner_arc.end_y} "  # Line to end of inner arc
+                f"A {segment.inner_radius} {segment.inner_radius} 0 {segment.large_arc_flag} 0 {inner_arc.start_x} {inner_arc.start_y} "  # Inner arc (reverse)
                 "Z"
             )
             
@@ -443,14 +459,14 @@ class SVG:
         if color is None:
             color = self.config.default_color
         # Convert angles from degrees to radians for calculations
-        start_angle_rad = radians(start_angle_deg)
-        end_angle_rad = radians(end_angle_deg)
+        start_angle_rad = math.radians(start_angle_deg)
+        end_angle_rad = math.radians(end_angle_deg)
 
         # Calculate the start and end points
-        start_x = cx + radius * cos(start_angle_rad)
-        start_y = cy + radius * sin(start_angle_rad)
-        end_x = cx + radius * cos(end_angle_rad)
-        end_y = cy + radius * sin(end_angle_rad)
+        start_x = cx + radius * math.cos(start_angle_rad)
+        start_y = cy + radius * math.sin(start_angle_rad)
+        end_x = cx + radius * math.cos(end_angle_rad)
+        end_y = cy + radius * math.sin(end_angle_rad)
 
         # Determine if the arc should be drawn as a large-arc (values >= 180 degrees)
         large_arc_flag = "1" if end_angle_deg - start_angle_deg >= 180 else "0"
@@ -502,7 +518,7 @@ class SVG:
         if color is None:
             color = self.config.default_color
             
-        path_str=self.get_donut_path(cx, cy, segment)
+        path_str=self.get_donut_path(segment)
      
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
@@ -553,17 +569,15 @@ class SVG:
         """
         # Common calculations
         mid_angle = (segment.start_angle + segment.end_angle) / 2
-        mid_angle_rad = radians(mid_angle)
+        mid_angle_rad = math.radians(mid_angle)
         mid_radius = (segment.inner_radius + segment.outer_radius) / 2
-        cx, cy = self.config.width / 2, self.config.height / 2
-
+  
         if direction in ["horizontal", "angled"]:
             # Calculate position for horizontal or angled text
-            text_x = cx + mid_radius * cos(mid_angle_rad)
-            text_y = cy + mid_radius * sin(mid_angle_rad)
+            text_x = segment.cx + mid_radius * math.cos(mid_angle_rad)
+            text_y = segment.cy + mid_radius * math.sin(mid_angle_rad)
 
             # Adjust text anchor and rotation for better readability
-            text_anchor = "middle"
             transform = ""
             if direction == "angled":
                 rotation_angle = self.get_text_rotation(mid_angle)
@@ -582,21 +596,27 @@ class SVG:
             )
 
         elif direction == "curved":
+            lines = text.split('\n')
+            line_count = len(lines)
+            total_text_height = self.line_height * line_count
+    
             # Create a path for the text to follow
             path_id = f"path{segment.start_angle}-{segment.end_angle}"
-            path_d = self.get_donut_path(cx, cy, segment, middle_arc=True)
-            path_element = (
-                f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />'
-            )
-            self.add_element(path_element)
+            path_d = self.get_donut_path(segment, middle_arc=True)
+            self.add_element(f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />')
+    
+            # Calculate start offset for each line
+            start_offset = 50 - (total_text_height / (2 * math.pi * mid_radius)) * 100 / line_count
+    
+            for line in lines:
+                text_path_element = (
+                    f'<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">'
+                    f'<textPath xlink:href="#{path_id}" startOffset="{start_offset}%" text-anchor="middle">{html.escape(line)}</textPath>'
+                    f"</text>"
+                )
+                self.add_element(text_path_element)
+                start_offset += (self.line_height / (2 * math.pi * mid_radius)) * 100
 
-            # Add text along the path
-            text_path_element = (
-                f'<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">'
-                f'<textPath xlink:href="#{path_id}" startOffset="50%" text-anchor="middle">{html.escape(text)}</textPath>'
-                f"</text>"
-            )
-            self.add_element(text_path_element)
         else:
             raise ValueError(f"invalid direction {direction}")
 
