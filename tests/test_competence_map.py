@@ -133,14 +133,14 @@ class TestDynamicCompetenceMap(Basetest):
                 self.assertIsNotNone(dcm.competence_tree)
                 svg_config = SVGConfig()
                 svg_config.legend_height = 40 * len(dcm.competence_tree.levels)
-                for text_mode in ["none","curved","horizontal","angled"]:
-                    svg_file = f"/tmp/{example_name}_competence_map_{markup}_{text_mode}.svg"
+                for text_mode in ["none", "curved", "horizontal", "angled"]:
+                    svg_file = (
+                        f"/tmp/{example_name}_competence_map_{markup}_{text_mode}.svg"
+                    )
                     dcm_chart = DcmChart(dcm)
                     dcm_chart.generate_svg(
-                        svg_file, 
-                        config=svg_config,
-                        text_mode=text_mode
-                        )
+                        svg_file, config=svg_config, text_mode=text_mode
+                    )
                     markup_check = MarkupCheck(self, dcm)
                     markup_check.check_markup(svg_file=svg_file, svg_config=svg_config)
 

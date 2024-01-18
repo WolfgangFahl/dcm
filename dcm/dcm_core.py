@@ -164,7 +164,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         """
         super().__post_init__()
         self.update_paths()
-        
+
     def update_paths(self):
         """
         update my paths
@@ -450,7 +450,7 @@ class DynamicCompetenceMap:
     a visualization of a competence map
     """
 
-    def __init__(self, competence_tree: CompetenceTree,svg:SVG=None):
+    def __init__(self, competence_tree: CompetenceTree, svg: SVG = None):
         """
         constructor
         """

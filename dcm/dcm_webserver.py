@@ -290,7 +290,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                             handler=self.read_and_optionally_render,
                         )
                         selection = ["none", "curved", "horizontal", "angled"]
-                        self.add_select("text", selection, value=self.text_mode,on_change=self.on_text_mode_change)
+                        self.add_select(
+                            "text",
+                            selection,
+                            value=self.text_mode,
+                            on_change=self.on_text_mode_change,
+                        )
                     with ui.grid(columns=1).classes("w-full") as self.left_grid:
                         with ui.row() as self.input_row:
                             self.input_input = ui.input(
@@ -363,14 +368,14 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # assess_learner will render ...
         # self.render_dcm(dcm,learner=learner)
         self.assess_learner(dcm, learner)
-        
-    async def on_text_mode_change(self,args):
+
+    async def on_text_mode_change(self, args):
         """
         handle changes in the text_mode
         """
-        new_text_mode=args.value
-        if new_text_mode!=self.text_mode:
-            self.text_mode=new_text_mode
+        new_text_mode = args.value
+        if new_text_mode != self.text_mode:
+            self.text_mode = new_text_mode
             await self.render()
 
     def configure_run(self):

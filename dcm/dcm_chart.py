@@ -135,7 +135,7 @@ class DcmChart:
         filename: Optional[str] = None,
         learner: Optional[Learner] = None,
         config: Optional[SVGConfig] = None,
-        text_mode: str = "none"
+        text_mode: str = "none",
     ) -> str:
         """
         Generate the SVG markup and optionally save it to a file. If a filename is given, the method
@@ -152,10 +152,10 @@ class DcmChart:
         if config is None:
             config = SVGConfig()  # Use default configuration if none provided
         svg_markup = self.generate_svg_markup(
-            self.dcm.competence_tree, 
-            learner=learner, 
+            self.dcm.competence_tree,
+            learner=learner,
             config=config,
-            text_mode=text_mode
+            text_mode=text_mode,
         )
         if filename:
             self.save_svg_to_file(svg_markup, filename)
