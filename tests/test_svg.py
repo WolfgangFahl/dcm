@@ -7,7 +7,7 @@ from typing import Tuple
 
 from ngwidgets.basetest import Basetest
 
-from dcm.svg import SVG
+from dcm.svg import SVG, DonutSegment
 
 
 class TestSVG(Basetest):
@@ -38,3 +38,56 @@ class TestSVG(Basetest):
                 places=1,
                 msg=f"Failed for input angle: {input_angle}",
             )
+            
+    def test_multiline_text(self):
+        svg = SVG()
+        # Add multiline text to the SVG
+        multiline_text = "This is line 1.\nThis is line 2.\nThis is line 3."
+        svg.add_text(x=100, y=100, text=multiline_text, fill="black")
+
+        # Get the complete SVG markup
+        svg_markup = svg.get_svg_markup()
+        debug=True
+        if debug:
+            print(svg_markup)
+        svg.save("/tmp/multiline_svg_text.svg")    
+                
+    def test_get_donut_path(self):
+        """
+        Test the get_donut_path method to ensure it returns the correct
+        SVG path commands for the donut segment and the middle arc based on a DonutSegment.
+        """
+        # Create an SVG instance with default configuration
+        svg = SVG()
+
+        # Define a test DonutSegment
+        test_segment = DonutSegment(inner_radius=100.0, outer_radius=150.0, start_angle=0.0, end_angle=180.0)
+
+        # Define the expected SVG path command for the test segment
+        expected_path_commands ={
+            False: (
+                "M 400.0 300.0 "
+                "L 450.0 300.0 "
+                "A 150.0 150.0 0 1 1 150.0 300.0 "
+                "L 200.0 300.0 "
+                "A 100.0 100.0 0 1 0 400.0 300.0 Z"
+            ), 
+            True: (
+                "M 450.0 300.0 "  # Calculated start point (cx + r*cos(0), cy + r*sin(0))
+                "A 125.0 125.0 0 1 1 175.0 300.0"  # Arc command
+            )
+        }
+        debug=self.debug
+        debug=True
+        for middle_arc, expected_path_command in expected_path_commands.items():
+            # Get the actual SVG path command from the method
+            actual_path_command = svg.get_donut_path(300.0, 300.0, test_segment,middle_arc=middle_arc)
+            if debug:
+                print(actual_path_command)
+            # Check if the actual path command matches the expected one
+            self.assertEqual(
+                actual_path_command,
+                expected_path_command,
+                msg=f"Expected path command does not match the actual path command."
+            )
+

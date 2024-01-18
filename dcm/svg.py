@@ -5,7 +5,6 @@ from typing import List, Optional, Tuple
 
 from pydantic.dataclasses import dataclass
 
-
 @dataclass
 class SVGConfig:
     """
@@ -96,6 +95,19 @@ class SVG:
         self.elements = []
         self.indent = self.config.indent
 
+    @property
+    def line_height(self)->float:
+        # Calculate line height based on font size
+        line_height = self.config.font_size * 1.2  # You can adjust this multiplier as needed
+        return line_height
+    
+    def get_indent(self,level)->str:
+        """
+        get the indentation for the given level
+        """
+        indentation=f"{self.indent * level}"
+        return indentation
+    
     def get_svg_style(self) -> str:
         """
         Define styles for SVG elements.
@@ -142,7 +154,88 @@ class SVG:
         """
         average_char_width_factor = 0.6
         average_char_width = average_char_width_factor * self.config.font_size
-        return int(average_char_width * len(text))
+        return int(average_char_width * len(text))  
+    
+    def get_text_rotation(self, rotation_angle: float) -> float:
+        """
+        Adjusts the rotation angle for SVG text elements to ensure that the text
+        is upright and readable in a circular chart. The text will be rotated
+        by 180 degrees if it is in the lower half of the chart (between 90 and 270 degrees).
+
+        Args:
+            rotation_angle (float): The initial rotation angle of the text element.
+
+        Returns:
+            float: The adjusted rotation angle for the text element.
+        """
+        # In the bottom half of the chart (90 to 270 degrees), the text
+        # would appear upside down, so we rotate it by 180 degrees.
+        if 90 <= rotation_angle < 270:
+            rotation_angle -= 180
+
+        # Return the adjusted angle. No adjustment is needed for the
+        # top half of the chart as the text is already upright.
+        return rotation_angle
+    
+    def get_donut_path(self, 
+            cx: float, 
+            cy: float, 
+            segment: DonutSegment,
+            middle_arc:bool=False) -> str:
+        """
+        Create an SVG path definition for an arc using the properties of a DonutSegment.
+
+        Args:
+            cx (float): X-coordinate of the circle's center.
+            cy (float): Y-coordinate of the circle's center.
+            segment (DonutSegment): The segment for which to create the path.
+            middle_arc(bool): if True get the middle arc
+
+        Returns:
+            str: SVG path definition string for the full donut segment or the middle_arc if middle_arc is set to true.
+        """
+        # Determine if the arc should be drawn as a large-arc (values >= 180 degrees)
+        large_arc_flag = "1" if segment.end_angle - segment.start_angle >= 180 else "0"
+        # Convert angles from degrees to radians for calculations
+        start_angle_rad = radians(segment.start_angle)
+        end_angle_rad = radians(segment.end_angle)
+        
+        if middle_arc:
+            # Calculate the start and end points for the middle arc
+            middle_radius = (segment.inner_radius + segment.outer_radius) / 2
+            start_x_middle = cx + middle_radius * cos(start_angle_rad)
+            start_y_middle = cy + middle_radius * sin(start_angle_rad)
+            end_x_middle = cx + middle_radius * cos(end_angle_rad)
+            end_y_middle = cy + middle_radius * sin(end_angle_rad)
+            
+            # Create the path for the middle arc
+            path_str = (
+                f"M {start_x_middle} {start_y_middle} "  # Move to start of middle arc
+                f"A {middle_radius} {middle_radius} 0 {large_arc_flag} 1 {end_x_middle} {end_y_middle}"
+            )
+        else:
+            # Create the path for the pie segment without indentation
+            # Calculate the start and end points for the outer radius
+            start_x_outer = cx + segment.outer_radius * cos(start_angle_rad)
+            start_y_outer = cy + segment.outer_radius * sin(start_angle_rad)
+            end_x_outer = cx + segment.outer_radius * cos(end_angle_rad)
+            end_y_outer = cy + segment.outer_radius * sin(end_angle_rad)
+    
+            # Calculate the start and end points for the inner radius
+            start_x_inner = cx + segment.inner_radius * cos(start_angle_rad)
+            start_y_inner = cy + segment.inner_radius * sin(start_angle_rad)
+            end_x_inner = cx + segment.inner_radius * cos(end_angle_rad)
+            end_y_inner = cy + segment.inner_radius * sin(end_angle_rad)
+            path_str = (
+                f"M {start_x_inner} {start_y_inner} "  # Move to start of inner arc
+                f"L {start_x_outer} {start_y_outer} "  # Line to start of outer arc
+                f"A {segment.outer_radius} {segment.outer_radius} 0 {large_arc_flag} 1 {end_x_outer} {end_y_outer} "  # Outer arc
+                f"L {end_x_inner} {end_y_inner} "  # Line to end of inner arc
+                f"A {segment.inner_radius} {segment.inner_radius} 0 {large_arc_flag} 0 {start_x_inner} {start_y_inner} "  # Inner arc (reverse)
+                "Z"
+            )
+            
+        return path_str
 
     def add_element(self, element: str, level: int = 1, comment: str = None):
         """
@@ -153,7 +246,7 @@ class SVG:
             level (int): Indentation level for the element.
             comment(str): optional comment to add
         """
-        base_indent = f"{self.indent * level}"
+        base_indent = self.get_indent(level)
         if comment:
             indented_comment = f"{base_indent}<!-- {comment} -->\n"
             self.elements.append(indented_comment)
@@ -172,7 +265,7 @@ class SVG:
 
         # If URL is provided, wrap the circle in an anchor tag to make it clickable
         if config.url:
-            circle_indent = self.indent * (config.indent_level + 1)
+            circle_indent = self.get_indent(config.indent_level + 1)
             circle_element = f"""<a xlink:href="{config.url}" target="_blank">
 {circle_indent}{circle_element}
 </a>"""
@@ -207,7 +300,7 @@ class SVG:
             indent_level (int): Indentation level for the rectangle.
         """
         color = fill if fill else self.config.default_color
-        rect = f'{self.indent * 3}<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
+        rect = f'{self.get_indent(indent_level)}<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
         self.add_element(rect)
 
     def add_legend_column(
@@ -243,6 +336,9 @@ class SVG:
         fill: str = "black",
         font_weight: str = "normal",
         text_anchor: str = "start",
+        transform: str = "",
+        centered: bool = False,
+        indent_level: int =1,
     ) -> None:
         """
         Add text to the SVG.
@@ -254,16 +350,34 @@ class SVG:
             fill (str, optional): Fill color of the text. Defaults to "black".
             font_weight (str, optional): Font weight (normal, bold, etc.). Defaults to "normal".
             text_anchor (str, optional): Text alignment (start, middle, end). Defaults to "start".
+            indent_level(int): the indentation level to apply
+            centered (bool): If True, treat x and y as the center of the text. Default is False.
+            transform (str, optional): Transformation for the text (e.g., rotation). Defaults to an empty string.
         """
-        escaped_text = html.escape(text)
+        # Split the input text into lines
+        lines = text.split('\n')
+        total_text_height = self.line_height * len(lines)
+        if centered:
+            # Adjust text_anchor to 'middle' when centered
+            text_anchor = "middle"
+    
+            # y-offset adjustment to center the text vertically
+            y -= total_text_height // 2
+        # Create a text element to hold the tspan elements
         text_element = (
-            f'<text x="{x}" y="{y}" fill="{fill}" '
+            f'\n{self.get_indent(indent_level)}<text x="{x}" y="{y}" fill="{fill}" '
             f'font-family="{self.config.font}" '
             f'font-size="{self.config.font_size}" '
             f'font-weight="{font_weight}" '
-            f'text-anchor="{text_anchor}">'
-            f"{escaped_text}</text>\n"
+            f'text-anchor="{text_anchor}" '
+            f'transform="{transform}">'
         )
+        # Add tspan elements for each line
+        for line in lines:
+            escaped_line = html.escape(line)
+            text_element += f'\n{self.get_indent(indent_level+1)}<tspan x="{x}" dy="{self.line_height}">{escaped_line}</tspan>'
+    
+        text_element += f"\n{self.get_indent(indent_level)}</text>\n"
         self.add_element(text_element)
 
     def add_group(
@@ -290,9 +404,9 @@ class SVG:
             group_attrs.append(f'class="{group_class}"')
         attrs_str = " ".join(group_attrs)
         indented_content = "\n".join(
-            f"{self.indent * (level + 1)}{line}" for line in content.strip().split("\n")
+            f"{self.get_indent(level + 1)}{line}" for line in content.strip().split("\n")
         )
-        group_str = f"{self.indent * level}<g {attrs_str}>\n{indented_content}\n{self.indent * level}</g>\n"
+        group_str = f"{self.get_indent(level)}<g {attrs_str}>\n{indented_content}\n{self.get_indent(level)}</g>\n"
         self.add_element(group_str, level=level, comment=comment)
 
     def add_pie_segment(
@@ -387,35 +501,9 @@ class SVG:
 
         if color is None:
             color = self.config.default_color
-        # Convert angles from degrees to radians for calculations
-        start_angle_rad = radians(segment.start_angle)
-        end_angle_rad = radians(segment.end_angle)
-
-        # Calculate the start and end points for the outer radius
-        start_x_outer = cx + segment.outer_radius * cos(start_angle_rad)
-        start_y_outer = cy + segment.outer_radius * sin(start_angle_rad)
-        end_x_outer = cx + segment.outer_radius * cos(end_angle_rad)
-        end_y_outer = cy + segment.outer_radius * sin(end_angle_rad)
-
-        # Calculate the start and end points for the inner radius
-        start_x_inner = cx + segment.inner_radius * cos(start_angle_rad)
-        start_y_inner = cy + segment.inner_radius * sin(start_angle_rad)
-        end_x_inner = cx + segment.inner_radius * cos(end_angle_rad)
-        end_y_inner = cy + segment.inner_radius * sin(end_angle_rad)
-
-        # Determine if the arc should be drawn as a large-arc (values >= 180 degrees)
-        large_arc_flag = "1" if segment.end_angle - segment.start_angle >= 180 else "0"
-
-        # Create the path for the pie segment without indentation
-        path_str = (
-            f"M {start_x_inner} {start_y_inner} "  # Move to start of inner arc
-            f"L {start_x_outer} {start_y_outer} "  # Line to start of outer arc
-            f"A {segment.outer_radius} {segment.outer_radius} 0 {large_arc_flag} 1 {end_x_outer} {end_y_outer} "  # Outer arc
-            f"L {end_x_inner} {end_y_inner} "  # Line to end of inner arc
-            f"A {segment.inner_radius} {segment.inner_radius} 0 {large_arc_flag} 0 {start_x_inner} {start_y_inner} "  # Inner arc (reverse)
-            "Z"
-        )
-
+            
+        path_str=self.get_donut_path(cx, cy, segment)
+     
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
         escaped_title = html.escape(config.title)  # Escape special characters
@@ -445,33 +533,13 @@ class SVG:
             comment=config.comment,
         )
 
-    def get_text_rotation(self, rotation_angle: float) -> float:
-        """
-        Adjusts the rotation angle for SVG text elements to ensure that the text
-        is upright and readable in a circular chart. The text will be rotated
-        by 180 degrees if it is in the lower half of the chart (between 90 and 270 degrees).
-
-        Args:
-            rotation_angle (float): The initial rotation angle of the text element.
-
-        Returns:
-            float: The adjusted rotation angle for the text element.
-        """
-        # In the bottom half of the chart (90 to 270 degrees), the text
-        # would appear upside down, so we rotate it by 180 degrees.
-        if 90 <= rotation_angle < 270:
-            rotation_angle -= 180
-
-        # Return the adjusted angle. No adjustment is needed for the
-        # top half of the chart as the text is already upright.
-        return rotation_angle
-
     def add_text_to_donut_segment(
         self,
         segment: DonutSegment,
         text: str,
         direction: str = "horizontal",
         color: str = "white",
+        indent_level: int=1,
     ) -> None:
         """
         Add text to a donut segment with various direction options.
@@ -501,32 +569,22 @@ class SVG:
                 rotation_angle = self.get_text_rotation(mid_angle)
                 transform = f"rotate({rotation_angle}, {text_x}, {text_y})"
 
-            # Add text element
-            escaped_text = html.escape(text)
-            text_element = (
-                f'<text x="{text_x}" y="{text_y}" fill="{color}" '
-                f'font-family="{self.config.font}" '
-                f'font-size="{self.config.font_size}" '
-                f'text-anchor="{text_anchor}" '
-                f'transform="{transform}">'
-                f"{escaped_text}</text>"
+            # Add text using the add_text method
+            self.add_text(
+                x=text_x,
+                y=text_y,
+                text=text,
+                fill=color,
+                font_weight="normal",
+                indent_level=indent_level,
+                transform=transform,
+                centered=True
             )
-            self.add_element(text_element)
 
         elif direction == "curved":
             # Create a path for the text to follow
             path_id = f"path{segment.start_angle}-{segment.end_angle}"
-            start_x = cx + segment.outer_radius * cos(mid_angle_rad)
-            start_y = cy + segment.outer_radius * sin(mid_angle_rad)
-            large_arc_flag = (
-                "1" if segment.end_angle - segment.start_angle >= 180 else "0"
-            )
-            path_d = (
-                f"M {start_x} {start_y} "
-                f"A {segment.outer_radius} {segment.outer_radius} 0 {large_arc_flag} 1 "
-                f"{cx + segment.outer_radius * cos(radians(segment.end_angle))} "
-                f"{cy + segment.outer_radius * sin(radians(segment.end_angle))}"
-            )
+            path_d = self.get_donut_path(cx, cy, segment, middle_arc=True)
             path_element = (
                 f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />'
             )

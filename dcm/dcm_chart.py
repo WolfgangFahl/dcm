@@ -207,7 +207,9 @@ class DcmChart:
 
         result = svg.add_donut_segment(config=element_config, segment=segment)
         if self.text_mode != "none":
-            text = textwrap.fill(element.short_name, width=20)
+            # no autofill please
+            # textwrap.fill(element.short_name, width=20)
+            text = element.short_name
             self.svg.add_text_to_donut_segment(segment, text, direction=self.text_mode)
         return result
 
