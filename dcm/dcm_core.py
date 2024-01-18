@@ -26,7 +26,7 @@ class CompetenceElement:
 
     Attributes:
         name (str): The name of the competence element.
-        short_name(Optional[str]): the label to be displayed 
+        short_name(Optional[str]): the label to be displayed
         id (Optional[str]): An optional identifier for the competence element will be set to the name if id is None.
         url (Optional[str]): An optional URL for more information about the competence element.
         description (Optional[str]): An optional description of the competence element.
@@ -152,6 +152,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
+
     lookup_url: Optional[str] = None
     aspects: List[CompetenceAspect] = field(default_factory=list)
     levels: List[CompetenceLevel] = field(default_factory=list)
@@ -162,6 +163,12 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         initalize the path variables of my hierarchy
         """
         super().__post_init__()
+        self.update_paths()
+        
+    def update_paths(self):
+        """
+        update my paths
+        """
         self.path = self.id
         # Loop through each competence aspect and set their paths and parent references
         for aspect in self.aspects:
@@ -443,12 +450,12 @@ class DynamicCompetenceMap:
     a visualization of a competence map
     """
 
-    def __init__(self, competence_tree: CompetenceTree):
+    def __init__(self, competence_tree: CompetenceTree,svg:SVG=None):
         """
         constructor
         """
         self.competence_tree = competence_tree
-        self.svg = None
+        self.svg = svg
 
     @property
     def main_id(self):

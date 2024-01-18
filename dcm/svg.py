@@ -444,43 +444,59 @@ class SVG:
             level=2,
             comment=config.comment,
         )
+        
+    def get_text_rotation(self,rotation_angle: float) -> float:
+        """
+        Adjusts the rotation angle for SVG text elements to ensure that the text
+        is upright and readable in a circular chart. The text will be rotated
+        by 180 degrees if it is in the lower half of the chart (between 90 and 270 degrees).
+
+        Args:
+            rotation_angle (float): The initial rotation angle of the text element.
+
+        Returns:
+            float: The adjusted rotation angle for the text element.
+        """
+        # In the bottom half of the chart (90 to 270 degrees), the text
+        # would appear upside down, so we rotate it by 180 degrees.
+        if 90 <= rotation_angle < 270:
+            rotation_angle -= 180
+
+        # Return the adjusted angle. No adjustment is needed for the
+        # top half of the chart as the text is already upright.
+        return rotation_angle
 
     def add_text_to_donut_segment(
-        self, 
-        segment: DonutSegment, 
-        text: str, 
-        direction: str = "horizontal",
-        color: str = "white"
-    ) -> None:
+            self, segment: DonutSegment, text: str, direction: str = "horizontal", color: str = "white"
+        ) -> None:
         """
         Add text to a donut segment with various direction options.
-
+    
         Args:
             segment (DonutSegment): The donut segment to which text will be added.
             text (str): The text content to be added.
             direction (str): The direction in which the text should be drawn.
                              Options are "horizontal", "angled", or "curved".
             color (str): The color of the text. Default is "white".
-                      
         """
         # Common calculations
         mid_angle = (segment.start_angle + segment.end_angle) / 2
         mid_angle_rad = radians(mid_angle)
         mid_radius = (segment.inner_radius + segment.outer_radius) / 2
         cx, cy = self.config.width / 2, self.config.height / 2
-
+    
         if direction in ["horizontal", "angled"]:
             # Calculate position for horizontal or angled text
             text_x = cx + mid_radius * cos(mid_angle_rad)
             text_y = cy + mid_radius * sin(mid_angle_rad)
-
-            # Adjust text anchor and rotation
+    
+            # Adjust text anchor and rotation for better readability
             text_anchor = "middle"
             transform = ""
             if direction == "angled":
-                rotation_angle = mid_angle if mid_angle <= 180 else mid_angle - 180
+                rotation_angle=self.get_text_rotation(mid_angle)
                 transform = f"rotate({rotation_angle}, {text_x}, {text_y})"
-
+                
             # Add text element
             escaped_text = html.escape(text)
             text_element = (
@@ -492,7 +508,7 @@ class SVG:
                 f"{escaped_text}</text>"
             )
             self.add_element(text_element)
-
+    
         elif direction == "curved":
             # Create a path for the text to follow
             path_id = f"path{segment.start_angle}-{segment.end_angle}"
@@ -511,7 +527,7 @@ class SVG:
                 f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />'
             )
             self.add_element(path_element)
-
+    
             # Add text along the path
             text_path_element = (
                 f'<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">'

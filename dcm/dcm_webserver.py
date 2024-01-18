@@ -63,7 +63,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
         self.assessment = None
-        self.text_mode="none"
+        self.text_mode = "none"
 
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -184,7 +184,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         dcm_chart = DcmChart(dcm)
         svg_markup = dcm_chart.generate_svg_markup(
-            config=r.config, with_java_script=True,text_mode=self.text_mode
+            config=r.config, with_java_script=True, text_mode=self.text_mode
         )
         response = HTMLResponse(content=svg_markup)
         return response
@@ -256,10 +256,10 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.assessment_button.enable()
             dcm_chart = DcmChart(dcm)
             svg = dcm_chart.generate_svg_markup(
-                learner=learner, 
-                selected_paths=selected_paths, 
+                learner=learner,
+                selected_paths=selected_paths,
                 with_java_script=False,
-                text_mode=self.text_mode
+                text_mode=self.text_mode,
             )
             # Use the new get_java_script method to get the JavaScript
             self.svg_view.content = svg
@@ -289,9 +289,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                             extensions=extensions,
                             handler=self.read_and_optionally_render,
                         )
-                        selection=["none","curved","horizontal","angled"]
-                        self.text_mode="curved"
-                        self.add_select("text", selection).bind_value(self,"text_mode")
+                        selection = ["none", "curved", "horizontal", "angled"]
+                        self.add_select("text", selection, value=self.text_mode,on_change=self.on_text_mode_change)
                     with ui.grid(columns=1).classes("w-full") as self.left_grid:
                         with ui.row() as self.input_row:
                             self.input_input = ui.input(
@@ -340,8 +339,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """
         run a new  assessment for a new learner
         """
-        learner = Learner(learner_id="?")
-        self.assess_learner(self.dcm, learner)
+        self.learner = Learner(learner_id="?")
+        self.assess_learner(self.dcm, self.learner)
 
     def assess(self, learner: Learner, tree_id: str = None):
         """
@@ -364,6 +363,15 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # assess_learner will render ...
         # self.render_dcm(dcm,learner=learner)
         self.assess_learner(dcm, learner)
+        
+    async def on_text_mode_change(self,args):
+        """
+        handle changes in the text_mode
+        """
+        new_text_mode=args.value
+        if new_text_mode!=self.text_mode:
+            self.text_mode=new_text_mode
+            await self.render()
 
     def configure_run(self):
         """

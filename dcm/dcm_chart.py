@@ -4,8 +4,9 @@ Created on 2024-01-12
 @author: wf
 """
 import copy
-from typing import List, Optional
 import textwrap
+from typing import List, Optional
+
 from dcm.dcm_core import (
     CompetenceElement,
     CompetenceFacet,
@@ -134,6 +135,7 @@ class DcmChart:
         filename: Optional[str] = None,
         learner: Optional[Learner] = None,
         config: Optional[SVGConfig] = None,
+        text_mode: str = "none"
     ) -> str:
         """
         Generate the SVG markup and optionally save it to a file. If a filename is given, the method
@@ -143,14 +145,17 @@ class DcmChart:
             filename (str, optional): The path to the file where the SVG should be saved. Defaults to None.
             learner(Learner): the learner to show the achievements for
             config (SVGConfig, optional): The configuration for the SVG canvas and legend. Defaults to default values.
-
+            text_mode(str): text display mode
         Returns:
             str: The SVG markup.
         """
         if config is None:
             config = SVGConfig()  # Use default configuration if none provided
         svg_markup = self.generate_svg_markup(
-            self.dcm.competence_tree, learner=learner, config=config
+            self.dcm.competence_tree, 
+            learner=learner, 
+            config=config,
+            text_mode=text_mode
         )
         if filename:
             self.save_svg_to_file(svg_markup, filename)
@@ -201,8 +206,8 @@ class DcmChart:
             segment.outer_radius = segment.inner_radius + relative_radius
 
         result = svg.add_donut_segment(config=element_config, segment=segment)
-        if self.text_mode!="none":
-            text=textwrap.fill(element.short_name,width=20)
+        if self.text_mode != "none":
+            text = textwrap.fill(element.short_name, width=20)
             self.svg.add_text_to_donut_segment(segment, text, direction=self.text_mode)
         return result
 
@@ -305,7 +310,7 @@ class DcmChart:
         selected_paths: List = [],
         config: SVGConfig = None,
         with_java_script: bool = True,
-        text_mode: str="none",
+        text_mode: str = "none",
         lookup_url: str = "",
     ) -> str:
         """
@@ -328,6 +333,7 @@ class DcmChart:
                 If None, default configuration settings are used. Defaults to None.
             with_java_script (bool, optional): Indicates whether to include JavaScript
                 in the SVG for interactivity. Defaults to True.
+            text_mode(str): text display mode
             lookup_url (str, optional): Base URL for linking to detailed descriptions
                 or information about the competence elements. If not provided, links
                 will not be generated. Defaults to an empty string.
@@ -343,7 +349,7 @@ class DcmChart:
             competence_tree = self.dcm.competence_tree
         self.selected_paths = selected_paths
         self.levels = ["aspects", "areas", "facets"]
-        self.text_mode=text_mode
+        self.text_mode = text_mode
 
         svg = self.prepare_and_add_inner_circle(config, competence_tree, lookup_url)
 

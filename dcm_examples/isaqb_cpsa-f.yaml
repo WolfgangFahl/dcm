@@ -1,14 +1,17 @@
-name: iSAQB e.V. CPSA-F Self Assessment
+name: iSAQB e.V. CPSA-F
+short_name: CPSA-F
 id: iSAQB_CPSA-F
 url: https://github.com/isaqb-org
 description: International Software Architecture Qualification Board Certified Professional
   for Software Architecture Foundation Level Mock Exam Self Assessment
 aspects:
 - name: basics
+  short_name: basics
   id: basics
   description: Basics
   areas:
   - name: Discuss Definitions of Software Architecture (R1)
+    short_name: LG1-1
     id: 1-01
     description: |2+
 
@@ -22,6 +25,7 @@ aspects:
 
     facets: []
   - name: Understand and Explain the Goals and Benefits of Software Architecture (R1)
+    short_name: LG1-2
     id: 1-02
     description: "\n\n\nSoftware architects can justify the following essential goals\
       \ and benefits of software architecture:\n\n* support the design, implementation,\
@@ -33,6 +37,7 @@ aspects:
       \ and operation\n \n"
     facets: []
   - name: Understand Software Architecture as Part of the Software Lifecycle (R2)
+    short_name: LG1-3
     id: 1-03
     description: |2+
 
@@ -45,6 +50,7 @@ aspects:
 
     facets: []
   - name: Understand Software Architects' Tasks and Responsibilities (R1)
+    short_name: LG1-4
     id: 1-04
     description: |2+
 
@@ -66,6 +72,7 @@ aspects:
 
     facets: []
   - name: Relate the Role of Software Architects to Other Stakeholders (R1)
+    short_name: LG1-5
     id: 1-05
     description: "\nSoftware architects are able to explain their role. \nThey should\
       \ adapt their contribution to a software development in a specific context and\
@@ -80,6 +87,7 @@ aspects:
     facets: []
   - name: Can Explain the Correlation between Development Approaches and Software
       Architecture (R2)
+    short_name: LG1-6
     id: 1-06
     description: |2+
 
@@ -89,6 +97,7 @@ aspects:
 
     facets: []
   - name: Differentiate between Short- and Long-Term Goals (R2)
+    short_name: LG1-7
     id: 1-07
     description: |2+
 
@@ -97,6 +106,7 @@ aspects:
 
     facets: []
   - name: Distinguish Explicit Statements and Implicit Assumptions (R1)
+    short_name: LG1-8
     id: 1-08
     description: |2+
 
@@ -109,6 +119,7 @@ aspects:
     facets: []
   - name: Responsibilities of Software Architects within the Greater Architectural
       Context (R3)
+    short_name: LG1-9
     id: 1-09
     description: |2
 
@@ -126,6 +137,7 @@ aspects:
       These architectural domains are not the content focus of CPSA-F.
     facets: []
   - name: Differentiate Types of IT Systems (R3)
+    short_name: LG1-10
     id: 1-10
     description: |2+
 
@@ -142,6 +154,7 @@ aspects:
 
     facets: []
   - name: Challenges of Distributed Systems (R3)
+    short_name: LG1-11
     id: 1-11
     description: |2
 
@@ -160,10 +173,12 @@ aspects:
       * that it is impossible to determine the temporal order of events in a distributed system
     facets: []
 - name: design
+  short_name: design
   id: design
   description: Design
   areas:
   - name: Select and Use Approaches and Heuristics for Architecture Development (R1,R3)
+    short_name: LG2-1
     id: 2-01
     description: "\nSoftware architects are able to name, explain, and use fundamental\
       \ approaches of architecture development, for example:\n\n* top-down and bottom-up\
@@ -175,6 +190,7 @@ aspects:
       \ architecture (R3)\n\n"
     facets: []
   - name: Design Software Architectures (R1)
+    short_name: LG2-2
     id: 2-02
     description: |2+
 
@@ -193,6 +209,7 @@ aspects:
 
     facets: []
   - name: Identify and Consider Factors Influencing Software Architecture (R1-R3)
+    short_name: LG2-3
     id: 2-03
     description: "\n\n\nSoftware architects are able to clarify and consider requirements\
       \ (including constraints that restrict their decisions).\nThey understand that\
@@ -220,6 +237,7 @@ aspects:
       \ examples for some of them (R2).\n\n"
     facets: []
   - name: Design and Implement Cross-Cutting Concepts (R1)
+    short_name: LG2-4
     id: 2-04
     description: |2+
 
@@ -235,6 +253,7 @@ aspects:
     facets: []
   - name: Describe, Explain and Appropriately Apply Important Solution Patterns (R1,
       R3)
+    short_name: LG2-5
     id: 2-05
     description: |2+
 
@@ -286,6 +305,7 @@ aspects:
 
     facets: []
   - name: Explain and Use Design Principles (R1-R3)
+    short_name: LG2-6
     id: 2-06
     description: |2
 
@@ -340,6 +360,7 @@ aspects:
       Software architects know other principles (such as CUPID, see <<nygard-cupid>>), and can apply them.
     facets: []
   - name: Manage Dependencies between Building Blocks (R1)
+    short_name: LG2-7
     id: 2-07
     description: |2+
 
@@ -357,6 +378,7 @@ aspects:
     facets: []
   - name: Achieve Quality Requirements with Appropriate Approaches and Techniques
       (R1)
+    short_name: LG2-8
     id: 2-08
     description: |2+
 
@@ -377,6 +399,7 @@ aspects:
 
     facets: []
   - name: Design and Define Interfaces (R1-R3)
+    short_name: LG2-9
     id: 2-09
     description: "\n\nSoftware architects know about the importance of interfaces.\
       \ They are able to design or specify interfaces between architectural building\
@@ -390,6 +413,7 @@ aspects:
       ** service oriented approach (see WS-*/SOAP-based web services.\n\n"
     facets: []
   - name: Know Fundamental Principles of Software Deployment (R3)
+    short_name: LG2-10
     id: 2-10
     description: |2+
 
@@ -408,10 +432,12 @@ aspects:
 
     facets: []
 - name: documentation
+  short_name: documentat
   id: documentation
   description: Documentation
   areas:
   - name: Explain and Consider the Requirements of Technical Documentation (R1)
+    short_name: LG3-1
     id: 3-01
     description: |2+
 
@@ -424,6 +450,7 @@ aspects:
 
     facets: []
   - name: Describe and Communicate Software Architectures (R1-R3)
+    short_name: LG3-2
     id: 3-02
     description: |2+
 
@@ -452,6 +479,7 @@ aspects:
 
     facets: []
   - name: Explain and Apply Notations/Models to Describe Software Architecture (R2-R3)
+    short_name: LG3-3
     id: 3-03
     description: |2+
 
@@ -470,6 +498,7 @@ aspects:
 
     facets: []
   - name: Explain and Use Architectural Views (R1)
+    short_name: LG3-4
     id: 3-04
     description: "\nSoftware architects are able to use the following architectural\
       \ views:\n\n* context view \n* building block or component view (composition\
@@ -479,6 +508,7 @@ aspects:
       \ onto the infrastructure)\n\n"
     facets: []
   - name: Explain and Apply Context View of Systems (R1)
+    short_name: LG3-5
     id: 3-05
     description: |2+
 
@@ -490,6 +520,7 @@ aspects:
 
     facets: []
   - name: Document and Communicate Cross-Cutting Concepts (R2)
+    short_name: LG3-6
     id: 3-06
     description: |2+
 
@@ -498,6 +529,7 @@ aspects:
 
     facets: []
   - name: Describe Interfaces (R1)
+    short_name: LG3-7
     id: 3-07
     description: |2+
 
@@ -506,6 +538,7 @@ aspects:
 
     facets: []
   - name: Explain and Document Architectural Decisions (R1-R2)
+    short_name: LG3-8
     id: 3-08
     description: |2+
 
@@ -519,6 +552,7 @@ aspects:
 
     facets: []
   - name: Know Additional Resources and Tools for Documentation (R3)
+    short_name: LG3-9
     id: 3-09
     description: |2+
 
@@ -535,10 +569,12 @@ aspects:
 
     facets: []
 - name: examples
+  short_name: examples
   id: examples
   description: Examples
   areas:
   - name: Know the Relation between Requirements, Constraints, and Solutions (R3)
+    short_name: LG5-1
     id: 5-01
     description: |2+
 
@@ -546,6 +582,7 @@ aspects:
 
     facets: []
   - name: Know the Rationale of a Solution's Technical Implementation (R3)
+    short_name: LG5-2
     id: 5-02
     description: |2+
 
@@ -553,10 +590,12 @@ aspects:
 
     facets: []
 - name: quality
+  short_name: quality
   id: quality
   description: Quality
   areas:
   - name: Discuss Quality Models and Quality Characteristics (R1)
+    short_name: LG4-1
     id: 4-01
     description: |2+
 
@@ -573,6 +612,7 @@ aspects:
 
     facets: []
   - name: Clarify Quality Requirements for Software Architectures (R1)
+    short_name: LG4-2
     id: 4-02
     description: |2+
 
@@ -584,6 +624,7 @@ aspects:
 
     facets: []
   - name: Qualitative Analysis of Software Architectures (R2-R3)
+    short_name: LG4-3
     id: 4-03
     description: |2+
 
@@ -601,6 +642,7 @@ aspects:
 
     facets: []
   - name: Quantitative Evaluation of Software Architectures (R2)
+    short_name: LG4-4
     id: 4-04
     description: |2+
 
@@ -620,17 +662,20 @@ aspects:
     facets: []
 levels:
 - name: Need to Learn
-  id: need-to-learn
+  short_name: Need to Le
+  id: Need to Learn
   color_code: '#FF0000'
   level: 1
   icon: thumb_down
 - name: Need to Lookup
-  id: need-to-lookup
+  short_name: Need to Lo
+  id: Need to Lookup
   color_code: '#0000FF'
   level: 2
   icon: question_mark
 - name: Already Known
-  id: already-known
+  short_name: Already Kn
+  id: Already Known
   color_code: '#008000'
   level: 3
   icon: thumb_up
