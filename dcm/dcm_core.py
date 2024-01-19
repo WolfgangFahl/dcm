@@ -152,23 +152,20 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
     """
+
     lookup_url: Optional[str] = None
-    total_levels:int = field(init=False)
+    total_levels: int = field(init=False)
     aspects: List[CompetenceAspect] = field(default_factory=list)
     levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
-    total_elements: Dict[str,int] = field(default_factory=dict)
-    
+    total_elements: Dict[str, int] = field(default_factory=dict)
+
     def __post_init__(self):
         """
         initalize the path variables of my hierarchy
         """
         super().__post_init__()
-        self.total_elements={
-            "aspects": 0,
-            "areas": 0,
-            "facets": 0
-        }
+        self.total_elements = {"aspects": 0, "areas": 0, "facets": 0}
         self.update_paths()
 
     def update_paths(self):
@@ -176,26 +173,26 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         update my paths
         """
         self.path = self.id
-        self.total_levels=1
+        self.total_levels = 1
         # Loop through each competence aspect and set their paths and parent references
         for aspect in self.aspects:
             aspect.competence_tree = self
             aspect.path = f"{self.id}/{aspect.id}"
-            self.total_elements["aspects"]=self.total_elements["aspects"]+1
-            self.total_levels=2
+            self.total_elements["aspects"] = self.total_elements["aspects"] + 1
+            self.total_levels = 2
             for area in aspect.areas:
-                self.total_levels=3
+                self.total_levels = 3
                 area.competence_tree = self
                 area.aspect = aspect
                 area.path = f"{self.id}/{aspect.id}/{area.id}"
-                self.total_elements["areas"]=self.total_elements["areas"]+1
+                self.total_elements["areas"] = self.total_elements["areas"] + 1
                 for facet in area.facets:
-                    self.total_levels=4
+                    self.total_levels = 4
                     facet.competence_tree = self
                     facet.area = area
                     facet.path = f"{self.id}/{aspect.id}/{area.id}/{facet.id}"
-                    self.total_elements["facets"]=self.total_elements["facets"]+1
-         
+                    self.total_elements["facets"] = self.total_elements["facets"] + 1
+
     @classmethod
     def required_keys(cls) -> Tuple:
         keys = {"name", "id", "url", "description", "element_names"}

@@ -224,8 +224,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 self.render_item(item)
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
-            
-    def render_item(self,item):
+
+    def render_item(self, item):
         if isinstance(item, DynamicCompetenceMap):
             self.render_dcm(item)
         else:
@@ -256,7 +256,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 except Exception as ex:
                     ui.notify(str(ex))
                 self.assessment = None
-                self.learner=None
+                self.learner = None
             self.dcm = dcm
             self.assessment_button.enable()
             dcm_chart = DcmChart(dcm)

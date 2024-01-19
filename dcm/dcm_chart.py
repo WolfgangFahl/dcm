@@ -26,7 +26,7 @@ class DcmChart:
         Constructor
         """
         self.dcm = dcm
-        self.text_mode="none"
+        self.text_mode = "none"
 
     def precalculate_segments(self, competence_tree: CompetenceTree) -> dict:
         """
@@ -111,10 +111,7 @@ class DcmChart:
         return svg.get_svg_markup(with_java_script=True)
 
     def prepare_and_add_inner_circle(
-        self, 
-        config, 
-        competence_tree: CompetenceTree, 
-        lookup_url: str = None
+        self, config, competence_tree: CompetenceTree, lookup_url: str = None
     ):
         """
         prepare the SVG markup generation and add
@@ -130,16 +127,17 @@ class DcmChart:
         # center of circle
         self.cx = config.width // 2
         self.cy = (config.total_height - config.legend_height) // 2
-        self.radius_steps=competence_tree.total_levels
+        self.radius_steps = competence_tree.total_levels
         self.tree_radius = config.width / 2 / self.radius_steps / 2
         self.circle_config = competence_tree.to_svg_node_config(
             x=self.cx, y=self.cy, width=self.tree_radius
         )
         svg.add_circle(config=self.circle_config)
-        if self.text_mode!="none":
+        if self.text_mode != "none":
             svg.add_text(
-                self.cx,self.cy, 
-                competence_tree.short_name, 
+                self.cx,
+                self.cy,
+                competence_tree.short_name,
                 centered=True,
                 fill="white",
             )
@@ -176,22 +174,18 @@ class DcmChart:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
 
-    def get_element_config(self, 
-            element: CompetenceElement) -> SVGNodeConfig:
+    def get_element_config(self, element: CompetenceElement) -> SVGNodeConfig:
         """
         get a configuration for the given element
-        
+
         Args:
             element(CompetenceElement): the element
-            
+
         Return:
             SVGNodeConfig: an SVG Node configuration
         """
         if element is None:
-            element_config=SVGNodeConfig(
-                x=self.cx,
-                y=self.cy,
-                fill='white')
+            element_config = SVGNodeConfig(x=self.cx, y=self.cy, fill="white")
             return element_config
         element_url = (
             element.url
@@ -219,19 +213,19 @@ class DcmChart:
     ) -> DonutSegment:
         """
         create a donut segment for the
-        given competence element and add it 
+        given competence element and add it
         to the given SVG
-        
+
         if level color is available an achievement
         needs to be potentially shown
         """
         element_config = self.get_element_config(element)
         # make sure we show the text on the original segment
-        text_segment=copy.deepcopy(segment)
+        text_segment = copy.deepcopy(segment)
 
         if level_color:
             element_config.fill = level_color  # Set the color
-            text_mode="none"
+            text_mode = "none"
         if element and element.path in self.selected_paths:
             element_config.element_class = "selected"
 
@@ -248,9 +242,8 @@ class DcmChart:
             # textwrap.fill(element.short_name, width=20)
             text = element.short_name
             self.svg.add_text_to_donut_segment(
-                text_segment, 
-                text, 
-                direction=self.text_mode)
+                text_segment, text, direction=self.text_mode
+            )
         return result
 
     def generate_donut_segment_for_achievement(
@@ -277,11 +270,7 @@ class DcmChart:
                 # make sure we don't interfere with the segment calculations
                 segment = copy.deepcopy(segment)
                 result = self.add_donut_segment(
-                    svg, 
-                    element, 
-                    segment, 
-                    level_color, 
-                    achievement.level
+                    svg, element, segment, level_color, achievement.level
                 )
         return result
 
@@ -312,7 +301,7 @@ class DcmChart:
         parent_element: CompetenceElement,
         learner: Learner,
         segment: DonutSegment,
-        symmetry_level: int=1
+        symmetry_level: int = 1,
     ):
         """
         generate the pie elements (donut segments) for the subelements
@@ -320,34 +309,32 @@ class DcmChart:
         e.g. aspects, areas or facets - taking the learner
         achievements into account if a corresponding achievement
         is found. The segment limits the area in which the generation may operate
-        
+
         the symmetry level denotes at which level the rings should be symmetric
         """
         sub_element_name = self.levels[level]
         # get the elements to be displayed
         elements = getattr(parent_element, sub_element_name)
         total = len(elements)
-        total_sub_elements=self.dcm.competence_tree.total_elements[sub_element_name]
+        total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
         # are there any elements to be shown?
         if total == 0:
             # there are no subelements we might need a single
             # empty donut segment
             # but only if there are any other available subelements
             # on this level
-            if total_sub_elements==0:
+            if total_sub_elements == 0:
                 return
             sub_segment = DonutSegment(
-                    cx=self.cx,
-                    cy=self.cy,
-                    inner_radius=segment.outer_radius,
-                    outer_radius=segment.outer_radius + self.tree_radius * 2,
-                    start_angle=segment.start_angle,
-                    end_angle=segment.end_angle,
+                cx=self.cx,
+                cy=self.cy,
+                inner_radius=segment.outer_radius,
+                outer_radius=segment.outer_radius + self.tree_radius * 2,
+                start_angle=segment.start_angle,
+                end_angle=segment.end_angle,
             )
-            self.generate_donut_segment_for_element(svg,
-                element=None,
-                learner=None,
-                segment=sub_segment
+            self.generate_donut_segment_for_element(
+                svg, element=None, learner=None, segment=sub_segment
             )
         else:
             angle_per_element = (segment.end_angle - segment.start_angle) / total
