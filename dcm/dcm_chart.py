@@ -193,12 +193,19 @@ class DcmChart:
     ) -> DonutSegment:
         """
         create a donut segment for the
-        given competence element and add it to the given SVG
+        given competence element and add it 
+        to the given SVG
+        
+        if level color is available an achievement
+        needs to be potentially shown
         """
         element_config = self.get_element_config(element)
+        # make sure we show the text on the original segment
+        text_segment=copy.deepcopy(segment)
 
         if level_color:
             element_config.fill = level_color  # Set the color
+            text_mode="none"
         if element.path in self.selected_paths:
             element_config.element_class = "selected"
 
@@ -214,7 +221,7 @@ class DcmChart:
             # no autofill please
             # textwrap.fill(element.short_name, width=20)
             text = element.short_name
-            self.svg.add_text_to_donut_segment(segment, text, direction=self.text_mode)
+            self.svg.add_text_to_donut_segment(text_segment, text, direction=self.text_mode)
         return result
 
     def generate_donut_segment_for_achievement(
@@ -241,7 +248,11 @@ class DcmChart:
                 # make sure we don't interfere with the segment calculations
                 segment = copy.deepcopy(segment)
                 result = self.add_donut_segment(
-                    svg, element, segment, level_color, achievement.level
+                    svg, 
+                    element, 
+                    segment, 
+                    level_color, 
+                    achievement.level
                 )
         return result
 
