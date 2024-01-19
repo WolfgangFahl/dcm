@@ -127,7 +127,8 @@ class DcmChart:
         # center of circle
         self.cx = config.width // 2
         self.cy = (config.total_height - config.legend_height) // 2
-        self.tree_radius = config.width / 2 / 8
+        self.radius_steps=competence_tree.total_levels
+        self.tree_radius = config.width / 2 / self.radius_steps / 2
         self.circle_config = competence_tree.to_svg_node_config(
             x=self.cx, y=self.cy, width=self.tree_radius
         )
@@ -298,6 +299,7 @@ class DcmChart:
         parent_element: CompetenceElement,
         learner: Learner,
         segment: DonutSegment,
+        symmetry_level: int=1
     ):
         """
         generate the pie elements (donut segments) for the subelements
@@ -305,18 +307,21 @@ class DcmChart:
         e.g. aspects, areas or facets - taking the learner
         achievements into account if a corresponding achievement
         is found. The segment limits the area in which the generation may operate
+        
+        the symmetry level denotes at which level the rings should be symmetric
         """
         sub_element_name = self.levels[level]
         # get the elements to be displayed
         elements = getattr(parent_element, sub_element_name)
         total = len(elements)
+        total_sub_elements=self.dcm.competence_tree.total_elements[sub_element_name]
         # are there any elements to be shown?
         if total == 0:
             # there are no subelements we might need a single
             # empty donut segment
             # but only if there are any other available subelements
             # on this level
-            if self.dcm.competence_tree.total_elements[sub_element_name]==0:
+            if total_sub_elements==0:
                 return
             sub_segment = DonutSegment(
                     cx=self.cx,
