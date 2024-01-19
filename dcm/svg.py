@@ -97,7 +97,7 @@ class Text:
         """
         Post-initialization processing to split the text into lines.
         """
-        self.lines = self.text.split("\n")
+        self.lines = self.text.strip().split("\n")
 
     @property
     def line_count(self) -> int:
@@ -123,6 +123,9 @@ class Arc:
     end_x: float
     end_y: float
 
+    # may be calculated by the get_arc function of DonutSegment
+    middle_x: Optional[float] = None
+    middle_y: Optional[float] = None
 
 @dataclass
 class DonutSegment(SVGNode):
@@ -130,14 +133,13 @@ class DonutSegment(SVGNode):
     A donut segment representing a
     section of a donut chart.
     """
-
     cx: float = 0.0
     cy: float = 0.0
     inner_radius: float = 0.0
     outer_radius: float = 0.0
     start_angle: Optional[float] = 0.0
     end_angle: Optional[float] = 360.0
-
+    
     @property
     def large_arc_flag(self) -> str:
         """
@@ -148,33 +150,48 @@ class DonutSegment(SVGNode):
         """
         large_arc_flag = "1" if self.end_angle - self.start_angle >= 180 else "0"
         return large_arc_flag
-
-    @property
-    def start_angle_rad(self) -> float:
-        return math.radians(self.start_angle)
-
-    @property
-    def end_angle_rad(self) -> float:
-        return math.radians(self.end_angle)
+    
+    def relative_angle(self,angle_factor=0.5) -> float:
+        """Calculate a relative angle of the donut segment."""
+        relative_angle=(self.start_angle+self.end_angle)* angle_factor
+        return relative_angle 
     
     def radial_radius(self,radial_offset:float)->float:
+        """
+        get the radial radius for the given radial offset
+        """
         radial_radius=self.inner_radius + (self.outer_radius - self.inner_radius) * radial_offset
         return radial_radius
     
+    def x_y(self,angle:float,radial_radius:float):
+        x = self.cx + radial_radius * math.cos(math.radians(angle))
+        y = self.cy + radial_radius * math.sin(math.radians(angle))
+        return x,y
+    
     def get_arc(self, radial_offset: float = 0.5) -> Arc:
+        """
+        Get the Arc for the givne radial offset
+        
+        Args:
+            radial_offset(float): e.g. 0.0 - inner 1.0 outer 0.5 middle
+        Returns:
+            Arc: the arc at the given radial offset
+        """
         # Calculate the adjusted radius within the bounds of inner and outer radii
         radial_radius=self.radial_radius(radial_offset)
-
+        
         # Calculate the start and end points of the arc
-        start_x = self.cx + radial_radius * math.cos(self.start_angle_rad)
-        start_y = self.cy + radial_radius * math.sin(self.start_angle_rad)
-        end_x = self.cx + radial_radius * math.cos(self.end_angle_rad)
-        end_y = self.cy + radial_radius * math.sin(self.end_angle_rad)
-
+        start_x,start_y=self.x_y(self.start_angle, radial_radius) 
+        end_x,end_y=self.x_y(self.end_angle,radial_radius)
+        middle_angle=self.relative_angle(0.5)
+        middle_x,middle_y=self.x_y(middle_angle,radial_radius)
+        
         return Arc(
             radius=radial_radius,
             start_x=start_x,
             start_y=start_y,
+            middle_x=middle_x,
+            middle_y=middle_y,
             end_x=end_x,
             end_y=end_y,
         )
@@ -570,19 +587,16 @@ class SVG:
                              Options are "horizontal", "angled", or "curved".
             color (str): The color of the text. Default is "white".
         """
-        # Common calculations
-        mid_angle = (segment.start_angle + segment.end_angle) / 2
-        mid_angle_rad = math.radians(mid_angle)
-        mid_radius = (segment.inner_radius + segment.outer_radius) / 2
-
         if direction in ["horizontal", "angled"]:
             # Calculate position for horizontal or angled text
-            text_x = segment.cx + mid_radius * math.cos(mid_angle_rad)
-            text_y = segment.cy + mid_radius * math.sin(mid_angle_rad)
-
+            # Use the get_arc method to find the position for horizontal or angled text
+            mid_arc = segment.get_arc(radial_offset=0.5)  # Get the mid-arc
+            text_x, text_y = mid_arc.middle_x, mid_arc.middle_y
+          
             # Adjust text anchor and rotation for better readability
             transform = ""
             if direction == "angled":
+                mid_angle = segment.relative_angle(0.5)
                 rotation_angle = self.get_text_rotation(mid_angle)
                 transform = f"rotate({rotation_angle}, {text_x}, {text_y})"
 

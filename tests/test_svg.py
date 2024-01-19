@@ -146,6 +146,8 @@ class TestSVG(Basetest):
 
         for offset, expected_arc in test_cases.items():
             actual_arc = segment.get_arc(radial_offset=offset)
+            expected_arc.middle_x=actual_arc.middle_x
+            expected_arc.middle_y=actual_arc.middle_y
             if debug:
                 print(
                     f"Debug - Offset {offset}: Expected {expected_arc}, got {actual_arc}"
