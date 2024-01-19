@@ -1,9 +1,9 @@
 import html
-from datetime import datetime
 import math
+from dataclasses import dataclass, field
+from datetime import datetime
 from typing import List, Optional, Tuple
 
-from pydantic.dataclasses import dataclass
 
 @dataclass
 class SVGConfig:
@@ -19,6 +19,7 @@ class SVGConfig:
         indent (str): Indentation string, default is two spaces.
         default_color (str): Default color code for SVG elements.
     """
+
     width: int = 600
     height: int = 600
     legend_height: int = 150
@@ -37,32 +38,82 @@ class SVGConfig:
         """
         return self.height + self.legend_height
 
+    @property
+    def line_height(self) -> float:
+        # Calculate line height based on font size
+        # You can adjust this multiplier as needed
+        line_height = self.font_size * 1.2
+        return line_height
+
+
 @dataclass
 class SVGNode:
     """
     a generic SVG Node
     """
+
     indent_level: int = 1
     id: Optional[str] = None
-    color: Optional[str] = None   # Color of font or stroke use default color of config if None
-    fill: Optional[str] = "black" # Fill color for the segment
-    title: Optional[str] = None   # Tooltip
+    color: Optional[
+        str
+    ] = None  # Color of font or stroke use default color of config if None
+    fill: Optional[str] = "black"  # Fill color for the segment
+    title: Optional[str] = None  # Tooltip
     comment: Optional[str] = None
- 
+
+
 @dataclass
 class SVGNodeConfig(SVGNode):
     """
     a single SVG Node configuration
     to display any element
     """
+
     x: float = 0.0
-    y: float = 0.0 
+    y: float = 0.0
     width: Optional[float] = None
     height: Optional[float] = None
     element_type: Optional[str] = None
     url: Optional[str] = None
     show_as_popup: bool = False  # Flag to indicate if the link should opened as a popup
     element_class: Optional[str] = "hoverable"
+
+
+@dataclass
+class Text:
+    """
+    Class to handle text-related operations in SVG.
+
+    Attributes:
+        text (str): The text content.
+        config (SVGConfig): Configuration for SVG generation.
+    """
+
+    text: str
+    config: SVGConfig
+    lines: List[str] = field(init=False)
+
+    def __post_init__(self):
+        """
+        Post-initialization processing to split the text into lines.
+        """
+        self.lines = self.text.split("\n")
+
+    @property
+    def line_count(self) -> int:
+        return len(self.lines)
+
+    @property
+    def total_text_height(self) -> float:
+        """
+        Calculate the total height of the text based on the number of lines and the line height.
+
+        Returns:
+            float: The total height of the text in pixels.
+        """
+        height = self.config.line_height * len(self.lines)
+        return height
+
 
 @dataclass
 class Arc:
@@ -72,20 +123,21 @@ class Arc:
     end_x: float
     end_y: float
 
-        
+
 @dataclass
 class DonutSegment(SVGNode):
     """
     A donut segment representing a
     section of a donut chart.
     """
+
     cx: float = 0.0
-    cy: float = 0.0 
+    cy: float = 0.0
     inner_radius: float = 0.0
     outer_radius: float = 0.0
     start_angle: Optional[float] = 0.0
     end_angle: Optional[float] = 360.0
- 
+
     @property
     def large_arc_flag(self) -> str:
         """
@@ -94,9 +146,9 @@ class DonutSegment(SVGNode):
         Returns:
             str: "1" if the arc is a large arc, otherwise "0".
         """
-        large_arc_flag="1" if self.end_angle - self.start_angle >= 180 else "0"
+        large_arc_flag = "1" if self.end_angle - self.start_angle >= 180 else "0"
         return large_arc_flag
-    
+
     @property
     def start_angle_rad(self) -> float:
         return math.radians(self.start_angle)
@@ -107,17 +159,25 @@ class DonutSegment(SVGNode):
 
     def get_arc(self, radial_offset: float = 0.5) -> Arc:
         # Calculate the adjusted radius within the bounds of inner and outer radii
-        adjusted_radius = self.inner_radius + (self.outer_radius - self.inner_radius) * radial_offset
-        
+        adjusted_radius = (
+            self.inner_radius + (self.outer_radius - self.inner_radius) * radial_offset
+        )
+
         # Calculate the start and end points of the arc
         start_x = self.cx + adjusted_radius * math.cos(self.start_angle_rad)
         start_y = self.cy + adjusted_radius * math.sin(self.start_angle_rad)
         end_x = self.cx + adjusted_radius * math.cos(self.end_angle_rad)
         end_y = self.cy + adjusted_radius * math.sin(self.end_angle_rad)
 
-        return Arc(radius=adjusted_radius, start_x=start_x, start_y=start_y, end_x=end_x, end_y=end_y)
+        return Arc(
+            radius=adjusted_radius,
+            start_x=start_x,
+            start_y=start_y,
+            end_x=end_x,
+            end_y=end_y,
+        )
 
-        
+
 class SVG:
     """
     Class for creating SVG drawings.
@@ -139,26 +199,20 @@ class SVG:
         self.elements = []
         self.indent = self.config.indent
 
-    @property
-    def line_height(self)->float:
-        # Calculate line height based on font size
-        line_height = self.config.font_size * 1.2  # You can adjust this multiplier as needed
-        return line_height
-    
-    def get_indent(self,level)->str:
+    def get_indent(self, level) -> str:
         """
         get the indentation for the given level
         """
-        indentation=f"{self.indent * level}"
+        indentation = f"{self.indent * level}"
         return indentation
-    
+
     def get_svg_style(self, with_java_script: bool) -> str:
         """
         Define styles for SVG elements.
-    
+
         Args:
             with_java_script (bool): Flag to indicate whether JavaScript-related styles should be included.
-    
+
         Returns:
             str: String containing style definitions for SVG.
         """
@@ -168,7 +222,7 @@ class SVG:
             f"{self.indent * 2}.hoverable:hover {{ fill-opacity: 0.7; }}\n"
             f"{self.indent * 2}.selected {{ fill-opacity: 0.5; stroke: blue; stroke-width: 1.5;}}\n"
         )
-    
+
         if with_java_script:
             style += (
                 f"{self.indent * 2}.popup {{\n"
@@ -191,7 +245,7 @@ class SVG:
                 f"{self.indent * 3}user-select: none;\n"  # prevents text selection on click
                 f"{self.indent * 2}}}\n"
             )
-        
+
         style += f"{self.indent}</style>\n"
         return style
 
@@ -207,8 +261,8 @@ class SVG:
         """
         average_char_width_factor = 0.6
         average_char_width = average_char_width_factor * self.config.font_size
-        return int(average_char_width * len(text))  
-    
+        return int(average_char_width * len(text))
+
     def get_text_rotation(self, rotation_angle: float) -> float:
         """
         Adjusts the rotation angle for SVG text elements to ensure that the text
@@ -229,11 +283,13 @@ class SVG:
         # Return the adjusted angle. No adjustment is needed for the
         # top half of the chart as the text is already upright.
         return rotation_angle
-    
-    def get_donut_path(self, 
-            segment: DonutSegment,
-            radial_offset: float = 0.5,
-            middle_arc:bool=False) -> str:
+
+    def get_donut_path(
+        self,
+        segment: DonutSegment,
+        radial_offset: float = 0.5,
+        middle_arc: bool = False,
+    ) -> str:
         """
         Create an SVG path definition for an arc using the properties of a DonutSegment.
 
@@ -244,10 +300,10 @@ class SVG:
 
         Returns:
             str: SVG path definition string for the full donut segment or the middle_arc if middle_arc is set to true.
-        """ 
+        """
         if middle_arc:
             arc = segment.get_arc(radial_offset=radial_offset)
-            
+
             # Create the path for the middle arc
             path_str = (
                 f"M {arc.start_x} {arc.start_y} "  # Move to start of middle arc
@@ -264,19 +320,19 @@ class SVG:
                 f"A {segment.inner_radius} {segment.inner_radius} 0 {segment.large_arc_flag} 0 {inner_arc.start_x} {inner_arc.start_y} "  # Inner arc (reverse)
                 "Z"
             )
-            
+
         return path_str
 
-    def add_element(self, element: str, level: int = 1, comment: str = None):
+    def add_element(self, element: str, indent_level: int = 1, comment: str = None):
         """
         Add an SVG element to the elements list with proper indentation.
 
         Args:
             element (str): SVG element to be added.
-            level (int): Indentation level for the element.
+            indent_level (int): Indentation level for the element.
             comment(str): optional comment to add
         """
-        base_indent = self.get_indent(level)
+        base_indent = self.get_indent(indent_level)
         if comment:
             indented_comment = f"{base_indent}<!-- {comment} -->\n"
             self.elements.append(indented_comment)
@@ -305,7 +361,7 @@ class SVG:
             circle_element,
             group_id=config.id,
             group_class=config.element_class,
-            level=config.indent_level,
+            indent_level=config.indent_level,
             comment=config.comment,
         )
 
@@ -330,8 +386,8 @@ class SVG:
             indent_level (int): Indentation level for the rectangle.
         """
         color = fill if fill else self.config.default_color
-        rect = f'{self.get_indent(indent_level)}<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
-        self.add_element(rect)
+        rect = f'<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
+        self.add_element(rect, indent_level=indent_level)
 
     def add_legend_column(
         self,
@@ -368,7 +424,7 @@ class SVG:
         text_anchor: str = "start",
         transform: str = "",
         centered: bool = False,
-        indent_level: int =1,
+        indent_level: int = 1,
     ) -> None:
         """
         Add text to the SVG.
@@ -376,7 +432,7 @@ class SVG:
         Args:
             x (int): X position of the text.
             y (int): Y position of the text.
-            text (str): Text content.
+            text(str): Text content.
             fill (str, optional): Fill color of the text. Defaults to "black".
             font_weight (str, optional): Font weight (normal, bold, etc.). Defaults to "normal".
             text_anchor (str, optional): Text alignment (start, middle, end). Defaults to "start".
@@ -384,15 +440,13 @@ class SVG:
             centered (bool): If True, treat x and y as the center of the text. Default is False.
             transform (str, optional): Transformation for the text (e.g., rotation). Defaults to an empty string.
         """
-        # Split the input text into lines
-        lines = text.split('\n')
-        total_text_height = self.line_height * len(lines)
+        text_obj = Text(text, self.config)
         if centered:
             # Adjust text_anchor to 'middle' when centered
             text_anchor = "middle"
-    
+
             # y-offset adjustment to center the text vertically
-            y -= total_text_height // 2
+            y -= text_obj.total_text_height // 2
         # Create a text element to hold the tspan elements
         # Only include the transform attribute if it is provided
         transform_attr = f'transform="{transform}" ' if transform else ""
@@ -403,13 +457,13 @@ class SVG:
             f'font-size="{self.config.font_size}" '
             f'font-weight="{font_weight}" '
             f'text-anchor="{text_anchor}" '
-            f'{transform_attr}>'
+            f"{transform_attr}>"
         )
         # Add tspan elements for each line
-        for line in lines:
+        for line in text_obj.lines:
             escaped_line = html.escape(line)
-            text_element += f'\n{self.get_indent(indent_level+1)}<tspan x="{x}" dy="{self.line_height}">{escaped_line}</tspan>'
-    
+            text_element += f'\n{self.get_indent(indent_level+1)}<tspan x="{x}" dy="{self.config.line_height}">{escaped_line}</tspan>'
+
         text_element += f"\n{self.get_indent(indent_level)}</text>\n"
         self.add_element(text_element)
 
@@ -418,7 +472,7 @@ class SVG:
         content: str,
         group_id: str = None,
         group_class: str = None,
-        level: int = 1,
+        indent_level: int = 1,
         comment: str = None,
     ):
         """
@@ -428,7 +482,7 @@ class SVG:
             content (str): SVG content to be grouped.
             group_id (str, optional): ID for the group.
             group_class (str, optional): Class for the group.
-            level (int): Indentation level for the group.
+            indent_level (int): Indentation level for the group.
         """
         group_attrs = []
         if group_id:
@@ -437,10 +491,14 @@ class SVG:
             group_attrs.append(f'class="{group_class}"')
         attrs_str = " ".join(group_attrs)
         indented_content = "\n".join(
-            f"{self.get_indent(level + 1)}{line}" for line in content.strip().split("\n")
+            f"{self.get_indent(indent_level + 1)}{line}"
+            for line in content.strip().split("\n")
         )
-        group_str = f"{self.get_indent(level)}<g {attrs_str}>\n{indented_content}\n{self.get_indent(level)}</g>\n"
-        self.add_element(group_str, level=level, comment=comment)
+        group_str = f"""{self.get_indent(indent_level)}<g {attrs_str}>
+{indented_content}
+{self.get_indent(indent_level)}</g>
+"""
+        self.add_element(group_str, indent_level=indent_level, comment=comment)
 
     def add_donut_segment(
         self,
@@ -458,15 +516,17 @@ class SVG:
 
         if color is None:
             color = self.config.default_color
-            
-        path_str=self.get_donut_path(segment)
-     
+
+        path_str = self.get_donut_path(segment)
+
         # Assemble the path and title elements
         path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        escaped_title = html.escape(config.title)  # Escape special characters
+        if config.title:
+            escaped_title = html.escape(config.title)  # Escape special characters
 
-        title_element = f"<title>{escaped_title}</title>"
-
+            title_element = f"<title>{escaped_title}</title>"
+        else:
+            title_element = ""
         # Combine path and title into one string without adding indentation here
         group_content = f"{path_element}{title_element}"
 
@@ -486,7 +546,7 @@ class SVG:
             group_content,
             group_id=config.id,
             group_class=config.element_class,
-            level=2,
+            indent_level=2,
             comment=config.comment,
         )
 
@@ -496,7 +556,7 @@ class SVG:
         text: str,
         direction: str = "horizontal",
         color: str = "white",
-        indent_level: int=1,
+        indent_level: int = 1,
     ) -> None:
         """
         Add text to a donut segment with various direction options.
@@ -512,7 +572,7 @@ class SVG:
         mid_angle = (segment.start_angle + segment.end_angle) / 2
         mid_angle_rad = math.radians(mid_angle)
         mid_radius = (segment.inner_radius + segment.outer_radius) / 2
-  
+
         if direction in ["horizontal", "angled"]:
             # Calculate position for horizontal or angled text
             text_x = segment.cx + mid_radius * math.cos(mid_angle_rad)
@@ -533,31 +593,28 @@ class SVG:
                 font_weight="normal",
                 indent_level=indent_level,
                 transform=transform,
-                centered=True
+                centered=True,
             )
 
         elif direction == "curved":
-            lines = text.split('\n')
-            line_count = len(lines)
-            total_text_height = self.line_height * line_count
-    
-            # Create a path for the text to follow
-            path_id = f"path{segment.start_angle}-{segment.end_angle}"
-            path_d = self.get_donut_path(segment, middle_arc=True)
-            self.add_element(f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />')
-    
-            # Calculate start offset for each line
-            start_offset = 50 - (total_text_height / (2 * math.pi * mid_radius)) * 100 / line_count
-    
-            for line in lines:
-                text_path_element = (
-                    f'<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">'
-                    f'<textPath xlink:href="#{path_id}" startOffset="{start_offset}%" text-anchor="middle">{html.escape(line)}</textPath>'
-                    f"</text>"
-                )
-                self.add_element(text_path_element)
-                start_offset += (self.line_height / (2 * math.pi * mid_radius)) * 100
+            text_obj = Text(text, self.config)
 
+            for i, line in enumerate(text_obj.lines):
+                radial_offset = 1 - ((i + 1) / (text_obj.line_count + 1))
+                # Create a path for the text to follow
+                path_id = f"path{segment.start_angle}-{segment.end_angle}-{i}"
+                path_d = self.get_donut_path(
+                    segment, middle_arc=True, radial_offset=radial_offset
+                )
+                self.add_element(
+                    f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />'
+                )
+
+                text_tag = f"""<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">"""
+                self.add_element(text_tag, indent_level=indent_level)
+                text_path = f"""<textPath xlink:href="#{path_id}" startOffset="50%" dominant-baseline="middle" text-anchor="middle">{html.escape(line)}</textPath>"""
+                self.add_element(text_path, indent_level=indent_level + 1)
+                self.add_element("</text>", indent_level=indent_level)
         else:
             raise ValueError(f"invalid direction {direction}")
 
@@ -635,7 +692,8 @@ class SVG:
             f'xmlns:xlink="http://www.w3.org/1999/xlink" '
             f'width="{self.width}" height="{self.config.total_height}">\n'
         )
-        popup = """
+        popup = (
+            """
         <!-- Add a foreignObject for the popup -->
 <foreignObject id="dcm-svg-popup" class="popup" width="500" height="354" x="150" y="260" visibility="hidden">
     <body xmlns="http://www.w3.org/1999/xhtml">
@@ -646,7 +704,10 @@ class SVG:
         </div>
     </body>
 </foreignObject>
-""" if with_java_script else ""
+"""
+            if with_java_script
+            else ""
+        )
         styles = self.get_svg_style(with_java_script)
         body = "".join(self.elements)
         footer = "</svg>"

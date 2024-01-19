@@ -296,7 +296,7 @@ class DcmChart:
                     inner_radius=segment.outer_radius,
                     outer_radius=segment.outer_radius + self.tree_radius * 2,
                     start_angle=start_angle,
-                    end_angle=end_angle
+                    end_angle=end_angle,
                 )
                 self.generate_donut_segment_for_element(
                     svg, element, learner, segment=sub_segment
@@ -362,10 +362,8 @@ class DcmChart:
         svg = self.prepare_and_add_inner_circle(config, competence_tree, lookup_url)
 
         segment = DonutSegment(
-            cx=self.cx,
-            cy=self.cy,
-            inner_radius=0, 
-            outer_radius=self.tree_radius)
+            cx=self.cx, cy=self.cy, inner_radius=0, outer_radius=self.tree_radius
+        )
         self.generate_pie_elements(
             level=0,
             svg=svg,

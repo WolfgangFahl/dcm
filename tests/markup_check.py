@@ -50,10 +50,12 @@ class MarkupCheck:
             )
 
         if svg_content:
+            self.content_lines = svg_content.splitlines()  # Split content into lines
             root = ET.fromstring(svg_content)
         elif svg_file:
-            tree = ET.parse(svg_file)
-            root = tree.getroot()
+            with open(svg_file, "r") as file:
+                self.content_lines = file.readlines()
+                root = ET.fromstringlist(self.content_lines)
         else:
             raise ValueError("No SVG content or file path provided.")
 
@@ -166,6 +168,7 @@ class MarkupCheck:
         svg_content: Optional[str] = None,
         svg_file: Optional[str] = None,
         svg_config: Optional[SVGConfig] = None,
+        context_lines: int = 2,
     ) -> None:
         """
         Conduct all checks on the SVG content, including configuration checks.
@@ -174,8 +177,34 @@ class MarkupCheck:
             svg_content (str, optional): The SVG content as a text string.
             svg_file (str, optional): The file path of the SVG file to parse.
             svg_config (SVGConfig, optional): The expected SVG configuration.
+            context_lines (int, optional): Number of lines to show before and after the error for context.
         """
-        root = self.parse_svg(svg_content=svg_content, svg_file=svg_file)
+        root = None
+        try:
+            root = self.parse_svg(svg_content=svg_content, svg_file=svg_file)
+        except Exception as ex:
+            if hasattr(ex, "position"):
+                line, col = getattr(ex, "position")
+                if svg_file:
+                    self.show_context(line, col, context_lines)
+            raise ex
         self.check_svg_elements(root)
         self.check_svg_titles(root)
         self.check_svg_config(root, svg_config)  # Include the config check
+
+    def show_context(self, line: int, col: int, context_lines: int) -> None:
+        start_line = max(line - context_lines, 0)
+        end_line = min(line + context_lines, len(self.content_lines))
+
+        for line_index in range(start_line, end_line):
+            # Print the line with line number
+            print(f"{line_index + 1}: {self.content_lines[line_index].rstrip()}")
+
+            # If this is the error line, add the marker
+            if (
+                line_index == line - 1
+            ):  # Adjust for 0-indexed line_index vs 1-indexed line
+                marker_line = (
+                    " " * (col - 1) + "^"
+                )  # Spaces to align with the error column, then '^'
+                print(f"{' ' * (len(str(line_index + 1)) + 2)}{marker_line}")

@@ -3,30 +3,29 @@ Created on 2024-01-18
 
 @author: wf
 """
+import os
 from typing import Tuple
 
 from ngwidgets.basetest import Basetest
 
-from dcm.svg import SVG, DonutSegment, Arc
-import os
+from dcm.svg import SVG, Arc, DonutSegment, SVGNodeConfig
 
 
 class TestSVG(Basetest):
     """
     test svg module
     """
-    
+
     def setUp(self, debug=False, profile=True):
         Basetest.setUp(self, debug=debug, profile=profile)
         self.tmp_directory = "/tmp/svg-module-test"
         os.makedirs(self.tmp_directory, exist_ok=True)
         self.write_results = True
-        
-    def save(self,svg:SVG,file_name:str):
+
+    def save(self, svg: SVG, file_name: str):
         if self.write_results:
-            svg_path=f"{self.tmp_directory}/{file_name}"
+            svg_path = f"{self.tmp_directory}/{file_name}"
             svg.save(svg_path)
-            
 
     def test_text_rotation(self):
         """
@@ -51,7 +50,7 @@ class TestSVG(Basetest):
                 places=1,
                 msg=f"Failed for input angle: {input_angle}",
             )
-            
+
     def test_multiline_text(self):
         """
         test mulitline handling
@@ -63,11 +62,11 @@ class TestSVG(Basetest):
 
         # Get the complete SVG markup
         svg_markup = svg.get_svg_markup()
-        debug=self.debug
+        debug = self.debug
         if debug:
             print(svg_markup)
-        self.save(svg,"multiline_svg_text.svg")    
-                
+        self.save(svg, "multiline_svg_text.svg")
+
     def test_get_donut_path(self):
         """
         Test the get_donut_path method to ensure it returns the correct
@@ -78,67 +77,121 @@ class TestSVG(Basetest):
 
         # Define a test DonutSegment
         test_segment = DonutSegment(
-            cx=300.0, 
+            cx=300.0,
             cy=300.0,
-            inner_radius=100.0, 
-            outer_radius=150.0, 
-            start_angle=0.0, 
-            end_angle=180.0)
+            inner_radius=100.0,
+            outer_radius=150.0,
+            start_angle=0.0,
+            end_angle=180.0,
+        )
 
         # Define the expected SVG path command for the test segment
-        expected_path_commands ={
+        expected_path_commands = {
             False: (
                 "M 400.0 300.0 "
                 "L 450.0 300.0 "
                 "A 150.0 150.0 0 1 1 150.0 300.0 "
                 "L 200.0 300.0 "
                 "A 100.0 100.0 0 1 0 400.0 300.0 Z"
-            ), 
+            ),
             True: (
                 "M 425.0 300.0 "  # Calculated start point (cx + r*cos(0), cy + r*sin(0))
                 "A 125.0 125.0 0 1 1 175.0 300.0"  # Arc command
-            )
+            ),
         }
-        debug=self.debug
-        #debug=True
+        debug = self.debug
+        # debug=True
         for middle_arc, expected_path_command in expected_path_commands.items():
             # Get the actual SVG path command from the method
-            actual_path_command = svg.get_donut_path(test_segment,middle_arc=middle_arc)
+            actual_path_command = svg.get_donut_path(
+                test_segment, middle_arc=middle_arc
+            )
             if debug:
                 print(actual_path_command)
             # Check if the actual path command matches the expected one
             self.assertEqual(
                 actual_path_command,
                 expected_path_command,
-                msg=f"Expected path command does not match the actual path command."
+                msg=f"Expected path command does not match the actual path command.",
             )
-            
+
     def test_get_arc(self):
         """
         Test the get_arc method to ensure it calculates the correct coordinates and radius of an arc.
         """
-        debug=self.debug
-        debug=True
+        debug = self.debug
+        debug = True
         # Create a DonutSegment instance
         segment = DonutSegment(
-            start_angle=0, 
-            end_angle=90, 
-            inner_radius=50, 
-            outer_radius=100, 
-            cx=150, 
-            cy=150)
+            start_angle=0,
+            end_angle=90,
+            inner_radius=50,
+            outer_radius=100,
+            cx=150,
+            cy=150,
+        )
 
         # Test cases with different radial offsets, adjusted for SVG context
         test_cases = {
-            0.0: Arc(radius=50.0, start_x=200.0, start_y=150.0, end_x=150.0, end_y=200.0),   # Inner arc
-            0.5: Arc(radius=75.0, start_x=225.0, start_y=150.0, end_x=150.0, end_y=225.0),   # Middle arc
-            1.0: Arc(radius=100.0, start_x=250.0, start_y=150.0, end_x=150.0, end_y=250.0),  # Outer arc
+            0.0: Arc(
+                radius=50.0, start_x=200.0, start_y=150.0, end_x=150.0, end_y=200.0
+            ),  # Inner arc
+            0.5: Arc(
+                radius=75.0, start_x=225.0, start_y=150.0, end_x=150.0, end_y=225.0
+            ),  # Middle arc
+            1.0: Arc(
+                radius=100.0, start_x=250.0, start_y=150.0, end_x=150.0, end_y=250.0
+            ),  # Outer arc
         }
 
         for offset, expected_arc in test_cases.items():
             actual_arc = segment.get_arc(radial_offset=offset)
             if debug:
-                print(f"Debug - Offset {offset}: Expected {expected_arc}, got {actual_arc}")
-            self.assertEqual(actual_arc, expected_arc, f"Failed for radial offset: {offset}")
+                print(
+                    f"Debug - Offset {offset}: Expected {expected_arc}, got {actual_arc}"
+                )
+            self.assertEqual(
+                actual_arc, expected_arc, f"Failed for radial offset: {offset}"
+            )
 
+    def test_curved_text_on_donut_segment(self):
+        """
+        Test the placement of curved text on a donut segment.
+        """
+        for start_angle in [0, 90, 180, 270]:
+            svg = SVG()
+            segment = DonutSegment(
+                cx=150,
+                cy=150,
+                inner_radius=50,
+                outer_radius=100,
+                start_angle=start_angle,
+                end_angle=start_angle + 90,
+            )
 
+            # Add a donut segment to the SVG
+            svg.add_donut_segment(
+                SVGNodeConfig(
+                    segment.cx,
+                    y=segment.cy,
+                    fill="#A0A0A0",
+                ),
+                segment,
+            )
+
+            # Add curved text to the donut segment
+            curved_text = f"{start_angle}\nCurved\nText\n"
+            svg.add_text_to_donut_segment(
+                segment, curved_text, direction="curved", color="white"
+            )
+
+            # Save SVG to visually inspect the result
+            svg_file_name = f"curved_text_on_donut_segment_{start_angle}.svg"
+            self.save(svg, svg_file_name)
+
+            # Optionally, print SVG markup for debugging
+            debug = self.debug
+            debug = True
+            if debug:
+                svg_markup = svg.get_svg_markup()
+                print(svg_markup)
