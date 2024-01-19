@@ -19,7 +19,6 @@ class SVGConfig:
         indent (str): Indentation string, default is two spaces.
         default_color (str): Default color code for SVG elements.
     """
-
     width: int = 600
     height: int = 600
     legend_height: int = 150
@@ -38,25 +37,31 @@ class SVGConfig:
         """
         return self.height + self.legend_height
 
-
 @dataclass
-class SVGNodeConfig:
+class SVGNode:
+    """
+    a generic SVG Node
+    """
+    indent_level: int = 1
+    id: Optional[str] = None
+    color: Optional[str] = None   # Color of font or stroke use default color of config if None
+    fill: Optional[str] = "black" # Fill color for the segment
+    title: Optional[str] = None   # Tooltip
+    comment: Optional[str] = None
+ 
+@dataclass
+class SVGNodeConfig(SVGNode):
     """
     a single SVG Node configuration
+    to display any element
     """
-
-    x: float
-    y: float
+    x: float = 0.0
+    y: float = 0.0 
     width: Optional[float] = None
     height: Optional[float] = None
-    fill: Optional[str] = "black"
-    indent_level: int = 1
     element_type: Optional[str] = None
-    id: Optional[str] = None
-    title: Optional[str] = None
     url: Optional[str] = None
     show_as_popup: bool = False  # Flag to indicate if the link should opened as a popup
-    comment: Optional[str] = None
     element_class: Optional[str] = "hoverable"
 
 @dataclass
@@ -66,21 +71,21 @@ class Arc:
     start_y: float
     end_x: float
     end_y: float
-    
+
+        
 @dataclass
-class DonutSegment:
+class DonutSegment(SVGNode):
     """
     A donut segment representing a
     section of a donut chart.
     """
-    cx: float
-    cy: float
-    inner_radius: float
-    outer_radius: float
+    cx: float = 0.0
+    cy: float = 0.0 
+    inner_radius: float = 0.0
+    outer_radius: float = 0.0
     start_angle: Optional[float] = 0.0
     end_angle: Optional[float] = 360.0
-    fill: Optional[str] = None  # Optional fill color for the segment
-
+ 
     @property
     def large_arc_flag(self) -> str:
         """
@@ -147,39 +152,48 @@ class SVG:
         indentation=f"{self.indent * level}"
         return indentation
     
-    def get_svg_style(self) -> str:
+    def get_svg_style(self, with_java_script: bool) -> str:
         """
         Define styles for SVG elements.
-
+    
+        Args:
+            with_java_script (bool): Flag to indicate whether JavaScript-related styles should be included.
+    
         Returns:
             str: String containing style definitions for SVG.
         """
-        return (
+        style = (
             f"{self.indent}<style>\n"
             f"{self.indent * 2}.hoverable {{ cursor: pointer; fill-opacity: 1; stroke: black; stroke-width: 0.5; }}\n"
             f"{self.indent * 2}.hoverable:hover {{ fill-opacity: 0.7; }}\n"
             f"{self.indent * 2}.selected {{ fill-opacity: 0.5; stroke: blue; stroke-width: 1.5;}}\n"
-            f"{self.indent * 2}.popup {{\n"
-            f"{self.indent * 3}border: 2px solid black;\n"
-            f"{self.indent * 3}border-radius: 15px;\n"
-            f"{self.indent * 3}overflow: auto;\n"  # changed to 'auto' to allow scrolling only if needed
-            f"{self.indent * 3}background: white;\n"
-            f"{self.indent * 3}box-sizing: border-box;\n"  # ensures padding and border are included
-            f"{self.indent * 3}padding: 10px;\n"  # optional padding inside the popup
-            f"{self.indent * 3}height: 100%;\n"  # adjusts height relative to foreignObject
-            f"{self.indent * 3}width: 100%;\n"  # adjusts width relative to foreignObject
-            f"{self.indent * 2}}}\n"
-            f"{self.indent * 2}.close-btn {{\n"  # style for the close button
-            f"{self.indent * 3}cursor: pointer;\n"
-            f"{self.indent * 3}position: absolute;\n"
-            f"{self.indent * 3}top: 0;\n"
-            f"{self.indent * 3}right: 0;\n"
-            f"{self.indent * 3}padding: 5px;\n"
-            f"{self.indent * 3}font-size: 20px;\n"
-            f"{self.indent * 3}user-select: none;\n"  # prevents text selection on click
-            f"{self.indent * 2}}}\n"
-            f"{self.indent}</style>\n"
         )
+    
+        if with_java_script:
+            style += (
+                f"{self.indent * 2}.popup {{\n"
+                f"{self.indent * 3}border: 2px solid black;\n"
+                f"{self.indent * 3}border-radius: 15px;\n"
+                f"{self.indent * 3}overflow: auto;\n"  # changed to 'auto' to allow scrolling only if needed
+                f"{self.indent * 3}background: white;\n"
+                f"{self.indent * 3}box-sizing: border-box;\n"  # ensures padding and border are included
+                f"{self.indent * 3}padding: 10px;\n"  # optional padding inside the popup
+                f"{self.indent * 3}height: 100%;\n"  # adjusts height relative to foreignObject
+                f"{self.indent * 3}width: 100%;\n"  # adjusts width relative to foreignObject
+                f"{self.indent * 2}}}\n"
+                f"{self.indent * 2}.close-btn {{\n"  # style for the close button
+                f"{self.indent * 3}cursor: pointer;\n"
+                f"{self.indent * 3}position: absolute;\n"
+                f"{self.indent * 3}top: 0;\n"
+                f"{self.indent * 3}right: 0;\n"
+                f"{self.indent * 3}padding: 5px;\n"
+                f"{self.indent * 3}font-size: 20px;\n"
+                f"{self.indent * 3}user-select: none;\n"  # prevents text selection on click
+                f"{self.indent * 2}}}\n"
+            )
+        
+        style += f"{self.indent}</style>\n"
+        return style
 
     def get_text_width(self, text: str) -> int:
         """
@@ -380,13 +394,16 @@ class SVG:
             # y-offset adjustment to center the text vertically
             y -= total_text_height // 2
         # Create a text element to hold the tspan elements
+        # Only include the transform attribute if it is provided
+        transform_attr = f'transform="{transform}" ' if transform else ""
+
         text_element = (
             f'\n{self.get_indent(indent_level)}<text x="{x}" y="{y}" fill="{fill}" '
             f'font-family="{self.config.font}" '
             f'font-size="{self.config.font_size}" '
             f'font-weight="{font_weight}" '
             f'text-anchor="{text_anchor}" '
-            f'transform="{transform}">'
+            f'{transform_attr}>'
         )
         # Add tspan elements for each line
         for line in lines:
@@ -425,80 +442,6 @@ class SVG:
         group_str = f"{self.get_indent(level)}<g {attrs_str}>\n{indented_content}\n{self.get_indent(level)}</g>\n"
         self.add_element(group_str, level=level, comment=comment)
 
-    def add_pie_segment(
-        self,
-        cx: int,
-        cy: int,
-        radius: int,
-        start_angle_deg: float,
-        end_angle_deg: float,
-        color: str,
-        segment_name: str,
-        segment_id: str = None,
-        segment_class: str = None,
-        segment_url: str = None,
-    ) -> None:
-        """
-        Add a pie segment to the SVG.
-
-        Args:
-            cx (int): X-coordinate of the center of the pie.
-            cy (int): Y-coordinate of the center of the pie.
-            radius (int): Radius of the pie.
-            start_angle_deg (float): Start angle of the segment in degrees.
-            end_angle_deg (float): End angle of the segment in degrees.
-            color (str): Fill color of the segment.
-            segment_name (str): Name of the segment, used for the tooltip.
-            segment_id (str, optional): ID for the segment group. Defaults to None.
-            segment_class (str, optional): Class for the segment group. Defaults to None.
-            segment_url (str, optional): URL linked to the segment. Defaults to None.
-
-        Returns:
-            None
-        """
-        if color is None:
-            color = self.config.default_color
-        # Convert angles from degrees to radians for calculations
-        start_angle_rad = math.radians(start_angle_deg)
-        end_angle_rad = math.radians(end_angle_deg)
-
-        # Calculate the start and end points
-        start_x = cx + radius * math.cos(start_angle_rad)
-        start_y = cy + radius * math.sin(start_angle_rad)
-        end_x = cx + radius * math.cos(end_angle_rad)
-        end_y = cy + radius * math.sin(end_angle_rad)
-
-        # Determine if the arc should be drawn as a large-arc (values >= 180 degrees)
-        large_arc_flag = "1" if end_angle_deg - start_angle_deg >= 180 else "0"
-
-        # Create the path for the pie segment without indentation
-        path_str = (
-            f"M {cx} {cy} "
-            f"L {start_x} {start_y} "
-            f"A {radius} {radius} 0 {large_arc_flag} 1 {end_x} {end_y} "
-            "Z"
-        )
-
-        # Assemble the path and title elements
-        path_element = f'<path d="{path_str}" fill="{color}" />\n'
-        escaped_title = html.escape(segment_name)  # Escape special characters
-
-        title_element = f"<title>{escaped_title}</title>"
-
-        # Combine path and title into one string without adding indentation here
-        group_content = f"{path_element}{title_element}"
-
-        # If an URL is provided, wrap the content within an anchor
-        if segment_url:
-            group_content = (
-                f'<a xlink:href="{segment_url}" target="_blank">\n{group_content}</a>\n'
-            )
-
-        # Use add_group to add the pie segment with proper indentation
-        self.add_group(
-            group_content, group_id=segment_id, group_class=segment_class, level=2
-        )
-
     def add_donut_segment(
         self,
         config: SVGNodeConfig,
@@ -509,10 +452,8 @@ class SVG:
 
         Args:
             config (SVGNodeConfig): Configuration for the donut segment.
-            start_angle_deg (float): Start angle of the segment in degrees.
-            end_angle_deg (float): End angle of the segment in degrees.
+            segment(DonutSegment)
         """
-        cx, cy = config.x, config.y
         color = config.fill if config.fill else self.config.default_color
 
         if color is None:
@@ -674,7 +615,7 @@ class SVG:
     """
         return popup_script
 
-    def get_svg_markup(self, with_java_script: bool = True) -> str:
+    def get_svg_markup(self, with_java_script: bool = False) -> str:
         """
         Generate the complete SVG markup.
 
@@ -705,9 +646,8 @@ class SVG:
         </div>
     </body>
 </foreignObject>
-"""
-
-        styles = self.get_svg_style()
+""" if with_java_script else ""
+        styles = self.get_svg_style(with_java_script)
         body = "".join(self.elements)
         footer = "</svg>"
         java_script = self.get_java_script() if with_java_script else ""

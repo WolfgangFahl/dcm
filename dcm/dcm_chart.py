@@ -108,7 +108,7 @@ class DcmChart:
             element = competence_tree.lookup_by_path(path)
             config = self.get_element_config(element)
             svg.add_donut_segment(config, segment)
-        return svg.get_svg_markup()
+        return svg.get_svg_markup(with_java_script=True)
 
     def prepare_and_add_inner_circle(
         self, config, competence_tree: CompetenceTree, lookup_url: str = None

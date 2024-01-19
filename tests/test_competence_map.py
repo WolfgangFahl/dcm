@@ -3,6 +3,7 @@ Created on 2023-11-06
 
 @author: wf
 """
+import os
 from ngwidgets.basetest import Basetest
 
 from dcm.dcm_chart import DcmChart
@@ -133,9 +134,11 @@ class TestDynamicCompetenceMap(Basetest):
                 self.assertIsNotNone(dcm.competence_tree)
                 svg_config = SVGConfig()
                 svg_config.legend_height = 40 * len(dcm.competence_tree.levels)
+                svg_path="/tmp/dcm-test"
+                os.makedirs(svg_path, exist_ok=True)
                 for text_mode in ["none", "curved", "horizontal", "angled"]:
                     svg_file = (
-                        f"/tmp/{example_name}_competence_map_{markup}_{text_mode}.svg"
+                        f"{svg_path}/{example_name}_competence_map_{markup}_{text_mode}.svg"
                     )
                     dcm_chart = DcmChart(dcm)
                     dcm_chart.generate_svg(

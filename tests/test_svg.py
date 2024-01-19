@@ -8,12 +8,25 @@ from typing import Tuple
 from ngwidgets.basetest import Basetest
 
 from dcm.svg import SVG, DonutSegment, Arc
+import os
 
 
 class TestSVG(Basetest):
     """
     test svg module
     """
+    
+    def setUp(self, debug=False, profile=True):
+        Basetest.setUp(self, debug=debug, profile=profile)
+        self.tmp_directory = "/tmp/svg-module-test"
+        os.makedirs(self.tmp_directory, exist_ok=True)
+        self.write_results = True
+        
+    def save(self,svg:SVG,file_name:str):
+        if self.write_results:
+            svg_path=f"{self.tmp_directory}/{file_name}"
+            svg.save(svg_path)
+            
 
     def test_text_rotation(self):
         """
@@ -50,10 +63,10 @@ class TestSVG(Basetest):
 
         # Get the complete SVG markup
         svg_markup = svg.get_svg_markup()
-        debug=True
+        debug=self.debug
         if debug:
             print(svg_markup)
-        svg.save("/tmp/multiline_svg_text.svg")    
+        self.save(svg,"multiline_svg_text.svg")    
                 
     def test_get_donut_path(self):
         """
@@ -87,7 +100,7 @@ class TestSVG(Basetest):
             )
         }
         debug=self.debug
-        debug=True
+        #debug=True
         for middle_arc, expected_path_command in expected_path_commands.items():
             # Get the actual SVG path command from the method
             actual_path_command = svg.get_donut_path(test_segment,middle_arc=middle_arc)
@@ -121,7 +134,6 @@ class TestSVG(Basetest):
             0.5: Arc(radius=75.0, start_x=225.0, start_y=150.0, end_x=150.0, end_y=225.0),   # Middle arc
             1.0: Arc(radius=100.0, start_x=250.0, start_y=150.0, end_x=150.0, end_y=250.0),  # Outer arc
         }
-
 
         for offset, expected_arc in test_cases.items():
             actual_arc = segment.get_arc(radial_offset=offset)
