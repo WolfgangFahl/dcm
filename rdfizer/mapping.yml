@@ -1,0 +1,63 @@
+# SDM-RDFizer example
+# WF 2024-01-19
+#
+# to use this mapping file install RDFizer
+#
+# pip install rdfizer
+#
+# and then run
+# rdfizer -c config.ini
+# For more information on SDM-RDFizer and its usage, visit: https://pypi.org/project/rdfizer/
+# Prefixes declaration
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix learner: <http://dcm.org/learner/> .
+@prefix achievement: <http://dcm.org/achievement/> .
+
+# Mapping for the learner
+<LearnerMap>
+  a rr:TriplesMap;
+  rml:logicalSource [
+    rml:source "../dcm_examples/arch_student_123.json";
+    rml:referenceFormulation ql:JSONPath;
+    rml:iterator "$"
+  ];
+  rr:subjectMap [
+    rr:template "learner:{learner_id}"
+  ];
+  rr:predicateObjectMap [
+    rr:predicate learner:hasAchievement;
+    rr:objectMap [
+      rr:parentTriplesMap <AchievementMap>;
+      rr:joinCondition [
+        rr:child "learner_id";
+        rr:parent "learner_id";
+      ];
+    ];
+  ].
+
+# Mapping for achievements
+<AchievementMap>
+  a rr:TriplesMap;
+  rml:logicalSource [
+    rml:source "../dcm_examples/arch_student_123.json";
+    rml:referenceFormulation ql:JSONPath;
+    rml:iterator "$.achievements[*]"
+  ];
+  rr:subjectMap [
+    rr:template "achievement:{path}"
+  ];
+  rr:predicateObjectMap [
+    rr:predicate achievement:level;
+    rr:objectMap [ rr:constant "{level}" ];
+  ];
+  rr:predicateObjectMap [
+    rr:predicate achievement:score;
+    rr:objectMap [ rr:datatype xsd:float; rr:constant "{score}" ];
+  ];
+  rr:predicateObjectMap [
+    rr:predicate achievement:dateAssessed;
+    rr:objectMap [ rr:datatype xsd:date; rr:constant "{date_assessed_iso}" ];
+  ].

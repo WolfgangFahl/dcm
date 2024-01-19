@@ -1,0 +1,3 @@
+#!/bin/bash
+# WF 2024-01-19
+rdfizer -c config.ini
