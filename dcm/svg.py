@@ -156,21 +156,23 @@ class DonutSegment(SVGNode):
     @property
     def end_angle_rad(self) -> float:
         return math.radians(self.end_angle)
-
+    
+    def radial_radius(self,radial_offset:float)->float:
+        radial_radius=self.inner_radius + (self.outer_radius - self.inner_radius) * radial_offset
+        return radial_radius
+    
     def get_arc(self, radial_offset: float = 0.5) -> Arc:
         # Calculate the adjusted radius within the bounds of inner and outer radii
-        adjusted_radius = (
-            self.inner_radius + (self.outer_radius - self.inner_radius) * radial_offset
-        )
+        radial_radius=self.radial_radius(radial_offset)
 
         # Calculate the start and end points of the arc
-        start_x = self.cx + adjusted_radius * math.cos(self.start_angle_rad)
-        start_y = self.cy + adjusted_radius * math.sin(self.start_angle_rad)
-        end_x = self.cx + adjusted_radius * math.cos(self.end_angle_rad)
-        end_y = self.cy + adjusted_radius * math.sin(self.end_angle_rad)
+        start_x = self.cx + radial_radius * math.cos(self.start_angle_rad)
+        start_y = self.cy + radial_radius * math.sin(self.start_angle_rad)
+        end_x = self.cx + radial_radius * math.cos(self.end_angle_rad)
+        end_y = self.cy + radial_radius * math.sin(self.end_angle_rad)
 
         return Arc(
-            radius=adjusted_radius,
+            radius=radial_radius,
             start_x=start_x,
             start_y=start_y,
             end_x=end_x,
