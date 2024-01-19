@@ -220,13 +220,16 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 item = DynamicCompetenceMap.from_definition_string(
                     name, definition, content_class=content_class, markup=markup
                 )
-                if isinstance(item, DynamicCompetenceMap):
-                    self.render_dcm(item)
-                else:
-                    self.learner = item
-                    self.assess(item)
+                self.render_item(item)
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
+            
+    def render_item(self,item):
+        if isinstance(item, DynamicCompetenceMap):
+            self.render_dcm(item)
+        else:
+            self.learner = item
+            self.assess(item)
 
     def render_dcm(
         self,
@@ -376,7 +379,10 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         new_text_mode = args.value
         if new_text_mode != self.text_mode:
             self.text_mode = new_text_mode
-            await self.render()
+            if self.learner:
+                self.render_item(self.learner)
+            else:
+                self.render_item(self.dcm)
 
     def configure_run(self):
         """
