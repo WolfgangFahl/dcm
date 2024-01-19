@@ -62,6 +62,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
+        self.learner = None
         self.assessment = None
         self.text_mode = "none"
 
@@ -226,6 +227,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             
     def render_item(self,item):
         if isinstance(item, DynamicCompetenceMap):
+            self.learner=None
+            self.assessment=None
             self.render_dcm(item)
         else:
             self.learner = item
