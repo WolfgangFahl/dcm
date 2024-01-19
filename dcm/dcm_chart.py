@@ -165,8 +165,23 @@ class DcmChart:
             self.save_svg_to_file(svg_markup, filename)
         return svg_markup
 
-    def get_element_config(self, element: CompetenceElement) -> SVGNodeConfig:
-        """ """
+    def get_element_config(self, 
+            element: CompetenceElement) -> SVGNodeConfig:
+        """
+        get a configuration for the given element
+        
+        Args:
+            element(CompetenceElement): the element
+            
+        Return:
+            SVGNodeConfig: an SVG Node configuration
+        """
+        if element is None:
+            element_config=SVGNodeConfig(
+                x=self.cx,
+                y=self.cy,
+                fill='white')
+            return element_config
         element_url = (
             element.url
             if element.url
@@ -206,7 +221,7 @@ class DcmChart:
         if level_color:
             element_config.fill = level_color  # Set the color
             text_mode="none"
-        if element.path in self.selected_paths:
+        if element and element.path in self.selected_paths:
             element_config.element_class = "selected"
 
         if achievement_level is not None:
@@ -217,7 +232,7 @@ class DcmChart:
             segment.outer_radius = segment.inner_radius + relative_radius
 
         result = svg.add_donut_segment(config=element_config, segment=segment)
-        if self.text_mode != "none":
+        if element and self.text_mode != "none":
             # no autofill please
             # textwrap.fill(element.short_name, width=20)
             text = element.short_name
@@ -296,7 +311,27 @@ class DcmChart:
         elements = getattr(parent_element, sub_element_name)
         total = len(elements)
         # are there any elements to be shown?
-        if total > 0:
+        if total == 0:
+            # there are no subelements we might need a single
+            # empty donut segment
+            # but only if there are any other available subelements
+            # on this level
+            if self.dcm.competence_tree.total_elements[sub_element_name]==0:
+                return
+            sub_segment = DonutSegment(
+                    cx=self.cx,
+                    cy=self.cy,
+                    inner_radius=segment.outer_radius,
+                    outer_radius=segment.outer_radius + self.tree_radius * 2,
+                    start_angle=segment.start_angle,
+                    end_angle=segment.end_angle,
+            )
+            self.generate_donut_segment_for_element(svg,
+                element=None,
+                learner=None,
+                segment=sub_segment
+            )
+        else:
             angle_per_element = (segment.end_angle - segment.start_angle) / total
             start_angle = segment.start_angle
             for element in elements:

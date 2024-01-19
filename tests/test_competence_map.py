@@ -110,6 +110,7 @@ class TestDynamicCompetenceMap(Basetest):
                 ct = dcm.competence_tree
                 if debug:
                     print(f"competence_tree: {ct.id}:{ct.path}")
+                    print(ct.total_elements)
                 self.assertEqual(ct.id, ct.path)
                 for aspect in ct.aspects:
                     if debug:
