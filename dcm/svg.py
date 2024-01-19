@@ -18,8 +18,8 @@ class SVGConfig:
         font_size (int): Font size in points for text elements.
         indent (str): Indentation string, default is two spaces.
         default_color (str): Default color code for SVG elements.
+        with_pop(bool): if True support popup javascript functionality
     """
-
     width: int = 600
     height: int = 600
     legend_height: int = 150
@@ -27,6 +27,7 @@ class SVGConfig:
     font_size: int = 12
     indent: str = "  "
     default_color: str = "#C0C0C0"
+    with_popup: bool=False
 
     @property
     def total_height(self) -> int:
@@ -229,12 +230,9 @@ class SVG:
         indentation = f"{self.indent * level}"
         return indentation
 
-    def get_svg_style(self, with_java_script: bool) -> str:
+    def get_svg_style(self) -> str:
         """
         Define styles for SVG elements.
-
-        Args:
-            with_java_script (bool): Flag to indicate whether JavaScript-related styles should be included.
 
         Returns:
             str: String containing style definitions for SVG.
@@ -247,7 +245,7 @@ class SVG:
             f"{self.indent * 2}.noclick {{ pointer-events: none; }}\n"  # style for non-clickable text
         )
 
-        if with_java_script:
+        if self.config.with_popup:
             style += (
                 f"{self.indent * 2}.popup {{\n"
                 f"{self.indent * 3}border: 2px solid black;\n"
@@ -732,10 +730,10 @@ class SVG:
     </body>
 </foreignObject>
 """
-            if with_java_script
+            if self.config.with_popup
             else ""
         )
-        styles = self.get_svg_style(with_java_script)
+        styles = self.get_svg_style()
         body = "".join(self.elements)
         footer = "</svg>"
         java_script = self.get_java_script() if with_java_script else ""

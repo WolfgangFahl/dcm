@@ -260,14 +260,15 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.dcm = dcm
             self.assessment_button.enable()
             dcm_chart = DcmChart(dcm)
-            svg = dcm_chart.generate_svg_markup(
+            svg_markup = dcm_chart.generate_svg_markup(
                 learner=learner,
                 selected_paths=selected_paths,
+                config=self.svg.config,
                 with_java_script=False,
                 text_mode=self.text_mode,
             )
             # Use the new get_java_script method to get the JavaScript
-            self.svg_view.content = svg
+            self.svg_view.content = svg_markup,
             self.svg_view.update()
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
@@ -276,8 +277,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """Generates the home page with a selection of examples and
         svg display
         """
-        svg = SVG()
-        java_script = svg.get_java_script()
+        config=SVGConfig(with_popup=True)
+        self.svg = SVG(config=config)
+        java_script = self.svg.get_java_script()
 
         # Add the script using ui.add_head_html()
         ui.add_head_html(java_script)

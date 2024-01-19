@@ -40,7 +40,7 @@ class TestAPI(WebserverTest):
         test the rendering
         """
         path = "/svg"
-        svg_config = SVGConfig(width=666, height=666)
+        svg_config = SVGConfig(width=666, height=666,with_popup=True)
         for markup, examples in self.example_definitions.items():
             for name, definition in examples.items():
                 data = {

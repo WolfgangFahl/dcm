@@ -99,7 +99,7 @@ class DcmChart:
             str: The SVG markup.
         """
         if config is None:
-            config = SVGConfig()  # Use default configuration if none provided
+            config = SVGConfig(with_popup=True)  # Use default configuration if none provided
         svg = self.prepare_and_add_inner_circle(config, competence_tree=competence_tree)
         # Pre-calculate segments for the competence tree
         segments_by_path = self.precalculate_segments(competence_tree)
@@ -163,7 +163,7 @@ class DcmChart:
             str: The SVG markup.
         """
         if config is None:
-            config = SVGConfig()  # Use default configuration if none provided
+            config = SVGConfig(with_popup=True)  # Use default configuration if none provided
         svg_markup = self.generate_svg_markup(
             self.dcm.competence_tree,
             learner=learner,

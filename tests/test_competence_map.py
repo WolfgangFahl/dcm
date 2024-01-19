@@ -134,7 +134,7 @@ class TestDynamicCompetenceMap(Basetest):
             for example_name, dcm in examples.items():
                 # Now you can perform assertions to verify that the data was loaded correctly
                 self.assertIsNotNone(dcm.competence_tree)
-                svg_config = SVGConfig()
+                svg_config = SVGConfig(with_popup=True)
                 svg_config.legend_height = 40 * len(dcm.competence_tree.levels)
                 svg_path = "/tmp/dcm-test"
                 os.makedirs(svg_path, exist_ok=True)
@@ -159,7 +159,7 @@ class TestDynamicCompetenceMap(Basetest):
                 dcm_chart = DcmChart(dcm)
 
                 # Generate SVG markup
-                svg_config = SVGConfig()
+                svg_config = SVGConfig(with_popup=True)
                 svg_markup = dcm_chart.generate_svg_from_segments(
                     dcm.competence_tree, config=svg_config
                 )
