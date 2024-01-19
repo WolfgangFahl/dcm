@@ -240,6 +240,7 @@ class SVG:
             f"{self.indent * 2}.hoverable {{ cursor: pointer; fill-opacity: 1; stroke: black; stroke-width: 0.5; }}\n"
             f"{self.indent * 2}.hoverable:hover {{ fill-opacity: 0.7; }}\n"
             f"{self.indent * 2}.selected {{ fill-opacity: 0.5; stroke: blue; stroke-width: 1.5;}}\n"
+            f"{self.indent * 2}.noclick {{ pointer-events: none; }}\n"  # style for non-clickable text
         )
 
         if with_java_script:
@@ -443,6 +444,7 @@ class SVG:
         text_anchor: str = "start",
         transform: str = "",
         centered: bool = False,
+        text_class: str ="noclick", 
         indent_level: int = 1,
     ) -> None:
         """
@@ -457,6 +459,7 @@ class SVG:
             text_anchor (str, optional): Text alignment (start, middle, end). Defaults to "start".
             indent_level(int): the indentation level to apply
             centered (bool): If True, treat x and y as the center of the text. Default is False.
+            text_class(str): "noclick" by default so that elements below are clickable
             transform (str, optional): Transformation for the text (e.g., rotation). Defaults to an empty string.
         """
         text_obj = Text(text, self.config)
@@ -465,17 +468,20 @@ class SVG:
             text_anchor = "middle"
 
             # y-offset adjustment to center the text vertically
-            y -= text_obj.total_text_height // 2
+            y -= text_obj.total_text_height / 2
+            # adjust for the ascender / descender vertical font weighting
+            y -= self.config.font_size*0.5
         # Create a text element to hold the tspan elements
         # Only include the transform attribute if it is provided
         transform_attr = f'transform="{transform}" ' if transform else ""
 
         text_element = (
-            f'\n{self.get_indent(indent_level)}<text x="{x}" y="{y}" fill="{fill}" '
+            f'\n{self.get_indent(indent_level)}<text class="{text_class}" x="{x}" y="{y}" fill="{fill}" '
             f'font-family="{self.config.font}" '
             f'font-size="{self.config.font_size}" '
             f'font-weight="{font_weight}" '
             f'text-anchor="{text_anchor}" '
+            f'dominant-baseline="middle" '
             f"{transform_attr}>"
         )
         # Add tspan elements for each line
@@ -575,6 +581,7 @@ class SVG:
         text: str,
         direction: str = "horizontal",
         color: str = "white",
+        text_class: str="noclick",
         indent_level: int = 1,
     ) -> None:
         """
@@ -626,9 +633,9 @@ class SVG:
                     f'<path id="{path_id}" d="{path_d}" fill="none" stroke="none" />'
                 )
 
-                text_tag = f"""<text fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">"""
+                text_tag = f"""<text class="{text_class}" fill="{color}" font-family="{self.config.font}" font-size="{self.config.font_size}">"""
                 self.add_element(text_tag, indent_level=indent_level)
-                text_path = f"""<textPath xlink:href="#{path_id}" startOffset="50%" dominant-baseline="middle" text-anchor="middle">{html.escape(line)}</textPath>"""
+                text_path = f"""<textPath  xlink:href="#{path_id}" startOffset="50%" dominant-baseline="middle" text-anchor="middle">{html.escape(line)}</textPath>"""
                 self.add_element(text_path, indent_level=indent_level + 1)
                 self.add_element("</text>", indent_level=indent_level)
         else:

@@ -2,6 +2,7 @@
 # created 2023-12-18 by WF
 name: architecture
 id: architecture
+short_name: Bach of Arch
 lookup_url: http://dcm.bitplan.com
 url: https://en.wikipedia.org/wiki/Bachelor_of_Architecture
 description: fictious architeture education example for dynamic competence map

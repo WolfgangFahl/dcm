@@ -4,7 +4,6 @@ Created on 2024-01-12
 @author: wf
 """
 import copy
-import textwrap
 from typing import List, Optional
 
 from dcm.dcm_core import (
@@ -27,6 +26,7 @@ class DcmChart:
         Constructor
         """
         self.dcm = dcm
+        self.text_mode="none"
 
     def precalculate_segments(self, competence_tree: CompetenceTree) -> dict:
         """
@@ -111,7 +111,10 @@ class DcmChart:
         return svg.get_svg_markup(with_java_script=True)
 
     def prepare_and_add_inner_circle(
-        self, config, competence_tree: CompetenceTree, lookup_url: str = None
+        self, 
+        config, 
+        competence_tree: CompetenceTree, 
+        lookup_url: str = None
     ):
         """
         prepare the SVG markup generation and add
@@ -133,6 +136,13 @@ class DcmChart:
             x=self.cx, y=self.cy, width=self.tree_radius
         )
         svg.add_circle(config=self.circle_config)
+        if self.text_mode!="none":
+            svg.add_text(
+                self.cx,self.cy, 
+                competence_tree.short_name, 
+                centered=True,
+                fill="white",
+            )
         return svg
 
     def generate_svg(
@@ -237,7 +247,10 @@ class DcmChart:
             # no autofill please
             # textwrap.fill(element.short_name, width=20)
             text = element.short_name
-            self.svg.add_text_to_donut_segment(text_segment, text, direction=self.text_mode)
+            self.svg.add_text_to_donut_segment(
+                text_segment, 
+                text, 
+                direction=self.text_mode)
         return result
 
     def generate_donut_segment_for_achievement(
