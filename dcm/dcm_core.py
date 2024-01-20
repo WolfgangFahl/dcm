@@ -425,6 +425,11 @@ class Learner:
     def main_id(self):
         main_id = self.learner_id
         return main_id
+    
+    @property
+    def file_name(self):
+        file_name=slugify(self.learner_id, lowercase=False, regex_pattern=r"[^\w\s\-]")
+        return file_name
 
     def add_achievement(self, new_achievement):
         self.achievements.append(new_achievement)

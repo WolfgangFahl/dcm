@@ -4,6 +4,7 @@ Created on 2023-11-06
 @author: wf
 """
 import os
+import uuid
 from typing import List, Optional
 from urllib.parse import urlparse
 
@@ -258,7 +259,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 self.assessment = None
                 self.learner = None
             self.dcm = dcm
-            self.assessment_button.enable()
+            self.assess_state(True)
             dcm_chart = DcmChart(dcm)
             svg_markup = dcm_chart.generate_svg_markup(
                 learner=learner,
@@ -319,13 +320,19 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                                 icon="query_stats",
                                 handler=self.new_assess,
                             )
-                            self.assessment_button.disable()
                             if self.is_local:
                                 self.tool_button(
                                     tooltip="open",
                                     icon="file_open",
                                     handler=self.open_file,
                                 )
+                            self.download_button=self.tool_button(
+                                tooltip="download",
+                                icon="download",
+                                handler=self.download,
+                            )
+                            self.assess_state(False)
+            
                 with splitter.after:
                     self.svg_view = ui.html("")
         await self.setup_footer()
@@ -351,7 +358,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """
         run a new  assessment for a new learner
         """
-        self.learner = Learner(learner_id="?")
+        self.learner = Learner(learner_id=f"{uuid.uuid4()}")
         self.assess_learner(self.dcm, self.learner)
 
     def assess(self, learner: Learner, tree_id: str = None):
@@ -375,6 +382,34 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # assess_learner will render ...
         # self.render_dcm(dcm,learner=learner)
         self.assess_learner(dcm, learner)
+    
+    def assess_state(self,state:bool):
+        if state:
+            self.assessment_button.enable()
+        else:
+            self.assessment_button.disable()
+        if self.learner:
+            self.download_button.enable()
+        else:
+            self.download_button.disable()
+             
+    async def download(self,_args):
+        """
+        allow downloading the assessment result
+        """
+        try:
+            with self.container:
+                if not self.learner:
+                    ui.notify("no active learner assessment")
+                    return
+                # https://nicegui.io/documentation/download
+                json_str=self.learner.to_json(indent=2)
+                json_bytes=json_str.encode()
+                json_file=f"{self.learner.file_name}.json"
+                ui.notify(f"downloading {json_file}")
+                ui.download(json_bytes,json_file)
+        except Exception as ex:
+            self.handle_exception(ex, self.do_trace)
 
     async def on_text_mode_change(self, args):
         """
