@@ -1,0 +1,62 @@
+# Dynamic Competence Map LinkML schema
+# WF 2024-01-20
+#
+# to install LinkML:
+# pip install linkml
+# 
+# to generate python code:
+# gen-python dcm_schema.yaml > dcm_model.py
+
+id: https://dcm.org/learner-schema
+name: learner-schema
+description: Schema for representing learners and their achievements.
+prefixes:
+  linkml: https://w3id.org/linkml/
+  dcm: https://dcm.org/learner-schema/
+
+imports:
+  - linkml:types
+
+default_range: string
+default_prefix: dcm
+
+classes:
+  Learner:
+    description: An individual learner with a unique identifier and a list of achievements.
+    slots:
+      - learner_id
+      - achievements
+
+  Achievement:
+    description: A record of an achievement attained by a learner.
+    slots:
+      - path
+      - level
+      - score
+      - date_assessed_iso
+
+slots:
+  learner_id:
+    description: Unique identifier for the learner.
+    range: string
+
+  achievements:
+    description: A list of achievements attained by the learner.
+    range: Achievement
+    multivalued: true
+
+  path:
+    description: The path representing the specific area of achievement.
+    range: string
+
+  level:
+    description: The level of achievement.
+    range: integer
+
+  score:
+    description: The score attained in the achievement.
+    range: float
+
+  date_assessed_iso:
+    description: The ISO format date when the achievement was assessed.
+    range: string

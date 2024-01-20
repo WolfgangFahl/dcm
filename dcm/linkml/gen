@@ -1,0 +1,4 @@
+#!/bin/bash
+# WF 2024-01-20
+gen-python dcm_schema.yaml > dcm_model.py
+gen-jsonld-context dcm_schema.yaml > dcm.context.jsonld
