@@ -49,7 +49,12 @@ class TestTriplify(Basetest):
         rdf_dumper=RDFDumper()
         
         g=rdf_dumper.as_rdf_graph(learner,self.json_ld_context)
-
+        debug=self.debug
+        debug=True
+        if debug:
+            # Serialize the graph to a string in Turtle format for inspection
+            rdf_str = g.serialize(format='turtle')
+            print(rdf_str)
         for subj, pred, obj in g:
             print(f"Subject: {subj}, Predicate: {pred}, Object: {obj}")
 

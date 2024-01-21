@@ -22,7 +22,7 @@ dependencies = [
 	# https://pypi.org/project/dataclasses-json/
 	"dataclasses-json>=0.6.1",
 	# https://github.com/trentm/python-markdown2
-	"markdown2>=2.4.11",
+	"markdown2>=2.4.7,<2.4.11",
 	# https://github.com/un33k/python-slugify
 	# https://pypi.org/project/python-slugify/
 	"python-slugify>=8.0.1",
