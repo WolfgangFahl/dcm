@@ -3,8 +3,11 @@ Created on 2023-11-06
 
 @author: wf
 """
+from dataclasses import dataclass
 import os
 import uuid
+import yaml
+import json
 from typing import List, Optional
 from urllib.parse import urlparse
 
@@ -39,7 +42,22 @@ class SVGRenderRequest(BaseModel):
     markup: str
     config: Optional[SVGConfig] = None
 
+@dataclass
+class ServerConfig:
+    storage_secret: str
+    storage_path: str
 
+    @classmethod
+    def from_yaml(cls, yaml_path: str):
+        if not os.path.exists(yaml_path):
+            default_storage_path = os.path.join(os.path.expanduser('~'), '.dcm', 'storage')
+            # Create the directory if it does not exist
+            os.makedirs(default_storage_path, exist_ok=True)
+            return cls(str(uuid.uuid4()), default_storage_path)
+        with open(yaml_path, 'r') as file:
+            config_data = yaml.safe_load(file)
+        return cls(**config_data)
+    
 class DynamicCompentenceMapWebServer(InputWebserver):
     """
     server to supply Dynamic Competence Map Visualizations
@@ -63,10 +81,17 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
+        self.container=None
         self.learner = None
         self.assessment = None
         self.text_mode = "none"
-
+        config_path = os.path.join(os.environ['HOME'], '.dcm/config.yaml')
+        self.server_config = ServerConfig.from_yaml(config_path)
+      
+        @app.get("/learner/{learner_slug}")
+        async def show_learner(learner_slug: str):
+            return await self.assess_learner_by_slug(learner_slug)
+    
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
             """
@@ -273,11 +298,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.svg_view.update()
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
-
-    async def home(self, _client: Client):
-        """Generates the home page with a selection of examples and
-        svg display
-        """
+            
+    def prepare_ui(self):
         config=SVGConfig(with_popup=True)
         self.svg = SVG(config=config)
         java_script = self.svg.get_java_script()
@@ -285,8 +307,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # Add the script using ui.add_head_html()
         ui.add_head_html(java_script)
 
-        self.setup_menu()
-
+    def show_ui(self):
         with ui.element("div").classes("w-full") as self.container:
             with ui.splitter() as splitter:
                 with splitter.before:
@@ -331,11 +352,15 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                                 icon="download",
                                 handler=self.download,
                             )
-                            self.assess_state(False)
-            
                 with splitter.after:
                     self.svg_view = ui.html("")
-        await self.setup_footer()
+
+    async def home(self, _client: Client):
+        """Generates the home page with a selection of examples and
+        svg display
+        """
+        await self.setup_content_div(self.show_ui)
+        self.assess_state(False)
 
     def assess_learner(self, dcm, learner):
         """
@@ -346,13 +371,15 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             learner(Learner): the learner to get the self assessment for
 
         """
-        if self.assessment is not None:
-            self.assessment.reset(dcm=dcm, learner=learner)
-        else:
-            with self.left_grid:
-                with ui.row() as self.assessment_row:
-                    self.assessment = Assessment(self, dcm=dcm, learner=learner)
-        self.assessment.update_achievement_view()
+        if self.container:
+            with self.container:
+                if self.assessment is not None:
+                    self.assessment.reset(dcm=dcm, learner=learner)
+                else:
+                    with self.left_grid:
+                        with ui.row() as self.assessment_row:
+                            self.assessment = Assessment(self, dcm=dcm, learner=learner)
+                self.assessment.update_achievement_view()
 
     def new_assess(self):
         """
@@ -361,6 +388,32 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.learner = Learner(learner_id=f"{uuid.uuid4()}")
         self.assess_learner(self.dcm, self.learner)
 
+    async def assess_learner_by_slug(self, learner_slug: str):
+        """
+        Assess a learner based on the slug of the id
+    
+        Args:
+            learner_slug (str): The unique slug of the learner.
+    
+        Raises:
+            HTTPException: If the learner file does not exist or an error occurs.
+        """
+        def show():
+            learner_file = os.path.join(self.server_config.storage_path, f"{learner_slug}.json")
+            if not os.path.exists(learner_file):
+                raise HTTPException(status_code=404, detail="Learner not found")    
+            try:
+                with open(learner_file, 'r') as file:
+                    learner_data = json.load(file)
+                    learner = Learner.from_dict(learner_data)
+            except Exception as e:
+                # Handle any exceptions related to file reading or JSON parsing
+                raise HTTPException(status_code=500, detail=str(e))
+                pass
+            self.assess(learner)
+            
+        await self.setup_content_div(show())
+    
     def assess(self, learner: Learner, tree_id: str = None):
         """
         run an assessment for the given learner
@@ -399,15 +452,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """
         try:
             with self.container:
-                if not self.learner:
+                if not self.assessment:
                     ui.notify("no active learner assessment")
                     return
-                # https://nicegui.io/documentation/download
-                json_str=self.learner.to_json(indent=2)
-                json_bytes=json_str.encode()
-                json_file=f"{self.learner.file_name}.json"
-                ui.notify(f"downloading {json_file}")
-                ui.download(json_bytes,json_file)
+                json_path=self.assessment.store()
+                ui.notify(f"downloading {json_path}")
+                ui.download(json_path)
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
 
@@ -435,3 +485,5 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             DynamicCompetenceMap.examples_path(),
             self.root_path,
         ]
+        self.args.storage_secret = self.server_config.storage_secret
+        pass

@@ -368,8 +368,8 @@ class Achievement:
     """
 
     path: str
-    level: int = None
-    score: float = None
+    level: Optional[int] = None
+    score: Optional[float] = None
     score_unit: Optional[str] = "%"
     evidence: Optional[str] = None
     date_assessed_iso: Optional[str] = None

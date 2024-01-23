@@ -18,7 +18,7 @@ readme = "README.md"
 license = {text = "Apache-2.0"} 
 dependencies = [
 	# https://github.com/WolfgangFahl/nicegui_widgets
-	"ngwidgets>=0.9.1",
+	"ngwidgets>=0.9.3",
 	# https://pypi.org/project/dataclasses-json/
 	"dataclasses-json>=0.6.1",
 	# https://github.com/trentm/python-markdown2
@@ -31,8 +31,7 @@ dependencies = [
 	# https://pypi.org/project/linkml/,
 	"linkml",
 	# https://pypi.org/project/rdflib/
-	"rdflib"
-	
+	"rdflib"	
 ]
 
 requires-python = ">=3.9"

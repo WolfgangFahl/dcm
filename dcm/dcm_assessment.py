@@ -7,6 +7,7 @@ from ngwidgets.progress import NiceguiProgressbar
 from ngwidgets.webserver import NiceGuiWebserver
 from ngwidgets.widgets import Link
 from nicegui import ui
+import os
 
 from dcm.dcm_core import (
     Achievement,
@@ -131,7 +132,34 @@ class Assessment:
         self.debug = debug
         self.reset(dcm=dcm, learner=learner)
         self.setup_ui()
+        
+    def store(self)->str:
+        """
+        Store the current state of 
+        the learner's achievements.
+        
+        Returns(str): the path to the file
+        """
+        file_path=None
+        try:
+            # Serialize the learner object to JSON
+            learner_data_json = self.learner.to_json(indent=2)
 
+            # Determine the file path for storing the learner's data
+            filename = self.learner.file_name + '.json'
+            file_path = os.path.join(self.webserver.server_config.storage_path, filename)
+
+            # Write the serialized data to the file
+            with open(file_path, 'w') as file:
+                file.write(learner_data_json)
+
+            if self.debug:
+                print(f"Learner data stored in {file_path}")
+                
+        except Exception as ex:
+            self.webserver.handle_exception(ex,self.webserver.do_trace)
+        return file_path
+        
     def reset(
         self,
         dcm: DynamicCompetenceMap,
@@ -321,6 +349,7 @@ class Assessment:
         """
         self.index_view.text = self.get_index_str()
         achievement = self.current_achievement
+        self.store()
         self.webserver.render_dcm(
             self.dcm,
             self.learner,
