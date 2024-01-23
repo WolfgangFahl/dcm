@@ -8,6 +8,7 @@ from ngwidgets.webserver import NiceGuiWebserver
 from ngwidgets.widgets import Link
 from nicegui import ui
 import os
+from datetime import datetime,timezone
 
 from dcm.dcm_core import (
     Achievement,
@@ -99,6 +100,15 @@ class ButtonRow:
             self.achievement.level = None
         else:
             self.achievement.level = selected_level
+            # Get the current time in UTC
+            current_time_utc = datetime.now(timezone.utc)
+
+            # Convert the current time to ISO format
+            date_assessed_iso = current_time_utc.isoformat()
+
+            # Assign it to self.achievement.date_assessed_iso
+            self.achievement.date_assessed_iso = date_assessed_iso
+            
         self.set_button_states(self.achievement)
         # refresh the ui
         self.row.update()
