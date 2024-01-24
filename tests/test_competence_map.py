@@ -58,7 +58,7 @@ class TestDynamicCompetenceMap(Basetest):
         example = examples[example_name]
         path = "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2"
         ct = example.competence_tree
-        self.assertEqual(3, ct.total_valid_levels)
+        self.assertEqual(4, ct.total_valid_levels)
         facet = ct.lookup_by_path(path)
         self.assertIsNotNone(facet)
         self.assertIsInstance(facet, CompetenceFacet)
