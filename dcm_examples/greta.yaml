@@ -287,25 +287,25 @@ levels:
 - name: Level1
   short_name: Level1
   id: Level1
-  color_code: '#FF5733'
+  color_code: '#ECEABE'
   level: 1
   utf8_icon: ⭐
 - name: Level2
   short_name: Level2
   id: Level2
-  color_code: '#FFAB33'
+  color_code: '#C8D575'
   level: 2
   utf8_icon: ⭐⭐
 - name: Level3
   short_name: Level3
   id: Level3
-  color_code: '#FFE333'
+  color_code: '#AEBF3F'
   level: 3
   utf8_icon: ⭐⭐⭐
 - name: Level4
   short_name: Level4
   id: Level4
-  color_code: '#33FF5B'
+  color_code: '#7D8A2C'
   level: 4
   utf8_icon: ⭐⭐⭐⭐
 element_names:

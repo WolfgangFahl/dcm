@@ -59,10 +59,10 @@ class TestGreta(Basetest):
         # Define color codes for competence levels
         color_codes = {
             0: "#888888",  # Grey for level 0
-            1: "#FF5733",  # Red for level 1
-            2: "#FFAB33",  # Orange for level 2
-            3: "#FFE333",  # Yellow for level 3
-            4: "#33FF5B",  # Green for level 4
+            1: "#ECEABE",  # Light Green for level 1
+            2: "#C8D575",  # Olive Green for level 2
+            3: "#AEBF3F",  # Medium Green for level 3
+            4: "#7D8A2C",  # Dark Green for level 4
         }
 
         # Define icons for competence levels (replace with actual icon names)
