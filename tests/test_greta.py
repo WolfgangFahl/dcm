@@ -90,7 +90,7 @@ class TestGreta(Basetest):
             name="GRETA",
             description=km["Name"],
             url="https://www.greta-die.de/webpages/greta-interaktiv",
-            stacked_levels=True
+            stacked_levels=True,
         )
         ct.element_names = {
             "tree": "Kompetenzbilanz",
@@ -148,8 +148,8 @@ class TestGreta(Basetest):
 
                     area.facets.append(facet)
         ct.update_paths()
-        for path,element in ct.elements_by_path.items():
-            element.short_name=greta_short_names[path]
+        for path, element in ct.elements_by_path.items():
+            element.short_name = greta_short_names[path]
         yaml_str = ct.to_yaml()
         if self.debug:
             print(yaml_str)

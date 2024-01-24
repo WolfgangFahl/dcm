@@ -135,9 +135,11 @@ class CompetenceLevel(CompetenceElement):
         icon(str): the name of a google mdi icon to be shown for this level
         utf8_icon(str): utf-8 char string to be used as icon
     """
+
     level: int = 1
     icon: Optional[str] = None
     utf8_icon: Optional[str] = None
+
 
 @dataclass_json
 @dataclass
