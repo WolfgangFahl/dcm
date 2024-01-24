@@ -40,7 +40,7 @@ class TestAPI(WebserverTest):
         test the rendering
         """
         path = "/svg"
-        svg_config = SVGConfig(width=666, height=666,with_popup=True)
+        svg_config = SVGConfig(width=666, height=666, with_popup=True)
         for markup, examples in self.example_definitions.items():
             for name, definition in examples.items():
                 data = {
@@ -63,16 +63,16 @@ class TestAPI(WebserverTest):
         test_cases = [
             # Test case for a specific facet
             (
-                "greta/4/1/2",
+                "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2",
                 ["<h2>Enthusiasmus</h2>", "<li>Freude"],
             ),
             # Test case for a whole aspect
             (
-                "greta/4/1",
+                "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen",
                 ["<h2>Motivationale Orientierungen</h2>"],
             ),
             # Test case for the whole tree
-            ("greta", ["<h2>GRETA</h2>"]),
+            ("GRETA", ["<h2>GRETA</h2>"]),
         ]
 
         debug = self.debug

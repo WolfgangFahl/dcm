@@ -20,6 +20,7 @@ class SVGConfig:
         default_color (str): Default color code for SVG elements.
         with_pop(bool): if True support popup javascript functionality
     """
+
     width: int = 600
     height: int = 600
     legend_height: int = 150
@@ -27,7 +28,7 @@ class SVGConfig:
     font_size: int = 12
     indent: str = "  "
     default_color: str = "#C0C0C0"
-    with_popup: bool=False
+    with_popup: bool = False
 
     @property
     def total_height(self) -> int:

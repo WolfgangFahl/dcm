@@ -43,6 +43,48 @@ class TestGreta(Basetest):
         # Open and read the JSON file
         with open(json_file_path, "r") as json_file:
             greta_data = json.load(json_file)
+
+        greta_short_names = {
+            "GRETA": "GRETA",
+            "GRETA/BerufspraktischesWissenUndKoennen": "Berufsprak",
+            "GRETA/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik": "DidaktMethodik",
+            "GRETA/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-1": "DM-Lernziele",
+            "GRETA/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-2": "DM-Methoden",
+            "GRETA/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-3": "DM-Rahmenbedingungen",
+            "GRETA/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-4": "DM-Outcome",
+            "GRETA/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung": "Beratung",
+            "GRETA/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/GRETA-1-2-1": "Beratung-Orientierung",
+            "GRETA/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/GRETA-1-2-2": "Beratung-Diagnostik",
+            "GRETA/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion": "KommInterakt",
+            "GRETA/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion/GRETA-1-3-1": "KI-Gruppen",
+            "GRETA/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion/GRETA-1-3-2": "KI-Kommunikation",
+            "GRETA/BerufspraktischesWissenUndKoennen/Organistion": "Organisation",
+            "GRETA/BerufspraktischesWissenUndKoennen/Organistion/GRETA-1-4-1": "Org-Auftraggeber",
+            "GRETA/BerufspraktischesWissenUndKoennen/Organistion/GRETA-1-4-2": "Org-Netzwerke",
+            "GRETA/FachUndFeldspezifischesWissen": "FachFeldWissen",
+            "GRETA/FachUndFeldspezifischesWissen/Feldbezug": "Feldbezug",
+            "GRETA/FachUndFeldspezifischesWissen/Feldbezug/GRETA-2-1-1": "FB-Adressaten",
+            "GRETA/FachUndFeldspezifischesWissen/Feldbezug/GRETA-2-1-2": "FB-Feldwissen",
+            "GRETA/FachUndFeldspezifischesWissen/Feldbezug/GRETA-2-1-3": "FB-Curricula",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen": "Werthaltungen",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos": "Berufsethos",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/GRETA-3-1-1": "BE-Menschenbild",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/GRETA-3-1-2": "BE-Wertvorstellungen",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen": "Berufsueberzeugungen",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/GRETA-3-2-1": "BU-Rollenbewusstsein",
+            "GRETA/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/GRETA-3-2-2": "BU-Lehrannahmen",
+            "GRETA/ProfessionelleSelbststeuerung": "Selbststeuerung",
+            "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen": "MotOrient",
+            "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-1": "MO-Selbstwirksamkeit",
+            "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2": "MO-Enthusiasmus",
+            "GRETA/ProfessionelleSelbststeuerung/Selbstregulation": "Selbstregul",
+            "GRETA/ProfessionelleSelbststeuerung/Selbstregulation/GRETA-4-2-1": "SR-Feedback",
+            "GRETA/ProfessionelleSelbststeuerung/Selbstregulation/GRETA-4-2-2": "SR-Engagement",
+            "GRETA/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung": "BerufspraktErf",
+            "GRETA/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/GRETA-4-3-1": "BE-Reflexion",
+            "GRETA/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/GRETA-4-3-2": "BE-Weiterentwicklung",
+        }
+
         km = greta_data["Kompetenzmodell"]
         ct = CompetenceTree(
             name="GRETA",
@@ -57,32 +99,42 @@ class TestGreta(Basetest):
             "level": "Lernfortschritt",
         }
         # Define color codes for competence levels
-        color_codes = {
+        level_color_codes = {
             0: "#888888",  # Grey for level 0
-            1: "#ECEABE",  # Light Green for level 1
-            2: "#C8D575",  # Olive Green for level 2
-            3: "#AEBF3F",  # Medium Green for level 3
-            4: "#7D8A2C",  # Dark Green for level 4
+            1: "#C8D575",  # Olive Green for level 1
+            2: "#AEBF3F",  # Medium Green for level 2
+            3: "#7D8A2C",  # Dark Green for level 3
         }
+        # Define the color codes for areas:
+        aspect_color_codes = ["#868378", "#aba89e", "#c9c7c0", "#e8e6e1"]
 
         # Define icons for competence levels (replace with actual icon names)
-        utf8_icons = {0: "❓", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐"}
-        for level in range(5):
+        utf8_icons = {0: "❓", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐"}
+        # , 4: "⭐⭐⭐⭐"}
+        for level in range(len(utf8_icons)):
             cl = CompetenceLevel(
                 name=f"Level{level}",
                 level=level,
                 utf8_icon=utf8_icons[level],
-                color_code=color_codes[level],
+                color_code=level_color_codes[level],
             )
             ct.levels.append(cl)
 
         for a_index, g_aspect in enumerate(km["Kompetenzaspekte"]):
-            aspect = CompetenceAspect(id=f"{a_index+1}", name=g_aspect["Name"])
+            aspect = CompetenceAspect(
+                id=g_aspect["ID"],
+                name=g_aspect["Name"],
+                color_code=aspect_color_codes[a_index],
+            )
             ct.aspects.append(aspect)
             for g_index, g_area in enumerate(g_aspect["Kompetenzbereiche"]):
                 if self.debug:
                     print(json.dumps(g_area, indent=2))
-                area = CompetenceArea(id=f"{g_index+1}", name=g_area["Name"])
+                area = CompetenceArea(
+                    id=g_area["ID"],
+                    name=g_area["Name"],
+                    color_code="#ECEABE",  # Light Green for areas
+                )
                 aspect.areas.append(area)
                 for f_index, g_facet in enumerate(g_area["Kompetenzfacetten"]):
                     description = """**Kompetenzanforderungen**:\n\n"""
@@ -90,10 +142,13 @@ class TestGreta(Basetest):
                         description += f"- {req}\n"
                     pass
                     facet = CompetenceFacet(
-                        id=f"{f_index+1}", name=g_facet["Name"], description=description
+                        id=g_facet["ID"], name=g_facet["Name"], description=description
                     )
 
                     area.facets.append(facet)
+        ct.update_paths()
+        for path,element in ct.elements_by_path.items():
+            element.short_name=greta_short_names[path]
         yaml_str = ct.to_yaml()
         if self.debug:
             print(yaml_str)

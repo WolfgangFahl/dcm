@@ -3,12 +3,13 @@ Created on 2024-01-10
 
 @author: wf
 """
+import os
+from datetime import datetime, timezone
+
 from ngwidgets.progress import NiceguiProgressbar
 from ngwidgets.webserver import NiceGuiWebserver
 from ngwidgets.widgets import Link
 from nicegui import ui
-import os
-from datetime import datetime,timezone
 
 from dcm.dcm_core import (
     Achievement,
@@ -108,7 +109,7 @@ class ButtonRow:
 
             # Assign it to self.achievement.date_assessed_iso
             self.achievement.date_assessed_iso = date_assessed_iso
-            
+
         self.set_button_states(self.achievement)
         # refresh the ui
         self.row.update()
@@ -142,34 +143,36 @@ class Assessment:
         self.debug = debug
         self.reset(dcm=dcm, learner=learner)
         self.setup_ui()
-        
-    def store(self)->str:
+
+    def store(self) -> str:
         """
-        Store the current state of 
+        Store the current state of
         the learner's achievements.
-        
+
         Returns(str): the path to the file
         """
-        file_path=None
+        file_path = None
         try:
             # Serialize the learner object to JSON
             learner_data_json = self.learner.to_json(indent=2)
 
             # Determine the file path for storing the learner's data
-            filename = self.learner.file_name + '.json'
-            file_path = os.path.join(self.webserver.server_config.storage_path, filename)
+            filename = self.learner.file_name + ".json"
+            file_path = os.path.join(
+                self.webserver.server_config.storage_path, filename
+            )
 
             # Write the serialized data to the file
-            with open(file_path, 'w') as file:
+            with open(file_path, "w") as file:
                 file.write(learner_data_json)
 
             if self.debug:
                 print(f"Learner data stored in {file_path}")
-                
+
         except Exception as ex:
-            self.webserver.handle_exception(ex,self.webserver.do_trace)
+            self.webserver.handle_exception(ex, self.webserver.do_trace)
         return file_path
-        
+
     def reset(
         self,
         dcm: DynamicCompetenceMap,

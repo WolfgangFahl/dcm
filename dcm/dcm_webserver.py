@@ -3,14 +3,14 @@ Created on 2023-11-06
 
 @author: wf
 """
-from dataclasses import dataclass
+import json
 import os
 import uuid
-import yaml
-import json
+from dataclasses import dataclass
 from typing import List, Optional
 from urllib.parse import urlparse
 
+import yaml
 from fastapi import HTTPException
 from fastapi.responses import HTMLResponse
 from ngwidgets.file_selector import FileSelector
@@ -42,6 +42,7 @@ class SVGRenderRequest(BaseModel):
     markup: str
     config: Optional[SVGConfig] = None
 
+
 @dataclass
 class ServerConfig:
     storage_secret: str
@@ -50,14 +51,17 @@ class ServerConfig:
     @classmethod
     def from_yaml(cls, yaml_path: str):
         if not os.path.exists(yaml_path):
-            default_storage_path = os.path.join(os.path.expanduser('~'), '.dcm', 'storage')
+            default_storage_path = os.path.join(
+                os.path.expanduser("~"), ".dcm", "storage"
+            )
             # Create the directory if it does not exist
             os.makedirs(default_storage_path, exist_ok=True)
             return cls(str(uuid.uuid4()), default_storage_path)
-        with open(yaml_path, 'r') as file:
+        with open(yaml_path, "r") as file:
             config_data = yaml.safe_load(file)
         return cls(**config_data)
-    
+
+
 class DynamicCompentenceMapWebServer(InputWebserver):
     """
     server to supply Dynamic Competence Map Visualizations
@@ -81,17 +85,17 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
-        self.container=None
+        self.container = None
         self.learner = None
         self.assessment = None
         self.text_mode = "none"
-        config_path = os.path.join(os.environ['HOME'], '.dcm/config.yaml')
+        config_path = os.path.join(os.environ["HOME"], ".dcm/config.yaml")
         self.server_config = ServerConfig.from_yaml(config_path)
-      
+
         @app.get("/learner/{learner_slug}")
         async def show_learner(learner_slug: str):
             return await self.assess_learner_by_slug(learner_slug)
-    
+
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
             """
@@ -294,13 +298,13 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 text_mode=self.text_mode,
             )
             # Use the new get_java_script method to get the JavaScript
-            self.svg_view.content = svg_markup,
+            self.svg_view.content = (svg_markup,)
             self.svg_view.update()
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
-            
+
     def prepare_ui(self):
-        config=SVGConfig(with_popup=True)
+        config = SVGConfig(with_popup=True)
         self.svg = SVG(config=config)
         java_script = self.svg.get_java_script()
 
@@ -347,7 +351,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                                     icon="file_open",
                                     handler=self.open_file,
                                 )
-                            self.download_button=self.tool_button(
+                            self.download_button = self.tool_button(
                                 tooltip="download",
                                 icon="download",
                                 handler=self.download,
@@ -391,19 +395,22 @@ class DynamicCompentenceMapWebServer(InputWebserver):
     async def assess_learner_by_slug(self, learner_slug: str):
         """
         Assess a learner based on the slug of the id
-    
+
         Args:
             learner_slug (str): The unique slug of the learner.
-    
+
         Raises:
             HTTPException: If the learner file does not exist or an error occurs.
         """
+
         def show():
-            learner_file = os.path.join(self.server_config.storage_path, f"{learner_slug}.json")
+            learner_file = os.path.join(
+                self.server_config.storage_path, f"{learner_slug}.json"
+            )
             if not os.path.exists(learner_file):
-                raise HTTPException(status_code=404, detail="Learner not found")    
+                raise HTTPException(status_code=404, detail="Learner not found")
             try:
-                with open(learner_file, 'r') as file:
+                with open(learner_file, "r") as file:
                     learner_data = json.load(file)
                     learner = Learner.from_dict(learner_data)
             except Exception as e:
@@ -411,9 +418,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 raise HTTPException(status_code=500, detail=str(e))
                 pass
             self.assess(learner)
-            
+
         await self.setup_content_div(show())
-    
+
     def assess(self, learner: Learner, tree_id: str = None):
         """
         run an assessment for the given learner
@@ -435,8 +442,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # assess_learner will render ...
         # self.render_dcm(dcm,learner=learner)
         self.assess_learner(dcm, learner)
-    
-    def assess_state(self,state:bool):
+
+    def assess_state(self, state: bool):
         if state:
             self.assessment_button.enable()
         else:
@@ -445,8 +452,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.download_button.enable()
         else:
             self.download_button.disable()
-             
-    async def download(self,_args):
+
+    async def download(self, _args):
         """
         allow downloading the assessment result
         """
@@ -455,7 +462,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 if not self.assessment:
                     ui.notify("no active learner assessment")
                     return
-                json_path=self.assessment.store()
+                json_path = self.assessment.store()
                 ui.notify(f"downloading {json_path}")
                 ui.download(json_path)
         except Exception as ex:

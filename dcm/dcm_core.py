@@ -174,10 +174,12 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         """
         self.path = self.id
         self.total_levels = 1
+        self.elements_by_path = {self.path: self}
         # Loop through each competence aspect and set their paths and parent references
         for aspect in self.aspects:
             aspect.competence_tree = self
             aspect.path = f"{self.id}/{aspect.id}"
+            self.elements_by_path[aspect.path] = aspect
             self.total_elements["aspects"] = self.total_elements["aspects"] + 1
             self.total_levels = 2
             for area in aspect.areas:
@@ -185,12 +187,14 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                 area.competence_tree = self
                 area.aspect = aspect
                 area.path = f"{self.id}/{aspect.id}/{area.id}"
+                self.elements_by_path[area.path] = area
                 self.total_elements["areas"] = self.total_elements["areas"] + 1
                 for facet in area.facets:
                     self.total_levels = 4
                     facet.competence_tree = self
                     facet.area = area
                     facet.path = f"{self.id}/{aspect.id}/{area.id}/{facet.id}"
+                    self.elements_by_path[facet.path] = facet
                     self.total_elements["facets"] = self.total_elements["facets"] + 1
 
     @classmethod
@@ -220,40 +224,14 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             if not lenient:
                 raise ValueError(msg)
 
-        parts = path.split("/")
-        if len(parts) < 1:
-            return None
-
-        tree_id = parts[0]
-        if tree_id != self.id:
-            handle_error(f"invalid tree_id for lookup {tree_id}")
-            return None
-        if len(parts) == 1:
-            return self
-        if len(parts) > 1:
-            aspect_id = parts[1]
-            # Retrieve the aspect
-            aspect = next(
-                (aspect for aspect in self.aspects if aspect.id == aspect_id), None
-            )
-        if aspect:
-            if len(parts) == 2:
-                return aspect
-            if len(parts) > 2:
-                area_id = parts[2]
-                area = next((area for area in aspect.areas if area.id == area_id), None)
-                if area:
-                    if len(parts) == 3:
-                        return area
-                if len(parts) > 3:
-                    facet_id = parts[3]
-                    facet = next(
-                        (facet for facet in area.facets if facet.id == facet_id), None
-                    )
-                    if facet:
-                        return facet
-        handle_error(f"invalid path for lookup {path}")
-        return None
+        element = None
+        if path not in self.elements_by_path:
+            msg = f"invalid path {path}"
+            if not lenient:
+                raise ValueError(msg)
+        else:
+            element = self.elements_by_path.get(path)
+        return element
 
     @property
     def total_valid_levels(self) -> int:
@@ -425,10 +403,12 @@ class Learner:
     def main_id(self):
         main_id = self.learner_id
         return main_id
-    
+
     @property
     def file_name(self):
-        file_name=slugify(self.learner_id, lowercase=False, regex_pattern=r"[^\w\s\-]")
+        file_name = slugify(
+            self.learner_id, lowercase=False, regex_pattern=r"[^\w\s\-]"
+        )
         return file_name
 
     def add_achievement(self, new_achievement):

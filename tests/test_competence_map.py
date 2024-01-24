@@ -53,12 +53,12 @@ class TestDynamicCompetenceMap(Basetest):
         test looking up an element
         """
         examples = DynamicCompetenceMap.get_examples(markup="yaml")
-        example_name = "greta"
+        example_name = "GRETA"
         self.assertTrue(example_name in examples)
         example = examples[example_name]
-        path = "greta/4/1/2"
+        path = "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2"
         ct = example.competence_tree
-        self.assertEqual(4, ct.total_valid_levels)
+        self.assertEqual(3, ct.total_valid_levels)
         facet = ct.lookup_by_path(path)
         self.assertIsNotNone(facet)
         self.assertIsInstance(facet, CompetenceFacet)
