@@ -28,90 +28,6 @@ class DcmChart:
         self.dcm = dcm
         self.text_mode = "none"
 
-    def precalculate_segments(self, competence_tree: CompetenceTree) -> dict:
-        """
-        Pre-calculate the DonutSegment for each element in the CompetenceTree
-        and store it in a dictionary by path for quick lookup.
-
-        Args:
-            competence_tree (CompetenceTree): The competence tree to precalculate the segments for.
-
-        Returns:
-            dict: A dictionary mapping paths to their corresponding DonutSegment.
-        """
-        segment_by_path = {}
-        full_circle = 360
-        aspect_angle = (
-            full_circle / len(competence_tree.aspects)
-            if competence_tree.aspects
-            else full_circle
-        )
-
-        for aspect in competence_tree.aspects:
-            start_angle_aspect = 0
-            for area_index, area in enumerate(aspect.areas):
-                end_angle_aspect = start_angle_aspect + aspect_angle
-
-                # Create a DonutSegment for the area
-                segment_by_path[area.path] = DonutSegment(
-                    cx=self.cx,
-                    cy=self.cy,
-                    inner_radius=self.tree_radius,
-                    outer_radius=self.tree_radius * 2,  # Modify as needed
-                    start_angle=start_angle_aspect,
-                    end_angle=end_angle_aspect,
-                    fill="white",  # Default fill color for segments with no elements
-                )
-
-                # Calculate and store segments for sub-elements (facets)
-                for facet_index, facet in enumerate(area.facets):
-                    facet_angle = aspect_angle / len(area.facets)
-                    start_angle_facet = start_angle_aspect + (facet_index * facet_angle)
-                    end_angle_facet = start_angle_facet + facet_angle
-
-                    segment_by_path[facet.path] = DonutSegment(
-                        cx=self.cx,
-                        cy=self.cy,
-                        inner_radius=self.tree_radius * 2,  # Modify as needed
-                        outer_radius=self.tree_radius * 3,  # Modify as needed
-                        start_angle=start_angle_facet,
-                        end_angle=end_angle_facet,
-                        fill=facet.color_code if facet.color_code else "white",
-                    )
-
-                # Update the start angle for the next area within the same aspect.
-                start_angle_aspect = end_angle_aspect
-
-        return segment_by_path
-
-    def generate_svg_from_segments(
-        self, competence_tree: CompetenceTree, config: Optional[SVGConfig] = None
-    ) -> str:
-        """
-        Generate the SVG markup using pre-calculated DonutSegment objects stored in segments_by_path.
-
-        Args:
-            competence_tree(CompetenceTree): a competence tree
-            segments_by_path (dict): A dictionary mapping element paths to their corresponding DonutSegment objects.
-            config (SVGConfig, optional): The configuration for the SVG canvas and legend. Defaults to default values.
-
-        Returns:
-            str: The SVG markup.
-        """
-        if config is None:
-            config = SVGConfig(
-                with_popup=True
-            )  # Use default configuration if none provided
-        svg = self.prepare_and_add_inner_circle(config, competence_tree=competence_tree)
-        # Pre-calculate segments for the competence tree
-        segments_by_path = self.precalculate_segments(competence_tree)
-        # Iterate over the segments and add them to the SVG
-        for path, segment in segments_by_path.items():
-            element = competence_tree.lookup_by_path(path)
-            config = self.get_element_config(element)
-            svg.add_donut_segment(config, segment)
-        return svg.get_svg_markup(with_java_script=True)
-
     def prepare_and_add_inner_circle(
         self, config, competence_tree: CompetenceTree, lookup_url: str = None
     ):
@@ -131,6 +47,10 @@ class DcmChart:
         self.cy = (config.total_height - config.legend_height) // 2
         self.radius_steps = competence_tree.total_levels
         self.tree_radius = config.width / 2 / self.radius_steps / 2
+        if "tree" in competence_tree.relative_radius:
+            _inner,outer=competence_tree.relative_radius.get("tree")
+            self.tree_radius=outer *config.width/2 
+            
         self.circle_config = competence_tree.to_svg_node_config(
             x=self.cx, y=self.cy, width=self.tree_radius
         )
@@ -309,13 +229,16 @@ class DcmChart:
         generate a donut segment for a given element of
         the CompetenceTree
         """
-        # Simply create the donut segment without considering the achievement
-        result = self.add_donut_segment(svg=svg, element=element, segment=segment)
-        # check learner achievements
-        if learner:
-            _learner_segment = self.generate_donut_segment_for_achievement(
-                svg=svg, learner=learner, element=element, segment=segment
-            )
+        if segment.outer_radius==0.0:
+            result=segment
+        else:
+            # Simply create the donut segment without considering the achievement
+            result = self.add_donut_segment(svg=svg, element=element, segment=segment)
+            # check learner achievements
+            if learner:
+                _learner_segment = self.generate_donut_segment_for_achievement(
+                    svg=svg, learner=learner, element=element, segment=segment
+                )
         return result
 
     def generate_pie_elements(
@@ -341,6 +264,16 @@ class DcmChart:
         elements = getattr(parent_element, sub_element_name)
         total = len(elements)
         total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
+        hierarchy_level=sub_element_name[:-1]
+        if hierarchy_level in self.dcm.competence_tree.relative_radius:
+            # calculate inner and outer radius
+            inner_ratio, outer_ratio = self.dcm.competence_tree.relative_radius[hierarchy_level]
+            # Calculate the actual inner and outer radii
+            inner_radius = self.svg.config.width/2  * inner_ratio
+            outer_radius = self.svg.config.width/2 * outer_ratio
+        else:
+            inner_radius=segment.outer_radius
+            outer_radius=segment.outer_radius + self.tree_radius * 2
         # are there any elements to be shown?
         if total == 0:
             # there are no subelements we might need a single
@@ -349,11 +282,12 @@ class DcmChart:
             # on this level
             if total_sub_elements == 0:
                 return
+                
             sub_segment = DonutSegment(
                 cx=self.cx,
                 cy=self.cy,
-                inner_radius=segment.outer_radius,
-                outer_radius=segment.outer_radius + self.tree_radius * 2,
+                inner_radius=inner_radius,
+                outer_radius=outer_radius,
                 start_angle=segment.start_angle,
                 end_angle=segment.end_angle,
             )
@@ -368,8 +302,8 @@ class DcmChart:
                 sub_segment = DonutSegment(
                     cx=self.cx,
                     cy=self.cy,
-                    inner_radius=segment.outer_radius,
-                    outer_radius=segment.outer_radius + self.tree_radius * 2,
+                    inner_radius=inner_radius,
+                    outer_radius=outer_radius,
                     start_angle=start_angle,
                     end_angle=end_angle,
                 )

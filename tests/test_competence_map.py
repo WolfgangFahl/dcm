@@ -146,23 +146,3 @@ class TestDynamicCompetenceMap(Basetest):
                     )
                     markup_check = MarkupCheck(self, dcm)
                     markup_check.check_markup(svg_file=svg_file, svg_config=svg_config)
-
-    def test_generate_svg_from_segments(self):
-        """
-        Test the SVG generation from precalculated DonutSegment objects.
-        """
-        for markup, examples in self.example_definitions.items():
-
-            for example_name, dcm in examples.items():
-                # Now you can perform assertions to verify that the data was loaded correctly
-                self.assertIsNotNone(dcm)
-                dcm_chart = DcmChart(dcm)
-
-                # Generate SVG markup
-                svg_config = SVGConfig(with_popup=True)
-                svg_markup = dcm_chart.generate_svg_from_segments(
-                    dcm.competence_tree, config=svg_config
-                )
-                svg_file = f"/tmp/{example_name}_{markup}_segments.svg"
-                with open(svg_file, "w") as file:
-                    file.write(svg_markup)

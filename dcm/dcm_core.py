@@ -159,6 +159,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
     aspects: List[CompetenceAspect] = field(default_factory=list)
     levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
+    relative_radius: Dict[str, Tuple[float, float]] = field(default_factory=dict)
     total_elements: Dict[str, int] = field(default_factory=dict)
 
     def __post_init__(self):

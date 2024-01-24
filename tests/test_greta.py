@@ -16,7 +16,6 @@ from dcm.dcm_core import (
     CompetenceTree,
 )
 
-
 class TestGreta(Basetest):
     """
     test converting the Greta competence Json Model to
@@ -98,6 +97,12 @@ class TestGreta(Basetest):
             "area": "Kompetenzbereich",
             "facet": "Kompetenzfacette",
             "level": "Lernfortschritt",
+        }
+        ct.relative_radius = {
+            "tree": (0.0, 1/9),
+            "aspect": (0.0, 0.0),
+            "area": (1/9, 3/9),
+            "facet": (3/9, 9/9),
         }
         # Define color codes for competence levels
         level_color_codes = {

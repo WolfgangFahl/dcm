@@ -97,10 +97,10 @@ class MarkupCheck:
             "svg": "http://www.w3.org/2000/svg",
             "xlink": "http://www.w3.org/1999/xlink",
         }
-
-        for aspect in self.dcm.competence_tree.aspects:
+        ct=self.dcm.competence_tree
+        for aspect in ct.aspects:
             # ignore aspects without areas ..
-            if len(aspect.areas) == 0:
+            if len(aspect.areas) == 0 or ct.relative_radius.get("aspect")==(0.0,0.0):
                 continue
             element = root.find(f"svg:g[@id='{aspect.id}']", namespaces=namespaces)
             self.test_case.assertIsNotNone(
