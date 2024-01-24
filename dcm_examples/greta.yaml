@@ -14,7 +14,6 @@ aspects:
   - name: Didaktik und Methodik
     short_name: DidaktMethodik
     id: DidaktikUndMethodik
-    color_code: '#ECEABE'
     facets:
     - name: Lerninhalte und -ziele
       short_name: DM-Lernziele
@@ -58,7 +57,6 @@ aspects:
   - name: Beratung/Individualisierte Lernunterstützung
     short_name: Beratung
     id: BeratungIndividualisierteLernunterstuetzung
-    color_code: '#ECEABE'
     facets:
     - name: Teilnehmendenorientierung
       short_name: Beratung-Orientierung
@@ -85,7 +83,6 @@ aspects:
   - name: Kommunikation und Interaktion
     short_name: KommInterakt
     id: KommunikationUndInteraktion
-    color_code: '#ECEABE'
     facets:
     - name: Moderation und Steuerung von Gruppen
       short_name: KI-Gruppen
@@ -113,7 +110,6 @@ aspects:
   - name: Organisation
     short_name: Organisation
     id: Organistion
-    color_code: '#ECEABE'
     facets:
     - name: Kooperation mit den Auftraggebenden/Arbeitgebenden
       short_name: Org-Auftraggeber
@@ -142,7 +138,6 @@ aspects:
   - name: Feldbezug
     short_name: Feldbezug
     id: Feldbezug
-    color_code: '#ECEABE'
     facets:
     - name: Adressatinnen und Adressaten
       short_name: FB-Adressaten
@@ -178,7 +173,6 @@ aspects:
   - name: Berufsethos
     short_name: Berufsethos
     id: Berufsethos
-    color_code: '#ECEABE'
     facets:
     - name: Menschenbilder
       short_name: BE-Menschenbild
@@ -200,7 +194,6 @@ aspects:
   - name: Berufsbezogene Überzeugungen
     short_name: Berufsueberzeugungen
     id: BerufsbezogeneUeberzeugungen
-    color_code: '#ECEABE'
     facets:
     - name: Eigenes Rollenbewusstsein
       short_name: BU-Rollenbewusstsein
@@ -228,7 +221,6 @@ aspects:
   - name: Motivationale Orientierungen
     short_name: MotOrient
     id: MotivationaleOrientierungen
-    color_code: '#ECEABE'
     facets:
     - name: Selbstwirksamkeitsüberzeugungen
       short_name: MO-Selbstwirksamkeit
@@ -249,7 +241,6 @@ aspects:
   - name: Selbstregulation
     short_name: Selbstregul
     id: Selbstregulation
-    color_code: '#ECEABE'
     facets:
     - name: Umgang mit Feedback und Kritik
       short_name: SR-Feedback
@@ -271,7 +262,6 @@ aspects:
   - name: Berufspraktische Erfahrung
     short_name: BerufspraktErf
     id: BerufspraktischeErfahrung
-    color_code: '#ECEABE'
     facets:
     - name: Reflexion des eigenen Lehrhandelns
       short_name: BE-Reflexion
@@ -302,21 +292,27 @@ levels:
 - name: Level1
   short_name: Level1
   id: Level1
-  color_code: '#C8D575'
+  color_code: '#ECEABE'
   level: 1
   utf8_icon: ⭐
 - name: Level2
   short_name: Level2
   id: Level2
-  color_code: '#AEBF3F'
+  color_code: '#C8D575'
   level: 2
   utf8_icon: ⭐⭐
 - name: Level3
   short_name: Level3
   id: Level3
-  color_code: '#7D8A2C'
+  color_code: '#AEBF3F'
   level: 3
   utf8_icon: ⭐⭐⭐
+- name: Level4
+  short_name: Level4
+  id: Level4
+  color_code: '#7D8A2C'
+  level: 4
+  utf8_icon: ⭐⭐⭐⭐
 element_names:
   tree: Kompetenzbilanz
   aspect: Kompetenzaspekt
@@ -331,10 +327,10 @@ relative_radius:
   - 0.0
   - 0.0
   area:
-  - 0.1111111111111111
-  - 0.3333333333333333
+  - 0.0
+  - 0.0
   facet:
-  - 0.3333333333333333
+  - 0.1111111111111111
   - 1.0
 total_elements:
   aspects: 4

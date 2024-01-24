@@ -101,24 +101,24 @@ class TestGreta(Basetest):
             "level": "Lernfortschritt",
         }
         ct.relative_radius = {
-            "tree": (0.0, 1 / 9),
+            "tree": (0.0, 1/9),
             "aspect": (0.0, 0.0),
-            "area": (1 / 9, 3 / 9),
-            "facet": (3 / 9, 9 / 9),
+            "area": (0.0, 0.0),
+            "facet": (1 / 9, 9 / 9),
         }
         # Define color codes for competence levels
         level_color_codes = {
             0: "#888888",  # Grey for level 0
-            1: "#C8D575",  # Olive Green for level 1
-            2: "#AEBF3F",  # Medium Green for level 2
-            3: "#7D8A2C",  # Dark Green for level 3
+            1: "#ECEABE",  # Light Green for areas 1
+            2: "#C8D575",  # Olive Green for level 2
+            3: "#AEBF3F",  # Medium Green for level 3
+            4: "#7D8A2C",  # Dark Green for level 4
         }
         # Define the color codes for areas:
         aspect_color_codes = ["#868378", "#aba89e", "#c9c7c0", "#e8e6e1"]
 
         # Define icons for competence levels (replace with actual icon names)
-        utf8_icons = {0: "❓", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐"}
-        # , 4: "⭐⭐⭐⭐"}
+        utf8_icons = {0: "❓", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐"}
         for level in range(len(utf8_icons)):
             cl = CompetenceLevel(
                 name=f"Level{level}",
@@ -141,7 +141,6 @@ class TestGreta(Basetest):
                 area = CompetenceArea(
                     id=g_area["ID"],
                     name=g_area["Name"],
-                    color_code="#ECEABE",  # Light Green for areas
                 )
                 aspect.areas.append(area)
                 for f_index, g_facet in enumerate(g_area["Kompetenzfacetten"]):
