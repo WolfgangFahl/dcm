@@ -60,7 +60,8 @@ class DcmChart:
                 self.cx,
                 self.cy,
                 competence_tree.short_name,
-                centered=True,
+                text_anchor = "middle",
+                center_v=True,
                 fill="white",
             )
         return svg

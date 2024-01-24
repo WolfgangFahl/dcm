@@ -435,7 +435,7 @@ class SVG:
         self.add_text(x, y - height, title, font_weight="bold")
         for index, (color, label) in enumerate(items):
             self.add_rectangle(x, y + index * (height + 5), width, height, color)
-            self.add_text(x + width + 10, y + index * (height + 5) + height / 2, label)
+            self.add_text(x + width + 10, y + index * (height + 5) + height / 2, label,center_v=True)
 
     def add_text(
         self,
@@ -446,7 +446,7 @@ class SVG:
         font_weight: str = "normal",
         text_anchor: str = "start",
         transform: str = "",
-        centered: bool = False,
+        center_v: bool = False,
         text_class: str = "noclick",
         indent_level: int = 1,
     ) -> None:
@@ -461,15 +461,12 @@ class SVG:
             font_weight (str, optional): Font weight (normal, bold, etc.). Defaults to "normal".
             text_anchor (str, optional): Text alignment (start, middle, end). Defaults to "start".
             indent_level(int): the indentation level to apply
-            centered (bool): If True, treat x and y as the center of the text. Default is False.
+            center_v (bool): If True, y as the vertical center of the text. Default is False.
             text_class(str): "noclick" by default so that elements below are clickable
             transform (str, optional): Transformation for the text (e.g., rotation). Defaults to an empty string.
         """
         text_obj = Text(text, self.config)
-        if centered:
-            # Adjust text_anchor to 'middle' when centered
-            text_anchor = "middle"
-
+        if center_v:
             # y-offset adjustment to center the text vertically
             y -= text_obj.total_text_height / 2
             # adjust for the ascender / descender vertical font weighting
@@ -619,7 +616,8 @@ class SVG:
                 font_weight="normal",
                 indent_level=indent_level,
                 transform=transform,
-                centered=True,
+                text_anchor = "middle",
+                center_v=True,
             )
 
         elif direction == "curved":
