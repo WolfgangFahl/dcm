@@ -48,9 +48,9 @@ class DcmChart:
         self.radius_steps = competence_tree.total_levels
         self.tree_radius = config.width / 2 / self.radius_steps / 2
         if "tree" in competence_tree.relative_radius:
-            _inner,outer=competence_tree.relative_radius.get("tree")
-            self.tree_radius=outer *config.width/2 
-            
+            _inner, outer = competence_tree.relative_radius.get("tree")
+            self.tree_radius = outer * config.width / 2
+
         self.circle_config = competence_tree.to_svg_node_config(
             x=self.cx, y=self.cy, width=self.tree_radius
         )
@@ -60,7 +60,7 @@ class DcmChart:
                 self.cx,
                 self.cy,
                 competence_tree.short_name,
-                text_anchor = "middle",
+                text_anchor="middle",
                 center_v=True,
                 fill="white",
             )
@@ -230,8 +230,8 @@ class DcmChart:
         generate a donut segment for a given element of
         the CompetenceTree
         """
-        if segment.outer_radius==0.0:
-            result=segment
+        if segment.outer_radius == 0.0:
+            result = segment
         else:
             # Simply create the donut segment without considering the achievement
             result = self.add_donut_segment(svg=svg, element=element, segment=segment)
@@ -265,16 +265,18 @@ class DcmChart:
         elements = getattr(parent_element, sub_element_name)
         total = len(elements)
         total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
-        hierarchy_level=sub_element_name[:-1]
+        hierarchy_level = sub_element_name[:-1]
         if hierarchy_level in self.dcm.competence_tree.relative_radius:
             # calculate inner and outer radius
-            inner_ratio, outer_ratio = self.dcm.competence_tree.relative_radius[hierarchy_level]
+            inner_ratio, outer_ratio = self.dcm.competence_tree.relative_radius[
+                hierarchy_level
+            ]
             # Calculate the actual inner and outer radii
-            inner_radius = self.svg.config.width/2  * inner_ratio
-            outer_radius = self.svg.config.width/2 * outer_ratio
+            inner_radius = self.svg.config.width / 2 * inner_ratio
+            outer_radius = self.svg.config.width / 2 * outer_ratio
         else:
-            inner_radius=segment.outer_radius
-            outer_radius=segment.outer_radius + self.tree_radius * 2
+            inner_radius = segment.outer_radius
+            outer_radius = segment.outer_radius + self.tree_radius * 2
         # are there any elements to be shown?
         if total == 0:
             # there are no subelements we might need a single
@@ -283,7 +285,7 @@ class DcmChart:
             # on this level
             if total_sub_elements == 0:
                 return
-                
+
             sub_segment = DonutSegment(
                 cx=self.cx,
                 cy=self.cy,

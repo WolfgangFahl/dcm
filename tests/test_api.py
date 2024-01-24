@@ -63,16 +63,16 @@ class TestAPI(WebserverTest):
         test_cases = [
             # Test case for a specific facet
             (
-                "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2",
+                "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2",
                 ["<h2>Enthusiasmus</h2>", "<li>Freude"],
             ),
             # Test case for a whole aspect
             (
-                "GRETA/ProfessionelleSelbststeuerung/MotivationaleOrientierungen",
+                "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen",
                 ["<h2>Motivationale Orientierungen</h2>"],
             ),
             # Test case for the whole tree
-            ("GRETA", ["<h2>GRETA</h2>"]),
+            ("greta_v2_0", ["<h2>GRETA</h2>"]),
         ]
 
         debug = self.debug

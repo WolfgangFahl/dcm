@@ -435,7 +435,12 @@ class SVG:
         self.add_text(x, y - height, title, font_weight="bold")
         for index, (color, label) in enumerate(items):
             self.add_rectangle(x, y + index * (height + 5), width, height, color)
-            self.add_text(x + width + 10, y + index * (height + 5) + height / 2, label,center_v=True)
+            self.add_text(
+                x + width + 10,
+                y + index * (height + 5) + height / 2,
+                label,
+                center_v=True,
+            )
 
     def add_text(
         self,
@@ -616,7 +621,7 @@ class SVG:
                 font_weight="normal",
                 indent_level=indent_level,
                 transform=transform,
-                text_anchor = "middle",
+                text_anchor="middle",
                 center_v=True,
             )
 
