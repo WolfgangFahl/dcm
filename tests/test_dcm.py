@@ -19,7 +19,7 @@ class TestDCM(Basetest):
         """
         debug = self.debug
         # debug=True
-        for name in ["portfolio_plus", "iSAQB_CPSA-F"]:
+        for name in ["portfolio_plus", "iSAQB_CPSA-F","greta_v2_0"]:
             ct = CompetenceTree(name=name)
             if debug:
                 print(ct.id)
