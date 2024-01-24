@@ -90,6 +90,7 @@ class TestGreta(Basetest):
             name="GRETA",
             description=km["Name"],
             url="https://www.greta-die.de/webpages/greta-interaktiv",
+            stacked_levels=True
         )
         ct.element_names = {
             "tree": "Kompetenzbilanz",

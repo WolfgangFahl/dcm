@@ -135,11 +135,9 @@ class CompetenceLevel(CompetenceElement):
         icon(str): the name of a google mdi icon to be shown for this level
         utf8_icon(str): utf-8 char string to be used as icon
     """
-
     level: int = 1
     icon: Optional[str] = None
     utf8_icon: Optional[str] = None
-
 
 @dataclass_json
 @dataclass
@@ -155,6 +153,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
 
     lookup_url: Optional[str] = None
     total_levels: int = field(init=False)
+    stacked_levels: Optional[bool] = False
     aspects: List[CompetenceAspect] = field(default_factory=list)
     levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)

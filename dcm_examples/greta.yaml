@@ -4,6 +4,7 @@ id: GRETA
 url: https://www.greta-die.de/webpages/greta-interaktiv
 description: GRETA-Kompetenzmodell 2.0
 total_levels: 4
+stacked_levels: true
 aspects:
 - name: Berufspraktisches Wissen und Können
   short_name: Berufsprak

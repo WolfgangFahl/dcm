@@ -233,14 +233,28 @@ class DcmChart:
         if element and element.path in self.selected_paths:
             element_config.element_class = "selected"
 
-        if achievement_level is not None:
+        if achievement_level is None:
+            result = svg.add_donut_segment(config=element_config, segment=segment)
+        else:
+            # we need to draw an achievement
             total_levels = self.dcm.competence_tree.total_valid_levels
-            relative_radius = (segment.outer_radius - segment.inner_radius) * (
-                achievement_level / total_levels
-            )
-            segment.outer_radius = segment.inner_radius + relative_radius
-
-        result = svg.add_donut_segment(config=element_config, segment=segment)
+            if not self.dcm.competence_tree.stacked_levels:
+                ratio=achievement_level / total_levels
+                relative_radius = (segment.outer_radius - segment.inner_radius) * ratio
+                segment.outer_radius = segment.inner_radius + relative_radius
+                result = svg.add_donut_segment(config=element_config, segment=segment)
+            else:
+                # create the stacked segments starting with the highest level 
+                for level in range(achievement_level, 0, -1):
+                    level_color = self.dcm.competence_tree.get_level_color(level)
+                    stack_element_config=copy.deepcopy(element_config)
+                    stack_element_config.fill=level_color
+                    ratio = level / total_levels
+                    relative_radius = (segment.outer_radius - segment.inner_radius) * ratio
+                    stacked_segment = copy.deepcopy(segment)
+                    stacked_segment.outer_radius = segment.inner_radius + relative_radius
+                    # the result will be overrriden in the loop so we'll return the innermost
+                    result = svg.add_donut_segment(config=stack_element_config, segment=stacked_segment)
         if element and self.text_mode != "none":
             # no autofill please
             # textwrap.fill(element.short_name, width=20)
