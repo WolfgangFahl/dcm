@@ -373,7 +373,7 @@ class Assessment:
         self.button_row.set_button_states(achievement)
         competence_element = self.competence_tree.lookup_by_path(achievement.path)
         if not competence_element:
-            ui.notify("invalid path: {achievement.path}")
+            ui.notify(f"invalid path: {achievement.path}")
             self.markdown_view.content = f"⚠️ {achievement.path}"
         else:
             if hasattr(competence_element, "path"):
