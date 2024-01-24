@@ -1,15 +1,20 @@
 name: GRETA
-id: greta
+short_name: GRETA
+id: GRETA
 url: https://www.greta-die.de/webpages/greta-interaktiv
 description: GRETA-Kompetenzmodell 2.0
+total_levels: 1
 aspects:
 - name: Berufspraktisches Wissen und Können
+  short_name: Berufsprak
   id: '1'
   areas:
   - name: Didaktik und Methodik
+    short_name: Didaktik u
     id: '1'
     facets:
     - name: Lerninhalte und -ziele
+      short_name: Lerninhalt
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -20,6 +25,7 @@ aspects:
         - Ausrichtung der Lerninhalte und -ziele an den Teilnehmenden
         - Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden
     - name: Methoden, Medien und Lernmaterialien
+      short_name: 'Methoden, '
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -30,6 +36,7 @@ aspects:
         - Evaluation der im Lehr-Lern-Angebot eingesetzten Methoden, (digitalen) Medien und Lernmaterialien
         - Nutzung von (digitalen) Tools/Werkzeugen zur Evaluation des Lehr-Lern-Angebots
     - name: Rahmenbedingungen und Lernumgebungen
+      short_name: Rahmenbedi
       id: '3'
       description: |
         **Kompetenzanforderungen**:
@@ -38,6 +45,7 @@ aspects:
         - Anpassung der beeinflussbaren Rahmenbedingungen in (digital-gestützten) Lernumgebungen
         - Schaffung einer konstruktiv-unterstützenden (digital-gestützten) Lernumgebung durch Ausschöpfung der Rahmenbedingungen
     - name: Outcomeorientierung
+      short_name: Outcomeori
       id: '4'
       description: |
         **Kompetenzanforderungen**:
@@ -45,9 +53,11 @@ aspects:
         - Ausrichtung des Lehrhandelns an Lernergebnissen
         - Auswahl und Anwendung geeigneter Methoden und (digitaler) Tools/Werkzeuge zur Lernerfolgskontrolle unter Berücksichtigung datenschutzrechtlicher Aspekte und des gegebenen Kontexts
   - name: Beratung/Individualisierte Lernunterstützung
+    short_name: Beratung/I
     id: '2'
     facets:
     - name: Teilnehmendenorientierung
+      short_name: Teilnehmen
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -59,6 +69,7 @@ aspects:
         - Berücksichtigung der Diversität der Teilnehmenden (Alter, Geschlecht, Bildungstand etc.)
         - Ermöglichung der Differenzierung und Individualisierung im Unterricht mithilfe (digitaler) Medien und Tools/Werkzeugen
     - name: Diagnostik und Lernberatung
+      short_name: Diagnostik
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -68,9 +79,11 @@ aspects:
         - Nutzung von diagnostischen Daten und Informationen bei der individuellen Beratung von Lernenden
         - Setzung von Lernimpulsen in Beratungsgesprächen
   - name: Kommunikation und Interaktion
+    short_name: Kommunikat
     id: '3'
     facets:
     - name: Moderation und Steuerung von Gruppen
+      short_name: Moderation
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -82,6 +95,7 @@ aspects:
         - Schaffung einer vertrauensvollen Gesprächsatmosphäre
         - Konstruktiver Umgang mit technischen Problemen und Störungen innerhalb der Gruppe
     - name: Professionelle Kommunikation
+      short_name: Profession
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -92,9 +106,11 @@ aspects:
         - Austausch mit Teilnehmenden mithilfe von digitalen Kommunikationstools unter Beachtung der Netiquette
         - Berücksichtigung von Besonderheiten verbaler und non-verbaler Kommunikation in digitalen Lernumgebungen
   - name: Organisation
+    short_name: Organisati
     id: '4'
     facets:
     - name: Kooperation mit den Auftraggebenden/Arbeitgebenden
+      short_name: Kooperatio
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -103,6 +119,7 @@ aspects:
         - Vermarktung des eigenen Angebots über geeignete (digitale) Medien und Tools/Werkzeuge (z.B. über Soziale Medien)
         - Zusammenarbeit und Austausch mit Auftraggebenden/Arbeitgebenden bei der Neukonzipierung und Erweiterung von Angeboten sowie zur Problemlösung
     - name: Kollegiale Zusammenarbeit/Netzwerken
+      short_name: Kollegiale
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -112,12 +129,15 @@ aspects:
         - Zusammenarbeit in interdisziplinären Teams oder kollegialen Netzwerken über unterschiedliche Formate (z.B. kollegialer Austausch, Fachtagungen, Lerngemeinschaften, Soziale Medien)
         - Austausch von freien Lern- und Lehrmaterialien (OER)
 - name: Fach- und Feldspezifisches Wissen
+  short_name: 'Fach- und '
   id: '2'
   areas:
   - name: Feldbezug
+    short_name: Feldbezug
     id: '1'
     facets:
     - name: Adressatinnen und Adressaten
+      short_name: Adressatin
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -125,6 +145,7 @@ aspects:
         - Wissen über Adressatinnen und Adressaten eigener Angebote (z.B. Interessen, Gewohnheiten, Vorlieben, Bedürfnisse, Ängste, vorhandene Ressourcen, bestehende Einschränkungen und Barrieren)
         - Wissen über Einstellungen, Nutzungsgewohnheiten, Barrieren und Kompetenzen der Adressatinnen und Adressaten in Bezug auf digitale Medien und Tools
     - name: Feldspezifisches Wissen
+      short_name: Feldspezif
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -133,6 +154,7 @@ aspects:
         - Handlungsfeldspezifisches Wissen über organisatorische und rechtliche Rahmenbedingungen
         - Wissen über die Besonderheiten des Lernens Erwachsener sowie über die Strukturen und Ansprüche der Erwachsenenbildung insgesamt in Abgrenzung zum formalen Bildungsbereich
     - name: Curriculare und institutionelle Rahmenbedingungen
+      short_name: Curricular
       id: '3'
       description: |
         **Kompetenzanforderungen**:
@@ -141,12 +163,15 @@ aspects:
         - Wissen über die Beratungs- und Supportkapazitäten des spezifischen Weiterbildungsfeldes, der Weiterbildungseinrichtung
         - Wissen über einrichtungsinterne digitale Ausstattung sowie die Vorgaben und Erwartungen der Weiterbildungseinrichtung bzgl. der Softwarenutzung
 - name: Professionelle Werthaltungen und Überzeugungen
+  short_name: Profession
   id: '3'
   areas:
   - name: Berufsethos
+    short_name: Berufsetho
     id: '1'
     facets:
     - name: Menschenbilder
+      short_name: Menschenbi
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -154,6 +179,7 @@ aspects:
         - Bewusstsein über den Einfluss des eigenen Menschenbildes auf den Lehr-Lern-Prozess
         - Innehaben eines Menschenbilds, das eigene weltanschauliche und theoretische Orientierungen widerspiegelt
     - name: Wertvorstellungen
+      short_name: Wertvorste
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -162,9 +188,11 @@ aspects:
         - Bewusstsein und Verantwortungsübernahme für das Wohlergehen der Teilnehmenden
         - Verinnerlichung berufsethischer Standards und Prinzipien
   - name: Berufsbezogene Überzeugungen
+    short_name: Berufsbezo
     id: '2'
     facets:
     - name: Eigenes Rollenbewusstsein
+      short_name: Eigenes Ro
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -174,6 +202,7 @@ aspects:
         - Identifikation mit der Rolle als Lehrperson in der EB/WB
         - Flexibler Wechsel der eigenen Rolle je nach Lehr-Lern-Situation (Begleiten, Wissen vermitteln etc.) und Lehr-Lern-Setting (hybrid, Präsenz, digital)
     - name: Subjektive Annahmen über das Lehren und Lernen
+      short_name: Subjektive
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -181,12 +210,15 @@ aspects:
         - Bewusstsein über eigene subjektive Lehr-Lern-Theorien und deren Einfluss auf Lehr-Lern-Prozesse
         - Bewusstsein über die eigenen Vorstellungen darüber, unter welchen Voraussetzungen Lernen gelingt
 - name: Professionelle Selbststeuerung
+  short_name: Profession
   id: '4'
   areas:
   - name: Motivationale Orientierungen
+    short_name: Motivation
     id: '1'
     facets:
     - name: Selbstwirksamkeitsüberzeugungen
+      short_name: Selbstwirk
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -194,6 +226,7 @@ aspects:
         - Überzeugung, über die Fähigkeiten und Mittel zu verfügen, die für die erfolgreiche Bewältigung gegebener Anforderungen notwendig sind
         - Überzeugung, auch schwierige Situationen aufgrund der eigenen Kompetenzen bewältigen zu können
     - name: Enthusiasmus
+      short_name: Enthusiasm
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -201,9 +234,11 @@ aspects:
         - Freude an der Ausübung der eigenen Tätigkeit und dem Fach
         - Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln
   - name: Selbstregulation
+    short_name: Selbstregu
     id: '2'
     facets:
     - name: Umgang mit Feedback und Kritik
+      short_name: Umgang mit
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -212,6 +247,7 @@ aspects:
         - Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten
         - Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird
     - name: Engagement und Distanz
+      short_name: Engagement
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -219,9 +255,11 @@ aspects:
         - Bewusster Umgang mit eigenen Ressourcen
         - Ausbalancieren von hohem Engagement und guter Distanzierungsfähigkeit
   - name: Berufspraktische Erfahrung
+    short_name: Berufsprak
     id: '3'
     facets:
     - name: Reflexion des eigenen Lehrhandelns
+      short_name: 'Reflexion '
       id: '1'
       description: |
         **Kompetenzanforderungen**:
@@ -230,6 +268,7 @@ aspects:
         - Bereitschaft zur Reflexion des eigenen pädagogischen Handelns während oder nach einer Handlungssituation
         - Bereitschaft zur Übernahme der Perspektive der Teilnehmenden
     - name: Berufliche Weiterentwicklung
+      short_name: Berufliche
       id: '2'
       description: |
         **Kompetenzanforderungen**:
@@ -240,27 +279,32 @@ aspects:
         - Kritische Auseinandersetzung mit fachlichen, pädagogischen und gesamtgesellschaftlichen Themen
 levels:
 - name: Level0
-  id: level0
+  short_name: Level0
+  id: Level0
   color_code: '#888888'
   level: 0
   utf8_icon: ❓
 - name: Level1
-  id: level1
+  short_name: Level1
+  id: Level1
   color_code: '#FF5733'
   level: 1
   utf8_icon: ⭐
 - name: Level2
-  id: level2
+  short_name: Level2
+  id: Level2
   color_code: '#FFAB33'
   level: 2
   utf8_icon: ⭐⭐
 - name: Level3
-  id: level3
+  short_name: Level3
+  id: Level3
   color_code: '#FFE333'
   level: 3
   utf8_icon: ⭐⭐⭐
 - name: Level4
-  id: level4
+  short_name: Level4
+  id: Level4
   color_code: '#33FF5B'
   level: 4
   utf8_icon: ⭐⭐⭐⭐

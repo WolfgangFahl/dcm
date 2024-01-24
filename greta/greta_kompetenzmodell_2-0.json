@@ -1,12 +1,15 @@
 {
   "Kompetenzmodell": {
     "Name": "GRETA-Kompetenzmodell 2.0",
+    "ID": "greta_v2_0",
     "Kompetenzaspekte": [
       {
         "Name": "Berufspraktisches Wissen und Können",
+        "ID": "BerufspraktischesWissenUndKoennen",
         "Kompetenzbereiche": [
           {
             "Name": "Didaktik und Methodik",
+            "ID": "DidaktikUndMethodik",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-1-1-1",
@@ -51,6 +54,7 @@
           },
           {
             "Name": "Beratung/Individualisierte Lernunterstützung",
+            "ID": "BeratungIndividualisierteLernunterstuetzung",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-1-2-1",
@@ -78,6 +82,7 @@
           },
           {
             "Name": "Kommunikation und Interaktion",
+            "ID": "KommunikationUndInteraktion",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-1-3-1",
@@ -106,6 +111,7 @@
           },
           {
             "Name": "Organisation",
+            "ID": "Organistion",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-1-4-1",
@@ -132,9 +138,11 @@
       },
       {
         "Name": "Fach- und Feldspezifisches Wissen",
+        "ID": "FachUndFeldspezifischesWissen",
         "Kompetenzbereiche": [
           {
             "Name": "Feldbezug",
+            "ID": "Feldbezug",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-2-1-1",
@@ -168,9 +176,11 @@
       },
       {
         "Name": "Professionelle Werthaltungen und Überzeugungen",
+        "ID": "ProfessionelleWerthaltungenUndUeberzeugungen",
         "Kompetenzbereiche": [
           {
             "Name": "Berufsethos",
+            "ID": "Berufsethos",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-3-1-1",
@@ -193,6 +203,7 @@
           },
           {
             "Name": "Berufsbezogene Überzeugungen",
+            "ID": "BerufsbezogeneUeberzeugungen",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-3-2-1",
@@ -218,9 +229,11 @@
       },
       {
         "Name": "Professionelle Selbststeuerung",
+        "ID": "ProfessionelleSelbststeuerung",
         "Kompetenzbereiche": [
           {
             "Name": "Motivationale Orientierungen",
+            "ID": "MotivationaleOrientierungen",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-4-1-1",
@@ -242,6 +255,7 @@
           },
           {
             "Name": "Selbstregulation",
+            "ID": "Selbstregulation",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-4-2-1",
@@ -264,6 +278,7 @@
           },
           {
             "Name": "Berufspraktische Erfahrung",
+            "ID": "BerufspraktischeErfahrung",
             "Kompetenzfacetten": [
               {
                 "ID": "GRETA-4-3-1",
