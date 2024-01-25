@@ -28,7 +28,7 @@ class RingSpec:
         inner_ratio (Optional[float]): The inner radius of the ring, relative to the chart size.
         outer_ratio (Optional[float]): The outer radius of the ring, relative to the chart size.
     """
-    text_mode: Optional[str] = None
+    text_mode: Optional[str] = "empty"
     inner_ratio: Optional[float] = None
     outer_ratio: Optional[float] = None
     

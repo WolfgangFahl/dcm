@@ -140,6 +140,7 @@ class DonutSegment(SVGNode):
     outer_radius: float = 0.0
     start_angle: Optional[float] = 0.0
     end_angle: Optional[float] = 360.0
+    text_mode: Optional[str] = None
 
     @property
     def large_arc_flag(self) -> str:

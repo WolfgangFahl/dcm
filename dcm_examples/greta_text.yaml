@@ -359,21 +359,21 @@ element_names:
   level: Lernfortschritt
 ring_specs:
   tree:
-    text_mode: empty
+    text_mode: horizontal
     inner_ratio: 0.0
-    outer_ratio: 0.1111111111111111
+    outer_ratio: 0.1
   aspect:
-    text_mode: empty
-    inner_ratio: 0.0
-    outer_ratio: 0.0
+    text_mode: curved
+    inner_ratio: 0.9
+    outer_ratio: 1.0
   area:
     text_mode: empty
     inner_ratio: 0.0
     outer_ratio: 0.0
   facet:
-    text_mode: empty
-    inner_ratio: 0.1111111111111111
-    outer_ratio: 1.0
+    text_mode: angled
+    inner_ratio: 0.1
+    outer_ratio: 0.9
 total_elements:
   aspects: 4
   areas: 10

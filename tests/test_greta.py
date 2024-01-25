@@ -27,7 +27,13 @@ class TestGreta(Basetest):
     def setUp(self, debug=False, profile=True):
         Basetest.setUp(self, debug=debug, profile=profile)
 
-    def test_greta_json(self):
+    def test_create_yaml_from_json(self):
+        """
+        convert the GRETA json specification to YAML
+        """
+        for with_text in [False,True]:
+            self.create_greta_json(with_text)
+    def create_greta_json(self,with_text:bool):
         """
         Read the Greta model from 'greta_kompetenzmodell_2-0.json'
         """
@@ -87,7 +93,6 @@ class TestGreta(Basetest):
             f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/ReflexionDesEigenenLehrhandelns": "BE-Reflexion",
             f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/BeruflicheWeiterentwicklung": "BE-Weiterentwicklung",
         }
-
        
         ct = CompetenceTree(
             name="GRETA",
@@ -103,23 +108,43 @@ class TestGreta(Basetest):
             "facet": "Kompetenzfacette",
             "level": "Lernfortschritt",
         }
-        ct.ring_specs = {
-            "tree": RingSpec(
-                inner_ratio=0.0, 
-                outer_ratio=1/10),
-            "aspect": RingSpec(
-                text_mode="curved",
-                inner_ratio=9/10, 
-                outer_ratio=10/10),
-            "area": RingSpec(
-                inner_ratio=0.0, 
-                outer_ratio=0.0
-                ),
-            "facet": RingSpec(
-                text_mode="angled",
-                inner_ratio=1 / 10, 
-                outer_ratio=9 / 10),
-        }
+        if with_text:
+            ct.ring_specs = {
+                "tree": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=1/10,
+                    text_mode="horizontal"),
+                "aspect": RingSpec(
+                    text_mode="curved",
+                    inner_ratio=9/10, 
+                    outer_ratio=10/10),
+                "area": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0
+                    ),
+                "facet": RingSpec(
+                    text_mode="angled",
+                    inner_ratio=1 / 10, 
+                    outer_ratio=9 / 10),
+            }
+        else:
+            ct.ring_specs = {
+                "tree": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=1/9
+                    ),
+                "aspect": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0),
+                "area": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0
+                    ),
+                "facet": RingSpec(
+                    inner_ratio=1 / 9, 
+                    outer_ratio=9 / 9),
+            }
+            
         # Define color codes for competence levels
         level_color_codes = {
             0: "#888888",  # Grey for level 0
@@ -180,5 +205,7 @@ class TestGreta(Basetest):
         yaml_str = ct.to_yaml()
         if self.debug:
             print(yaml_str)
-        with open("/tmp/greta.yaml", "w") as yaml_file:
+        
+        suffix="_text" if with_text else ""
+        with open(f"/tmp/greta{suffix}.yaml", "w") as yaml_file:
             yaml_file.write(yaml_str)

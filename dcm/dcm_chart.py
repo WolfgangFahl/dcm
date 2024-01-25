@@ -26,7 +26,7 @@ class DcmChart:
         Constructor
         """
         self.dcm = dcm
-        self.text_mode = "none"
+        self.text_mode = "empty"
 
     def prepare_and_add_inner_circle(
         self, config, competence_tree: CompetenceTree, lookup_url: str = None
@@ -55,7 +55,7 @@ class DcmChart:
             x=self.cx, y=self.cy, width=self.tree_radius
         )
         svg.add_circle(config=self.circle_config)
-        if self.text_mode != "none":
+        if self.text_mode != "empty":
             svg.add_text(
                 self.cx,
                 self.cy,
@@ -71,7 +71,7 @@ class DcmChart:
         filename: Optional[str] = None,
         learner: Optional[Learner] = None,
         config: Optional[SVGConfig] = None,
-        text_mode: str = "none",
+        text_mode: str = "empty",
     ) -> str:
         """
         Generate the SVG markup and optionally save it to a file. If a filename is given, the method
@@ -150,7 +150,6 @@ class DcmChart:
 
         if level_color:
             element_config.fill = level_color  # Set the color
-            text_mode = "none"
         if element and element.path in self.selected_paths:
             element_config.element_class = "selected"
 
@@ -178,17 +177,21 @@ class DcmChart:
                     stacked_segment.outer_radius = (
                         segment.inner_radius + relative_radius
                     )
-                    # the result will be overrriden in the loop so we'll return the innermost
+                    # the result will be overriden in the loop so we'll return the innermost
                     result = svg.add_donut_segment(
                         config=stack_element_config, segment=stacked_segment
                     )
-        if element and self.text_mode != "none":
-            # no autofill please
-            # textwrap.fill(element.short_name, width=20)
-            text = element.short_name
-            self.svg.add_text_to_donut_segment(
-                text_segment, text, direction=self.text_mode
-            )
+        if element: 
+            text_mode=self.text_mode
+            if segment.text_mode:
+                text_mode=segment.text_mode
+            if text_mode!="empty":
+                # no autofill please
+                # textwrap.fill(element.short_name, width=20)
+                text = element.short_name
+                self.svg.add_text_to_donut_segment(
+                    text_segment, text, direction=text_mode
+                )
         return result
 
     def generate_donut_segment_for_achievement(
@@ -266,9 +269,11 @@ class DcmChart:
         total = len(elements)
         total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
         hierarchy_level = sub_element_name[:-1]
+        text_mode=self.text_mode
         if hierarchy_level in self.dcm.competence_tree.ring_specs:
             # calculate inner and outer radius
             ringspec = self.dcm.competence_tree.ring_specs[hierarchy_level]
+            text_mode=ringspec.text_mode
             # Calculate the actual inner and outer radii
             inner_radius = self.svg.config.width / 2 * ringspec.inner_ratio
             outer_radius = self.svg.config.width / 2 * ringspec.outer_ratio
@@ -291,6 +296,7 @@ class DcmChart:
                 outer_radius=outer_radius,
                 start_angle=segment.start_angle,
                 end_angle=segment.end_angle,
+                text_mode=text_mode
             )
             self.generate_donut_segment_for_element(
                 svg, element=None, learner=None, segment=sub_segment
@@ -307,6 +313,7 @@ class DcmChart:
                     outer_radius=outer_radius,
                     start_angle=start_angle,
                     end_angle=end_angle,
+                    text_mode=text_mode
                 )
                 self.generate_donut_segment_for_element(
                     svg, element, learner, segment=sub_segment
@@ -328,7 +335,7 @@ class DcmChart:
         selected_paths: List = [],
         config: SVGConfig = None,
         with_java_script: bool = True,
-        text_mode: str = "none",
+        text_mode: str = "empty",
         lookup_url: str = "",
     ) -> str:
         """

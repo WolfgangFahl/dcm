@@ -88,7 +88,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.assessment = None
         self.content_div = None
         self.timeout=0.5
-        self.text_mode = "none"
+        self.text_mode = "empty"
         config_path = os.path.join(os.environ["HOME"], ".dcm/config.yaml")
         self.server_config = ServerConfig.from_yaml(config_path)
 
@@ -325,7 +325,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                             extensions=extensions,
                             handler=self.read_and_optionally_render,
                         )
-                        selection = ["none", "curved", "horizontal", "angled"]
+                        selection = ["empty", "curved", "horizontal", "angled"]
                         self.add_select(
                             "text",
                             selection,
