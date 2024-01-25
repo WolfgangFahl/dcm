@@ -3,7 +3,7 @@ Created on 2023-11-06
 
 @author: wf
 """
-import json
+import asyncio
 import os
 import uuid
 from dataclasses import dataclass
@@ -36,7 +36,6 @@ class SVGRenderRequest(BaseModel):
         markup (str): The format of the definition ('json' or 'yaml').
         config (SVGConfig): Optional configuration for SVG rendering. Defaults to None, which uses default settings.
     """
-
     name: str
     definition: str
     markup: str
@@ -85,17 +84,15 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
-        self.container = None
         self.learner = None
         self.assessment = None
+        self.content_div = None
+        self.timeout=0.5
         self.text_mode = "none"
         config_path = os.path.join(os.environ["HOME"], ".dcm/config.yaml")
         self.server_config = ServerConfig.from_yaml(config_path)
 
-        @app.get("/learner/{learner_slug}")
-        async def show_learner(learner_slug: str):
-            return await self.assess_learner_by_slug(learner_slug)
-
+        # FastAPI endpoints
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
             """
@@ -175,6 +172,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             """
             path = f"{tree_id}"
             return await self.show_description(path)
+        
+        # nicegui RESTFul endpoints
+        @ui.page("/learner/{learner_slug}")
+        async def show_learner(client: Client,learner_slug: str):
+            await client.connected(timeout=self.timeout)
+            return await self.assess_learner_by_slug(learner_slug)
 
     async def show_description(self, path: str = None) -> HTMLResponse:
         """
@@ -239,7 +242,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             input_source = self.input
             if input_source:
                 name = self.get_basename_without_extension(input_source)
-                with self.container:
+                with self.content_div:
                     ui.notify(f"rendering {name}")
                 definition = self.do_read_input(input_source)
                 # Determine the format based on the file extension
@@ -312,7 +315,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         ui.add_head_html(java_script)
 
     def show_ui(self):
-        with ui.element("div").classes("w-full") as self.container:
+        with self.content_div:
             with ui.splitter() as splitter:
                 with splitter.before:
                     with ui.grid(columns=2).classes("w-full") as self.left_selection:
@@ -375,15 +378,16 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             learner(Learner): the learner to get the self assessment for
 
         """
-        if self.container:
-            with self.container:
-                if self.assessment is not None:
-                    self.assessment.reset(dcm=dcm, learner=learner)
-                else:
-                    with self.left_grid:
-                        with ui.row() as self.assessment_row:
-                            self.assessment = Assessment(self, dcm=dcm, learner=learner)
-                self.assessment.update_achievement_view()
+        if not self.content_div:
+            return
+        with self.content_div:
+            if self.assessment is not None:
+                self.assessment.reset(dcm=dcm, learner=learner)
+            else:
+                with self.left_grid:
+                    with ui.row() as self.assessment_row:
+                        self.assessment = Assessment(self, dcm=dcm, learner=learner)
+            self.assessment.update_achievement_view()
 
     def new_assess(self):
         """
@@ -402,24 +406,18 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         Raises:
             HTTPException: If the learner file does not exist or an error occurs.
         """
-
         def show():
-            learner_file = os.path.join(
-                self.server_config.storage_path, f"{learner_slug}.json"
-            )
-            if not os.path.exists(learner_file):
-                raise HTTPException(status_code=404, detail="Learner not found")
             try:
-                with open(learner_file, "r") as file:
-                    learner_data = json.load(file)
-                    learner = Learner.from_dict(learner_data)
-            except Exception as e:
-                # Handle any exceptions related to file reading or JSON parsing
-                raise HTTPException(status_code=500, detail=str(e))
-                pass
-            self.assess(learner)
+                self.show_ui()
+                learner_file = os.path.join(
+                    self.server_config.storage_path, f"{learner_slug}.json"
+                )
+                learner = Learner.load_from_json_file(learner_file)
+                self.assess(learner)
+            except Exception as ex:
+                self.handle_exception(ex, self.do_trace)
 
-        await self.setup_content_div(show())
+        await self.setup_content_div(show)
 
     def assess(self, learner: Learner, tree_id: str = None):
         """
@@ -458,7 +456,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         allow downloading the assessment result
         """
         try:
-            with self.container:
+            with self.content_div:
                 if not self.assessment:
                     ui.notify("no active learner assessment")
                     return

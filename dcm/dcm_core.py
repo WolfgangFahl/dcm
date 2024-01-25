@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import markdown2
 import yaml
 from dataclasses_json import dataclass_json
-from ngwidgets.yamlable import YamlAble
+from ngwidgets.yamlable import YamlAble, lod_storable
 from slugify import slugify
 
 from dcm.svg import SVG, SVGNodeConfig
@@ -401,8 +401,7 @@ class Achievement:
         return parts[3] if len(parts) > 3 else None
 
 
-@dataclass_json
-@dataclass
+@lod_storable
 class Learner:
     """
     A learner with achievements.
