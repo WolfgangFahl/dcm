@@ -60,19 +60,20 @@ class TestAPI(WebserverTest):
         """
         Test the element description endpoint
         """
+        greta_id="greta_v2_0_1"
         test_cases = [
             # Test case for a specific facet
             (
-                "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2",
+                f"{greta_id}/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
                 ["<h2>Enthusiasmus</h2>", "<li>Freude"],
             ),
             # Test case for a whole aspect
             (
-                "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen",
+                f"{greta_id}/ProfessionelleSelbststeuerung/MotivationaleOrientierungen",
                 ["<h2>Motivationale Orientierungen</h2>"],
             ),
             # Test case for the whole tree
-            ("greta_v2_0", ["<h2>GRETA</h2>"]),
+            (f"{greta_id}", ["<h2>GRETA</h2>"]),
         ]
 
         debug = self.debug

@@ -2,104 +2,104 @@
   "learner_id": "1116e424-b4f9-45a2-acc1-c5d54350daea",
   "achievements": [
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-17T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-23T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-18T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
-      "level": 3,
+      "path": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-25T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
-      "level": 3,
+      "path": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-23T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-19T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-17T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-22T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-17T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-17T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
-      "level": 3,
+      "path": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-18T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
-      "level": 3,
+      "path": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,
       "date_assessed_iso": "2023-09-26T11:03:33.863Z"
     },
     {
-      "path": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
-      "level": 3,
+      "path": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
+      "level": 4,
       "score": 3,
       "score_unit": "%",
       "evidence": null,

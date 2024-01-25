@@ -37,12 +37,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Beratung/Individualisierte Lernunterstützung",
-          "competenceFacet": "Teilnehmendenorientierung",
-          "educational_difficulty_value": 1,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Beratung/Individualisierte Lernunterstützung",
+          "facet": "Teilnehmendenorientierung",
+          "level": 1,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -158,12 +158,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Beratung/Individualisierte Lernunterstützung",
-          "competenceFacet": "Teilnehmendenorientierung",
-          "educational_difficulty_value": 3,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Beratung/Individualisierte Lernunterstützung",
+          "facet": "Teilnehmendenorientierung",
+          "level": 3,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -279,12 +279,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Beratung/Individualisierte Lernunterstützung",
-          "competenceFacet": "Teilnehmendenorientierung",
-          "educational_difficulty_value": 2,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Beratung/Individualisierte Lernunterstützung",
+          "facet": "Teilnehmendenorientierung",
+          "level": 2,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -400,12 +400,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Professionelle Selbststeuerung",
-          "competenceArea": "Motivationale Orientierungen",
-          "competenceFacet": "Selbstwirksamkeitsüberzeugungen",
-          "educational_difficulty_value": 3,
+          "competencePath": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Professionelle Selbststeuerung",
+          "area": "Motivationale Orientierungen",
+          "facet": "Selbstwirksamkeitsüberzeugungen",
+          "level": 3,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -521,12 +521,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Professionelle Selbststeuerung",
-          "competenceArea": "Motivationale Orientierungen",
-          "competenceFacet": "Selbstwirksamkeitsüberzeugungen",
-          "educational_difficulty_value": 1,
+          "competencePath": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Professionelle Selbststeuerung",
+          "area": "Motivationale Orientierungen",
+          "facet": "Selbstwirksamkeitsüberzeugungen",
+          "level": 1,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -642,12 +642,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Didaktik und Methodik",
-          "competenceFacet": "Rahmenbedingungen und Lernumgebungen",
-          "educational_difficulty_value": 2,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Didaktik und Methodik",
+          "facet": "Rahmenbedingungen und Lernumgebungen",
+          "level": 2,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -763,12 +763,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Didaktik und Methodik",
-          "competenceFacet": "Rahmenbedingungen und Lernumgebungen",
-          "educational_difficulty_value": 1,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Didaktik und Methodik",
+          "facet": "Rahmenbedingungen und Lernumgebungen",
+          "level": 1,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -884,12 +884,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Didaktik und Methodik",
-          "competenceFacet": "Outcomeorientierung",
-          "educational_difficulty_value": 4,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Didaktik und Methodik",
+          "facet": "Outcomeorientierung",
+          "level": 4,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -1005,12 +1005,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Didaktik und Methodik",
-          "competenceFacet": "Outcomeorientierung",
-          "educational_difficulty_value": 1,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Didaktik und Methodik",
+          "facet": "Outcomeorientierung",
+          "level": 1,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -1126,12 +1126,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Didaktik und Methodik",
-          "competenceFacet": "Lerninhalte und -ziele",
-          "educational_difficulty_value": 1,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Didaktik und Methodik",
+          "facet": "Lerninhalte und -ziele",
+          "level": 1,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -1247,12 +1247,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Berufspraktisches Wissen und Können",
-          "competenceArea": "Didaktik und Methodik",
-          "competenceFacet": "Lerninhalte und -ziele",
-          "educational_difficulty_value": 3,
+          "competencePath": "greta_v2_0_1/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Berufspraktisches Wissen und Können",
+          "area": "Didaktik und Methodik",
+          "facet": "Lerninhalte und -ziele",
+          "level": 3,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -1368,12 +1368,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Professionelle Selbststeuerung",
-          "competenceArea": "Motivationale Orientierungen",
-          "competenceFacet": "Enthusiasmus",
-          "educational_difficulty_value": 3,
+          "competencePath": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Professionelle Selbststeuerung",
+          "area": "Motivationale Orientierungen",
+          "facet": "Enthusiasmus",
+          "level": 3,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }
@@ -1489,12 +1489,12 @@
         "https://h5p.com/extensions/h5pcom_lrs_domain": "https://learninglocker.wb-web.de/__learninglocker/data/xAPI/statements",
         "learningObjectMetadata": {
           "general_title_string": "Lernwiderstände auf Grund des Kursablaufs",
-          "competencePath": "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
-          "competenceTree": "GRETA Kompetenzmodell 2.0",
-          "competenceAspect": "Professionelle Selbststeuerung",
-          "competenceArea": "Motivationale Orientierungen",
-          "competenceFacet": "Enthusiasmus",
-          "educational_difficulty_value": 1,
+          "competencePath": "greta_v2_0_1/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus",
+          "tree": "GRETA Kompetenzmodell 2.0",
+          "aspect": "Professionelle Selbststeuerung",
+          "area": "Motivationale Orientierungen",
+          "facet": "Enthusiasmus",
+          "level": 1,
           "educational_typicalLearningTime_duration": "3h45m",
           "credits": 1
           }

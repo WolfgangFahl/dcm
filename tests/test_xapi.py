@@ -60,5 +60,8 @@ class TestxApi(Basetest):
             print(json.dumps(xapi.xapi_dict, indent=2))
         learner = xapi.to_learner(self.competence_tree)
         self.assertIsNotNone(learner)
+        json_str=learner.to_json(indent=2)
+        with open("/tmp/greta_learner_xapi_example1.json", "w") as json_file:
+                json_file.write(json_str)
         if debug:
-            print(learner.to_json(indent=2))
+            print(json_str)

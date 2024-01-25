@@ -1,8 +1,8 @@
 name: GRETA
 short_name: GRETA
-id: greta_v2_0
+id: greta_v2_0_1
 url: https://www.greta-die.de/webpages/greta-interaktiv
-description: GRETA-Kompetenzmodell 2.0
+description: GRETA-Kompetenzmodell
 total_levels: 4
 stacked_levels: true
 aspects:
@@ -17,7 +17,7 @@ aspects:
     facets:
     - name: Lerninhalte und -ziele
       short_name: DM-Lernziele
-      id: GRETA-1-1-1
+      id: LerninhalteUndZiele
       description: |
         **Kompetenzanforderungen**:
 
@@ -28,7 +28,7 @@ aspects:
         - Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden
     - name: Methoden, Medien und Lernmaterialien
       short_name: DM-Methoden
-      id: GRETA-1-1-2
+      id: MethodenMedienUndLernmaterialien
       description: |
         **Kompetenzanforderungen**:
 
@@ -39,7 +39,7 @@ aspects:
         - Nutzung von (digitalen) Tools/Werkzeugen zur Evaluation des Lehr-Lern-Angebots
     - name: Rahmenbedingungen und Lernumgebungen
       short_name: DM-Rahmenbedingungen
-      id: GRETA-1-1-3
+      id: RahmenbedingungenUndLernumgebungen
       description: |
         **Kompetenzanforderungen**:
 
@@ -48,7 +48,7 @@ aspects:
         - Schaffung einer konstruktiv-unterstützenden (digital-gestützten) Lernumgebung durch Ausschöpfung der Rahmenbedingungen
     - name: Outcomeorientierung
       short_name: DM-Outcome
-      id: GRETA-1-1-4
+      id: Outcomeorientierung
       description: |
         **Kompetenzanforderungen**:
 
@@ -60,7 +60,7 @@ aspects:
     facets:
     - name: Teilnehmendenorientierung
       short_name: Beratung-Orientierung
-      id: GRETA-1-2-1
+      id: Teilnehmendenorientierung
       description: |
         **Kompetenzanforderungen**:
 
@@ -71,8 +71,8 @@ aspects:
         - Berücksichtigung der Diversität der Teilnehmenden (Alter, Geschlecht, Bildungstand etc.)
         - Ermöglichung der Differenzierung und Individualisierung im Unterricht mithilfe (digitaler) Medien und Tools/Werkzeugen
     - name: Diagnostik und Lernberatung
-      short_name: Beratung-Diagnostik
-      id: GRETA-1-2-2
+      short_name: Lernberatung
+      id: DiagnostikUndLernberatung
       description: |
         **Kompetenzanforderungen**:
 
@@ -86,7 +86,7 @@ aspects:
     facets:
     - name: Moderation und Steuerung von Gruppen
       short_name: KI-Gruppen
-      id: GRETA-1-3-1
+      id: ModerationUndSteuerungVonGruppen
       description: |
         **Kompetenzanforderungen**:
 
@@ -98,7 +98,7 @@ aspects:
         - Konstruktiver Umgang mit technischen Problemen und Störungen innerhalb der Gruppe
     - name: Professionelle Kommunikation
       short_name: KI-Kommunikation
-      id: GRETA-1-3-2
+      id: ProfessionelleKommunikation
       description: |
         **Kompetenzanforderungen**:
 
@@ -109,11 +109,11 @@ aspects:
         - Berücksichtigung von Besonderheiten verbaler und non-verbaler Kommunikation in digitalen Lernumgebungen
   - name: Organisation
     short_name: Organisation
-    id: Organistion
+    id: Organisation
     facets:
     - name: Kooperation mit den Auftraggebenden/Arbeitgebenden
       short_name: Org-Auftraggeber
-      id: GRETA-1-4-1
+      id: KooperationMitDenAuftraggebendenArbeitgebenden
       description: |
         **Kompetenzanforderungen**:
 
@@ -122,7 +122,7 @@ aspects:
         - Zusammenarbeit und Austausch mit Auftraggebenden/Arbeitgebenden bei der Neukonzipierung und Erweiterung von Angeboten sowie zur Problemlösung
     - name: Kollegiale Zusammenarbeit/Netzwerken
       short_name: Org-Netzwerke
-      id: GRETA-1-4-2
+      id: KollegialeZusammenarbeitNetzwerken
       description: |
         **Kompetenzanforderungen**:
 
@@ -141,7 +141,7 @@ aspects:
     facets:
     - name: Adressatinnen und Adressaten
       short_name: FB-Adressaten
-      id: GRETA-2-1-1
+      id: AdressatinnenUndAdressaten
       description: |
         **Kompetenzanforderungen**:
 
@@ -149,7 +149,7 @@ aspects:
         - Wissen über Einstellungen, Nutzungsgewohnheiten, Barrieren und Kompetenzen der Adressatinnen und Adressaten in Bezug auf digitale Medien und Tools
     - name: Feldspezifisches Wissen
       short_name: FB-Feldwissen
-      id: GRETA-2-1-2
+      id: FeldspezifischesWissen
       description: |
         **Kompetenzanforderungen**:
 
@@ -158,7 +158,7 @@ aspects:
         - Wissen über die Besonderheiten des Lernens Erwachsener sowie über die Strukturen und Ansprüche der Erwachsenenbildung insgesamt in Abgrenzung zum formalen Bildungsbereich
     - name: Curriculare und institutionelle Rahmenbedingungen
       short_name: FB-Curricula
-      id: GRETA-2-1-3
+      id: CurriculareUndInstitutionelleRahmenbedingungen
       description: |
         **Kompetenzanforderungen**:
 
@@ -176,7 +176,7 @@ aspects:
     facets:
     - name: Menschenbilder
       short_name: BE-Menschenbild
-      id: GRETA-3-1-1
+      id: Menschenbilder
       description: |
         **Kompetenzanforderungen**:
 
@@ -184,7 +184,7 @@ aspects:
         - Innehaben eines Menschenbilds, das eigene weltanschauliche und theoretische Orientierungen widerspiegelt
     - name: Wertvorstellungen
       short_name: BE-Wertvorstellungen
-      id: GRETA-3-1-2
+      id: Wertvorstellungen
       description: |
         **Kompetenzanforderungen**:
 
@@ -197,7 +197,7 @@ aspects:
     facets:
     - name: Eigenes Rollenbewusstsein
       short_name: BU-Rollenbewusstsein
-      id: GRETA-3-2-1
+      id: EigenesRollenbewusstsein
       description: |
         **Kompetenzanforderungen**:
 
@@ -207,7 +207,7 @@ aspects:
         - Flexibler Wechsel der eigenen Rolle je nach Lehr-Lern-Situation (Begleiten, Wissen vermitteln etc.) und Lehr-Lern-Setting (hybrid, Präsenz, digital)
     - name: Subjektive Annahmen über das Lehren und Lernen
       short_name: BU-Lehrannahmen
-      id: GRETA-3-2-2
+      id: SubjektiveAnnahmenUeberDasLehrenUndLernen
       description: |
         **Kompetenzanforderungen**:
 
@@ -224,7 +224,7 @@ aspects:
     facets:
     - name: Selbstwirksamkeitsüberzeugungen
       short_name: MO-Selbstwirksamkeit
-      id: GRETA-4-1-1
+      id: Selbstwirksamkeitsueberzeugungen
       description: |
         **Kompetenzanforderungen**:
 
@@ -232,7 +232,7 @@ aspects:
         - Überzeugung, auch schwierige Situationen aufgrund der eigenen Kompetenzen bewältigen zu können
     - name: Enthusiasmus
       short_name: MO-Enthusiasmus
-      id: GRETA-4-1-2
+      id: Enthusiasmus
       description: |
         **Kompetenzanforderungen**:
 
@@ -244,7 +244,7 @@ aspects:
     facets:
     - name: Umgang mit Feedback und Kritik
       short_name: SR-Feedback
-      id: GRETA-4-2-1
+      id: UmgangMitFeedbackUndKritik
       description: |
         **Kompetenzanforderungen**:
 
@@ -253,7 +253,7 @@ aspects:
         - Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird
     - name: Engagement und Distanz
       short_name: SR-Engagement
-      id: GRETA-4-2-2
+      id: EngagementUndDistanz
       description: |
         **Kompetenzanforderungen**:
 
@@ -265,7 +265,7 @@ aspects:
     facets:
     - name: Reflexion des eigenen Lehrhandelns
       short_name: BE-Reflexion
-      id: GRETA-4-3-1
+      id: ReflexionDesEigenenLehrhandelns
       description: |
         **Kompetenzanforderungen**:
 
@@ -274,7 +274,7 @@ aspects:
         - Bereitschaft zur Übernahme der Perspektive der Teilnehmenden
     - name: Berufliche Weiterentwicklung
       short_name: BE-Weiterentwicklung
-      id: GRETA-4-3-2
+      id: BeruflicheWeiterentwicklung
       description: |
         **Kompetenzanforderungen**:
 

@@ -1,7 +1,8 @@
 {
   "Kompetenzmodell": {
-    "Name": "GRETA-Kompetenzmodell 2.0",
-    "ID": "greta_v2_0",
+    "Name": "GRETA-Kompetenzmodell",
+    "ID": "greta_v2_0_1",
+    "Version": "2.0.1",
     "Kompetenzaspekte": [
       {
         "Name": "Berufspraktisches Wissen und Können",
@@ -12,7 +13,7 @@
             "ID": "DidaktikUndMethodik",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-1-1-1",
+                "ID": "LerninhalteUndZiele",
                 "Name": "Lerninhalte und -ziele",
                 "Kompetenzanforderungen": [
                   "Festlegung und Formulierung von Lerninhalten und -zielen",
@@ -23,7 +24,7 @@
                 ]
               },
               {
-                "ID": "GRETA-1-1-2",
+                "ID": "MethodenMedienUndLernmaterialien",
                 "Name": "Methoden, Medien und Lernmaterialien",
                 "Kompetenzanforderungen": [
                   "Reflektierte und kritische Auswahl, Nutzung und Gestaltung geeigneter Methoden, (digitaler) Medien und Lernmaterialien",
@@ -34,7 +35,7 @@
                 ]
               },
               {
-                "ID": "GRETA-1-1-3",
+                "ID": "RahmenbedingungenUndLernumgebungen",
                 "Name": "Rahmenbedingungen und Lernumgebungen",
                 "Kompetenzanforderungen": [
                   "Berücksichtigung der räumlichen, zeitlich, personellen, medial und organisatorischen Rahmenbedingungen in (digital-gestützten) Lernumgebungen",
@@ -43,7 +44,7 @@
                 ]
               },
               {
-                "ID": "GRETA-1-1-4",
+                "ID": "Outcomeorientierung",
                 "Name": "Outcomeorientierung",
                 "Kompetenzanforderungen": [
                   "Ausrichtung des Lehrhandelns an Lernergebnissen",
@@ -57,7 +58,7 @@
             "ID": "BeratungIndividualisierteLernunterstuetzung",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-1-2-1",
+                "ID": "Teilnehmendenorientierung",
                 "Name": "Teilnehmendenorientierung",
                 "Kompetenzanforderungen": [
                   "Angebotsausrichtung auf die Merkmale der tatsächlichen Teilnehmenden (z.B. demografische Merkmale, soziokulturelle Prägungen, Vorkenntnisse, (Lern-)Interessen, Ressourcen oder limitierende Faktoren)",
@@ -69,7 +70,7 @@
                 ]
               },
               {
-                "ID": "GRETA-1-2-2",
+                "ID": "DiagnostikUndLernberatung",
                 "Name": "Diagnostik und Lernberatung",
                 "Kompetenzanforderungen": [
                   "Einsatz geeigneter Instrumente und digitaler Tools/Werkzeuge zur Analyse der Lernausgangslage, Lernvoraussetzung, Lernmotivation, Lernhindernisse, Lernschwierigkeiten für diagnostische Zwecke",
@@ -85,7 +86,7 @@
             "ID": "KommunikationUndInteraktion",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-1-3-1",
+                "ID": "ModerationUndSteuerungVonGruppen",
                 "Name": "Moderation und Steuerung von Gruppen",
                 "Kompetenzanforderungen": [
                   "Kenntnis von Gruppendynamiken und -strukturen",
@@ -97,7 +98,7 @@
                 ]
               },
               {
-                "ID": "GRETA-1-3-2",
+                "ID": "ProfessionelleKommunikation",
                 "Name": "Professionelle Kommunikation",
                 "Kompetenzanforderungen": [
                   "Professionelle Gesprächsführung unter Beachtung allgemeiner Umgangsformen und -regeln",
@@ -111,10 +112,10 @@
           },
           {
             "Name": "Organisation",
-            "ID": "Organistion",
+            "ID": "Organisation",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-1-4-1",
+                "ID": "KooperationMitDenAuftraggebendenArbeitgebenden",
                 "Name": "Kooperation mit den Auftraggebenden/Arbeitgebenden",
                 "Kompetenzanforderungen": [
                   "Beschaffung relevanter Informationen über (potenzielle) Auftraggebende/Arbeitgebende für die Akquise von Lehraufträgen (z.B. Ziele, Adressatinnen und Adressaten, Honorarkorridore, Organisationskultur)",
@@ -123,7 +124,7 @@
                 ]
               },
               {
-                "ID": "GRETA-1-4-2",
+                "ID": "KollegialeZusammenarbeitNetzwerken",
                 "Name": "Kollegiale Zusammenarbeit/Netzwerken",
                 "Kompetenzanforderungen": [
                   "Verortung des eigenen Angebots im Gesamtprogramm einer Einrichtung sowie Herstellung von Querverbindungen zu anderen Angeboten",
@@ -145,7 +146,7 @@
             "ID": "Feldbezug",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-2-1-1",
+                "ID": "AdressatinnenUndAdressaten",
                 "Name": "Adressatinnen und Adressaten",
                 "Kompetenzanforderungen": [
                   "Wissen über Adressatinnen und Adressaten eigener Angebote (z.B. Interessen, Gewohnheiten, Vorlieben, Bedürfnisse, Ängste, vorhandene Ressourcen, bestehende Einschränkungen und Barrieren)",
@@ -153,7 +154,7 @@
                 ]
               },
               {
-                "ID": "GRETA-2-1-2",
+                "ID": "FeldspezifischesWissen",
                 "Name": "Feldspezifisches Wissen",
                 "Kompetenzanforderungen": [
                   "Wissen über handlungsspezifische Ziele und Prinzipien",
@@ -162,7 +163,7 @@
                 ]
               },
               {
-                "ID": "GRETA-2-1-3",
+                "ID": "CurriculareUndInstitutionelleRahmenbedingungen",
                 "Name": "Curriculare und institutionelle Rahmenbedingungen",
                 "Kompetenzanforderungen": [
                   "Wissen über einrichtungsinterne Rahmenlehrpläne bzw. Modulpläne",
@@ -183,7 +184,7 @@
             "ID": "Berufsethos",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-3-1-1",
+                "ID": "Menschenbilder",
                 "Name": "Menschenbilder",
                 "Kompetenzanforderungen": [
                   "Bewusstsein über den Einfluss des eigenen Menschenbildes auf den Lehr-Lern-Prozess",
@@ -191,7 +192,7 @@
                 ]
               },
               {
-                "ID": "GRETA-3-1-2",
+                "ID": "Wertvorstellungen",
                 "Name": "Wertvorstellungen",
                 "Kompetenzanforderungen": [
                   "Verinnerlichung von Werten wie Empathie, Achtung, Respekt und Wertschätzung gegenüber den Teilnehmenden",
@@ -206,7 +207,7 @@
             "ID": "BerufsbezogeneUeberzeugungen",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-3-2-1",
+                "ID": "EigenesRollenbewusstsein",
                 "Name": "Eigenes Rollenbewusstsein",
                 "Kompetenzanforderungen": [
                   "Bewusstsein über die eigene professionelle Rolle",
@@ -216,7 +217,7 @@
                 ]
               },
               {
-                "ID": "GRETA-3-2-2",
+                "ID": "SubjektiveAnnahmenUeberDasLehrenUndLernen",
                 "Name": "Subjektive Annahmen über das Lehren und Lernen",
                 "Kompetenzanforderungen": [
                   "Bewusstsein über eigene subjektive Lehr-Lern-Theorien und deren Einfluss auf Lehr-Lern-Prozesse",
@@ -236,7 +237,7 @@
             "ID": "MotivationaleOrientierungen",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-4-1-1",
+                "ID": "Selbstwirksamkeitsueberzeugungen",
                 "Name": "Selbstwirksamkeitsüberzeugungen",
                 "Kompetenzanforderungen": [
                   "Überzeugung, über die Fähigkeiten und Mittel zu verfügen, die für die erfolgreiche Bewältigung gegebener Anforderungen notwendig sind",
@@ -244,7 +245,7 @@
                 ]
               },
               {
-                "ID": "GRETA-4-1-2",
+                "ID": "Enthusiasmus",
                 "Name": "Enthusiasmus",
                 "Kompetenzanforderungen": [
                   "Freude an der Ausübung der eigenen Tätigkeit und dem Fach",
@@ -258,7 +259,7 @@
             "ID": "Selbstregulation",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-4-2-1",
+                "ID": "UmgangMitFeedbackUndKritik",
                 "Name": "Umgang mit Feedback und Kritik",
                 "Kompetenzanforderungen": [
                   "Professionelle und konstruktive Reaktion auf Kritik und Feedback",
@@ -267,7 +268,7 @@
                 ]
               },
               {
-                "ID": "GRETA-4-2-2",
+                "ID": "EngagementUndDistanz",
                 "Name": "Engagement und Distanz",
                 "Kompetenzanforderungen": [
                   "Bewusster Umgang mit eigenen Ressourcen",
@@ -281,7 +282,7 @@
             "ID": "BerufspraktischeErfahrung",
             "Kompetenzfacetten": [
               {
-                "ID": "GRETA-4-3-1",
+                "ID": "ReflexionDesEigenenLehrhandelns",
                 "Name": "Reflexion des eigenen Lehrhandelns",
                 "Kompetenzanforderungen": [
                   "Bewusstsein über die Wichtigkeit der Reflexion des eigenen Lehrhandelns",
@@ -290,7 +291,7 @@
                 ]
               },
               {
-                "ID": "GRETA-4-3-2",
+                "ID": "BeruflicheWeiterentwicklung",
                 "Name": "Berufliche Weiterentwicklung",
                 "Kompetenzanforderungen": [
                   "Bewusstsein über die Notwendigkeit der beruflichen Weiterentwicklung",

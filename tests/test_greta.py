@@ -35,7 +35,7 @@ class TestGreta(Basetest):
 
         # Specify the relative path to the JSON file
         json_file_path = os.path.join(
-            script_dir, "..", "greta", "greta_kompetenzmodell_2-0.json"
+            script_dir, "..", "greta", "greta_kompetenzmodell_2-0_1.json"
         )
 
         # Check if the JSON file exists
@@ -43,52 +43,54 @@ class TestGreta(Basetest):
         # Open and read the JSON file
         with open(json_file_path, "r") as json_file:
             greta_data = json.load(json_file)
-
+        
+        km = greta_data["Kompetenzmodell"]
+        greta_id=km["ID"]
         greta_short_names = {
-            "greta_v2_0": "GRETA",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen": "Berufsprak",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik": "DidaktMethodik",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-1": "DM-Lernziele",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-2": "DM-Methoden",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-3": "DM-Rahmenbedingungen",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/GRETA-1-1-4": "DM-Outcome",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung": "Beratung",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/GRETA-1-2-1": "Beratung-Orientierung",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/GRETA-1-2-2": "Beratung-Diagnostik",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion": "KommInterakt",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion/GRETA-1-3-1": "KI-Gruppen",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion/GRETA-1-3-2": "KI-Kommunikation",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/Organistion": "Organisation",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/Organistion/GRETA-1-4-1": "Org-Auftraggeber",
-            "greta_v2_0/BerufspraktischesWissenUndKoennen/Organistion/GRETA-1-4-2": "Org-Netzwerke",
-            "greta_v2_0/FachUndFeldspezifischesWissen": "FachFeldWissen",
-            "greta_v2_0/FachUndFeldspezifischesWissen/Feldbezug": "Feldbezug",
-            "greta_v2_0/FachUndFeldspezifischesWissen/Feldbezug/GRETA-2-1-1": "FB-Adressaten",
-            "greta_v2_0/FachUndFeldspezifischesWissen/Feldbezug/GRETA-2-1-2": "FB-Feldwissen",
-            "greta_v2_0/FachUndFeldspezifischesWissen/Feldbezug/GRETA-2-1-3": "FB-Curricula",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen": "Werthaltungen",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos": "Berufsethos",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/GRETA-3-1-1": "BE-Menschenbild",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/GRETA-3-1-2": "BE-Wertvorstellungen",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen": "Berufsueberzeugungen",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/GRETA-3-2-1": "BU-Rollenbewusstsein",
-            "greta_v2_0/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/GRETA-3-2-2": "BU-Lehrannahmen",
-            "greta_v2_0/ProfessionelleSelbststeuerung": "Selbststeuerung",
-            "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen": "MotOrient",
-            "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-1": "MO-Selbstwirksamkeit",
-            "greta_v2_0/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/GRETA-4-1-2": "MO-Enthusiasmus",
-            "greta_v2_0/ProfessionelleSelbststeuerung/Selbstregulation": "Selbstregul",
-            "greta_v2_0/ProfessionelleSelbststeuerung/Selbstregulation/GRETA-4-2-1": "SR-Feedback",
-            "greta_v2_0/ProfessionelleSelbststeuerung/Selbstregulation/GRETA-4-2-2": "SR-Engagement",
-            "greta_v2_0/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung": "BerufspraktErf",
-            "greta_v2_0/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/GRETA-4-3-1": "BE-Reflexion",
-            "greta_v2_0/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/GRETA-4-3-2": "BE-Weiterentwicklung",
+            f"{greta_id}": "GRETA",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen": "Berufsprak",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik": "DidaktMethodik",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele": "DM-Lernziele",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/MethodenMedienUndLernmaterialien": "DM-Methoden",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen": "DM-Rahmenbedingungen",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/Outcomeorientierung": "DM-Outcome",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung": "Beratung",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/Teilnehmendenorientierung": "Beratung-Orientierung",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/BeratungIndividualisierteLernunterstuetzung/DiagnostikUndLernberatung": "Lernberatung",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion": "KommInterakt",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion/ModerationUndSteuerungVonGruppen": "KI-Gruppen",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/KommunikationUndInteraktion/ProfessionelleKommunikation": "KI-Kommunikation",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/Organisation": "Organisation",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/Organisation/KooperationMitDenAuftraggebendenArbeitgebenden": "Org-Auftraggeber",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/Organisation/KollegialeZusammenarbeitNetzwerken": "Org-Netzwerke",
+            f"{greta_id}/FachUndFeldspezifischesWissen": "FachFeldWissen",
+            f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug": "Feldbezug",
+            f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug/AdressatinnenUndAdressaten": "FB-Adressaten",
+            f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug/FeldspezifischesWissen": "FB-Feldwissen",
+            f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug/CurriculareUndInstitutionelleRahmenbedingungen": "FB-Curricula",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen": "Werthaltungen",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos": "Berufsethos",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/Menschenbilder": "BE-Menschenbild",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/Wertvorstellungen": "BE-Wertvorstellungen",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen": "Berufsueberzeugungen",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/EigenesRollenbewusstsein": "BU-Rollenbewusstsein",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/SubjektiveAnnahmenUeberDasLehrenUndLernen": "BU-Lehrannahmen",
+            f"{greta_id}/ProfessionelleSelbststeuerung": "Selbststeuerung",
+            f"{greta_id}/ProfessionelleSelbststeuerung/MotivationaleOrientierungen": "MotOrient",
+            f"{greta_id}/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Selbstwirksamkeitsueberzeugungen": "MO-Selbstwirksamkeit",
+            f"{greta_id}/ProfessionelleSelbststeuerung/MotivationaleOrientierungen/Enthusiasmus": "MO-Enthusiasmus",
+            f"{greta_id}/ProfessionelleSelbststeuerung/Selbstregulation": "Selbstregul",
+            f"{greta_id}/ProfessionelleSelbststeuerung/Selbstregulation/UmgangMitFeedbackUndKritik": "SR-Feedback",
+            f"{greta_id}/ProfessionelleSelbststeuerung/Selbstregulation/EngagementUndDistanz": "SR-Engagement",
+            f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung": "BerufspraktErf",
+            f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/ReflexionDesEigenenLehrhandelns": "BE-Reflexion",
+            f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/BeruflicheWeiterentwicklung": "BE-Weiterentwicklung",
         }
 
-        km = greta_data["Kompetenzmodell"]
+       
         ct = CompetenceTree(
             name="GRETA",
-            id=km["ID"],
+            id=greta_id,
             description=km["Name"],
             url="https://www.greta-die.de/webpages/greta-interaktiv",
             stacked_levels=True,
@@ -154,8 +156,15 @@ class TestGreta(Basetest):
 
                     area.facets.append(facet)
         ct.update_paths()
+        ok=True
         for path, element in ct.elements_by_path.items():
+            if not path in greta_short_names:
+                parts=path.split("/")
+                print(f"missing short_name for {json.dumps(parts,indent=2)}")
+                ok=False
+                continue
             element.short_name = greta_short_names[path]
+        self.assertTrue(ok)
         yaml_str = ct.to_yaml()
         if self.debug:
             print(yaml_str)
