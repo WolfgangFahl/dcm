@@ -33,7 +33,7 @@ class TestxApi(Basetest):
         # Ensure the YAML file exists
         self.assertTrue(os.path.exists(yaml_file_path))
         # Load the CompetenceTree from the YAML file
-        competence_tree = CompetenceTree.load_from_file(yaml_file_path)
+        competence_tree = CompetenceTree.load_from_yaml_file(yaml_file_path)
         return competence_tree
 
     def get_xApi_example(self) -> XAPI:
