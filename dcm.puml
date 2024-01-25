@@ -34,6 +34,7 @@ class dcm.dcm_core.CompetenceElement {
   url: Optional[str]
   description: Optional[str]
   color_code: Optional[str]
+  border_color: Optional[str]
   path: str 
 }
 
@@ -50,6 +51,7 @@ class dcm.dcm_core.CompetenceTree {
   competence_aspects: Dict[str, CompetenceAspect]
   competence_levels: List[CompetenceLevel]
   element_names: Dict[str, str]
+  ring_specs: Dict[str, RingSpec] 
 }
 note top of CompetenceElement
 Generic element to allow consistent

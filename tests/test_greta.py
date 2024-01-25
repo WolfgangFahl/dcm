@@ -14,6 +14,7 @@ from dcm.dcm_core import (
     CompetenceFacet,
     CompetenceLevel,
     CompetenceTree,
+    RingSpec
 )
 
 
@@ -102,11 +103,22 @@ class TestGreta(Basetest):
             "facet": "Kompetenzfacette",
             "level": "Lernfortschritt",
         }
-        ct.relative_radius = {
-            "tree": (0.0, 1/9),
-            "aspect": (0.0, 0.0),
-            "area": (0.0, 0.0),
-            "facet": (1 / 9, 9 / 9),
+        ct.ring_specs = {
+            "tree": RingSpec(
+                inner_ratio=0.0, 
+                outer_ratio=1/10),
+            "aspect": RingSpec(
+                text_mode="curved",
+                inner_ratio=9/10, 
+                outer_ratio=10/10),
+            "area": RingSpec(
+                inner_ratio=0.0, 
+                outer_ratio=0.0
+                ),
+            "facet": RingSpec(
+                text_mode="angled",
+                inner_ratio=1 / 10, 
+                outer_ratio=9 / 10),
         }
         # Define color codes for competence levels
         level_color_codes = {
@@ -153,7 +165,6 @@ class TestGreta(Basetest):
                     facet = CompetenceFacet(
                         id=g_facet["ID"], name=g_facet["Name"], description=description
                     )
-
                     area.facets.append(facet)
         ct.update_paths()
         ok=True
@@ -164,6 +175,7 @@ class TestGreta(Basetest):
                 ok=False
                 continue
             element.short_name = greta_short_names[path]
+            element.border_color = "white"
         self.assertTrue(ok)
         yaml_str = ct.to_yaml()
         if self.debug:

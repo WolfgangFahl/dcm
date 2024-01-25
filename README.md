@@ -72,7 +72,7 @@ applications in skill development and competency management.
 * [API documentation](http://dcm.bitplan.com/docs)
 
 ### Model
-![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/WolfgangFahl/dcm/main/dcm.puml?fmt=svg&version=5)
+![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/WolfgangFahl/dcm/main/dcm.puml?fmt=svg&version=6)
 
 ## Authors
 * [Wolfgang Fahl](http://www.bitplan.com/Wolfgang_Fahl)

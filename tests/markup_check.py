@@ -100,7 +100,10 @@ class MarkupCheck:
         ct = self.dcm.competence_tree
         for aspect in ct.aspects:
             # ignore aspects without areas ..
-            if len(aspect.areas) == 0 or ct.relative_radius.get("aspect") == (0.0, 0.0):
+            if len(aspect.areas) == 0:
+                continue
+            ring_spec=ct.ring_specs.get("aspect")
+            if ring_spec and ring_spec.empty:
                 continue
             element = root.find(f"svg:g[@id='{aspect.id}']", namespaces=namespaces)
             self.test_case.assertIsNotNone(

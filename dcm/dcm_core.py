@@ -17,7 +17,26 @@ from slugify import slugify
 
 from dcm.svg import SVG, SVGNodeConfig
 
+@dataclass_json
+@dataclass
+class RingSpec:
+    """
+    Specification of rings of the donut chart.
 
+    Attributes:
+        text_mode (Optional[str]): The mode of text display on the ring. Default is None.
+        inner_ratio (Optional[float]): The inner radius of the ring, relative to the chart size.
+        outer_ratio (Optional[float]): The outer radius of the ring, relative to the chart size.
+    """
+    text_mode: Optional[str] = None
+    inner_ratio: Optional[float] = None
+    outer_ratio: Optional[float] = None
+    
+    @property 
+    def empty(self)->bool:
+        empty=self.inner_ratio is None or self.outer_ratio is None or (self.inner_ratio + self.outer_ratio) == 0.0
+        return empty
+    
 @dataclass_json
 @dataclass
 class CompetenceElement:
@@ -30,7 +49,8 @@ class CompetenceElement:
         id (Optional[str]): An optional identifier for the competence element will be set to the name if id is None.
         url (Optional[str]): An optional URL for more information about the competence element.
         description (Optional[str]): An optional description of the competence element.
-        color_code (str): A string representing a color code associated with the competence element.
+        color_code (str): A string representing a (fill) color code associated with the competence element.
+        border_color (str): A string representing the border color to be used e.g. "black" or "#ffffff"
     """
 
     name: str
@@ -39,6 +59,7 @@ class CompetenceElement:
     url: Optional[str] = None
     description: Optional[str] = None
     color_code: Optional[str] = None
+    border_color: Optional[str] = None
 
     def __post_init__(self):
         # Set the id to the the slug of the name if id is None
@@ -80,6 +101,7 @@ class CompetenceElement:
             id=f"{self.id}",
             url=url,
             fill=self.color_code,
+            color=self.border_color,
             title=self.name,
             comment=comment,
             **kwargs,
@@ -146,20 +168,24 @@ class CompetenceLevel(CompetenceElement):
 class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
     """
     Represents the entire structure of competencies, including various aspects and levels.
-
+    
     Attributes:
-        competence_aspects (List[CompetenceAspect]): A list of CompetenceAspect objects.
-        competence_levels (List[CompetenceLevel]): A list of CompetenceLevel objects representing the different levels in the competence hierarchy.
+        lookup_url (Optional[str]): Optional URL for additional information.
+        total_levels (int): Total number of levels in the competence hierarchy.
+        stacked_levels (Optional[bool]): Indicates whether the levels are stacked.
+        aspects (List[CompetenceAspect]): A list of CompetenceAspect objects.
+        levels (List[CompetenceLevel]): A list of CompetenceLevel objects.
         element_names (Dict[str, str]): A dictionary holding the names for tree, aspects, facets, and levels.  The key is the type ("tree", "aspect", "facet", "level").
+        ring_specs (Dict[str, RingSpec]): Specifications for the rings in the donut chart.
+        total_elements (Dict[str, int]): A dictionary holding the total number of elements for each type (aspects, areas, facets).
     """
-
     lookup_url: Optional[str] = None
     total_levels: int = field(init=False)
     stacked_levels: Optional[bool] = False
     aspects: List[CompetenceAspect] = field(default_factory=list)
     levels: List[CompetenceLevel] = field(default_factory=list)
     element_names: Dict[str, str] = field(default_factory=dict)
-    relative_radius: Dict[str, Tuple[float, float]] = field(default_factory=dict)
+    ring_specs: Dict[str, RingSpec] = field(default_factory=dict)
     total_elements: Dict[str, int] = field(default_factory=dict)
 
     def __post_init__(self):

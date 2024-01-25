@@ -3,6 +3,7 @@ short_name: GRETA
 id: greta_v2_0_1
 url: https://www.greta-die.de/webpages/greta-interaktiv
 description: GRETA-Kompetenzmodell
+border_color: white
 total_levels: 4
 stacked_levels: true
 aspects:
@@ -10,10 +11,12 @@ aspects:
   short_name: Berufsprak
   id: BerufspraktischesWissenUndKoennen
   color_code: '#868378'
+  border_color: white
   areas:
   - name: Didaktik und Methodik
     short_name: DidaktMethodik
     id: DidaktikUndMethodik
+    border_color: white
     facets:
     - name: Lerninhalte und -ziele
       short_name: DM-Lernziele
@@ -26,6 +29,7 @@ aspects:
         - Kritische Prüfung und Bewertung der (digitalen) Informationskanäle und -quellen bei der Erschließung von Lerninhalten
         - Ausrichtung der Lerninhalte und -ziele an den Teilnehmenden
         - Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden
+      border_color: white
     - name: Methoden, Medien und Lernmaterialien
       short_name: DM-Methoden
       id: MethodenMedienUndLernmaterialien
@@ -37,6 +41,7 @@ aspects:
         - Berücksichtigung urheber-, datenschutzrechtlicher sowie medienethischer Aspekte bei der Auswahl, Nutzung und Gestaltung von Methoden, (digitalen) Medien und Lernmaterialien
         - Evaluation der im Lehr-Lern-Angebot eingesetzten Methoden, (digitalen) Medien und Lernmaterialien
         - Nutzung von (digitalen) Tools/Werkzeugen zur Evaluation des Lehr-Lern-Angebots
+      border_color: white
     - name: Rahmenbedingungen und Lernumgebungen
       short_name: DM-Rahmenbedingungen
       id: RahmenbedingungenUndLernumgebungen
@@ -46,6 +51,7 @@ aspects:
         - Berücksichtigung der räumlichen, zeitlich, personellen, medial und organisatorischen Rahmenbedingungen in (digital-gestützten) Lernumgebungen
         - Anpassung der beeinflussbaren Rahmenbedingungen in (digital-gestützten) Lernumgebungen
         - Schaffung einer konstruktiv-unterstützenden (digital-gestützten) Lernumgebung durch Ausschöpfung der Rahmenbedingungen
+      border_color: white
     - name: Outcomeorientierung
       short_name: DM-Outcome
       id: Outcomeorientierung
@@ -54,9 +60,11 @@ aspects:
 
         - Ausrichtung des Lehrhandelns an Lernergebnissen
         - Auswahl und Anwendung geeigneter Methoden und (digitaler) Tools/Werkzeuge zur Lernerfolgskontrolle unter Berücksichtigung datenschutzrechtlicher Aspekte und des gegebenen Kontexts
+      border_color: white
   - name: Beratung/Individualisierte Lernunterstützung
     short_name: Beratung
     id: BeratungIndividualisierteLernunterstuetzung
+    border_color: white
     facets:
     - name: Teilnehmendenorientierung
       short_name: Beratung-Orientierung
@@ -70,6 +78,7 @@ aspects:
         - Stärkung der Selbststeuerungs- und Selbstlernkompetenzen der Teilnehmenden durch den Einsatz lernaktivierender (digitaler) Medien und Tools/Werkzeugen
         - Berücksichtigung der Diversität der Teilnehmenden (Alter, Geschlecht, Bildungstand etc.)
         - Ermöglichung der Differenzierung und Individualisierung im Unterricht mithilfe (digitaler) Medien und Tools/Werkzeugen
+      border_color: white
     - name: Diagnostik und Lernberatung
       short_name: Lernberatung
       id: DiagnostikUndLernberatung
@@ -80,9 +89,11 @@ aspects:
         - Auswertung und Interpretation diagnostischer Daten und Informationen
         - Nutzung von diagnostischen Daten und Informationen bei der individuellen Beratung von Lernenden
         - Setzung von Lernimpulsen in Beratungsgesprächen
+      border_color: white
   - name: Kommunikation und Interaktion
     short_name: KommInterakt
     id: KommunikationUndInteraktion
+    border_color: white
     facets:
     - name: Moderation und Steuerung von Gruppen
       short_name: KI-Gruppen
@@ -96,6 +107,7 @@ aspects:
         - Unterstützung der Vernetzung der Lernenden
         - Schaffung einer vertrauensvollen Gesprächsatmosphäre
         - Konstruktiver Umgang mit technischen Problemen und Störungen innerhalb der Gruppe
+      border_color: white
     - name: Professionelle Kommunikation
       short_name: KI-Kommunikation
       id: ProfessionelleKommunikation
@@ -107,9 +119,11 @@ aspects:
         - Steuerung organisatorischer Kommunikationsabläufe
         - Austausch mit Teilnehmenden mithilfe von digitalen Kommunikationstools unter Beachtung der Netiquette
         - Berücksichtigung von Besonderheiten verbaler und non-verbaler Kommunikation in digitalen Lernumgebungen
+      border_color: white
   - name: Organisation
     short_name: Organisation
     id: Organisation
+    border_color: white
     facets:
     - name: Kooperation mit den Auftraggebenden/Arbeitgebenden
       short_name: Org-Auftraggeber
@@ -120,6 +134,7 @@ aspects:
         - Beschaffung relevanter Informationen über (potenzielle) Auftraggebende/Arbeitgebende für die Akquise von Lehraufträgen (z.B. Ziele, Adressatinnen und Adressaten, Honorarkorridore, Organisationskultur)
         - Vermarktung des eigenen Angebots über geeignete (digitale) Medien und Tools/Werkzeuge (z.B. über Soziale Medien)
         - Zusammenarbeit und Austausch mit Auftraggebenden/Arbeitgebenden bei der Neukonzipierung und Erweiterung von Angeboten sowie zur Problemlösung
+      border_color: white
     - name: Kollegiale Zusammenarbeit/Netzwerken
       short_name: Org-Netzwerke
       id: KollegialeZusammenarbeitNetzwerken
@@ -130,14 +145,17 @@ aspects:
         - Kollegiale Zusammenarbeit mit anderen Lehrenden innerhalb und außerhalb von beauftragenden Einrichtungen
         - Zusammenarbeit in interdisziplinären Teams oder kollegialen Netzwerken über unterschiedliche Formate (z.B. kollegialer Austausch, Fachtagungen, Lerngemeinschaften, Soziale Medien)
         - Austausch von freien Lern- und Lehrmaterialien (OER)
+      border_color: white
 - name: Fach- und Feldspezifisches Wissen
   short_name: FachFeldWissen
   id: FachUndFeldspezifischesWissen
   color_code: '#aba89e'
+  border_color: white
   areas:
   - name: Feldbezug
     short_name: Feldbezug
     id: Feldbezug
+    border_color: white
     facets:
     - name: Adressatinnen und Adressaten
       short_name: FB-Adressaten
@@ -147,6 +165,7 @@ aspects:
 
         - Wissen über Adressatinnen und Adressaten eigener Angebote (z.B. Interessen, Gewohnheiten, Vorlieben, Bedürfnisse, Ängste, vorhandene Ressourcen, bestehende Einschränkungen und Barrieren)
         - Wissen über Einstellungen, Nutzungsgewohnheiten, Barrieren und Kompetenzen der Adressatinnen und Adressaten in Bezug auf digitale Medien und Tools
+      border_color: white
     - name: Feldspezifisches Wissen
       short_name: FB-Feldwissen
       id: FeldspezifischesWissen
@@ -156,6 +175,7 @@ aspects:
         - Wissen über handlungsspezifische Ziele und Prinzipien
         - Handlungsfeldspezifisches Wissen über organisatorische und rechtliche Rahmenbedingungen
         - Wissen über die Besonderheiten des Lernens Erwachsener sowie über die Strukturen und Ansprüche der Erwachsenenbildung insgesamt in Abgrenzung zum formalen Bildungsbereich
+      border_color: white
     - name: Curriculare und institutionelle Rahmenbedingungen
       short_name: FB-Curricula
       id: CurriculareUndInstitutionelleRahmenbedingungen
@@ -165,14 +185,17 @@ aspects:
         - Wissen über einrichtungsinterne Rahmenlehrpläne bzw. Modulpläne
         - Wissen über die Beratungs- und Supportkapazitäten des spezifischen Weiterbildungsfeldes, der Weiterbildungseinrichtung
         - Wissen über einrichtungsinterne digitale Ausstattung sowie die Vorgaben und Erwartungen der Weiterbildungseinrichtung bzgl. der Softwarenutzung
+      border_color: white
 - name: Professionelle Werthaltungen und Überzeugungen
   short_name: Werthaltungen
   id: ProfessionelleWerthaltungenUndUeberzeugungen
   color_code: '#c9c7c0'
+  border_color: white
   areas:
   - name: Berufsethos
     short_name: Berufsethos
     id: Berufsethos
+    border_color: white
     facets:
     - name: Menschenbilder
       short_name: BE-Menschenbild
@@ -182,6 +205,7 @@ aspects:
 
         - Bewusstsein über den Einfluss des eigenen Menschenbildes auf den Lehr-Lern-Prozess
         - Innehaben eines Menschenbilds, das eigene weltanschauliche und theoretische Orientierungen widerspiegelt
+      border_color: white
     - name: Wertvorstellungen
       short_name: BE-Wertvorstellungen
       id: Wertvorstellungen
@@ -191,9 +215,11 @@ aspects:
         - Verinnerlichung von Werten wie Empathie, Achtung, Respekt und Wertschätzung gegenüber den Teilnehmenden
         - Bewusstsein und Verantwortungsübernahme für das Wohlergehen der Teilnehmenden
         - Verinnerlichung berufsethischer Standards und Prinzipien
+      border_color: white
   - name: Berufsbezogene Überzeugungen
     short_name: Berufsueberzeugungen
     id: BerufsbezogeneUeberzeugungen
+    border_color: white
     facets:
     - name: Eigenes Rollenbewusstsein
       short_name: BU-Rollenbewusstsein
@@ -205,6 +231,7 @@ aspects:
         - Kritische Auseinandersetzung mit Erwartungen und Anforderungen an die eigene Rolle (u.a. von Teilnehmenden, Auftraggebenden)
         - Identifikation mit der Rolle als Lehrperson in der EB/WB
         - Flexibler Wechsel der eigenen Rolle je nach Lehr-Lern-Situation (Begleiten, Wissen vermitteln etc.) und Lehr-Lern-Setting (hybrid, Präsenz, digital)
+      border_color: white
     - name: Subjektive Annahmen über das Lehren und Lernen
       short_name: BU-Lehrannahmen
       id: SubjektiveAnnahmenUeberDasLehrenUndLernen
@@ -213,14 +240,17 @@ aspects:
 
         - Bewusstsein über eigene subjektive Lehr-Lern-Theorien und deren Einfluss auf Lehr-Lern-Prozesse
         - Bewusstsein über die eigenen Vorstellungen darüber, unter welchen Voraussetzungen Lernen gelingt
+      border_color: white
 - name: Professionelle Selbststeuerung
   short_name: Selbststeuerung
   id: ProfessionelleSelbststeuerung
   color_code: '#e8e6e1'
+  border_color: white
   areas:
   - name: Motivationale Orientierungen
     short_name: MotOrient
     id: MotivationaleOrientierungen
+    border_color: white
     facets:
     - name: Selbstwirksamkeitsüberzeugungen
       short_name: MO-Selbstwirksamkeit
@@ -230,6 +260,7 @@ aspects:
 
         - Überzeugung, über die Fähigkeiten und Mittel zu verfügen, die für die erfolgreiche Bewältigung gegebener Anforderungen notwendig sind
         - Überzeugung, auch schwierige Situationen aufgrund der eigenen Kompetenzen bewältigen zu können
+      border_color: white
     - name: Enthusiasmus
       short_name: MO-Enthusiasmus
       id: Enthusiasmus
@@ -238,9 +269,11 @@ aspects:
 
         - Freude an der Ausübung der eigenen Tätigkeit und dem Fach
         - Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln
+      border_color: white
   - name: Selbstregulation
     short_name: Selbstregul
     id: Selbstregulation
+    border_color: white
     facets:
     - name: Umgang mit Feedback und Kritik
       short_name: SR-Feedback
@@ -251,6 +284,7 @@ aspects:
         - Professionelle und konstruktive Reaktion auf Kritik und Feedback
         - Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten
         - Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird
+      border_color: white
     - name: Engagement und Distanz
       short_name: SR-Engagement
       id: EngagementUndDistanz
@@ -259,9 +293,11 @@ aspects:
 
         - Bewusster Umgang mit eigenen Ressourcen
         - Ausbalancieren von hohem Engagement und guter Distanzierungsfähigkeit
+      border_color: white
   - name: Berufspraktische Erfahrung
     short_name: BerufspraktErf
     id: BerufspraktischeErfahrung
+    border_color: white
     facets:
     - name: Reflexion des eigenen Lehrhandelns
       short_name: BE-Reflexion
@@ -272,6 +308,7 @@ aspects:
         - Bewusstsein über die Wichtigkeit der Reflexion des eigenen Lehrhandelns
         - Bereitschaft zur Reflexion des eigenen pädagogischen Handelns während oder nach einer Handlungssituation
         - Bereitschaft zur Übernahme der Perspektive der Teilnehmenden
+      border_color: white
     - name: Berufliche Weiterentwicklung
       short_name: BE-Weiterentwicklung
       id: BeruflicheWeiterentwicklung
@@ -282,6 +319,7 @@ aspects:
         - Bereitschaft zur kontinuierlichen Weiterentwicklung im Hinblick auf fachliche, pädagogische und gesamtgesellschaftliche Themen
         - Aufgeschlossenheit gegenüber neuen fachlichen, pädagogischen und gesamtgesellschaftlichen Themen
         - Kritische Auseinandersetzung mit fachlichen, pädagogischen und gesamtgesellschaftlichen Themen
+      border_color: white
 levels:
 - name: Level0
   short_name: Level0
@@ -319,19 +357,21 @@ element_names:
   area: Kompetenzbereich
   facet: Kompetenzfacette
   level: Lernfortschritt
-relative_radius:
+ring_specs:
   tree:
-  - 0.0
-  - 0.1111111111111111
+    inner_ratio: 0.0
+    outer_ratio: 0.1
   aspect:
-  - 0.0
-  - 0.0
+    text_mode: curved
+    inner_ratio: 0.9
+    outer_ratio: 1.0
   area:
-  - 0.0
-  - 0.0
+    inner_ratio: 0.0
+    outer_ratio: 0.0
   facet:
-  - 0.1111111111111111
-  - 1.0
+    text_mode: angled
+    inner_ratio: 0.1
+    outer_ratio: 0.9
 total_elements:
   aspects: 4
   areas: 10

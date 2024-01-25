@@ -56,13 +56,10 @@ class SVGNode:
 
     indent_level: int = 1
     id: Optional[str] = None
-    color: Optional[
-        str
-    ] = None  # Color of font or stroke use default color of config if None
+    color: Optional[str] = None  # Color of font or stroke use default color of config if None
     fill: Optional[str] = "black"  # Fill color for the segment
     title: Optional[str] = None  # Tooltip
     comment: Optional[str] = None
-
 
 @dataclass
 class SVGNodeConfig(SVGNode):
@@ -543,14 +540,12 @@ class SVG:
             segment(DonutSegment)
         """
         color = config.fill if config.fill else self.config.default_color
-
-        if color is None:
-            color = self.config.default_color
+        stroke_color = config.color if config.color else "black"
 
         path_str = self.get_donut_path(segment)
 
         # Assemble the path and title elements
-        path_element = f'<path d="{path_str}" fill="{color}" />\n'
+        path_element = f'<path d="{path_str}" stroke="{stroke_color}" fill="{color}" />\n'
         if config.title:
             escaped_title = html.escape(config.title)  # Escape special characters
 

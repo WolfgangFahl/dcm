@@ -47,9 +47,9 @@ class DcmChart:
         self.cy = (config.total_height - config.legend_height) // 2
         self.radius_steps = competence_tree.total_levels
         self.tree_radius = config.width / 2 / self.radius_steps / 2
-        if "tree" in competence_tree.relative_radius:
-            _inner, outer = competence_tree.relative_radius.get("tree")
-            self.tree_radius = outer * config.width / 2
+        if "tree" in competence_tree.ring_specs:
+            ringspec = competence_tree.ring_specs.get("tree")
+            self.tree_radius = ringspec.outer_ratio * config.width / 2
 
         self.circle_config = competence_tree.to_svg_node_config(
             x=self.cx, y=self.cy, width=self.tree_radius
@@ -266,14 +266,12 @@ class DcmChart:
         total = len(elements)
         total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
         hierarchy_level = sub_element_name[:-1]
-        if hierarchy_level in self.dcm.competence_tree.relative_radius:
+        if hierarchy_level in self.dcm.competence_tree.ring_specs:
             # calculate inner and outer radius
-            inner_ratio, outer_ratio = self.dcm.competence_tree.relative_radius[
-                hierarchy_level
-            ]
+            ringspec = self.dcm.competence_tree.ring_specs[hierarchy_level]
             # Calculate the actual inner and outer radii
-            inner_radius = self.svg.config.width / 2 * inner_ratio
-            outer_radius = self.svg.config.width / 2 * outer_ratio
+            inner_radius = self.svg.config.width / 2 * ringspec.inner_ratio
+            outer_radius = self.svg.config.width / 2 * ringspec.outer_ratio
         else:
             inner_radius = segment.outer_radius
             outer_radius = segment.outer_radius + self.tree_radius * 2

@@ -23,6 +23,9 @@ class TestSVG(Basetest):
         self.write_results = True
 
     def save(self, svg: SVG, file_name: str):
+        """
+        save the given svg to the given filename
+        """
         if self.write_results:
             svg_path = f"{self.tmp_directory}/{file_name}"
             svg.save(svg_path)
