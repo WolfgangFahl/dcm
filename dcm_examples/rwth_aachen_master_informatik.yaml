@@ -1,562 +1,722 @@
 name: Computer Science
+short_name: RWTH Master CS
 id: '1425409'
 url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+description: RWTH Aachen Master Informatik
+total_levels: 3
+stacked_levels: false
 aspects:
 - name: Electives
+  short_name: Electives
   id: '1433959'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas:
   - name: Theoretical Computer Science
+    short_name: Theoretica
     id: '1433960'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Visual Computing & Interaction
+    short_name: Visual Com
     id: '1436731'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Hardware/Software Systems
+    short_name: Hardware/S
     id: '1435044'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: AI & Data
+    short_name: AI & Data
     id: '1435552'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software methods, tools
+    short_name: Software m
     id: '1440210'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
 - name: Applied Courses
+  short_name: Applied Co
   id: '1430972'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas:
   - name: Biology
+    short_name: Biology
     id: '1430973'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Business Administration
+    short_name: Business A
     id: '1431214'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Electrical Engineering
+    short_name: Electrical
     id: '1431629'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Mathematics
+    short_name: Mathematic
     id: '1431977'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Mechanical Engineering
+    short_name: Mechanical
     id: '1432295'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Physics
+    short_name: Physics
     id: '1432891'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Philosophy
+    short_name: Philosophy
     id: '1433063'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Chemistry
+    short_name: Chemistry
     id: '1433477'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Medicine
+    short_name: Medicine
     id: '1433612'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Accredited Applied Course
+    short_name: Accredited
     id: '1433897'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Psychology
+    short_name: Psychology
     id: '1433926'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
 - name: Labs, Seminars, Colloquiums
+  short_name: Labs, Semi
   id: '1438244'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas:
   - name: Seminar Computer Science
+    short_name: Seminar Co
     id: '1438871'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software Lab
+    short_name: Software L
     id: '1438806'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Depth Area Colloquium
+    short_name: Depth Area
     id: '1438690'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Seminar aus anderen Fakultäten/Fachgruppen
+    short_name: Seminar au
     id: '1534364'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
 - name: Master Thesis
+  short_name: Master The
   id: '1433954'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas: []
 - name: Requirements
+  short_name: Requiremen
   id: '1428650'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas:
   - name: Programming Concepts
+    short_name: Programmin
     id: '1429415'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Compiler Construction
+    short_name: Compiler C
     id: '1429435'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Efficient Algorithms
+    short_name: 'Efficient '
     id: '1429442'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Satisfiability Checking
+    short_name: Satisfiabi
     id: '1429450'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Module Complexity Theory
+    short_name: Module Com
     id: '1429477'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Mathematical Logic II
+    short_name: Mathematic
     id: '1429491'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Model Checking
+    short_name: Model Chec
     id: '1429498'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Modeling and analysis of hybrid systems
+    short_name: Modeling a
     id: '1429505'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Calculus for Computer Science
+    short_name: Calculus f
     id: '1429511'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Discrete Structures
+    short_name: Discrete S
     id: '1429520'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Advanced Internet Technology
+    short_name: Advanced I
     id: '1429547'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Communication Systems Engineering
+    short_name: Communicat
     id: '1429564'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Embedded Systems
+    short_name: Embedded S
     id: '1429579'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Mobile Internet Technology
+    short_name: Mobile Int
     id: '1429605'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Model-Based Software Engineering
+    short_name: Model-Base
     id: '1429626'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software Architectures
+    short_name: Software A
     id: '1429649'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software Quality Assurance
+    short_name: Software Q
     id: '1429667'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software-Engineering programming language Ada 95
+    short_name: Software-E
     id: '1429682'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Business Process Intelligence
+    short_name: Business P
     id: '1429698'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Web Technologies
+    short_name: Introducti
     id: '1429705'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Artificial Intelligence
+    short_name: Artificial
     id: '1429722'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Knowledge Representation
+    short_name: 'Knowledge '
     id: '1429739'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Automatic Speech Recognition
+    short_name: 'Automatic '
     id: '1429751'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Computer Vision
+    short_name: Computer V
     id: '1429777'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Designing Interactive Systems I
+    short_name: 'Designing '
     id: '1429790'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Research module
+    short_name: Research m
     id: '1429806'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Computer Graphics
+    short_name: Computer G
     id: '1429819'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: High-Performance Computing
+    short_name: High-Perfo
     id: '1429833'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: iOS Application Development
+    short_name: iOS Applic
     id: '1429849'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Concepts and Models for Parallel and Data-centric Programming
+    short_name: Concepts a
     id: '1429863'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Performance Analysis and Correctness Checking of Parallel Applications
+    short_name: Performanc
     id: '1429876'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Digital Fabrication
+    short_name: Digital Fa
     id: '1429891'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Physically-Based Animation
+    short_name: Physically
     id: '1429899'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Real-time Graphics
+    short_name: 'Real-time '
     id: '1429913'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Social Data Science
+    short_name: Social Dat
     id: '1429927'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Social Networks
+    short_name: Social Net
     id: '1429934'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Statistical Classification and Machine Learning
+    short_name: Statistica
     id: '1429960'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Statistical Methods in Natural Language Processing
+    short_name: Statistica
     id: '1429975'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Text Mining
+    short_name: Text Minin
     id: '1429990'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Web Mining
+    short_name: Web Mining
     id: '1430004'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Anatomy
+    short_name: Introducti
     id: '1430016'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Medicine for Nature Scientists and Engineers 1 and 2
+    short_name: Introducti
     id: '1430023'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Health Care Systems
+    short_name: Health Car
     id: '1430035'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Foundations of Cell Biology and Biochemistry
+    short_name: Foundation
     id: '1430041'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Medical Biometrics and Clinical Epidemiology
+    short_name: Medical Bi
     id: '1430051'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Medical Methodology
+    short_name: Medical Me
     id: '1430060'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Methodology of Planning
+    short_name: Methodolog
     id: '1430087'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Transport planning I
+    short_name: 'Transport '
     id: '1430094'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Decision Theory
+    short_name: Decision T
     id: '1430189'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Operations Research
+    short_name: Operations
     id: '1430268'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Biology for Students of Computer Sciences and Mathematics
+    short_name: Biology fo
     id: '1430278'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Practical Course Biology for Students of Computer Sciences
+    short_name: 'Practical '
     id: '1430294'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Inorganic Chemistry
+    short_name: 'Inorganic '
     id: '1430305'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Organic Chemistry
+    short_name: Organic Ch
     id: '1430313'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Computational Chemistry
+    short_name: Computatio
     id: '1430318'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Theory of Chemical Bonds
+    short_name: 'Theory of '
     id: '1430325'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Fundamentals of Electrical Engineering 2 - Modeling and Analysis of Electrical
       Components and Circuits
+    short_name: Fundamenta
     id: '1430332'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Power Systems
+    short_name: Power Syst
     id: '1430342'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Fundamentals of Integrated Circuits and Systems
+    short_name: Fundamenta
     id: '1430349'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Communication Networks
+    short_name: Communicat
     id: '1430356'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Communications Engineering
+    short_name: Communicat
     id: '1430362'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Automatic Control
+    short_name: 'Automatic '
     id: '1430377'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Engineering Mechanics
+    short_name: Engineerin
     id: '1430388'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Optional courses of mechanical engineering
+    short_name: Optional c
     id: '1430404'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Numerical Analysis I
+    short_name: 'Numerical '
     id: '1430426'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Practical Course in Mathematics
+    short_name: 'Practical '
     id: '1430435'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Numerical Analysis II
+    short_name: 'Numerical '
     id: '1430442'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Computeralgebra
+    short_name: Computeral
     id: '1430450'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Complex Analysis I
+    short_name: Complex An
     id: '1430461'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Experimental Physics I (Mechanics and Relativity)
+    short_name: Experiment
     id: '1430471'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Experimental Physics II (Heat and Electromagnetism)
+    short_name: Experiment
     id: '1430482'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Physics
+    short_name: Introducti
     id: '1430491'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Physics lab
+    short_name: Physics la
     id: '1430505'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: General Introduction to Philosophy
+    short_name: General In
     id: '1430538'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Theory of Argumentation
+    short_name: 'Theory of '
     id: '1430561'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Practical Philosophy
+    short_name: 'Practical '
     id: '1430566'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Computability and Complexity
+    short_name: Computabil
     id: '1430619'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Mathematical Logic I
+    short_name: Mathematic
     id: '1430628'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Formal Systems, Automata, Processes
+    short_name: Formal Sys
     id: '1430635'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Data Structures and Algorithms
+    short_name: Data Struc
     id: '1430644'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software Engineering
+    short_name: Software E
     id: '1430653'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Computer Engineering
+    short_name: Introducti
     id: '1430663'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: System Programming
+    short_name: System Pro
     id: '1430672'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Operating Systems and System Software
+    short_name: 'Operating '
     id: '1430686'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Linear Algebra
+    short_name: Linear Alg
     id: '1430695'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Applied Stochastics
+    short_name: Introducti
     id: '1430703'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Databases and Information Systems
+    short_name: 'Databases '
     id: '1430710'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Implementation of Databases
+    short_name: Implementa
     id: '1430724'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Seminar Computer Science
+    short_name: Seminar Co
     id: '1430730'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Software Project Lab
+    short_name: Software P
     id: '1430838'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Advanced Automata Theory
+    short_name: Advanced A
     id: '1430884'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Bookkeeping and Managerial Accounting
+    short_name: Bookkeepin
     id: '1430932'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Basic Module Philosophical Propaedeutics
+    short_name: Basic Modu
     id: '1430939'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Introduction to Numerical Methods and Software
+    short_name: Introducti
     id: '1430950'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Infinite Computations and Games
+    short_name: Infinite C
     id: '1430956'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Data Communication
+    short_name: Data Commu
     id: '1509365'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Elements of Machine Learning and Data Science
+    short_name: Elements o
     id: '1509575'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: IT-Security
+    short_name: IT-Securit
     id: '1509607'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Bookkeeping and Managerial Accounting
+    short_name: Bookkeepin
     id: '1531579'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
 - name: Scientific Integrity
+  short_name: Scientific
   id: '1440206'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas: []
 - name: Additional Examinations
+  short_name: Additional
   id: '1456158'
   url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
   areas:
   - name: Modules
+    short_name: Modules
     id: '1456159'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Partial Examinations
+    short_name: Partial Ex
     id: '1456160'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Languages
+    short_name: Languages
     id: '1456161'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Recognized Partial Examinations
+    short_name: Recognized
     id: '1456650'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
   - name: Competences
+    short_name: Competence
     id: '1457617'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
     facets: []
 levels:
-- name: 1,0 - 95%
-  id: 10 - 95
+- name: 1,0 - ≥95%
+  short_name: 1,0 - ≥95%
+  id: 10 - -95
+  color_code: green
+  level: 11
+- name: 1,3 - ≥90%
+  short_name: 1,3 - ≥90%
+  id: 13 - -90
+  color_code: '#158e00'
   level: 10
-- name: 1,3 - 90%
-  id: 13 - 90
+- name: 1,7 - ≥85%
+  short_name: 1,7 - ≥85%
+  id: 17 - -85
+  color_code: '#2f9c00'
   level: 9
-- name: 1,7 - 85%
-  id: 17 - 85
+- name: 2,0 - ≥80%
+  short_name: 2,0 - ≥80%
+  id: 20 - -80
+  color_code: '#4daa00'
   level: 8
-- name: 2,0 - 80%
-  id: 20 - 80
+- name: 2,3 - ≥75%
+  short_name: 2,3 - ≥75%
+  id: 23 - -75
+  color_code: '#6fb800'
   level: 7
-- name: 2,3 - 75%
-  id: 23 - 75
+- name: 2,7 - ≥70%
+  short_name: 2,7 - ≥70%
+  id: 27 - -70
+  color_code: '#95c700'
   level: 6
-- name: 2,7 - 70%
-  id: 27 - 70
+- name: 3,0 - ≥65%
+  short_name: 3,0 - ≥65%
+  id: 30 - -65
+  color_code: '#c0d500'
   level: 5
-- name: 3,0 - 65%
-  id: 30 - 65
+- name: 3,3 - ≥60%
+  short_name: 3,3 - ≥60%
+  id: 33 - -60
+  color_code: '#e3d700'
   level: 4
-- name: 3,3 - 60%
-  id: 33 - 60
+- name: 3,7 - ≥55%
+  short_name: 3,7 - ≥55%
+  id: 37 - -55
+  color_code: '#f1c000'
   level: 3
-- name: 3,7 - 55%
-  id: 37 - 55
+- name: 4,0 - ≥50%
+  short_name: 4,0 - ≥50%
+  id: 40 - -50
+  color_code: orange
   level: 2
-- name: 4,0 - 50%
-  id: 40 - 50
+- name: ' ❌ - <50%'
+  short_name: ' ❌ - <50%'
+  id: '  - -50'
+  color_code: '#FF0000'
   level: 1
 element_names:
   tree: Study plan
@@ -564,3 +724,24 @@ element_names:
   area: Module
   facet: Module element
   level: Grade
+ring_specs:
+  tree:
+    text_mode: horizontal
+    inner_ratio: 0.0
+    outer_ratio: 0.1
+  aspect:
+    text_mode: curved
+    inner_ratio: 0.1
+    outer_ratio: 0.3
+  area:
+    text_mode: angled
+    inner_ratio: 0.3
+    outer_ratio: 1.0
+  facet:
+    text_mode: empty
+    inner_ratio: 0.0
+    outer_ratio: 0.0
+total_elements:
+  aspects: 7
+  areas: 124
+  facets: 0

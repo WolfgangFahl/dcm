@@ -261,7 +261,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
 
     @classmethod
     def required_keys(cls) -> Tuple:
-        keys = {"name", "id", "url", "description", "element_names"}
+        keys = {"name", "id", "url", "description", "aspects"}
         return keys
 
     def lookup_by_path(
@@ -370,13 +370,15 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             box_width,
             box_height,
         )
-
+        max_name_width=5
+        if self.levels:
+            max_name_width=max(svg.get_text_width(level.name) for level in self.levels)
         # Calculate the x position for the aspect legend based on the width of the level legend
         x_aspect_start = (
             x_start
             + box_width
             + padding
-            + max(svg.get_text_width(level.name) for level in self.levels)
+            + max_name_width
             + padding
         )
 

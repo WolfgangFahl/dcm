@@ -31,7 +31,9 @@ dependencies = [
 	# https://pypi.org/project/linkml/,
 	"linkml",
 	# https://pypi.org/project/rdflib/
-	"rdflib"	
+	"rdflib",
+	# https://pypi.org/project/colour/
+	"colour>=0.1.5"
 ]
 
 requires-python = ">=3.9"

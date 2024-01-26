@@ -1,0 +1,221 @@
+name: Exemplary Curriculum SPO 2021 - Faculty of Architecture, KIT
+id: KIT-Arch2021
+short_name: KIT BAArchitecture BA KIT
+lookup_url: http://dcm.bitplan.com
+url: https://www.arch.kit.edu/img/220325_MHB_Arch_BA_2021_en.pdf
+description: Exemplary curriculum for the Bachelor of Architecture program as per SPO 2021 at the Faculty of Architecture, Karlsruhe Institute of Technology.
+aspects:
+  - name: 1st Semester
+    id: sem1
+    description: Introduction to basic concepts and design in architecture.
+    color_code: '#8ca9c7'
+    areas:
+      - name: Studio Space
+        id: StudioSpace
+        facets:
+          - name: Studio Space
+            score: 10
+            score_unit: CP
+          - name: Basics of Design Theory
+            score: 4
+            score_unit: CP
+          - name: Artistic and Sculptural Design
+            score: 4
+            score_unit: CP
+          - name: Building Materials Science
+            score: 4
+            score_unit: CP
+          - name: Architectural Geometry
+            score: 4
+            score_unit: CP
+          - name: Theory of Architecture 1
+            score: 4
+            score_unit: CP
+
+  - name: 2nd Semester
+    id: sem2
+    description: Further development of architectural design and construction understanding.
+    color_code: '#b59a7b'
+    areas:
+      - name: Studio Structure
+        id: StudioStructure
+        facets:
+          - name: Studio Structure
+            score: 10
+            score_unit: CP
+          - name: Basics of Building Construction
+            score: 4
+            score_unit: CP
+          - name: Static and Strength of Materials
+            score: 4
+            score_unit: CP
+          - name: Building Physics
+            score: 4
+            score_unit: CP
+          - name: Integrative Digital Methods
+            score: 4
+            score_unit: CP
+          - name: History of Architecture and Urban Planning
+            score: 4
+            score_unit: CP
+
+  - name: 3rd Semester
+    id: sem3
+    description: Advanced exploration of materials and structural design.
+    color_code: '#8c9c7a'
+    areas:
+      - name: Studio Material
+        id: StudioMaterial
+        facets:
+          - name: Studio Material
+            score: 10
+            score_unit: CP
+          - name: Building Construction
+            score: 4
+            score_unit: CP
+          - name: Structural Design
+            score: 4
+            score_unit: CP
+          - name: Building Services
+            score: 4
+            score_unit: CP
+          - name: Explorative Digital Methods
+            score: 4
+            score_unit: CP
+          - name: History of Architecture and Urban Planning, Urban Development
+            score: 4
+            score_unit: CP
+
+  - name: 4th Semester
+    id: sem4
+    description: Focus on urban planning, law, and building studies.
+    color_code: '#c7a89b'
+    areas:
+      - name: Studio Context
+        id: StudioContext
+        facets:
+          - name: Studio Context
+            score: 10
+            score_unit: CP
+          - name: Basics of Urban Planning
+            score: 4
+            score_unit: CP
+          - name: Law for Architects and Construction Planning Law
+            score: 4
+            score_unit: CP
+          - name: Basics of Building Studies and Design
+            score: 4
+            score_unit: CP
+          - name: Communication of Architecture and Scientific Methodology
+            score: 4
+            score_unit: CP
+          - name: History of Architecture and Urban Planning, Building Survey
+            score: 4
+            score_unit: CP
+
+  - name: 5th Semester
+    id: sem5
+    description: Emphasis on sustainability, international perspectives, and project management.
+    color_code: '#a7c8b9'
+    areas:
+      - name: Studio System
+        id: StudioSystem
+        facets:
+          - name: Studio System
+            score: 10
+            score_unit: CP
+          - name: Sustainability
+            score: 4
+            score_unit: CP
+          - name: International Module
+            score: 4
+            score_unit: CP
+          - name: Elective Module
+            score: 4
+            score_unit: CP
+          - name: Construction Economics and Project Management
+            score: 4
+            score_unit: CP
+          - name: Art History
+            score: 4
+            score_unit: CP
+
+  - name: 6th Semester
+    id: sem6
+    description: Capstone projects, advanced topics, and interdisciplinary qualifications.
+    color_code: '#b7a9c8'
+    areas:
+      - name: Bachelor's Thesis
+        id: BachelorsThesis
+        facets:
+          - name: Bachelor's Thesis
+            score: 12
+            score_unit: CP
+          - name: Advanced Topic of Bachelor Thesis
+            score: 4
+            score_unit: CP
+          - name: Elective Module
+            score: 4
+            score_unit: CP
+          - name: Seminar Week
+            score: 4
+            score_unit: CP
+          - name: Interdisciplinary Qualifications
+            score: 6
+            score_unit: CP
+levels:
+- name: 1,0 - ≥95%
+  short_name: 1,0 - ≥95%
+  id: 10 - -95
+  color_code: green
+  level: 11
+- name: 1,3 - ≥90%
+  short_name: 1,3 - ≥90%
+  id: 13 - -90
+  color_code: '#158e00'
+  level: 10
+- name: 1,7 - ≥85%
+  short_name: 1,7 - ≥85%
+  id: 17 - -85
+  color_code: '#2f9c00'
+  level: 9
+- name: 2,0 - ≥80%
+  short_name: 2,0 - ≥80%
+  id: 20 - -80
+  color_code: '#4daa00'
+  level: 8
+- name: 2,3 - ≥75%
+  short_name: 2,3 - ≥75%
+  id: 23 - -75
+  color_code: '#6fb800'
+  level: 7
+- name: 2,7 - ≥70%
+  short_name: 2,7 - ≥70%
+  id: 27 - -70
+  color_code: '#95c700'
+  level: 6
+- name: 3,0 - ≥65%
+  short_name: 3,0 - ≥65%
+  id: 30 - -65
+  color_code: '#c0d500'
+  level: 5
+- name: 3,3 - ≥60%
+  short_name: 3,3 - ≥60%
+  id: 33 - -60
+  color_code: '#e3d700'
+  level: 4
+- name: 3,7 - ≥55%
+  short_name: 3,7 - ≥55%
+  id: 37 - -55
+  color_code: '#f1c000'
+  level: 3
+- name: 4,0 - ≥50%
+  short_name: 4,0 - ≥50%
+  id: 40 - -50
+  color_code: orange
+  level: 2
+- name: ' ❌ - <50%'
+  short_name: ' ❌ - <50%'
+  id: '  - -50'
+  color_code: '#FF0000'
+  level: 1
