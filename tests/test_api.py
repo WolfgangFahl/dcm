@@ -60,7 +60,7 @@ class TestAPI(WebserverTest):
         """
         Test the element description endpoint
         """
-        greta_id="greta_v2_0_1"
+        greta_id = "greta_v2_0_1"
         test_cases = [
             # Test case for a specific facet
             (

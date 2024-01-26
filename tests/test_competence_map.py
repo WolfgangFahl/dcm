@@ -138,7 +138,7 @@ class TestDynamicCompetenceMap(Basetest):
                 svg_config.legend_height = 40 * len(dcm.competence_tree.levels)
                 svg_path = "/tmp/dcm-test"
                 os.makedirs(svg_path, exist_ok=True)
-                for text_mode in ["empty", "curved", "horizontal", "angled"]:
+                for text_mode in ["curved", "horizontal", "angled", "empty"]:
                     svg_file = f"{svg_path}/{example_name}_competence_map_{markup}_{text_mode}.svg"
                     dcm_chart = DcmChart(dcm)
                     dcm_chart.generate_svg(

@@ -8,13 +8,13 @@ total_levels: 4
 stacked_levels: true
 aspects:
 - name: Berufspraktisches Wissen und Können
-  short_name: Berufsprak
+  short_name: Berufspraktisches Wissen und Können
   id: BerufspraktischesWissenUndKoennen
   color_code: '#868378'
   border_color: white
   areas:
   - name: Didaktik und Methodik
-    short_name: DidaktMethodik
+    short_name: DM
     id: DidaktikUndMethodik
     border_color: white
     facets:
@@ -147,7 +147,7 @@ aspects:
         - Austausch von freien Lern- und Lehrmaterialien (OER)
       border_color: white
 - name: Fach- und Feldspezifisches Wissen
-  short_name: FachFeldWissen
+  short_name: Fach- und Feldspezifiches Wissen
   id: FachUndFeldspezifischesWissen
   color_code: '#aba89e'
   border_color: white
@@ -217,7 +217,7 @@ aspects:
         - Verinnerlichung berufsethischer Standards und Prinzipien
       border_color: white
   - name: Berufsbezogene Überzeugungen
-    short_name: Berufsueberzeugungen
+    short_name: BU-Überz.
     id: BerufsbezogeneUeberzeugungen
     border_color: white
     facets:
@@ -295,7 +295,7 @@ aspects:
         - Ausbalancieren von hohem Engagement und guter Distanzierungsfähigkeit
       border_color: white
   - name: Berufspraktische Erfahrung
-    short_name: BerufspraktErf
+    short_name: BE-Erfahr.
     id: BerufspraktischeErfahrung
     border_color: white
     facets:

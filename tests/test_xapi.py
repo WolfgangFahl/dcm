@@ -55,13 +55,13 @@ class TestxApi(Basetest):
         """
         xapi = self.get_xApi_example()
         debug = self.debug
-        #debug = True
+        # debug = True
         if debug:
             print(json.dumps(xapi.xapi_dict, indent=2))
         learner = xapi.to_learner(self.competence_tree)
         self.assertIsNotNone(learner)
-        json_str=learner.to_json(indent=2)
+        json_str = learner.to_json(indent=2)
         with open("/tmp/greta_learner_xapi_example1.json", "w") as json_file:
-                json_file.write(json_str)
+            json_file.write(json_str)
         if debug:
             print(json_str)

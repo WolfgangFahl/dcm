@@ -12,6 +12,7 @@ from dcm.dcm_core import (
     CompetenceTree,
     DynamicCompetenceMap,
     Learner,
+    RingSpec,
 )
 from dcm.svg import SVG, DonutSegment, SVGConfig, SVGNodeConfig
 
@@ -26,7 +27,6 @@ class DcmChart:
         Constructor
         """
         self.dcm = dcm
-        self.text_mode = "empty"
 
     def prepare_and_add_inner_circle(
         self, config, competence_tree: CompetenceTree, lookup_url: str = None
@@ -45,17 +45,14 @@ class DcmChart:
         # center of circle
         self.cx = config.width // 2
         self.cy = (config.total_height - config.legend_height) // 2
-        self.radius_steps = competence_tree.total_levels
-        self.tree_radius = config.width / 2 / self.radius_steps / 2
-        if "tree" in competence_tree.ring_specs:
-            ringspec = competence_tree.ring_specs.get("tree")
-            self.tree_radius = ringspec.outer_ratio * config.width / 2
+        ringspec = competence_tree.ring_specs.get("tree")
+        self.tree_radius = ringspec.outer_ratio * config.width / 2
 
         self.circle_config = competence_tree.to_svg_node_config(
             x=self.cx, y=self.cy, width=self.tree_radius
         )
         svg.add_circle(config=self.circle_config)
-        if self.text_mode != "empty":
+        if ringspec.text_mode != "empty":
             svg.add_text(
                 self.cx,
                 self.cy,
@@ -181,11 +178,11 @@ class DcmChart:
                     result = svg.add_donut_segment(
                         config=stack_element_config, segment=stacked_segment
                     )
-        if element: 
-            text_mode=self.text_mode
+        if element:
+            text_mode = "empty"
             if segment.text_mode:
-                text_mode=segment.text_mode
-            if text_mode!="empty":
+                text_mode = segment.text_mode
+            if text_mode != "empty":
                 # no autofill please
                 # textwrap.fill(element.short_name, width=20)
                 text = element.short_name
@@ -269,17 +266,12 @@ class DcmChart:
         total = len(elements)
         total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
         hierarchy_level = sub_element_name[:-1]
-        text_mode=self.text_mode
-        if hierarchy_level in self.dcm.competence_tree.ring_specs:
-            # calculate inner and outer radius
-            ringspec = self.dcm.competence_tree.ring_specs[hierarchy_level]
-            text_mode=ringspec.text_mode
-            # Calculate the actual inner and outer radii
-            inner_radius = self.svg.config.width / 2 * ringspec.inner_ratio
-            outer_radius = self.svg.config.width / 2 * ringspec.outer_ratio
-        else:
-            inner_radius = segment.outer_radius
-            outer_radius = segment.outer_radius + self.tree_radius * 2
+        # calculate inner and outer radius
+        ringspec = self.dcm.competence_tree.ring_specs[hierarchy_level]
+        text_mode = ringspec.text_mode
+        # Calculate the actual inner and outer radii
+        inner_radius = self.svg.config.width / 2 * ringspec.inner_ratio
+        outer_radius = self.svg.config.width / 2 * ringspec.outer_ratio
         # are there any elements to be shown?
         if total == 0:
             # there are no subelements we might need a single
@@ -296,7 +288,7 @@ class DcmChart:
                 outer_radius=outer_radius,
                 start_angle=segment.start_angle,
                 end_angle=segment.end_angle,
-                text_mode=text_mode
+                text_mode=text_mode,
             )
             self.generate_donut_segment_for_element(
                 svg, element=None, learner=None, segment=sub_segment
@@ -313,7 +305,7 @@ class DcmChart:
                     outer_radius=outer_radius,
                     start_angle=start_angle,
                     end_angle=end_angle,
-                    text_mode=text_mode
+                    text_mode=text_mode,
                 )
                 self.generate_donut_segment_for_element(
                     svg, element, learner, segment=sub_segment
@@ -356,9 +348,9 @@ class DcmChart:
                 achievements. Defaults to an empty list.
             config (SVGConfig, optional): Configuration for the SVG canvas and legend.
                 If None, default configuration settings are used. Defaults to None.
+            text_mode(str): text display mode
             with_java_script (bool, optional): Indicates whether to include JavaScript
                 in the SVG for interactivity. Defaults to True.
-            text_mode(str): text display mode
             lookup_url (str, optional): Base URL for linking to detailed descriptions
                 or information about the competence elements. If not provided, links
                 will not be generated. Defaults to an empty string.
@@ -374,8 +366,7 @@ class DcmChart:
             competence_tree = self.dcm.competence_tree
         self.selected_paths = selected_paths
         self.levels = ["aspects", "areas", "facets"]
-        self.text_mode = text_mode
-
+        competence_tree.calculate_ring_specs(text_mode)
         svg = self.prepare_and_add_inner_circle(config, competence_tree, lookup_url)
 
         segment = DonutSegment(

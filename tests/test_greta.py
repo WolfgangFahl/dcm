@@ -14,7 +14,7 @@ from dcm.dcm_core import (
     CompetenceFacet,
     CompetenceLevel,
     CompetenceTree,
-    RingSpec
+    RingSpec,
 )
 
 
@@ -31,9 +31,10 @@ class TestGreta(Basetest):
         """
         convert the GRETA json specification to YAML
         """
-        for with_text in [False,True]:
+        for with_text in [False, True]:
             self.create_greta_json(with_text)
-    def create_greta_json(self,with_text:bool):
+
+    def create_greta_json(self, with_text: bool):
         """
         Read the Greta model from 'greta_kompetenzmodell_2-0.json'
         """
@@ -50,13 +51,13 @@ class TestGreta(Basetest):
         # Open and read the JSON file
         with open(json_file_path, "r") as json_file:
             greta_data = json.load(json_file)
-        
+
         km = greta_data["Kompetenzmodell"]
-        greta_id=km["ID"]
+        greta_id = km["ID"]
         greta_short_names = {
             f"{greta_id}": "GRETA",
-            f"{greta_id}/BerufspraktischesWissenUndKoennen": "Berufsprak",
-            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik": "DidaktMethodik",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen": "Berufspraktisches Wissen und Können",
+            f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik": "DM",
             f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/LerninhalteUndZiele": "DM-Lernziele",
             f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/MethodenMedienUndLernmaterialien": "DM-Methoden",
             f"{greta_id}/BerufspraktischesWissenUndKoennen/DidaktikUndMethodik/RahmenbedingungenUndLernumgebungen": "DM-Rahmenbedingungen",
@@ -70,7 +71,7 @@ class TestGreta(Basetest):
             f"{greta_id}/BerufspraktischesWissenUndKoennen/Organisation": "Organisation",
             f"{greta_id}/BerufspraktischesWissenUndKoennen/Organisation/KooperationMitDenAuftraggebendenArbeitgebenden": "Org-Auftraggeber",
             f"{greta_id}/BerufspraktischesWissenUndKoennen/Organisation/KollegialeZusammenarbeitNetzwerken": "Org-Netzwerke",
-            f"{greta_id}/FachUndFeldspezifischesWissen": "FachFeldWissen",
+            f"{greta_id}/FachUndFeldspezifischesWissen": "Fach- und Feldspezifiches Wissen",
             f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug": "Feldbezug",
             f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug/AdressatinnenUndAdressaten": "FB-Adressaten",
             f"{greta_id}/FachUndFeldspezifischesWissen/Feldbezug/FeldspezifischesWissen": "FB-Feldwissen",
@@ -79,7 +80,7 @@ class TestGreta(Basetest):
             f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos": "Berufsethos",
             f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/Menschenbilder": "BE-Menschenbild",
             f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/Berufsethos/Wertvorstellungen": "BE-Wertvorstellungen",
-            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen": "Berufsueberzeugungen",
+            f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen": "BU-Überz.",
             f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/EigenesRollenbewusstsein": "BU-Rollenbewusstsein",
             f"{greta_id}/ProfessionelleWerthaltungenUndUeberzeugungen/BerufsbezogeneUeberzeugungen/SubjektiveAnnahmenUeberDasLehrenUndLernen": "BU-Lehrannahmen",
             f"{greta_id}/ProfessionelleSelbststeuerung": "Selbststeuerung",
@@ -89,11 +90,11 @@ class TestGreta(Basetest):
             f"{greta_id}/ProfessionelleSelbststeuerung/Selbstregulation": "Selbstregul",
             f"{greta_id}/ProfessionelleSelbststeuerung/Selbstregulation/UmgangMitFeedbackUndKritik": "SR-Feedback",
             f"{greta_id}/ProfessionelleSelbststeuerung/Selbstregulation/EngagementUndDistanz": "SR-Engagement",
-            f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung": "BerufspraktErf",
+            f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung": "BE-Erfahr.",
             f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/ReflexionDesEigenenLehrhandelns": "BE-Reflexion",
             f"{greta_id}/ProfessionelleSelbststeuerung/BerufspraktischeErfahrung/BeruflicheWeiterentwicklung": "BE-Weiterentwicklung",
         }
-       
+
         ct = CompetenceTree(
             name="GRETA",
             id=greta_id,
@@ -111,40 +112,24 @@ class TestGreta(Basetest):
         if with_text:
             ct.ring_specs = {
                 "tree": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=1/10,
-                    text_mode="horizontal"),
+                    inner_ratio=0.0, outer_ratio=1 / 10, text_mode="horizontal"
+                ),
                 "aspect": RingSpec(
-                    text_mode="curved",
-                    inner_ratio=9/10, 
-                    outer_ratio=10/10),
-                "area": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0
-                    ),
+                    text_mode="curved", inner_ratio=9 / 10, outer_ratio=10 / 10
+                ),
+                "area": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
                 "facet": RingSpec(
-                    text_mode="angled",
-                    inner_ratio=1 / 10, 
-                    outer_ratio=9 / 10),
+                    text_mode="angled", inner_ratio=1 / 10, outer_ratio=9 / 10
+                ),
             }
         else:
             ct.ring_specs = {
-                "tree": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=1/9
-                    ),
-                "aspect": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0),
-                "area": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0
-                    ),
-                "facet": RingSpec(
-                    inner_ratio=1 / 9, 
-                    outer_ratio=9 / 9),
+                "tree": RingSpec(inner_ratio=0.0, outer_ratio=1 / 9),
+                "aspect": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
+                "area": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
+                "facet": RingSpec(inner_ratio=1 / 9, outer_ratio=9 / 9),
             }
-            
+
         # Define color codes for competence levels
         level_color_codes = {
             0: "#888888",  # Grey for level 0
@@ -192,12 +177,12 @@ class TestGreta(Basetest):
                     )
                     area.facets.append(facet)
         ct.update_paths()
-        ok=True
+        ok = True
         for path, element in ct.elements_by_path.items():
             if not path in greta_short_names:
-                parts=path.split("/")
+                parts = path.split("/")
                 print(f"missing short_name for {json.dumps(parts,indent=2)}")
-                ok=False
+                ok = False
                 continue
             element.short_name = greta_short_names[path]
             element.border_color = "white"
@@ -205,7 +190,7 @@ class TestGreta(Basetest):
         yaml_str = ct.to_yaml()
         if self.debug:
             print(yaml_str)
-        
-        suffix="_text" if with_text else ""
+
+        suffix = "_text" if with_text else ""
         with open(f"/tmp/greta{suffix}.yaml", "w") as yaml_file:
             yaml_file.write(yaml_str)

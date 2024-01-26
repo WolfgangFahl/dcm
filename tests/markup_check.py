@@ -102,7 +102,7 @@ class MarkupCheck:
             # ignore aspects without areas ..
             if len(aspect.areas) == 0:
                 continue
-            ring_spec=ct.ring_specs.get("aspect")
+            ring_spec = ct.ring_specs.get("aspect")
             if ring_spec and ring_spec.empty:
                 continue
             element = root.find(f"svg:g[@id='{aspect.id}']", namespaces=namespaces)

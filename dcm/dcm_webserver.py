@@ -3,7 +3,6 @@ Created on 2023-11-06
 
 @author: wf
 """
-import asyncio
 import os
 import uuid
 from dataclasses import dataclass
@@ -22,6 +21,7 @@ from pydantic import BaseModel
 from dcm.dcm_assessment import Assessment
 from dcm.dcm_chart import DcmChart
 from dcm.dcm_core import CompetenceTree, DynamicCompetenceMap, Learner
+from dcm.dcm_web import RingSpecsView
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
 
@@ -36,6 +36,7 @@ class SVGRenderRequest(BaseModel):
         markup (str): The format of the definition ('json' or 'yaml').
         config (SVGConfig): Optional configuration for SVG rendering. Defaults to None, which uses default settings.
     """
+
     name: str
     definition: str
     markup: str
@@ -87,8 +88,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.learner = None
         self.assessment = None
         self.content_div = None
-        self.timeout=0.5
         self.text_mode = "empty"
+        self.timeout = 0.5
         config_path = os.path.join(os.environ["HOME"], ".dcm/config.yaml")
         self.server_config = ServerConfig.from_yaml(config_path)
 
@@ -172,10 +173,10 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             """
             path = f"{tree_id}"
             return await self.show_description(path)
-        
+
         # nicegui RESTFul endpoints
         @ui.page("/learner/{learner_slug}")
-        async def show_learner(client: Client,learner_slug: str):
+        async def show_learner(client: Client, learner_slug: str):
             await client.connected(timeout=self.timeout)
             return await self.assess_learner_by_slug(learner_slug)
 
@@ -291,6 +292,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 self.assessment = None
                 self.learner = None
             self.dcm = dcm
+            self.ringspecs_view.update_rings(dcm.competence_tree)
             self.assess_state(True)
             dcm_chart = DcmChart(dcm)
             svg_markup = dcm_chart.generate_svg_markup(
@@ -325,13 +327,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                             extensions=extensions,
                             handler=self.read_and_optionally_render,
                         )
-                        selection = ["empty", "curved", "horizontal", "angled"]
-                        self.add_select(
-                            "text",
-                            selection,
-                            value=self.text_mode,
-                            on_change=self.on_text_mode_change,
-                        )
+                        self.ringspecs_view = RingSpecsView(self)
                     with ui.grid(columns=1).classes("w-full") as self.left_grid:
                         with ui.row() as self.input_row:
                             self.input_input = ui.input(
@@ -406,6 +402,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         Raises:
             HTTPException: If the learner file does not exist or an error occurs.
         """
+
         def show():
             try:
                 self.show_ui()
@@ -441,6 +438,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # self.render_dcm(dcm,learner=learner)
         self.assess_learner(dcm, learner)
 
+    def on_update_ringspecs(self):
+        if self.learner:
+            self.render_item(self.learner)
+        else:
+            self.render_item(self.dcm)
+
     def assess_state(self, state: bool):
         if state:
             self.assessment_button.enable()
@@ -465,18 +468,6 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 ui.download(json_path)
         except Exception as ex:
             self.handle_exception(ex, self.do_trace)
-
-    async def on_text_mode_change(self, args):
-        """
-        handle changes in the text_mode
-        """
-        new_text_mode = args.value
-        if new_text_mode != self.text_mode:
-            self.text_mode = new_text_mode
-            if self.learner:
-                self.render_item(self.learner)
-            else:
-                self.render_item(self.dcm)
 
     def configure_run(self):
         """

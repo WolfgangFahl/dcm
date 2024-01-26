@@ -17,6 +17,7 @@ from slugify import slugify
 
 from dcm.svg import SVG, SVGNodeConfig
 
+
 @dataclass_json
 @dataclass
 class RingSpec:
@@ -28,15 +29,21 @@ class RingSpec:
         inner_ratio (Optional[float]): The inner radius of the ring, relative to the chart size.
         outer_ratio (Optional[float]): The outer radius of the ring, relative to the chart size.
     """
+
     text_mode: Optional[str] = "empty"
     inner_ratio: Optional[float] = None
     outer_ratio: Optional[float] = None
-    
-    @property 
-    def empty(self)->bool:
-        empty=self.inner_ratio is None or self.outer_ratio is None or (self.inner_ratio + self.outer_ratio) == 0.0
+
+    @property
+    def empty(self) -> bool:
+        empty = (
+            self.inner_ratio is None
+            or self.outer_ratio is None
+            or (self.inner_ratio + self.outer_ratio) == 0.0
+        )
         return empty
-    
+
+
 @dataclass_json
 @dataclass
 class CompetenceElement:
@@ -168,7 +175,7 @@ class CompetenceLevel(CompetenceElement):
 class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
     """
     Represents the entire structure of competencies, including various aspects and levels.
-    
+
     Attributes:
         lookup_url (Optional[str]): Optional URL for additional information.
         total_levels (int): Total number of levels in the competence hierarchy.
@@ -179,6 +186,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         ring_specs (Dict[str, RingSpec]): Specifications for the rings in the donut chart.
         total_elements (Dict[str, int]): A dictionary holding the total number of elements for each type (aspects, areas, facets).
     """
+
     lookup_url: Optional[str] = None
     total_levels: int = field(init=False)
     stacked_levels: Optional[bool] = False
@@ -195,6 +203,29 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         super().__post_init__()
         self.total_elements = {"aspects": 0, "areas": 0, "facets": 0}
         self.update_paths()
+        self.calculate_ring_specs("empty")
+
+    def calculate_ring_specs(self, text_mode: str):
+        """
+        calculate the ring specifications
+        """
+        inner_ratio = 0.0
+        circle_ratio = 1 / (self.total_levels * 2 + 1)
+        outer_ratio = circle_ratio
+        if not "tree" in self.ring_specs:
+            self.ring_specs["tree"] = RingSpec(
+                text_mode=text_mode, inner_ratio=0.0, outer_ratio=circle_ratio
+            )
+        # loop over ring levels
+        for rl in ["aspect", "area", "facet"]:
+            inner_ratio = outer_ratio
+            outer_ratio = outer_ratio + circle_ratio * 2
+            if not rl in self.ring_specs:
+                self.ring_specs[rl] = RingSpec(
+                    text_mode=text_mode,
+                    inner_ratio=inner_ratio,
+                    outer_ratio=outer_ratio,
+                )
 
     def update_paths(self):
         """

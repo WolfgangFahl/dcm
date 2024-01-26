@@ -35,9 +35,9 @@ class XAPI:
         actor_id = None
         learner = None
         for entry in self.xapi_dict:
-            stmt=entry.get("statement")
+            stmt = entry.get("statement")
             if stmt:
-                actor=stmt.get("actor")
+                actor = stmt.get("actor")
                 if actor:
                     # Extract necessary information from the xAPI statement
                     new_actor_id = actor["account"]["name"]
