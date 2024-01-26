@@ -113,11 +113,17 @@ class RingSpecsView:
         """
         setup the user interface
         """
-        with ui.expansion("rings") as self.expansion:
+        with ui.expansion("",icon="settings") as self.expansion:
+            levels=["tree", "aspect", "area", "facet"]
+            with ui.row():
+                ui.label("symmetry:")
+                self.symmetry_radio = ui.radio(["count","time","score"], value=None).props('inline')
+            with ui.row():
+                ui.html("<hr>")
             with ui.grid(columns=3, rows=4) as self.grid:
                 inner_ratio = 0
                 outer_ratio = 1 / 7
-                for rl in ["tree", "aspect", "area", "facet"]:
+                for rl in levels:
                     rs = RingSpec(
                         text_mode="empty",
                         inner_ratio=round(inner_ratio, 2),

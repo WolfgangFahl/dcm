@@ -37,8 +37,21 @@ class dcm.dcm_core.CompetenceElement {
   border_color: Optional[str]
   path: str 
 }
+class dcm.dcm_core.RingSpec {
+  text_mode: Optional[str]
+  inner_ratio: Optional[float]
+  outer_ratio: Optional[float]
+  +empty() : bool
+}
+note top of RingSpec
+specification of how to display a ring in the chart
+end note
 
 class dcm.dcm_core.CompetenceFacet {
+  time: Optional[float]
+  time_unit: Optional[str]
+  max_score: Optional[float]
+  score_unit: Optional[str]
 }
 class dcm.dcm_core.CompetenceLevel {
   level: int

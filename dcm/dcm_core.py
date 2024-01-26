@@ -124,8 +124,11 @@ class CompetenceFacet(CompetenceElement):
 
     This class can include additional properties or methods specific to a competence facet.
     """
-
-
+    time: Optional[float] = None
+    time_unit: Optional[str] = "h"
+    max_score: Optional[float] = 100.0
+    score_unit: Optional[str] = "%"
+    
 @dataclass_json
 @dataclass
 class CompetenceArea(CompetenceElement):
