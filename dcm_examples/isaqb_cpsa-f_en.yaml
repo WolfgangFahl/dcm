@@ -11,7 +11,7 @@ aspects:
   short_name: basics
   id: basics
   description: Basics
-  color_code: '#3b6fc5'
+  color_code: '#c4903a'
   areas:
   - name: Discuss Definitions of Software Architecture (R1)
     short_name: LG1-1
@@ -179,7 +179,7 @@ aspects:
   short_name: design
   id: design
   description: Design
-  color_code: '#456fb3'
+  color_code: '#ba904c'
   areas:
   - name: Select and Use Approaches and Heuristics for Architecture Development (R1,R3)
     short_name: LG2-1
@@ -439,7 +439,7 @@ aspects:
   short_name: documentat
   id: documentation
   description: Documentation
-  color_code: '#4f6ea2'
+  color_code: '#b0915d'
   areas:
   - name: Explain and Consider the Requirements of Technical Documentation (R1)
     short_name: LG3-1
@@ -577,7 +577,7 @@ aspects:
   short_name: examples
   id: examples
   description: Examples
-  color_code: '#596e90'
+  color_code: '#a6916f'
   areas:
   - name: Know the Relation between Requirements, Constraints, and Solutions (R3)
     short_name: LG5-1
@@ -599,7 +599,7 @@ aspects:
   short_name: quality
   id: quality
   description: Quality
-  color_code: '#636e7f'
+  color_code: '#9c9180'
   areas:
   - name: Discuss Quality Models and Quality Characteristics (R1)
     short_name: LG4-1

@@ -11,7 +11,7 @@ aspects:
   short_name: basics
   id: basics
   description: Basics
-  color_code: '#3b6fc5'
+  color_code: '#c4903a'
   areas:
   - name: Definitionen von Softwarearchitektur diskutieren (R1)
     short_name: LZ1-1
@@ -173,7 +173,7 @@ aspects:
   short_name: design
   id: design
   description: Design
-  color_code: '#456fb3'
+  color_code: '#ba904c'
   areas:
   - name: Vorgehen und Heuristiken zur Architekturentwicklung auswählen und anwenden
       können (R1,R3)
@@ -441,7 +441,7 @@ aspects:
   short_name: documentat
   id: documentation
   description: Documentation
-  color_code: '#4f6ea2'
+  color_code: '#b0915d'
   areas:
   - name: Anforderungen an technische Dokumentation erläutern und berücksichtigen
       (R1)
@@ -573,7 +573,7 @@ aspects:
   short_name: examples
   id: examples
   description: Examples
-  color_code: '#596e90'
+  color_code: '#a6916f'
   areas:
   - name: Bezug von Anforderungen und Randbedingungen zu Lösung erfassen (R3)
     short_name: LZ5-1
@@ -595,7 +595,7 @@ aspects:
   short_name: quality
   id: quality
   description: Quality
-  color_code: '#636e7f'
+  color_code: '#9c9180'
   areas:
   - name: Qualitätsmodelle und Qualitätsmerkmale diskutieren (R1)
     short_name: LZ4-1
