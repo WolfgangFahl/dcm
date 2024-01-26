@@ -1,0 +1,711 @@
+name: iSAQB e.V. CPSA-F
+short_name: CPSA-F
+id: iSAQB_CPSA-F_de
+url: https://github.com/isaqb-org
+description: International Software Architecture Qualification Board Certified Professional
+  for Software Architecture Foundation Level Mock Exam Self Assessment
+total_levels: 3
+stacked_levels: false
+aspects:
+- name: basics
+  short_name: basics
+  id: basics
+  description: Basics
+  color_code: '#3b6fc5'
+  areas:
+  - name: Definitionen von Softwarearchitektur diskutieren (R1)
+    short_name: LZ1-1
+    id: 1-01
+    description: |2+
+
+      Softwarearchitekt:innen kennen mehrere Definitionen von Softwarearchitektur (u. a. ISO 42010/IEEE 1471, SEI, Booch etc.) und können deren Gemeinsamkeiten benennen:
+
+      * Komponenten/Bausteine mit Schnittstellen und Beziehungen
+      * Bausteine als allgemeiner Begriff, Komponenten als eine spezielle Ausprägung davon
+      * Strukturen, Querschnittskonzepte, Prinzipien
+      * Architekturentscheidungen mit systemweiten oder den gesamten Lebenszyklus betreffenden Konsequenzen
+
+    facets: []
+  - name: Nutzen und Ziele von Softwarearchitektur verstehen und erläutern (R1)
+    short_name: LZ1-2
+    id: 1-02
+    description: "\n\nSoftwarearchitekt:innen können folgenden Nutzen und wesentlichen\
+      \ Ziele von Softwarearchitektur begründen:\n\n* Entwurf, Implementierung, Pflege\
+      \ und Betrieb von Systemen zu unterstützen\n* funktionale Anforderungen zu erreichen\
+      \ bzw. deren Erfüllbarkeit sicherzustellen\n* Anforderungen wie Zuverlässigkeit,\
+      \ Wartbarkeit, Änderbarkeit, Sicherheit, Energieeffizienz zu erreichen\n* Verständnis\
+      \ für Strukturen und Konzepte des Systems zu vermitteln, bezogen auf sämtliche\
+      \ relevanten Stakeholder\n* systematisch Komplexität zu reduzieren \n* architekturrelevante\
+      \ Richtlinien für Implementierung und Betrieb zu spezifizieren\n\n"
+    facets: []
+  - name: Softwarearchitektur in Software-Lebenszyklus einordnen (R2)
+    short_name: LZ1-3
+    id: 1-03
+    description: |2+
+
+
+      Softwarearchitekt:innen können Ihre Aufgaben und Ergebnisse in den gesamten Lebenszyklus von IT-Systemen einordnen.
+      Sie können:
+
+      * Konsequenzen von Änderungen bei Anforderungen, Technologien oder der Systemumgebung im Bezug auf die Softwarearchitektur erkennen
+      * inhaltliche Zusammenhänge zwischen IT-Systemen und den unterstützten Geschäfts- und Betriebsprozessen aufzeigen
+
+    facets: []
+  - name: Aufgaben und Verantwortung von Softwarearchitekt:innen verstehen (R1)
+    short_name: LZ1-4
+    id: 1-04
+    description: |2+
+
+      Softwarearchitekt:innen tragen die Verantwortung für die Erreichung der Anforderungen und die Entwicklung der Architektur der Lösung.
+      Sie müssen diese Verantwortung, abhängig vom jeweiligen Prozess- oder Vorgehensmodell, mit der Gesamtverantwortung der Projektleitung oder anderen Rollen koordinieren.
+
+      Aufgaben und Verantwortung von Softwarearchitekt:innen:
+
+      * Anforderungen und Randbedingungen klären, hinterfragen und bei Bedarf verfeinern, insbesondere _Required Features_ und _Required Constraints_
+      * Strukturentscheidungen hinsichtlich Systemzerlegung und Bausteinstruktur treffen, dabei Abhängigkeiten und Schnittstellen zwischen den Bausteinen festlegen
+      * Querschnittskonzepte entscheiden (beispielsweise Persistenz, Kommunikation, GUI) und bei Bedarf umsetzen
+      * Softwarearchitektur auf Basis von Sichten, Architekturmustern sowie technischen und Querschnittskonzepten kommunizieren und dokumentieren
+      * Umsetzung und Implementierung der Architektur begleiten, Rückmeldungen der beteiligten Stakeholder bei Bedarf in die Architektur einarbeiten, Konsistenz von Quellcode und Softwarearchitektur prüfen und sicherstellen
+      * Softwarearchitektur analysieren und bewerten, insbesondere hinsichtlich Risiken bezüglich der Erreichung von Anforderungen. Siehe <<LZ-4-3>> und <<LZ-4-4>>.
+      * Die Konsequenzen von Architekturentscheidungen erkennen, aufzeigen und gegenüber anderen Stakeholdern argumentieren
+
+      Sie sollen selbstständig die Notwendigkeit von Iterationen bei allen Aufgaben erkennen und Möglichkeiten für entsprechende Rückmeldung aufzeigen.
+
+    facets: []
+  - name: Rolle von Softwarearchitekt:innen in Beziehung zu anderen Stakeholdern setzen
+      (R1)
+    short_name: LZ1-5
+    id: 1-05
+    description: "\nSoftwarearchitekt:innen können ihre Rolle erklären. \nSie sollten\
+      \ ihren Beitrag zur Systementwicklung in Verbindung mit anderen Stakeholdern\
+      \ und Organisationseinheiten kontextspezifisch ausgestalten, insbesondere zu:\n\
+      \n* Produktmanagement, Product-Owner\n* Projektleitung und -management\n* Anforderungsanalytiker:innen\
+      \ (System-/Businessanalyse, Anforderungsmanagement, Fachbereich)\n* Entwicklung\n\
+      * Qualitätssicherung und Test\n* IT-Betrieb (Produktion, Rechenzentren), zutreffend\
+      \ primär für Informationssysteme\n* Hardwareentwicklung\n* Unternehmensarchitektur,\
+      \ Architekturboard.\n\n"
+    facets: []
+  - name: Zusammenhang zwischen Entwicklungsvorgehen und Softwarearchitektur erläutern
+      können (R2)
+    short_name: LZ1-6
+    id: 1-06
+    description: |2+
+
+
+      * Softwarearchitekt:innen können den Einfluss von iterativem Vorgehen auf Architekturentscheidungen erläutern (hinsichtlich Risiken und Prognostizierbarkeit).
+      * Sie müssen aufgrund inhärenter Unsicherheit oftmals iterativ arbeiten und entscheiden.
+      Dabei müssen sie bei anderen Stakeholdern systematisch Rückmeldung einholen.
+
+    facets: []
+  - name: Kurz- und langfristige Ziele differenzieren (R2)
+    short_name: LZ1-7
+    id: 1-07
+    description: |2+
+
+
+      Softwarearchitekt:innen können potenzielle Zielkonflikte zwischen kurz- und langfristigen Zielen erklären, um eine für alle Beteiligten tragfähige Lösung zu erarbeiten
+
+    facets: []
+  - name: Explizite Aussagen von impliziten Annahmen unterscheiden (R1)
+    short_name: LZ1-8
+    id: 1-08
+    description: |2+
+
+
+      Softwarearchitekt:innen:
+
+      * können Annahmen oder Voraussetzungen explizit darstellen und dadurch implizite Annahmen vermeiden
+      * wissen, dass implizite Annahmen potenzielle Missverständnisse zwischen beteiligten Stakeholdern bewirken
+
+    facets: []
+  - name: Zuständigkeit von Softwarearchitekt:innen in organisatorischen Kontext einordnen
+      (R3)
+    short_name: LZ1-9
+    id: 1-09
+    description: |2+
+
+
+      Der Fokus des iSAQB CPSA-Foundation Level liegt auf Strukturen und Konzepten einzelner Softwaresysteme.
+
+      Darüber hinaus kennen Softwarearchitekt:innen weitere Architekturdomänen, beispielsweise:
+
+      * Unternehmens-IT-Architektur (_Enterprise IT Architecture_): Struktur von Anwendungslandschaften
+      * Geschäfts- bzw. Prozessarchitektur (_Business and Process Architecture_): Struktur von u.a. Geschäftsprozessen
+      * Informationsarchitektur: systemübergreifende Struktur und Nutzung von Information und Daten
+      * Infrastruktur- bzw. Technologiearchitektur: Struktur der technischen Infrastruktur, Hardware, Netze etc.
+      * Hardware- oder Prozessorarchitektur (für hardwarenahe Systeme)
+
+      Diese Architekturdomänen sind nicht inhaltlicher Fokus vom CPSA-F.
+
+    facets: []
+  - name: Typen von IT-Systemen unterscheiden (R3)
+    short_name: LZ1-10
+    id: 1-10
+    description: |2+
+
+
+      Softwarearchitekt:innen kennen unterschiedliche Typen von IT-Systemen, beispielsweise:
+
+      * Informationssysteme
+      * Decision-Support, Data-Warehouse oder Business-Intelligence Systeme
+      * Mobile Systeme
+      * _Cloud-native_ Systeme (siehe <<cncf>>)
+      * Batchprozesse oder -systeme
+      * Systeme, die auf maschinellem Lernen oder künstlicher Intelligenz basieren
+      * hardwarenahe Systeme; hier verstehen sie die Notwendigkeit des Hardware-/Software-Co-Designs (zeitliche und inhaltliche Abhängigkeiten von Hard- und Softwareentwicklung).
+
+
+    facets: []
+  - name: Herausforderungen verteilter Systeme (R3)
+    short_name: LZ1-11
+    id: 1-11
+    description: "\n\nSoftwarearchitekt:innen können:\n\n* die Verteilung in einer\
+      \ gegebenen Software-Architektur identifizieren\n* Konsistenzkriterien für ein\
+      \ gegebenes fachliches Problem analysieren\n* Kausalität von Ereignissen in\
+      \ einem verteilten System erklären\n\nSoftwarearchitekt:innen wissen:\n\n* dass\
+      \ Kommunikation in einem verteilten System fehlschlagen kann\n* dass es bei\
+      \ verteilten Systemen Einschränkungen hinsichtlich der Konsistenz in Datenbanken\
+      \ gibt \n* was das \"Split-Brain\"-Problem ist und warum es schwierig zu lösen\
+      \ ist\n* dass es unmöglich ist, die exakte zeitliche Reihenfolge der Ereignisse\
+      \ in einem verteilten System zu bestimmen\n"
+    facets: []
+- name: design
+  short_name: design
+  id: design
+  description: Design
+  color_code: '#456fb3'
+  areas:
+  - name: Vorgehen und Heuristiken zur Architekturentwicklung auswählen und anwenden
+      können (R1,R3)
+    short_name: LZ2-1
+    id: 2-01
+    description: "\nSoftwarearchitekt:innen können grundlegende Vorgehensweisen der\
+      \ Architekturentwicklung benennen, erklären und anwenden, beispielsweise:\n\n\
+      * Top-down- und Bottom-up-Vorgehen beim Entwurf (R1)\n* Sichtenbasierte Architekturentwicklung\
+      \ (R1)\n* iterativer und inkrementeller Entwurf (R1)\n** Notwendigkeit von Iterationen,\
+      \ insbesondere bei unter Unsicherheit getroffenen Entscheidungen (R1)\n** Notwendigkeit\
+      \ von Rückmeldungen zu Entwurfsentscheidungen (R1)\n* Domain-Driven Design,\
+      \ siehe <<evans>> (R3)\n* Evolutionäre Architektur, siehe <<ford>> (R3)\n* Globale\
+      \ Analyse, siehe <<hofmeister>> (R3) \n* Modellgetriebene Architektur (R3)\n\
+      \n"
+    facets: []
+  - name: Softwarearchitekturen entwerfen (R1)
+    short_name: LZ2-2
+    id: 2-02
+    description: |2+
+
+
+      Softwarearchitekt:innen können:
+
+      * Softwarearchitekturen auf Basis bekannter funktionaler und Qualitätsanforderungen für nicht sicherheits- oder unternehmenskritische Softwaresysteme entwerfen und angemessen kommunizieren und dokumentieren
+      * Strukturentscheidungen hinsichtlich Systemzerlegung und Bausteinstruktur treffen, dabei Abhängigkeiten zwischen Bausteinen festlegen
+      * gegenseitige Abhängigkeiten und Abwägungen bezüglich Entwurfsentscheidungen erkennen und begründen
+      * Begriffe _Blackbox_ und _Whitebox_ erklären und zielgerichtet anwenden
+      * schrittweise Verfeinerung und Spezifikation von Bausteinen durchführen
+      * Architektursichten entwerfen, insbesondere Baustein-, Laufzeit- und Verteilungssicht
+      * die aus diesen Entscheidungen resultierenden Konsequenzen auf den Quellcode erklären
+      * domänenspezifische und technische Bestandteile in Architekturen trennen und diese Trennung begründen
+      * Risiken von Entwurfsentscheidungen identifizieren.
+
+    facets: []
+  - name: Anforderungen klären und berücksichtigen können (R1-R3)
+    short_name: LZ2-3
+    id: 2-03
+    description: "\n\nSoftwarearchitekt:innen können Anforderungen (inklusive Randbedingungen\
+      \ als Einschränkungen der Entwurfsfreiheit) klären und berücksichtigen.\nSie\
+      \ verstehen, dass ihre Entscheidungen zu weiteren Anforderungen (inklusive Randbedingungen)\
+      \ an das zu entwerfende System, seine Architektur oder den Entwicklungsprozess\
+      \ führen können. \n\nSie erkennen und berücksichtigen den Einfluss von:\n\n\
+      * produktbezogenen Anforderungen wie (R1)\n** funktionale Anforderungen\n**\
+      \ Qualitätsanforderungen\n\n* Technologische Randbedingungen wie \n** bestehende\
+      \ oder geplante Hardware- und Software-Infrastruktur (R1)\n** technologische\
+      \ Beschränkungen für Datenstrukturen und Schnittstellen (R2)\n** Referenzarchitekturen,\
+      \ Bibliotheken, Komponenten und Frameworks (R1)\n** Programmiersprachen (R2)\n\
+      \n* Organisatorischen Randbedingungen wie\n** Organisationsstruktur von Entwicklungsteams\
+      \ und Auftraggebenden (R1), insbesondere das Gesetz von Conway (R2)\n** Unternehmens-\
+      \ und Teamkultur (R3)\n** Partnerschaften und Kooperationen (R2)\n** Normen,\
+      \ Richtlinien und Prozessmodelle (z.B. Genehmigungs- und Freigabeprozesse) (R2)\n\
+      ** Verfügbarkeit von Ressourcen wie Budget, Zeit und Personal (R1)\n** Verfügbarkeit,\
+      \ Qualifikation und Engagement von Mitarbeitenden (R1)\n\n* Regulatorischen\
+      \ Randbedingungen wie (R2)\n** lokale und internationale rechtliche Einschränkungen\n\
+      ** Vertrags- und Haftungsfragen\n** Datenschutzgesetze und Gesetze zum Schutz\
+      \ der Privatsphäre\n** Fragen der Einhaltung oder Verpflichtungen zur Beweislast\n\
+      \n* Trends wie (R3)\n** Markttrends\n** Technologietrends (z.B. Blockchain,\
+      \ Microservices)\n** Methodik-Trends (z.B. agil)\n** (potenzielle) Auswirkungen\
+      \ weiterer Stakeholderinteressen und vorgegebener oder extern festgelegter Designentscheidungen\
+      \ \n"
+    facets: []
+  - name: Querschnittskonzepte entwerfen und umsetzen (R1)
+    short_name: LZ2-4
+    id: 2-04
+    description: |2+
+
+
+      Softwarearchitekt:innen können:
+
+      * die Bedeutung von Querschnittskonzepten erklären
+      * Querschnittskonzepte entscheiden und entwerfen, unter anderem Persistenz, Kommunikation, GUI, Fehlerbehandlung, Nebenläufigkeit, Energieeffizienz
+      * mögliche wechselseitige Abhängigkeiten dieser Entscheidungen erkennen und beurteilen.
+
+      Softwarearchitekt:innen wissen, dass solche Querschnittskonzepte systemübergreifend wiederverwendbar sein können.
+
+    facets: []
+  - name: Wichtige Lösungsmuster beschreiben, erklären und angemessen anwenden (R1,
+      R3)
+    short_name: LZ2-5
+    id: 2-05
+    description: |2+
+
+
+
+      Softwarearchitekt:innen kennen verschiedene Architekturmuster (siehe unten) und können sie gegebenenfalls anwenden.
+
+      Sie wissen (R3):
+
+      * dass Muster ein Weg sind, bestimmte Qualitäten für gegebene Probleme und Anforderungen innerhalb gegebener Kontexte zu erreichen
+      * dass es verschiedene Kategorien von Mustern gibt
+      * zusätzliche Quellen für Muster, die sich auf ihre spezifische technische oder Anwendungsdomäne beziehen
+
+
+      Softwarearchitekt:innen können die folgenden Muster erklären und Beispiele dafür liefern (R1):
+
+      * Schichten (Layers):
+      ** Abstraktionsschichten (Abstraction layers) verbergen Details, Beispiel: ISO/OSI-Netzwerkschichten oder "Hardware-Abstraktionsschicht". Siehe <https://en.wikipedia.org/wiki/Hardware_abstraction>.
+      ** Eine andere Interpretation sind Schichten zur (physischen) Trennung von Funktionalität oder Verantwortung, siehe <https://en.wikipedia.org/wiki/Multitier_architecture>.
+
+      * Pipes-and-Filter: Repräsentativ für Datenflussmuster, die die schrittweise Verarbeitung in eine Reihe von Verarbeitungsaktivitäten ("Filter") und zugehörige Transport/Puffer ("Pipes") separieren.
+      * Microservices teilen Anwendungen in separate ausführbare Dienste
+        auf, die über Netzwerk (remote) kommunizieren. <<newman>>
+      * Dependency Injection als eine mögliche Lösung für das Dependency-Inversion-Prinzip
+
+
+      Softwarearchitekt:innen können einige der folgendene Muster erklären, ihre Relevanz für konkrete Systeme erläutern und Beispiele dafür liefern (R3):
+
+      * Blackboard: Behandlung von Problemen, die nicht durch deterministische Algorithmen lösbar sind, sondern vielfältiges Wissen erfordern.
+      * Broker: verantwortlich für die Koordination der Kommunikation zwischen Anbieter(n) und Verbraucher(n), angewandt in verteilten Systemen. Verantwortlich für die Weiterleitung von Anfragen und/oder die Übermittlung von Ergebnissen, Fehlern und Ausnahmen.
+      * Kombinator (Synonym: Closure of Operations), für Domänenobjekte vom Typ T, suchen Sie nach Operationen sowohl mit Input- als auch Output-Typ T. Siehe <<yorgey>>
+      * CQRS (Command-Query-Responsibility-Segregation): Trennung von Lese- und Schreibvorgängen in Informationssystemen. Erfordert Einblicke in konkrete Datenbank-/Persistenztechnologie, um die unterschiedlichen Eigenschaften und Anforderungen von "Lese-" und "Schreib"-Operationen zu verstehen.
+      * Event-Sourcing: Behandlung von Datenoperationen durch eine Abfolge von Ereignissen (Events), von denen jedes in einem Append-only Speicher aufgezeichnet wird.
+      * Interpreter: repräsentieren Domänenobjekt oder DSL als Syntax, bieten eine Funktion, die eine semantische Interpretation des Domänenobjekts getrennt vom Domänenobjekt selbst implementiert.
+      * Integrations- oder Messaging-Patterns (z.B. aus <<hohpe>>)
+      * Die MVC- (Model View Controller), MVVM- (Model View ViewModel), MVU- (Model View Update), PAC- (Presentation Abstraction Control) Musterfamilie, die die externe Repräsentation (Ansicht) von Daten von Operationen Diensten und deren Koordination trennt.
+      * Schnittstellenmuster wie Adapter, Fassade, Proxy. Solche Muster helfen bei der Integration von Subsystemen und/oder bei der Vereinfachung von Abhängigkeiten. Architekt:innen sollten wissen, dass diese Muster unabhängig von (Objekt-)Technologie verwendet werden können.
+      ** Adapter: Entkopplung von Konsument und Provider - wenn die Schnittstelle des Providers nicht genau mit der des Konsumenten übereinstimmt.
+      ** Fassade: vereinfacht die Verwendung eines Providers für den/die Consumer durch vereinfachten Zugriff.
+      ** Proxy: Ein Vermittler/Stellvertreter zwischen Consumer und Provider, der beispielsweise die zeitliche Entkopplung, das Caching von Ergebnissen oder die Zugriffskontrolle auf den Provider ermöglicht.
+      * Observer (Beobachter): Ein Interessent (Observer, Beobachter)
+        registriert sich bei einem Objekt (dem Subjekt), damit das Subjekt
+        den Observer bei Änderungen benachrichtigt.
+      * Plug-In: erweitert das Verhalten einer Komponente.
+      * Ports&Adapters (syn. Onion-Architecture, Hexagonale Architektur, Clean-Architecture): konzentrieren die Domänenlogik im Zentrum des Systems, und besitzen lediglich an den Rändern Verbindungen zur Außenwelt (Datenbank, UI). Abhängigkeiten von außen nach innen (Outside-In), niemals von innen nach außen (Inside-Out). <<lange21>> <<martin17>>
+      * Remote Procedure Call: eine Funktion oder einen Algorithmus in einem anderen Adressraum ausführen lassen.
+      * SOA (Service-orientierte Architektur): Ein Ansatz zur Bereitstellung abstrakter Dienste statt konkreter Implementierungen für die Benutzer des Systems, um die Wiederverwendung von Diensten über Abteilungen und zwischen Unternehmen zu fördern.
+      * Template und Strategy: spezifische Algorithmen durch Kapselung flexibel machen.
+      * Visitor (Besucher): Traversierung von Datenstrukturen von spezifischer Verarbeitung trennen.
+
+
+      Softwarearchitekt:innen kennen wesentliche Quellen für Architekturmuster, beispielsweise die POSA-Literatur (z.B. <<buschmanna>>) und PoEAA (<<fowler>>) (für Informationssysteme) (R3)
+
+    facets: []
+  - name: Entwurfsprinzipien erläutern und anwenden (R1-R3)
+    short_name: LZ2-6
+    id: 2-06
+    description: |2
+
+
+
+      Softwarearchitekt:innen sind in der Lage zu erklären, was Entwurfsprinzipien sind.
+      Sie können deren grundlegende Ziele und deren Anwendung im Hinblick auf Softwarearchitektur skizzieren. (R2)
+
+      Softwarearchitekt:innen sind in der Lage:
+
+      * die unten aufgeführten Gestaltungsprinzipien zu erläutern und mit Beispielen zu illustrieren
+      * zu erklären, wie diese Prinzipien angewendet werden sollen
+      * darzulegen, wie Anforderungen die Anwendung dieser Prinzipien beeinflussen
+      * die Auswirkungen der Entwurfsprinzipien auf die Implementierung zu erläutern
+      * Quellcode und Architektur zu analysieren, um zu beurteilen, ob diese Entwurfsprinzipien angewendet wurden oder angewendet werden sollten
+
+
+      **Abstraktion** (R1)
+
+      * im Sinne eines Vorgehens zur Erarbeitung zweckmäßiger Generalisierungen
+      * als eine Entwurfstechnik, bei dem die Bausteine von Abstraktionen und nicht von Implementierungen abhängen
+      * Schnittstellen als Abstraktionen
+
+
+      **Modularisierung** (R1)
+
+      * Geheimnisprinzip (Information Hiding) und Kapselung (R1)
+      * Trennung von Verantwortlichkeiten (Separation of Concerns - SoC) (R1)
+      * Lose, aber funktionell ausreichende Kopplung (R1) von Bausteinen, siehe <<LZ-2-7, Lernziel 2-7>>
+      * Hohe Kohäsion (R1)
+      * SOLID-Prinzipien (R1-R3), soweit sie auf architektonischer Ebene von Relevanz sind:
+      ** S: Single-Responsibility-Prinzip (R1) und seine Beziehung zu SoC
+      ** O: Offen/geschlossen-Prinzip (R1)
+      ** L: Liskov'sches Substitutionsprinzip (R3) als eine Möglichkeit, Konsistenz und konzeptionelle Integrität beim objektorientierten Design zu erreichen
+      ** I: Interface-Segregation-Prinzip (R2) und seine Beziehung zu <<LZ-2-9, Lernziel 2-9 "Schnittstellen entwerfen und festlegen">>
+      ** D: Dependency-Inversion-Prinzip (R1) - Umkehrung von Abhängigkeiten (R1) durch Schnittstellen oder ähnlichen Abstraktionen
+
+      **Konzeptionelle Integrität** (R2)
+
+      * bedeutet Einheitlichkeit (Homogenität, Konsistenz) von Lösungen für ähnliche Probleme zu erreichen (R2)
+      * als ein Mittel, um das Prinzip der geringsten Überraschung zu erreichen (principle of least surprise) (R3)
+
+
+      **Einfachheit** (R1)
+
+      * als Mittel zur Verringerung von Komplexität (R1)
+      * als Motiv der Prinzipien KISS (R1) und YAGNI (R2)
+
+
+      **Erwarte Fehler** (R1-R2)
+
+      * als Mittel für den Entwurf robuster und widerstandsfähiger Systeme (R1)
+      * als eine Verallgemeinerung des Robustheitsgrundsatzes (_Postel's law_) (R2)
+
+      **Weitere Prinzipien** (R3)
+
+      Softwarearchitekt:innen kennen weitere Prinzipien (etwa CUPID, siehe <<nygard-cupid>>) und können diese anwenden.
+    facets: []
+  - name: Abhängigkeiten von Bausteinen managen (R1)
+    short_name: LZ2-7
+    id: 2-07
+    description: "\n\n\nSoftwarearchitekt:innen verstehen Abhängigkeiten und Kopplung\
+      \ zwischen Bausteinen und können diese gezielt einsetzen. \nSie:\n\n* kennen\
+      \ und verstehen unterschiedliche Arten der Kopplung von Bausteinen (beispielsweise\
+      \  Kopplung über Benutzung/Delegation, Nachrichten/Ereignisse, Komposition,\
+      \ Erzeugung, Vererbung, zeitliche Kopplung, Kopplung über Daten, Datentypen\
+      \ oder Hardware)\n* verstehen, wie Abhängigkeiten die Kopplung vergrößern\n\
+      * können solche Arten der Kopplung gezielt einsetzen und die Konsequenzen solcher\
+      \ Abhängigkeiten einschätzen\n* kennen Möglichkeiten zur Auflösung bzw. Reduktion\
+      \ von Kopplung und können diese anwenden, beispielsweise:\n** Muster (siehe\
+      \ <<LZ-2-5, LZ 2-5>>)\n** Grundlegende Entwurfsprinzipien (siehe <<LZ-2-6, LZ\
+      \ 2-6>>)\n** Externalisierung von Abhängigkeiten, d.h. konkrete Abhängigkeiten\
+      \ erst zur Installations- oder Laufzeit festlegen, etwa durch Anwendung von\
+      \ _Dependency Injection_.\n\n\n"
+    facets: []
+  - name: Qualitätsanforderungen mit passenden Ansätzen und Techniken erreichen (R1)
+    short_name: LZ2-8
+    id: 2-08
+    description: |2+
+
+
+
+      Softwarearchitekt:innen kennen und berücksichtigen den starken Einfluss von Qualitätsanforderungen in Architektur- und Entwurfsentscheidungen, beispielsweise für:
+
+      * Effizienz, Laufzeitperformance
+      * Verfügbarkeit
+      * Wartbarkeit, Modifizierbarkeit, Erweiterbarkeit, Adaptierbarkeit
+      * Energieeffizienz
+
+      Sie können:
+
+      * Lösungsmöglichkeiten, _Architectural Tactics_, angemessene Praktiken sowie technische Möglichkeiten zur Erreichung wichtiger Qualitätsanforderungen von Softwaresystemen (unterschiedlich für eingebettete Systeme bzw. Informationssysteme) erklären und anwenden
+      * mögliche Wechselwirkungen zwischen solchen Lösungsmöglichkeiten sowie die entsprechenden Risiken identifizieren und kommunizieren.
+
+    facets: []
+  - name: Schnittstellen entwerfen und festlegen (R1-R3)
+    short_name: LZ2-9
+    id: 2-09
+    description: |2+
+
+
+
+      Softwarearchitekt:innen kennen die hohe Bedeutung von Schnittstellen. Sie können Schnittstellen zwischen Architekturbausteinen sowie externe Schnittstellen zwischen dem System und Elementen außerhalb des Systems entwerfen bzw. festlegen.
+
+      Sie kennen:
+
+      * wünschenswerte Eigenschaften von Schnittstellen und können diese bei
+        ihrer Entwicklung einsetzen:
+      ** einfach zu erlernen, einfach zu benutzen, einfach zu erweitern
+      ** schwer zu missbrauchen
+      ** funktional vollständig aus Sicht der Nutzer:innen oder nutzender Bausteine.
+      * die Notwendigkeit unterschiedlicher Behandlung interner und externer Schnittstellen
+      * unterschiedliche Implementierungsansätze von Schnittstellen (R3):
+      ** ressourcenorientierter Ansatz (REST, REpresentational State Transfer)
+      ** serviceorientierter Ansatz (wie bei WS-*/SOAP-basierten Webservices).
+
+    facets: []
+  - name: Grundlegende Prinzipien von Software-Deployments kennen (R3)
+    short_name: LZ2-10
+    id: 2-10
+    description: "\n\nSoftwarearchitekt:innen: \n\n* wissen, dass Software-Deployment\
+      \ der Prozess ist, durch den neue oder aktualisierte Software zur Benutzung\
+      \ bereitgestellt wird\n* können grundlegende Konzepte des Deployments von Software\
+      \ benennen und erklären, beispielsweise:\n** Automatisierung von Deployments\n\
+      ** Wiederholbare Builds\n** Konsistente Umgebungen (z.B. durch Nutzung von unveränderlicher\
+      \ (_immutable_) Infrastruktur)\n** Alles liegt unter Versionskontrolle\n** Releases\
+      \ sind einfach zurückzunehmen\n\n"
+    facets: []
+- name: documentation
+  short_name: documentat
+  id: documentation
+  description: Documentation
+  color_code: '#4f6ea2'
+  areas:
+  - name: Anforderungen an technische Dokumentation erläutern und berücksichtigen
+      (R1)
+    short_name: LZ3-1
+    id: 3-01
+    description: |2+
+
+
+      Softwarearchitekt:innen kennen die wesentlichen Anforderungen an technische Dokumentation und können diese bei der Dokumentation von Systemen berücksichtigen bzw. erfüllen:
+
+      * Verständlichkeit, Korrektheit, Effizienz, Angemessenheit, Wartbarkeit
+      * Orientierung von Form, Inhalt und Detailgrad an Zielgruppe der Dokumentation
+
+      Sie wissen, dass Verständlichkeit technischer Dokumentation nur von deren Zielgruppen beurteilt werden kann.
+
+    facets: []
+  - name: Softwarearchitekturen beschreiben und kommunizieren (R1-R3)
+    short_name: LZ3-2
+    id: 3-02
+    description: |2+
+
+
+      Softwarearchitekt:innen nutzen Dokumentation zur Unterstützung bei Entwurf, Implementierung und Weiterentwicklung (auch genannt _Wartung_ oder _Evolution_) von Systemen. (R2)
+
+      Softwarearchitekt:innen (R1):
+
+      * können Architekturen stakeholdergerecht dokumentieren und kommunizieren und dadurch unterschiedliche Zielgruppen adressieren, z. B. Management, Entwicklungsteams, QS, andere Softwarearchitekt:innen sowie möglicherweise zusätzliche Stakeholder
+      * können die Beiträge unterschiedlicher Autorengruppen stilistisch und inhaltlich konsolidieren und harmonisieren
+      * können Maßnahmen entwickeln und umsetzen, die mündliche und schriftliche Kommunikation in Einklang miteinander halten und miteinander angemessen ausbalancieren
+      * kennen den Nutzen von Template-basierter Dokumentation
+      * wissen, dass verschiedene Eigenschaften der Dokumentation von Spezifika des Systems, seinen Anforderungen, Risiken, dem Entwicklungsvorgehen, der Organisation oder anderen Faktoren abhängen.
+
+      Sie können beispielsweise die folgenden Merkmale von Dokumentation je nach Situation anpassen (R3):
+
+      * Umfang und Detaillierungsgrad der benötigten Dokumentation
+      * das Dokumentationsformat
+      * die Zugänglichkeit der Dokumentation
+      * Formalitäten der Dokumentation (z.B. Diagramme, die einem Metamodell entsprechen, oder einfache Zeichnungen)
+      * formale Überprüfungen und Freigabeprozesse für die Dokumentation
+
+
+    facets: []
+  - name: Notations-/Modellierungsmittel für Beschreibung von Softwarearchitektur
+      erläutern und anwenden (R2-R3)
+    short_name: LZ3-3
+    id: 3-03
+    description: "\n\nSoftwarearchitekt:innen kennen mindestens folgende UML-Diagramme\
+      \ (siehe <<uml>>) zur Notation von Architektursichten:\n\n* Klassen-, Paket-,\
+      \ Komponenten- (jeweils R2) und Kompositionsstrukturdiagramme (R3)\n* Verteilungsdiagramme\
+      \ (R2)\n* Sequenz- und Aktivitätsdiagramme (R2)\n* Zustandsdiagramme (R3)\n\n\
+      Softwarearchitekt:innen kennen Alternativen zu UML, beispielsweise (R3)\n\n\
+      * ArchiMate, siehe <<archimate>> \n* für Laufzeitsichten beispielsweise Flussdiagramme,\
+      \ nummerierte Listen oder Business-Process-Modelling-Notation (BPMN).\n\n"
+    facets: []
+  - name: Architektursichten erläutern und anwenden (R1)
+    short_name: LZ3-4
+    id: 3-04
+    description: |2+
+
+      Softwarearchitekt:innen können folgende Architektursichten anwenden:
+
+      * Kontextsicht (auch genannt Kontextabgrenzung)
+      * Baustein- oder Komponentensicht (Aufbau des Systems aus Softwarebausteinen)
+      * Laufzeitsicht (dynamische Sicht, Zusammenwirken der Softwarebausteine zur Laufzeit, Zustandsmodelle)
+      * Verteilungs-/Deploymentsicht (Hardware und technische Infrastruktur sowie Abbildung von Softwarebausteinen auf diese Infrastruktur)
+
+    facets: []
+  - name: Kontextabgrenzung von Systemen erläutern und anwenden (R1)
+    short_name: LZ3-5
+    id: 3-05
+    description: |2+
+
+      Softwarearchitekt:innen können:
+
+      * Kontext von Systemen z.B. in Form von Kontextdiagrammen mit Erläuterungen darstellen
+      * externe Schnittstellen von Systemen in der Kontextabgrenzung darstellen
+      * fachlichen und technischen Kontext differenzieren.
+
+    facets: []
+  - name: Querschnittskonzepte dokumentieren und kommunizieren (R2)
+    short_name: LZ3-6
+    id: 3-06
+    description: |2+
+
+
+      Softwarearchitekt:innen können typische Querschnittskonzepte (synonym _Prinzipien_, _Aspekte_) adäquat dokumentieren und kommunizieren, z. B. Persistenz, Ablaufsteuerung, UI, Verteilung/Integration, Protokollierung.
+
+    facets: []
+  - name: Schnittstellen beschreiben (R1)
+    short_name: LZ3-7
+    id: 3-07
+    description: |2+
+
+
+      Softwarearchitekt:innen können sowohl interne als auch externe Schnittstellen beschreiben und spezifizieren.
+
+    facets: []
+  - name: Architekturentscheidungen erläutern und dokumentieren (R1-R2)
+    short_name: LZ3-8
+    id: 3-08
+    description: |2
+
+
+      Softwarearchitekt:innen können:
+
+      * Architekturentscheidungen systematisch herbeiführen, begründen, kommunizieren und dokumentieren
+      * gegenseitige Abhängigkeiten solcher Entscheidungen erkennen, kommunizieren und dokumentieren
+
+      Softwarearchitekt:innen kennen Architecture-Decision-Records (ADR, siehe <<nygard>>) und können diese zur Dokumentation von Entscheidungen einsetzen (R2).
+    facets: []
+  - name: Weitere Hilfsmittel und Werkzeuge zur Dokumentation kennen (R3)
+    short_name: LZ3-9
+    id: 3-09
+    description: |2+
+
+
+      Softwarearchitekt:innen kennen:
+
+      * Grundlagen mehrerer publizierter Frameworks zur Beschreibung von Softwarearchitekturen, beispielsweise:
+      ** ISO/IEEE-42010 (vormals 1471), siehe <<iso42010>>
+      ** arc42, siehe <<arc42>>
+      ** C4, siehe <<brownc4>>
+      ** FMC, siehe <<fmc>>
+      * Ideen und Beispiele von Checklisten für die Erstellung, Dokumentation und Prüfung von Softwarearchitekturen
+      * mögliche Werkzeuge zur Erstellung und Pflege von Architekturdokumentation
+
+    facets: []
+- name: examples
+  short_name: examples
+  id: examples
+  description: Examples
+  color_code: '#596e90'
+  areas:
+  - name: Bezug von Anforderungen und Randbedingungen zu Lösung erfassen (R3)
+    short_name: LZ5-1
+    id: 5-01
+    description: |2+
+
+      Softwarearchitekt:innen haben an mindestens einem Beispiel den Bezug von Anforderungen und Randbedingungen zu Lösungsentscheidungen erkannt und nachvollzogen.
+
+    facets: []
+  - name: Technische Umsetzung einer Lösung nachvollziehen (R3)
+    short_name: LZ5-2
+    id: 5-02
+    description: |2+
+
+      Softwarearchitekt:innen können anhand mindestens eines Beispiels die technische Umsetzung (Implementierung, technische Konzepte, eingesetzte Produkte, Lösungsstrategien) einer Lösung nachvollziehen.
+
+    facets: []
+- name: quality
+  short_name: quality
+  id: quality
+  description: Quality
+  color_code: '#636e7f'
+  areas:
+  - name: Qualitätsmodelle und Qualitätsmerkmale diskutieren (R1)
+    short_name: LZ4-1
+    id: 4-01
+    description: |2+
+
+
+      Softwarearchitekt:innen können:
+
+      * den Begriff der Qualität und der Qualitätsmerkmale (angelehnt an z.{nbsp}B. <<iso25010>> oder <<bass>>) erklären
+      * generische Qualitätsmodelle (wie etwa <<iso25010>>, <<bass>> oder <<q42>>) erklären
+      * Zusammenhänge und Wechselwirkungen von Qualitätsmerkmalen erläutern, beispielsweise:
+      ** Konfigurierbarkeit versus Zuverlässigkeit
+      ** Speicherbedarf versus Leistungseffizienz
+      ** Sicherheit versus Benutzbarkeit
+      ** Laufzeitflexibilität versus Wartbarkeit.
+
+    facets: []
+  - name: Qualitätsanforderungen an Softwarearchitekturen klären (R1)
+    short_name: LZ4-2
+    id: 4-02
+    description: |2+
+
+
+      Softwarearchitekt:innen können:
+
+      * spezifische Qualitätsanforderungen an die zu entwickelnde Software und deren Architekturen klären und konkret formulieren, beispielsweise in Form von Szenarien und Qualitätsbäumen
+      * Szenarien und Qualitätsbäume erklären und anwenden.
+
+    facets: []
+  - name: Softwarearchitekturen qualitativ analysieren (R2-R3)
+    short_name: LZ4-3
+    id: 4-03
+    description: |2+
+
+      Softwarearchitekt:innen:
+
+      * kennen methodische Vorgehensweisen zur qualitativen Analyse von Softwarearchitekturen (R2), beispielsweise nach ATAM (R3)
+      * können kleinere Systeme qualitativ analysieren (R2)
+      * wissen, dass zur qualitativen Analyse und Bewertung von Architekturen folgende Informationsquellen helfen können (R2):
+      ** Qualitätsanforderungen, beispielsweise in Form von Qualitätsbäumen und -szenarien
+      ** Architekturdokumentation
+      ** Architektur- und Entwurfsmodelle
+      ** Quellcode
+      ** Metriken
+      ** Sonstige Dokumentationen des Systems, etwa Anforderungs-, Betriebs- oder Testdokumentation.
+
+    facets: []
+  - name: Softwarearchitekturen quantitativ bewerten (R2)
+    short_name: LZ4-4
+    id: 4-04
+    description: |2+
+
+
+      Softwarearchitekt:innen kennen Ansätze zur quantitativen Analyse und Bewertung (Messung) von Software.
+
+      Sie wissen, dass:
+
+      * quantitative Bewertung helfen kann, kritische Teile innerhalb von Systemen zu identifizieren
+      * zur Bewertung von Architekturen weitere Informationen hilfreich sein können, etwa:
+      ** Anforderungs- und Architekturdokumentation
+      ** Quellcode und diesbezügliche Metriken wie Lines-of-Code, (zyklomatische) Komplexität, ein- und ausgehende Abhängigkeiten
+      ** bekannte Fehler in Quellcode, insbesondere Fehlercluster
+      ** Testfälle und Testergebnisse.
+      * die Verwendung einer Metrik als Zielgröße zu deren Entwertung führen kann (R2), wie z. B. durch Goodharts Gesetz (R3) beschrieben.
+
+    facets: []
+levels:
+- name: Need to Learn
+  short_name: Learn
+  id: Need to Learn
+  color_code: '#FF0000'
+  level: 1
+  icon: thumb_down
+- name: Need to Lookup
+  short_name: Lookup
+  id: Need to Lookup
+  color_code: '#0000FF'
+  level: 2
+  icon: question_mark
+- name: Already Known
+  short_name: Known
+  id: Already Known
+  color_code: '#008000'
+  level: 3
+  icon: thumb_up
+element_names:
+  tree: Syllabus
+  aspect: Chapter
+  area: Learning Goal
+  facet: LearnItem
+  level: Self Assessment
+ring_specs:
+  tree:
+    text_mode: horizontal
+    inner_ratio: 0.0
+    outer_ratio: 0.1111111111111111
+  aspect:
+    text_mode: curved
+    inner_ratio: 0.1111111111111111
+    outer_ratio: 0.4444444444444444
+  area:
+    text_mode: angled
+    inner_ratio: 0.4444444444444444
+    outer_ratio: 1.0
+  facet:
+    text_mode: empty
+    inner_ratio: 0.0
+    outer_ratio: 0.0
+total_elements:
+  aspects: 5
+  areas: 36
+  facets: 0

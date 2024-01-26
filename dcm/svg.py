@@ -243,7 +243,7 @@ class SVG:
             f"{self.indent}<style>\n"
             f"{self.indent * 2}.hoverable {{ cursor: pointer; fill-opacity: 1; stroke: black; stroke-width: 0.5; }}\n"
             f"{self.indent * 2}.hoverable:hover {{ fill-opacity: 0.7; }}\n"
-            f"{self.indent * 2}.selected {{ fill-opacity: 0.5; stroke: blue; stroke-width: 1.5;}}\n"
+            f"{self.indent * 2}.selected {{ fill-opacity: 0.5; stroke: blue !important; stroke-width: 1.5;}}\n"
             f"{self.indent * 2}.noclick {{ pointer-events: none; }}\n"  # style for non-clickable text
         )
 

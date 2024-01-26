@@ -1,14 +1,17 @@
 name: iSAQB e.V. CPSA-F
 short_name: CPSA-F
-id: iSAQB_CPSA-F
+id: iSAQB_CPSA-F_en
 url: https://github.com/isaqb-org
 description: International Software Architecture Qualification Board Certified Professional
   for Software Architecture Foundation Level Mock Exam Self Assessment
+total_levels: 3
+stacked_levels: false
 aspects:
 - name: basics
   short_name: basics
   id: basics
   description: Basics
+  color_code: '#3b6fc5'
   areas:
   - name: Discuss Definitions of Software Architecture (R1)
     short_name: LG1-1
@@ -176,6 +179,7 @@ aspects:
   short_name: design
   id: design
   description: Design
+  color_code: '#456fb3'
   areas:
   - name: Select and Use Approaches and Heuristics for Architecture Development (R1,R3)
     short_name: LG2-1
@@ -435,6 +439,7 @@ aspects:
   short_name: documentat
   id: documentation
   description: Documentation
+  color_code: '#4f6ea2'
   areas:
   - name: Explain and Consider the Requirements of Technical Documentation (R1)
     short_name: LG3-1
@@ -572,6 +577,7 @@ aspects:
   short_name: examples
   id: examples
   description: Examples
+  color_code: '#596e90'
   areas:
   - name: Know the Relation between Requirements, Constraints, and Solutions (R3)
     short_name: LG5-1
@@ -593,6 +599,7 @@ aspects:
   short_name: quality
   id: quality
   description: Quality
+  color_code: '#636e7f'
   areas:
   - name: Discuss Quality Models and Quality Characteristics (R1)
     short_name: LG4-1
@@ -662,19 +669,19 @@ aspects:
     facets: []
 levels:
 - name: Need to Learn
-  short_name: Need to Le
+  short_name: Learn
   id: Need to Learn
   color_code: '#FF0000'
   level: 1
   icon: thumb_down
 - name: Need to Lookup
-  short_name: Need to Lo
+  short_name: Lookup
   id: Need to Lookup
   color_code: '#0000FF'
   level: 2
   icon: question_mark
 - name: Already Known
-  short_name: Already Kn
+  short_name: Known
   id: Already Known
   color_code: '#008000'
   level: 3
@@ -685,3 +692,24 @@ element_names:
   area: Learning Goal
   facet: LearnItem
   level: Self Assessment
+ring_specs:
+  tree:
+    text_mode: horizontal
+    inner_ratio: 0.0
+    outer_ratio: 0.1111111111111111
+  aspect:
+    text_mode: curved
+    inner_ratio: 0.1111111111111111
+    outer_ratio: 0.4444444444444444
+  area:
+    text_mode: angled
+    inner_ratio: 0.4444444444444444
+    outer_ratio: 1.0
+  facet:
+    text_mode: empty
+    inner_ratio: 0.0
+    outer_ratio: 0.0
+total_elements:
+  aspects: 5
+  areas: 36
+  facets: 0

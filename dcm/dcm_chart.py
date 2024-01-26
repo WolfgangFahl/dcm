@@ -149,6 +149,7 @@ class DcmChart:
             element_config.fill = level_color  # Set the color
         if element and element.path in self.selected_paths:
             element_config.element_class = "selected"
+            element_config.color="blue"
 
         if achievement_level is None:
             result = svg.add_donut_segment(config=element_config, segment=segment)
