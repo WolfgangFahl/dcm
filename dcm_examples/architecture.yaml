@@ -186,3 +186,20 @@ element_names:
   aspect: Domain of Expertise
   area: Skill Area
   level: Proficiency Stage
+ring_specs:
+  tree:
+    text_mode: horizontal
+    inner_ratio: 0.0
+    outer_ratio: 0.167
+  aspect:
+    text_mode: horizontal
+    inner_ratio: 0.167
+    outer_ratio: 0.5
+  area:
+    text_mode: angled
+    inner_ratio: 0.5
+    outer_ratio: 1.0
+  facet:
+    text_mode: empty
+    inner_ratio: 0.0
+    outer_ratio: 0.0
