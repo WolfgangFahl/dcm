@@ -385,7 +385,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                         self.assessment = Assessment(self, dcm=dcm, learner=learner)
             # we have to await self.assessment.step(0)
             # so we trigger it async
-            ui.timer(0, self.assessment.step,0, once=True)
+            ui.timer(0, lambda: self.assessment.step(0), once=True)
     
     def new_assess(self):
         """
