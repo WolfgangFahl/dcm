@@ -453,9 +453,11 @@ class Learner:
 
     def __post_init__(self):
         self.achievements_by_path = {}
+        self.achievement_indices_by_path = {}
         if self.achievements:
-            for achievement in self.achievements:
+            for index, achievement in enumerate(self.achievements):
                 self.achievements_by_path[achievement.path] = achievement
+                self.achievement_indices_by_path[achievement.path] = index
 
     @classmethod
     def required_keys(cls):
@@ -473,11 +475,20 @@ class Learner:
             self.learner_id, lowercase=False, regex_pattern=r"[^\w\s\-]"
         )
         return file_name
+    
+    def get_achievement_index(self,path)->int:
+        a_index=self.achievement_indices_by_path.get(path)
+        return a_index
 
     def add_achievement(self, new_achievement):
+        """
+        Add a new achievement for the learner.
+        """
         self.achievements.append(new_achievement)
+        index = len(self.achievements) - 1
         self.achievements_by_path[new_achievement.path] = new_achievement
-
+        self.achievement_indices_by_path[new_achievement.path] = index
+  
     def get_competence_tree_ids(self) -> List[str]:
         """
         Get all unique competence tree IDs of my achievements.
