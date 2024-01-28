@@ -322,7 +322,7 @@ class Assessment:
                 area_count += 1
                 if area_count == abs(area_step):
                     # Found the required area, update the index
-                    await self.goto(new_index)
+                    self.goto(new_index)
                     return
 
             # Move to the next/previous achievement
