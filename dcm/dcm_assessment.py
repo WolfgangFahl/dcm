@@ -115,7 +115,7 @@ class ButtonRow:
         self.row.update()
         # show achievement_view
         step = 1 if self.achievement.level else 0
-        self.assessment.update_achievement_view(step)
+        self.assessment.step(step)
 
 
 class Assessment:
@@ -322,8 +322,7 @@ class Assessment:
                 area_count += 1
                 if area_count == abs(area_step):
                     # Found the required area, update the index
-                    self.achievement_index = new_index
-                    self.update_achievement_view(0)
+                    self.goto(new_index)
                     return
 
             # Move to the next/previous achievement
@@ -334,7 +333,7 @@ class Assessment:
 
     async def goto(self, index: int):
         self.achievement_index = index
-        self.update_achievement_view(0)
+        self.step(0)
 
     async def step(self, step: int = 0):
         """
