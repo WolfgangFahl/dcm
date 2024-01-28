@@ -383,10 +383,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 with self.left_grid:
                     with ui.row() as self.assessment_row:
                         self.assessment = Assessment(self, dcm=dcm, learner=learner)
-            # we have to await self.assessment.step(0)
-            # so we trigger it async
-            ui.timer(0, lambda: self.assessment.step(0), once=True)
-    
+            self.assessment.step(0)
+      
     def new_assess(self):
         """
         run a new  assessment for a new learner

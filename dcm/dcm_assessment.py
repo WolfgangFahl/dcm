@@ -329,13 +329,14 @@ class Assessment:
             new_index += direction
 
         # Notify if no more areas in the direction
-        ui.notify("Reached the end of the areas in this direction.")
+        with self.container:
+            ui.notify("Reached the end of the areas in this direction.")
 
-    async def goto(self, index: int):
+    def goto(self, index: int):
         self.achievement_index = index
-        await self.step(0)
+        self.step(0)
 
-    async def step(self, step: int = 0):
+    def step(self, step: int = 0):
         """
         step with the achievement view
         """
