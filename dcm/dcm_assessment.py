@@ -322,7 +322,7 @@ class Assessment:
                 area_count += 1
                 if area_count == abs(area_step):
                     # Found the required area, update the index
-                    self.goto(new_index)
+                    await self.goto(new_index)
                     return
 
             # Move to the next/previous achievement
@@ -333,7 +333,7 @@ class Assessment:
 
     async def goto(self, index: int):
         self.achievement_index = index
-        self.step(0)
+        await self.step(0)
 
     async def step(self, step: int = 0):
         """
