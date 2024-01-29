@@ -30,6 +30,9 @@ aspects:
         - Ausrichtung der Lerninhalte und -ziele an den Teilnehmenden
         - Dialogische Erarbeitung von Lerninhalten und -zielen mit den Teilnehmenden
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Methoden, Medien und Lernmaterialien
       short_name: DM-Methoden
       id: MethodenMedienUndLernmaterialien
@@ -42,6 +45,9 @@ aspects:
         - Evaluation der im Lehr-Lern-Angebot eingesetzten Methoden, (digitalen) Medien und Lernmaterialien
         - Nutzung von (digitalen) Tools/Werkzeugen zur Evaluation des Lehr-Lern-Angebots
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Rahmenbedingungen und Lernumgebungen
       short_name: DM-Rahmenbedingungen
       id: RahmenbedingungenUndLernumgebungen
@@ -52,6 +58,9 @@ aspects:
         - Anpassung der beeinflussbaren Rahmenbedingungen in (digital-gestützten) Lernumgebungen
         - Schaffung einer konstruktiv-unterstützenden (digital-gestützten) Lernumgebung durch Ausschöpfung der Rahmenbedingungen
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Outcomeorientierung
       short_name: DM-Outcome
       id: Outcomeorientierung
@@ -61,6 +70,9 @@ aspects:
         - Ausrichtung des Lehrhandelns an Lernergebnissen
         - Auswahl und Anwendung geeigneter Methoden und (digitaler) Tools/Werkzeuge zur Lernerfolgskontrolle unter Berücksichtigung datenschutzrechtlicher Aspekte und des gegebenen Kontexts
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
   - name: Beratung/Individualisierte Lernunterstützung
     short_name: Beratung
     id: BeratungIndividualisierteLernunterstuetzung
@@ -79,6 +91,9 @@ aspects:
         - Berücksichtigung der Diversität der Teilnehmenden (Alter, Geschlecht, Bildungstand etc.)
         - Ermöglichung der Differenzierung und Individualisierung im Unterricht mithilfe (digitaler) Medien und Tools/Werkzeugen
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Diagnostik und Lernberatung
       short_name: Lernberatung
       id: DiagnostikUndLernberatung
@@ -90,6 +105,9 @@ aspects:
         - Nutzung von diagnostischen Daten und Informationen bei der individuellen Beratung von Lernenden
         - Setzung von Lernimpulsen in Beratungsgesprächen
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
   - name: Kommunikation und Interaktion
     short_name: KommInterakt
     id: KommunikationUndInteraktion
@@ -108,6 +126,9 @@ aspects:
         - Schaffung einer vertrauensvollen Gesprächsatmosphäre
         - Konstruktiver Umgang mit technischen Problemen und Störungen innerhalb der Gruppe
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Professionelle Kommunikation
       short_name: KI-Kommunikation
       id: ProfessionelleKommunikation
@@ -120,6 +141,9 @@ aspects:
         - Austausch mit Teilnehmenden mithilfe von digitalen Kommunikationstools unter Beachtung der Netiquette
         - Berücksichtigung von Besonderheiten verbaler und non-verbaler Kommunikation in digitalen Lernumgebungen
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
   - name: Organisation
     short_name: Organisation
     id: Organisation
@@ -135,6 +159,9 @@ aspects:
         - Vermarktung des eigenen Angebots über geeignete (digitale) Medien und Tools/Werkzeuge (z.B. über Soziale Medien)
         - Zusammenarbeit und Austausch mit Auftraggebenden/Arbeitgebenden bei der Neukonzipierung und Erweiterung von Angeboten sowie zur Problemlösung
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Kollegiale Zusammenarbeit/Netzwerken
       short_name: Org-Netzwerke
       id: KollegialeZusammenarbeitNetzwerken
@@ -146,6 +173,9 @@ aspects:
         - Zusammenarbeit in interdisziplinären Teams oder kollegialen Netzwerken über unterschiedliche Formate (z.B. kollegialer Austausch, Fachtagungen, Lerngemeinschaften, Soziale Medien)
         - Austausch von freien Lern- und Lehrmaterialien (OER)
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
 - name: Fach- und Feldspezifisches Wissen
   short_name: Fach- und Feldspezifiches Wissen
   id: FachUndFeldspezifischesWissen
@@ -166,6 +196,9 @@ aspects:
         - Wissen über Adressatinnen und Adressaten eigener Angebote (z.B. Interessen, Gewohnheiten, Vorlieben, Bedürfnisse, Ängste, vorhandene Ressourcen, bestehende Einschränkungen und Barrieren)
         - Wissen über Einstellungen, Nutzungsgewohnheiten, Barrieren und Kompetenzen der Adressatinnen und Adressaten in Bezug auf digitale Medien und Tools
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Feldspezifisches Wissen
       short_name: FB-Feldwissen
       id: FeldspezifischesWissen
@@ -176,6 +209,9 @@ aspects:
         - Handlungsfeldspezifisches Wissen über organisatorische und rechtliche Rahmenbedingungen
         - Wissen über die Besonderheiten des Lernens Erwachsener sowie über die Strukturen und Ansprüche der Erwachsenenbildung insgesamt in Abgrenzung zum formalen Bildungsbereich
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Curriculare und institutionelle Rahmenbedingungen
       short_name: FB-Curricula
       id: CurriculareUndInstitutionelleRahmenbedingungen
@@ -186,6 +222,9 @@ aspects:
         - Wissen über die Beratungs- und Supportkapazitäten des spezifischen Weiterbildungsfeldes, der Weiterbildungseinrichtung
         - Wissen über einrichtungsinterne digitale Ausstattung sowie die Vorgaben und Erwartungen der Weiterbildungseinrichtung bzgl. der Softwarenutzung
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
 - name: Professionelle Werthaltungen und Überzeugungen
   short_name: Werthaltungen
   id: ProfessionelleWerthaltungenUndUeberzeugungen
@@ -206,6 +245,9 @@ aspects:
         - Bewusstsein über den Einfluss des eigenen Menschenbildes auf den Lehr-Lern-Prozess
         - Innehaben eines Menschenbilds, das eigene weltanschauliche und theoretische Orientierungen widerspiegelt
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Wertvorstellungen
       short_name: BE-Wertvorstellungen
       id: Wertvorstellungen
@@ -216,6 +258,9 @@ aspects:
         - Bewusstsein und Verantwortungsübernahme für das Wohlergehen der Teilnehmenden
         - Verinnerlichung berufsethischer Standards und Prinzipien
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
   - name: Berufsbezogene Überzeugungen
     short_name: BU-Überz.
     id: BerufsbezogeneUeberzeugungen
@@ -232,6 +277,9 @@ aspects:
         - Identifikation mit der Rolle als Lehrperson in der EB/WB
         - Flexibler Wechsel der eigenen Rolle je nach Lehr-Lern-Situation (Begleiten, Wissen vermitteln etc.) und Lehr-Lern-Setting (hybrid, Präsenz, digital)
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Subjektive Annahmen über das Lehren und Lernen
       short_name: BU-Lehrannahmen
       id: SubjektiveAnnahmenUeberDasLehrenUndLernen
@@ -241,6 +289,9 @@ aspects:
         - Bewusstsein über eigene subjektive Lehr-Lern-Theorien und deren Einfluss auf Lehr-Lern-Prozesse
         - Bewusstsein über die eigenen Vorstellungen darüber, unter welchen Voraussetzungen Lernen gelingt
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
 - name: Professionelle Selbststeuerung
   short_name: Selbststeuerung
   id: ProfessionelleSelbststeuerung
@@ -261,6 +312,9 @@ aspects:
         - Überzeugung, über die Fähigkeiten und Mittel zu verfügen, die für die erfolgreiche Bewältigung gegebener Anforderungen notwendig sind
         - Überzeugung, auch schwierige Situationen aufgrund der eigenen Kompetenzen bewältigen zu können
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Enthusiasmus
       short_name: MO-Enthusiasmus
       id: Enthusiasmus
@@ -270,6 +324,9 @@ aspects:
         - Freude an der Ausübung der eigenen Tätigkeit und dem Fach
         - Bewusstsein über die Bedeutung des persönlichen Engagements und der Begeisterungsfähigkeit für das eigene professionelle Lehrhandeln
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
   - name: Selbstregulation
     short_name: Selbstregul
     id: Selbstregulation
@@ -285,6 +342,9 @@ aspects:
         - Ermöglichung von Zeiträumen und Orten zum Lösen von Problemen und Konflikten
         - Berücksichtigung des Mediums, durch welches Feedback kommuniziert wird
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Engagement und Distanz
       short_name: SR-Engagement
       id: EngagementUndDistanz
@@ -294,6 +354,9 @@ aspects:
         - Bewusster Umgang mit eigenen Ressourcen
         - Ausbalancieren von hohem Engagement und guter Distanzierungsfähigkeit
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
   - name: Berufspraktische Erfahrung
     short_name: BE-Erfahr.
     id: BerufspraktischeErfahrung
@@ -309,6 +372,9 @@ aspects:
         - Bereitschaft zur Reflexion des eigenen pädagogischen Handelns während oder nach einer Handlungssituation
         - Bereitschaft zur Übernahme der Perspektive der Teilnehmenden
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
     - name: Berufliche Weiterentwicklung
       short_name: BE-Weiterentwicklung
       id: BeruflicheWeiterentwicklung
@@ -320,34 +386,37 @@ aspects:
         - Aufgeschlossenheit gegenüber neuen fachlichen, pädagogischen und gesamtgesellschaftlichen Themen
         - Kritische Auseinandersetzung mit fachlichen, pädagogischen und gesamtgesellschaftlichen Themen
       border_color: white
+      time_unit: h
+      max_score: 100.0
+      score_unit: '%'
 levels:
-- name: Level0
-  short_name: Level0
-  id: Level0
+- name: nicht erfasst
+  short_name: nicht erfa
+  id: nicht-erfasst
   color_code: '#888888'
   level: 0
   utf8_icon: ❓
-- name: Level1
-  short_name: Level1
-  id: Level1
+- name: kennen und verstehen
+  short_name: kennen und
+  id: kennen-und-verstehen
   color_code: '#ECEABE'
   level: 1
   utf8_icon: ⭐
-- name: Level2
-  short_name: Level2
-  id: Level2
+- name: anwenden und umsetzen
+  short_name: anwenden u
+  id: anwenden-und-umsetzen
   color_code: '#C8D575'
   level: 2
   utf8_icon: ⭐⭐
-- name: Level3
-  short_name: Level3
-  id: Level3
+- name: analysieren und beurteilen
+  short_name: analysiere
+  id: analysieren-und-beurteilen
   color_code: '#AEBF3F'
   level: 3
   utf8_icon: ⭐⭐⭐
-- name: Level4
-  short_name: Level4
-  id: Level4
+- name: weiterentwickeln und kreieren
+  short_name: weiterentw
+  id: weiterentwickeln-und-kreieren
   color_code: '#7D8A2C'
   level: 4
   utf8_icon: ⭐⭐⭐⭐

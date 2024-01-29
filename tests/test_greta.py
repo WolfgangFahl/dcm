@@ -143,9 +143,17 @@ class TestGreta(Basetest):
 
         # Define icons for competence levels (replace with actual icon names)
         utf8_icons = {0: "❓", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐"}
+        level_names = [
+            "nicht erfasst",
+            "kennen und verstehen",
+            "anwenden und umsetzen",
+            "analysieren und beurteilen",
+            "weiterentwickeln und kreieren"
+        ]
+
         for level in range(len(utf8_icons)):
             cl = CompetenceLevel(
-                name=f"Level{level}",
+                name=level_names[level],
                 level=level,
                 utf8_icon=utf8_icons[level],
                 color_code=level_color_codes[level],

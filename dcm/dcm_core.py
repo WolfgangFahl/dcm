@@ -72,7 +72,7 @@ class CompetenceElement:
         # Set the id to the the slug of the name if id is None
         if self.id is None:
             # https://pypi.org/project/python-slugify/
-            self.id = slugify(self.name, lowercase=False, regex_pattern=r"[^\w\s\-]")
+            self.id = slugify(self.name, lowercase=False, regex_pattern=r"[^\w\-]")
         if self.short_name is None:
             self.short_name = self.name[:10]
 
