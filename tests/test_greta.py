@@ -107,7 +107,7 @@ class TestGreta(Basetest):
             "aspect": "Kompetenzaspekt",
             "area": "Kompetenzbereich",
             "facet": "Kompetenzfacette",
-            "level": "Lernfortschritt",
+            "level": "Lernziel-Stufen",
         }
         if with_text:
             ct.ring_specs = {

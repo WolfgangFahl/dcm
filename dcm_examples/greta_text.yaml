@@ -425,7 +425,7 @@ element_names:
   aspect: Kompetenzaspekt
   area: Kompetenzbereich
   facet: Kompetenzfacette
-  level: Lernfortschritt
+  level: Lernziel-Stufen
 ring_specs:
   tree:
     text_mode: horizontal
