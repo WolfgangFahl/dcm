@@ -148,7 +148,7 @@ class TestGreta(Basetest):
             "kennen und verstehen",
             "anwenden und umsetzen",
             "analysieren und beurteilen",
-            "weiterentwickeln und kreieren"
+            "weiterentwickeln und kreieren",
         ]
 
         for level in range(len(utf8_icons)):

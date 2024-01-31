@@ -384,7 +384,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                     with ui.row() as self.assessment_row:
                         self.assessment = Assessment(self, dcm=dcm, learner=learner)
             self.assessment.step(0)
-      
+
     def new_assess(self):
         """
         run a new  assessment for a new learner

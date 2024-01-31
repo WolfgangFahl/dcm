@@ -41,6 +41,7 @@ class dcm.dcm_core.RingSpec {
   text_mode: Optional[str]
   inner_ratio: Optional[float]
   outer_ratio: Optional[float]
+  levels_visible: Optional[bool]
   +empty() : bool
 }
 note top of RingSpec

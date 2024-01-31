@@ -5,6 +5,7 @@ Created on 2023-11-11
 """
 import json
 import os
+
 from colour import Color
 from ngwidgets.basetest import Basetest
 
@@ -16,7 +17,7 @@ from dcm.dcm_core import (
     CompetenceLevel,
     CompetenceTree,
     DynamicCompetenceMap,
-    RingSpec
+    RingSpec,
 )
 
 
@@ -119,13 +120,13 @@ class TestModule(Basetest):
             CompetenceLevel(name="3,3 - ≥60%", level=4),
             CompetenceLevel(name="3,7 - ≥55%", level=3),
             CompetenceLevel(name="4,0 - ≥50%", level=2),
-            CompetenceLevel(name=" ❌ - <50%", level=1,color_code="#FF0000"),
+            CompetenceLevel(name=" ❌ - <50%", level=1, color_code="#FF0000"),
         ]
-        orange=Color("orange")
-        green=Color("green")
-        for ci,color in enumerate(green.range_to(orange, 10)):
-            print (f"{ci}:{color}")
-            tree.levels[ci].color_code=str(color)
+        orange = Color("orange")
+        green = Color("green")
+        for ci, color in enumerate(green.range_to(orange, 10)):
+            print(f"{ci}:{color}")
+            tree.levels[ci].color_code = str(color)
         pass
         tree.element_names = {
             "tree": "Study plan",
@@ -143,8 +144,8 @@ class TestModule(Basetest):
         """
         file_name = "MHBXMLRAW_Master_1_Fach_Informatik_2023.json"
         url = "https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/"
-        description="RWTH Aachen Master Informatik"
-        short_name="RWTH Master CS"
+        description = "RWTH Aachen Master Informatik"
+        short_name = "RWTH Master CS"
         home_dir = os.path.expanduser("~")
         base_path = os.path.join(home_dir, ".dcm/rwth_aachen/")
         file_path = f"{base_path}/{file_name}"
@@ -158,30 +159,22 @@ class TestModule(Basetest):
 
             # Create the competence tree
             competence_tree = self.create_competence_tree(competence_elements, url=url)
-            competence_tree.description=description
-            competence_tree.short_name=short_name
+            competence_tree.description = description
+            competence_tree.short_name = short_name
             competence_tree.update_paths()
             competence_tree.ring_specs = {
                 "tree": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=1 / 10, 
-                    text_mode="horizontal"
+                    inner_ratio=0.0, outer_ratio=1 / 10, text_mode="horizontal"
                 ),
                 "aspect": RingSpec(
-                    text_mode="curved", 
-                    inner_ratio=1 / 10, 
-                    outer_ratio=3 / 10
+                    text_mode="curved", inner_ratio=1 / 10, outer_ratio=3 / 10
                 ),
                 "area": RingSpec(
-                    text_mode="angled",
-                    inner_ratio=3/10, 
-                    outer_ratio=10/10),
-                "facet": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0
+                    text_mode="angled", inner_ratio=3 / 10, outer_ratio=10 / 10
                 ),
+                "facet": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
             }
-        
+
             # Pretty print the JSON with specified indentation
             # pretty_json = competence_tree.to_pretty_json()
             yaml_str = competence_tree.to_yaml()

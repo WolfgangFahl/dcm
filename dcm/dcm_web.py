@@ -57,6 +57,7 @@ class RingSpecView:
                 value=self.ringspec.text_mode,
                 on_change=self.on_text_mode_change,
             )
+            self.level_visible_checkbox=ui.checkbox("level").on("click",self.on_level_visible_change)
 
     def update(self, rs: RingSpec):
         """
@@ -68,6 +69,13 @@ class RingSpecView:
         self.inner_ratio_slider.value = round(rs.inner_ratio, 2)
         self.outer_ratio_slider.value = round(rs.outer_ratio, 2)
         self.change_enabled = True
+        
+    def on_level_visible_change(self):
+        """
+        
+        """
+        self.ringspec.levels_visible=self.level_visible_checkbox.value
+        self.parent.on_change()
 
     def on_inner_ratio_change(self, gev: GenericEventArguments):
         """
@@ -113,14 +121,16 @@ class RingSpecsView:
         """
         setup the user interface
         """
-        with ui.expansion("",icon="settings") as self.expansion:
-            levels=["tree", "aspect", "area", "facet"]
+        with ui.expansion("", icon="settings") as self.expansion:
+            levels = ["tree", "aspect", "area", "facet"]
             with ui.row():
                 ui.label("symmetry:")
-                self.symmetry_radio = ui.radio(["count","time","score"], value=None).props('inline')
+                self.symmetry_radio = ui.radio(
+                    ["count", "time", "score"], value=None
+                ).props("inline")
             with ui.row():
                 ui.html("<hr>")
-            with ui.grid(columns=3, rows=4) as self.grid:
+            with ui.grid(columns=2, rows=8) as self.grid:
                 inner_ratio = 0
                 outer_ratio = 1 / 7
                 for rl in levels:

@@ -33,6 +33,7 @@ class RingSpec:
     text_mode: Optional[str] = "empty"
     inner_ratio: Optional[float] = None
     outer_ratio: Optional[float] = None
+    levels_visible: Optional[bool] = False
 
     @property
     def empty(self) -> bool:
@@ -124,11 +125,13 @@ class CompetenceFacet(CompetenceElement):
 
     This class can include additional properties or methods specific to a competence facet.
     """
+
     time: Optional[float] = None
     time_unit: Optional[str] = "h"
     max_score: Optional[float] = 100.0
     score_unit: Optional[str] = "%"
-    
+
+
 @dataclass_json
 @dataclass
 class CompetenceArea(CompetenceElement):
@@ -370,17 +373,13 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             box_width,
             box_height,
         )
-        max_name_width=5
+        max_name_width = 5
         if self.levels:
-            max_name_width=max(svg.get_text_width(level.name) for level in self.levels)
+            max_name_width = max(
+                svg.get_text_width(level.name) for level in self.levels
+            )
         # Calculate the x position for the aspect legend based on the width of the level legend
-        x_aspect_start = (
-            x_start
-            + box_width
-            + padding
-            + max_name_width
-            + padding
-        )
+        x_aspect_start = x_start + box_width + padding + max_name_width + padding
 
         # Add the competence aspect legend
         aspect_items = [(aspect.color_code, aspect.name) for aspect in self.aspects]
@@ -475,9 +474,9 @@ class Learner:
             self.learner_id, lowercase=False, regex_pattern=r"[^\w\s\-]"
         )
         return file_name
-    
-    def get_achievement_index(self,path)->int:
-        a_index=self.achievement_indices_by_path.get(path)
+
+    def get_achievement_index(self, path) -> int:
+        a_index = self.achievement_indices_by_path.get(path)
         return a_index
 
     def add_achievement(self, new_achievement):
@@ -488,7 +487,7 @@ class Learner:
         index = len(self.achievements) - 1
         self.achievements_by_path[new_achievement.path] = new_achievement
         self.achievement_indices_by_path[new_achievement.path] = index
-  
+
     def get_competence_tree_ids(self) -> List[str]:
         """
         Get all unique competence tree IDs of my achievements.

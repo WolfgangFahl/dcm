@@ -177,7 +177,7 @@ class DonutSegment(SVGNode):
 
     def get_arc(self, radial_offset: float = 0.5) -> Arc:
         """
-        Get the Arc for the givne radial offset
+        Get the Arc for the given radial offset
 
         Args:
             radial_offset(float): e.g. 0.0 - inner 1.0 outer 0.5 middle
