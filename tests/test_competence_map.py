@@ -90,12 +90,12 @@ class TestDynamicCompetenceMap(Basetest):
         test json to yaml conversion
         """
         debug = self.debug
-        #debug = True
+        # debug = True
         learner_examples = DynamicCompetenceMap.get_examples(content_class=Learner)
-        for _learner_id,learner in learner_examples.items():
+        for _learner_id, learner in learner_examples.items():
             yaml_str = learner.to_yaml()
             if debug:
-                    print(yaml_str)
+                print(yaml_str)
             self.assertTrue("achievements:" in yaml_str)
         pass
 
@@ -125,17 +125,15 @@ class TestDynamicCompetenceMap(Basetest):
                                 print(f"facet: {facet.id}:{facet.path}")
                             self.assertTrue(area.path in facet.path)
 
-    def gen_svg_for_dcm(self,dcm,example_name:str,markup:str):
+    def gen_svg_for_dcm(self, dcm, example_name: str, markup: str):
         self.assertIsNotNone(dcm.competence_tree)
         svg_config = SVGConfig(with_popup=True)
         svg_config.legend_height = 40 * len(dcm.competence_tree.levels)
-       
+
         for text_mode in ["curved", "horizontal", "angled", "empty"]:
             svg_file = f"{self.svg_path}/{example_name}_competence_map_{markup}_{text_mode}.svg"
             dcm_chart = DcmChart(dcm)
-            dcm_chart.generate_svg(
-                svg_file, config=svg_config, text_mode=text_mode
-            )
+            dcm_chart.generate_svg(svg_file, config=svg_config, text_mode=text_mode)
             markup_check = MarkupCheck(self, dcm)
             markup_check.check_markup(svg_file=svg_file, svg_config=svg_config)
 
@@ -146,7 +144,7 @@ class TestDynamicCompetenceMap(Basetest):
         for markup, examples in self.example_definitions.items():
             for example_name, dcm in examples.items():
                 # Now you can perform assertions to verify that the data was loaded correctly
-                self.gen_svg_for_dcm(dcm,example_name,markup)
+                self.gen_svg_for_dcm(dcm, example_name, markup)
 
     def testLearnerCompetenceMaps(self):
         """
@@ -154,12 +152,12 @@ class TestDynamicCompetenceMap(Basetest):
         """
         examples = DynamicCompetenceMap.get_examples(markup="yaml")
         learner_examples = DynamicCompetenceMap.get_examples(content_class=Learner)
-        for learner_id,learner in learner_examples.items():
+        for learner_id, learner in learner_examples.items():
             tree_ids = learner.get_competence_tree_ids()
-            self.assertEqual(1,len(tree_ids))
+            self.assertEqual(1, len(tree_ids))
             tree_id = tree_ids[0]
-            dcm=examples.get(tree_id)
+            dcm = examples.get(tree_id)
             self.assertIsNotNone(dcm)
-            dcm.learner=learner
+            dcm.learner = learner
             self.gen_svg_for_dcm(dcm, learner_id, "json")
             pass

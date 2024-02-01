@@ -59,6 +59,8 @@ class SVGNode:
     color: Optional[
         str
     ] = None  # Color of font or stroke use default color of config if None
+    stroke_width: float = 1.0  # Stroke width of the polygon lines
+    opacity: float = 0.5  # Opacity of fill e.g. for polygons
     fill: Optional[str] = "black"  # Fill color for the segment
     title: Optional[str] = None  # Tooltip
     comment: Optional[str] = None
@@ -128,6 +130,16 @@ class Arc:
     # may be calculated by the get_arc function of DonutSegment
     middle_x: Optional[float] = None
     middle_y: Optional[float] = None
+
+
+@dataclass
+class Polygon(SVGNode):
+    """
+    A polygon representing a series of data points in a radar chart.
+    """
+
+    # List of points (x, y) forming the polygon
+    points: List[Tuple[float, float]] = field(default_factory=list)
 
 
 @dataclass
@@ -412,6 +424,43 @@ class SVG:
         color = fill if fill else self.config.default_color
         rect = f'<rect x="{x}" y="{y}" width="{width}" height="{height}" fill="{color}" />\n'
         self.add_element(rect, indent_level=indent_level)
+
+    def add_polygon(self, polygon: Polygon, indent_level: int = 1):
+        """
+        Add a polygon to the SVG.
+
+        Args:
+            polygon (Polygon): The polygon to add to the SVG.
+            indent_level (int): Indentation level for the element.
+        """
+        points_str = " ".join(f"{x},{y}" for x, y in polygon.points)
+        fill_color = polygon.fill if polygon.fill else self.config.default_color
+        opacity = polygon.opacity
+        stroke_color = polygon.color if polygon.color else "black"
+        stroke_width = polygon.stroke_width
+
+        polygon_element = (
+            f'<polygon points="{points_str}" '
+            f'stroke="{stroke_color}" stroke-width="{stroke_width}" '
+            f'fill="{fill_color}" fill-opacity="{opacity}" />\n'
+        )
+
+        # If a title (tooltip) is provided, create a title element
+        title_element = (
+            f"<title>{html.escape(polygon.title)}</title>\n" if polygon.title else ""
+        )
+
+        # Combine polygon and title into one string without adding indentation here
+        group_content = f"{polygon_element}{title_element}"
+
+        # Use add_group to add the polygon with proper indentation and optional comment
+        self.add_group(
+            group_content,
+            group_id=polygon.id,
+            group_class="hoverable",  # You might want to adjust this or make it configurable
+            indent_level=indent_level,
+            comment=polygon.comment,
+        )
 
     def add_legend_column(
         self,

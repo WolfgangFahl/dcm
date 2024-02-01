@@ -57,7 +57,9 @@ class RingSpecView:
                 value=self.ringspec.text_mode,
                 on_change=self.on_text_mode_change,
             )
-            self.level_visible_checkbox=ui.checkbox("level").on("click",self.on_level_visible_change)
+            self.level_visible_checkbox = ui.checkbox("level").on(
+                "click", self.on_level_visible_change
+            )
 
     def update(self, rs: RingSpec):
         """
@@ -69,12 +71,10 @@ class RingSpecView:
         self.inner_ratio_slider.value = round(rs.inner_ratio, 2)
         self.outer_ratio_slider.value = round(rs.outer_ratio, 2)
         self.change_enabled = True
-        
+
     def on_level_visible_change(self):
-        """
-        
-        """
-        self.ringspec.levels_visible=self.level_visible_checkbox.value
+        """ """
+        self.ringspec.levels_visible = self.level_visible_checkbox.value
         self.parent.on_change()
 
     def on_inner_ratio_change(self, gev: GenericEventArguments):

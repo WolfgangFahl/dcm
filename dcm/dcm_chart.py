@@ -4,6 +4,7 @@ Created on 2024-01-12
 @author: wf
 """
 import copy
+import math
 from typing import List, Optional, Tuple
 
 from dcm.dcm_core import (
@@ -125,13 +126,34 @@ class DcmChart:
         )
         return element_config
 
+    def calculate_radar_chart_points(
+        self,
+        scores: List[float],
+        max_score: float,
+        center: Tuple[float, float],
+        radius: float,
+    ) -> List[Tuple[float, float]]:
+        num_axes = len(scores)
+        angle_per_axis = 2 * math.pi / num_axes  # Angle between each axis in radians
+
+        points = []
+        for i, score in enumerate(scores):
+            angle = angle_per_axis * i  # Angle for this axis
+            # Calculate the distance from the center for this point
+            distance = (score / max_score) * radius
+            x = center[0] + distance * math.cos(angle)
+            y = center[1] + distance * math.sin(angle)
+            points.append((x, y))
+
+        return points
+
     def get_stacked_segment(
         self,
         level: int,
         total_levels: int,
         segment: DonutSegment,
         element_config: SVGNodeConfig,
-    )-> Tuple[DonutSegment, SVGNodeConfig]:
+    ) -> Tuple[DonutSegment, SVGNodeConfig]:
         """
         Calculate the stacked segment for a given level.
 
@@ -142,9 +164,9 @@ class DcmChart:
             element_config (SVGNodeConfig): The element configuration.
 
         Returns:
-            Tuple[DonutSegment, SVGNodeConfig]: 
+            Tuple[DonutSegment, SVGNodeConfig]:
                 The calculated stacked segment and its configuration for the given level.
- 
+
         """
         level_color = self.dcm.competence_tree.get_level_color(level)
         stack_element_config = copy.deepcopy(element_config)
@@ -162,7 +184,7 @@ class DcmChart:
         segment: DonutSegment,
         level_color=None,
         achievement_level=None,
-        ringspec: RingSpec=None
+        ringspec: RingSpec = None,
     ) -> DonutSegment:
         """
         create a donut segment for the
@@ -183,7 +205,7 @@ class DcmChart:
             element_config.color = "blue"
         # in case we need to draw an achievement
         total_levels = self.dcm.competence_tree.total_valid_levels
-   
+
         if achievement_level is None:
             result = svg.add_donut_segment(config=element_config, segment=segment)
         else:
@@ -195,7 +217,9 @@ class DcmChart:
             else:
                 # create the stacked segments starting with the highest level
                 for level in range(achievement_level, 0, -1):
-                    stacked_segment,stack_element_config = self.get_stacked_segment(level, total_levels, segment, element_config)
+                    stacked_segment, stack_element_config = self.get_stacked_segment(
+                        level, total_levels, segment, element_config
+                    )
                     # the result will be overriden in the loop so we'll return the innermost
                     result = svg.add_donut_segment(
                         config=stack_element_config, segment=stacked_segment
@@ -212,17 +236,23 @@ class DcmChart:
                     text_segment, text, direction=text_mode
                 )
         # in stacked mode show the level circles
-        # by drawing arcs even if no achievements 
+        # by drawing arcs even if no achievements
         # are available
         if ringspec and ringspec.levels_visible:
             if total_levels:
                 svg.add_element(f"<!-- arcs for {element.path} -->")
                 for level in range(total_levels):
-                    stacked_segment,stack_element_config = self.get_stacked_segment(level, total_levels, segment, element_config)
+                    stacked_segment, stack_element_config = self.get_stacked_segment(
+                        level, total_levels, segment, element_config
+                    )
                     fill = "white"  # Set the color for unachieved levels
-                    donut_path = svg.get_donut_path(stacked_segment,radial_offset=1,middle_arc=True)  # Get the path for the stacked segment
-                    svg.add_element(f'<path d="{donut_path}" stroke="{fill}" fill="none" stroke-width="1.5" />')  # Draw the path in SVG
-        
+                    donut_path = svg.get_donut_path(
+                        stacked_segment, radial_offset=1, middle_arc=True
+                    )  # Get the path for the stacked segment
+                    svg.add_element(
+                        f'<path d="{donut_path}" stroke="{fill}" fill="none" stroke-width="1.5" />'
+                    )  # Draw the path in SVG
+
         return result
 
     def generate_donut_segment_for_achievement(
@@ -259,7 +289,7 @@ class DcmChart:
         element: CompetenceElement,
         learner: Learner,
         segment: DonutSegment,
-        ringspec: RingSpec=None
+        ringspec: RingSpec = None,
     ) -> DonutSegment:
         """
         generate a donut segment for a given element of
@@ -269,7 +299,9 @@ class DcmChart:
             result = segment
         else:
             # Simply create the donut segment without considering the achievement
-            result = self.add_donut_segment(svg=svg, element=element, segment=segment, ringspec=ringspec)
+            result = self.add_donut_segment(
+                svg=svg, element=element, segment=segment, ringspec=ringspec
+            )
             # check learner achievements
             if learner:
                 _learner_segment = self.generate_donut_segment_for_achievement(
