@@ -5,16 +5,15 @@ Created on 2023-11-06
 """
 import os
 import uuid
-from dataclasses import dataclass
 from typing import List, Optional
 from urllib.parse import urlparse
 
-import yaml
 from fastapi import HTTPException
 from fastapi.responses import HTMLResponse
 from ngwidgets.file_selector import FileSelector
 from ngwidgets.input_webserver import InputWebserver
 from ngwidgets.webserver import WebserverConfig
+from ngwidgets.yamlable import lod_storable
 from nicegui import Client, app, ui
 from pydantic import BaseModel
 
@@ -42,24 +41,89 @@ class SVGRenderRequest(BaseModel):
     markup: str
     config: Optional[SVGConfig] = None
 
-
-@dataclass
+@lod_storable
 class ServerConfig:
     storage_secret: str
     storage_path: str
 
     @classmethod
-    def from_yaml(cls, yaml_path: str):
-        if not os.path.exists(yaml_path):
-            default_storage_path = os.path.join(
-                os.path.expanduser("~"), ".dcm", "storage"
-            )
+    def from_config_yaml(cls, yaml_path: str=None):
+        default_config_path = os.path.join(
+            os.path.expanduser("~"), ".dcm")
+        default_storage_path=os.path.join(default_config_path,"storage")
+        if not yaml_path:
+            yaml_path=os.path.join(default_config_path,"server_config.yaml")
+        if os.path.exists(yaml_path):
+            server_config=cls.load_from_yaml_file(yaml_path)
+        else:
             # Create the directory if it does not exist
-            os.makedirs(default_storage_path, exist_ok=True)
-            return cls(str(uuid.uuid4()), default_storage_path)
-        with open(yaml_path, "r") as file:
-            config_data = yaml.safe_load(file)
-        return cls(**config_data)
+            os.makedirs(default_config_path, exist_ok=True)
+            storage_secret=str(uuid.uuid4())
+            server_config=cls(storage_secret,default_storage_path)
+            server_config.save_to_yaml_file(yaml_path)
+        return server_config
+
+class DcmSession:
+    """
+    Handles the session data for a Dynamic Competence Webserver session.
+
+    Attributes:
+        user_id (str): A unique identifier for the user's session.
+        learner_id (Optional[str]): Identifier for the learner.
+        assessment_state (Optional[bool]): The state of the assessment.
+        storage_path (str): The file system path where learner data is stored.
+    """
+
+    def __init__(self, user_id: str, storage_path: str) -> None:
+        """
+        Initialize a new instance of the DcmSession class.
+
+        Args:
+            user_id (str): A unique identifier for the user's session.
+            storage_path (str): The file system path where learner data is stored.
+        """
+        self.user_id = user_id
+        self.storage_path = storage_path
+        # Load session data from app.storage if it exists, otherwise initialize it
+        self.learner_id: Optional[str] = app.storage.user.get('learner_id')
+        self.assessment_state: Optional[bool] = app.storage.user.get('assessment_state',False)
+        self.learner=None
+
+    def save_session_state(self) -> None:
+        """
+        Save the current session state to app.storage.user.
+        """
+        app.storage.user['learner_id'] = self.learner_id
+        app.storage.user['assessment_state'] = self.assessment_state
+
+    def get_learner_file_path(self, learner_slug: str) -> str:
+        """
+        Get the file path for a learner's JSON file based on the learner's slug.
+
+        Args:
+            learner_slug (str): The unique slug of the learner.
+
+        Returns:
+            str: The file path for the learner's JSON file.
+        """
+        return os.path.join(self.storage_path, f"{learner_slug}.json")
+
+    def load_learner(self, learner_slug: str) -> None:
+        """
+        Load a learner from a JSON file based on the learner's slug.
+
+        Args:
+            learner_slug (str): The unique slug of the learner.
+
+        Raises:
+            FileNotFoundError: If the learner file does not exist.
+        """
+        learner_file = self.get_learner_file_path(learner_slug)
+        if not os.path.exists(learner_file):
+            raise FileNotFoundError(f"Learner file not found: {learner_file}")
+        self.learner = Learner.load_from_json_file(learner_file)
+        self.learner_id = self.learner.learner_id
+        self.save_session_state()
 
 
 class DynamicCompentenceMapWebServer(InputWebserver):
@@ -85,13 +149,11 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
         self.dcm = None
-        self.learner = None
         self.assessment = None
         self.content_div = None
         self.text_mode = "empty"
-        self.timeout = 0.5
-        config_path = os.path.join(os.environ["HOME"], ".dcm/config.yaml")
-        self.server_config = ServerConfig.from_yaml(config_path)
+        self.timeout = 1.5
+        self.server_config = ServerConfig.from_config_yaml()
 
         # FastAPI endpoints
         @app.post("/svg/")
@@ -263,7 +325,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         if isinstance(item, DynamicCompetenceMap):
             self.render_dcm(item)
         else:
-            self.learner = item
+            self.session.learner = item
+            self.session.save_session_state()
             self.assess(item)
 
     def render_dcm(
@@ -290,7 +353,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
                 except Exception as ex:
                     ui.notify(str(ex))
                 self.assessment = None
-                self.learner = None
+                self.session.learner = None
+                self.session.learner_id = None
+                self.session.save_session_state()
             self.dcm = dcm
             self.ringspecs_view.update_rings(dcm.competence_tree)
             self.assess_state(True)
@@ -317,6 +382,8 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         ui.add_head_html(java_script)
 
     def show_ui(self):
+        user_id = app.storage.browser['id']
+        self.session = DcmSession(user_id, self.server_config.storage_path)
         with self.content_div:
             with ui.splitter() as splitter:
                 with splitter.before:
@@ -389,8 +456,9 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         """
         run a new  assessment for a new learner
         """
-        self.learner = Learner(learner_id=f"{uuid.uuid4()}")
-        self.assess_learner(self.dcm, self.learner)
+        self.session.learner_id=f"{uuid.uuid4()}"
+        self.session.load_learner(self.session.learner_id)
+        self.assess_learner(self.dcm, self.session.learner)
 
     async def assess_learner_by_slug(self, learner_slug: str):
         """
@@ -406,10 +474,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         def show():
             try:
                 self.show_ui()
-                learner_file = os.path.join(
-                    self.server_config.storage_path, f"{learner_slug}.json"
-                )
-                learner = Learner.load_from_json_file(learner_file)
+                learner = self.session.load_learner(learner_slug)
                 self.assess(learner)
             except Exception as ex:
                 self.handle_exception(ex, self.do_trace)
@@ -439,17 +504,18 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         self.assess_learner(dcm, learner)
 
     def on_update_ringspecs(self):
-        if self.learner:
-            self.render_item(self.learner)
+        if self.session.learner:
+            self.render_item(self.session.learner)
         else:
             self.render_item(self.dcm)
 
     def assess_state(self, state: bool):
+        self.session.assessment_state=state
         if state:
             self.assessment_button.enable()
         else:
             self.assessment_button.disable()
-        if self.learner:
+        if self.session.learner:
             self.download_button.enable()
         else:
             self.download_button.disable()

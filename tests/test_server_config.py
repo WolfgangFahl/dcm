@@ -11,11 +11,13 @@ from ngwidgets.basetest import Basetest
 
 from dcm.dcm_webserver import ServerConfig
 
-
 class TestServerConfig(Basetest):
     """
     Test cases for the ServerConfig class.
     """
+    
+    def setUp(self, debug=True, profile=True):
+        Basetest.setUp(self, debug=debug, profile=profile)
 
     def test_server_config(self):
         # Create a temporary YAML config file for testing
@@ -30,7 +32,7 @@ class TestServerConfig(Basetest):
 
         try:
             # Load the configuration using the ServerConfig class
-            config = ServerConfig.from_yaml(tmp_file_path)
+            config = ServerConfig.from_config_yaml(tmp_file_path)
 
             # Check if the configuration is loaded correctly
             self.assertEqual(config.storage_secret, "test_secret")
@@ -39,3 +41,11 @@ class TestServerConfig(Basetest):
         finally:
             # Clean up: Remove the temporary file
             os.remove(tmp_file_path)
+            
+    def test_server_config_default(self):
+        """
+        test the server configuration with default yaml path
+        """
+        server_config=ServerConfig.from_config_yaml(yaml_path=None)
+        if self.debug:
+            print(server_config.to_yaml())
