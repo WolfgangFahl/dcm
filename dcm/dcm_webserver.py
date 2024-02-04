@@ -514,7 +514,7 @@ class DcmSolution(InputWebSolution):
             self.assessment_button.enable()
         else:
             self.assessment_button.disable()
-        if self.assessement is not None:
+        if self.assessment is not None:
             self.download_button.enable()
         else:
             self.download_button.disable()
