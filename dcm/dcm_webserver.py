@@ -510,7 +510,7 @@ class DcmSolution(InputWebSolution):
         in the UI
         """
         self.save_session_state()
-        if self.learner is None:
+        if self.dcm and self.learner is None:
             # allow creating a new learner
             self.assessment_button.enable()
         else:
