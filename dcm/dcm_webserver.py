@@ -510,11 +510,11 @@ class DcmSolution(InputWebSolution):
         in the UI
         """
         self.save_session_state()
-        if self.assessment is not None:
+        if self.learner is not None:
             self.assessment_button.enable()
         else:
             self.assessment_button.disable()
-        if self.learner:
+        if self.assessement is not None:
             self.download_button.enable()
         else:
             self.download_button.disable()
