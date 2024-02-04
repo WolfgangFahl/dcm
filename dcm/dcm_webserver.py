@@ -510,13 +510,17 @@ class DcmSolution(InputWebSolution):
         in the UI
         """
         self.save_session_state()
-        if self.learner is not None:
+        if self.learner is None:
+            # allow creating a new learner
             self.assessment_button.enable()
         else:
+            # the assessment is already on
             self.assessment_button.disable()
         if self.assessment is not None:
+                # downloading is possible
             self.download_button.enable()
         else:
+            # downloading is not possible - we have n learner
             self.download_button.disable()
 
     async def download(self, _args):
