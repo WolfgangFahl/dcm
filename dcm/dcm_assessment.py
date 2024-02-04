@@ -159,7 +159,7 @@ class Assessment:
             # Determine the file path for storing the learner's data
             filename = self.learner.file_name + ".json"
             file_path = os.path.join(
-                self.webserver.server_config.storage_path, filename
+                self.webserver.config.storage_path, filename
             )
 
             # Write the serialized data to the file
@@ -170,7 +170,7 @@ class Assessment:
                 print(f"Learner data stored in {file_path}")
 
         except Exception as ex:
-            self.webserver.handle_exception(ex, self.webserver.do_trace)
+            self.webserver.handle_exception(ex)
         return file_path
 
     def reset(

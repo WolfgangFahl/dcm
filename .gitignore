@@ -162,3 +162,5 @@ cython_debug/
 # Eclipse
 # Mac
 .DS_Store
+# nicegui files
+.nicegui

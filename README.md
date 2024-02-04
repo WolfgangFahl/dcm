@@ -11,8 +11,9 @@ defined competence aspects.
 [![GitHub issues](https://img.shields.io/github/issues-closed/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues/?q=is%3Aissue+is%3Aclosed)
 [![GitHub](https://img.shields.io/github/license/WolfgangFahl/dcm)](https://www.apache.org/licenses/LICENSE-2.0)
 
-## Demo
-* [demo](http://dcm.bitplan.com)
+## Demos
+* [RWTH Aachen i5](https://dcm.wikidata.dbis.rwth-aachen.de/)
+* [alternative mirror demo](https://dcm.bitplan.com)
 
 ## Motivation ##
 
