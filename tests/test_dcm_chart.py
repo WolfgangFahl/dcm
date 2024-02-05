@@ -67,10 +67,7 @@ class TestDcmChart(Basetest):
 
         # Use the function to calculate points for the scores
         radar_points = dcm_chart.calculate_radar_chart_points(
-            self.scores, 
-            max_score=100.0, 
-            center=center, 
-            radius=radius
+            self.scores, max_score=100.0, center=center, radius=radius
         )
 
         # Create a Polygon for the radar chart
@@ -84,9 +81,9 @@ class TestDcmChart(Basetest):
 
         # Create an SVG instance and add the radar chart Polygon
         svg = SVG(SVGConfig(width=600, height=600))
-  
+
         # Add concentric circles at every 10% interval
-        for i in range(1,11):
+        for i in range(1, 11):
             circle_radius = (radius * i) / 10
             svg.add_circle(
                 SVGNodeConfig(
@@ -108,5 +105,5 @@ class TestDcmChart(Basetest):
         if self.debug:
             svg_markup = svg.get_svg_markup()
             print(svg_markup)
-            
-        self.assertTrue('''<polygon points="500.0''' in svg_markup)
+
+        self.assertTrue("""<polygon points="500.0""" in svg_markup)

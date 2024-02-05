@@ -23,6 +23,7 @@ from dcm.dcm_web import RingSpecsView
 from dcm.svg import SVG, SVGConfig
 from dcm.version import Version
 
+
 class SVGRenderRequest(BaseModel):
     """
     A request for rendering an SVG.
@@ -33,11 +34,13 @@ class SVGRenderRequest(BaseModel):
         markup (str): The format of the definition ('json' or 'yaml').
         config (SVGConfig): Optional configuration for SVG rendering. Defaults to None, which uses default settings.
     """
+
     name: str
     definition: str
     markup: str
     text_mode: Optional[str] = "empty"
     config: Optional[SVGConfig] = None
+
 
 class DynamicCompentenceMapWebServer(InputWebserver):
     """
@@ -52,12 +55,12 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         copy_right = ""
         config = WebserverConfig(
             short_name="dcm",
-            copy_right=copy_right, 
-            version=Version(), 
-            default_port=8885
+            copy_right=copy_right,
+            version=Version(),
+            default_port=8885,
         )
-        server_config=WebserverConfig.get(config)
-        server_config.solution_class=DcmSolution
+        server_config = WebserverConfig.get(config)
+        server_config.solution_class = DcmSolution
         return server_config
 
     def __init__(self):
@@ -66,7 +69,7 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self, config=DynamicCompentenceMapWebServer.get_config()
         )
         self.examples = DynamicCompetenceMap.get_examples(markup="yaml")
-  
+
         # FastAPI endpoints
         @app.post("/svg/")
         async def render_svg(svg_render_request: SVGRenderRequest) -> HTMLResponse:
@@ -151,23 +154,25 @@ class DynamicCompentenceMapWebServer(InputWebserver):
         # nicegui RESTFul endpoints
         @ui.page("/learner/{learner_slug}")
         async def show_learner(client: Client, learner_slug: str):
-            return await self.page(client, DcmSolution.assess_learner_by_slug,learner_slug)
-        
+            return await self.page(
+                client, DcmSolution.assess_learner_by_slug, learner_slug
+            )
+
     async def render_svg(self, svg_render_request: SVGRenderRequest) -> HTMLResponse:
-            """
-            render the given request
-            """
-            r = svg_render_request
-            dcm = DynamicCompetenceMap.from_definition_string(
-                r.name, r.definition, content_class=CompetenceTree, markup=r.markup
-            )
-            dcm_chart = DcmChart(dcm)
-            svg_markup = dcm_chart.generate_svg_markup(
-                config=r.config, with_java_script=True, text_mode=r.text_mode
-            )
-            response = HTMLResponse(content=svg_markup)
-            return response
-        
+        """
+        render the given request
+        """
+        r = svg_render_request
+        dcm = DynamicCompetenceMap.from_definition_string(
+            r.name, r.definition, content_class=CompetenceTree, markup=r.markup
+        )
+        dcm_chart = DcmChart(dcm)
+        svg_markup = dcm_chart.generate_svg_markup(
+            config=r.config, with_java_script=True, text_mode=r.text_mode
+        )
+        response = HTMLResponse(content=svg_markup)
+        return response
+
     async def show_description(self, path: str = None) -> HTMLResponse:
         """
         Show the HTML description of a specific
@@ -211,12 +216,13 @@ class DynamicCompentenceMapWebServer(InputWebserver):
             self.root_path,
         ]
         pass
-        
+
+
 class DcmSolution(InputWebSolution):
     """
     the Dynamic Competence Map solution
     """
-    
+
     def __init__(self, webserver: DynamicCompentenceMapWebServer, client: Client):
         """
         Initialize the solution
@@ -228,7 +234,7 @@ class DcmSolution(InputWebSolution):
         """
         super().__init__(webserver, client)  # Call to the superclass constructor
         self.dcm = None
-        self.learner=None
+        self.learner = None
         self.assessment = None
         self.text_mode = "empty"
 
@@ -244,9 +250,9 @@ class DcmSolution(InputWebSolution):
         """
         Save the current session state to app.storage.user.
         """
-        learner_id=self.learner.learner_id if self.learner else None
-        app.storage.user['learner_id'] = learner_id
-        app.storage.user['assessment'] = self.assessment is not None
+        learner_id = self.learner.learner_id if self.learner else None
+        app.storage.user["learner_id"] = learner_id
+        app.storage.user["assessment"] = self.assessment is not None
 
     def get_learner_file_path(self, learner_slug: str) -> str:
         """
@@ -357,9 +363,9 @@ class DcmSolution(InputWebSolution):
         """
         prepare the user interface
         """
-        self.user_id = app.storage.browser['id']  
+        self.user_id = app.storage.browser["id"]
         self.prepare_svg()
-        
+
     def prepare_svg(self):
         """
         prepare the SVG / javascript display
@@ -369,7 +375,7 @@ class DcmSolution(InputWebSolution):
         java_script = self.svg.get_java_script()
 
         # Add the script using ui.add_head_html()
-        ui.add_head_html(java_script,shared=True)
+        ui.add_head_html(java_script, shared=True)
 
     def show_ui(self):
         """
@@ -416,7 +422,9 @@ class DcmSolution(InputWebSolution):
                 with splitter.after:
                     self.svg_view = ui.html("")
 
-    async def home(self,):
+    async def home(
+        self,
+    ):
         """Generates the home page with a selection of examples and
         svg display
         """
@@ -447,9 +455,9 @@ class DcmSolution(InputWebSolution):
         """
         run a new  assessment for a new learner
         """
-        try: 
-            learner_id=f"{uuid.uuid4()}"
-            self.learner=Learner(learner_id)
+        try:
+            learner_id = f"{uuid.uuid4()}"
+            self.learner = Learner(learner_id)
             self.save_session_state()
             self.assess_learner(self.dcm, self.learner)
         except Exception as ex:
@@ -517,7 +525,7 @@ class DcmSolution(InputWebSolution):
             # the assessment is already on
             self.assessment_button.disable()
         if self.assessment is not None:
-                # downloading is possible
+            # downloading is possible
             self.download_button.enable()
         else:
             # downloading is not possible - we have n learner

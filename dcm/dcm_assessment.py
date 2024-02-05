@@ -158,9 +158,7 @@ class Assessment:
 
             # Determine the file path for storing the learner's data
             filename = self.learner.file_name + ".json"
-            file_path = os.path.join(
-                self.webserver.config.storage_path, filename
-            )
+            file_path = os.path.join(self.webserver.config.storage_path, filename)
 
             # Write the serialized data to the file
             with open(file_path, "w") as file:

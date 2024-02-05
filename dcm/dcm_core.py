@@ -5,8 +5,8 @@ Created on 2023-06-11
 """
 import json
 import os
-from datetime import datetime
 from dataclasses import dataclass, field
+from datetime import datetime
 from json.decoder import JSONDecodeError
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -475,7 +475,7 @@ class Learner:
             self.learner_id, lowercase=False, regex_pattern=r"[^\w\s\-]"
         )
         return file_name
-    
+
     @property
     def most_recent_achievement_iso_date(self) -> Optional[str]:
         """
@@ -486,13 +486,16 @@ class Learner:
         """
         if not self.achievements:
             return None
-        dates = [achievement.date_assessed_iso for achievement in self.achievements if achievement.date_assessed_iso]
+        dates = [
+            achievement.date_assessed_iso
+            for achievement in self.achievements
+            if achievement.date_assessed_iso
+        ]
         if not dates:
             return None
         # Parse the ISO dates and return the most recent one
         most_recent_date = max(datetime.fromisoformat(date) for date in dates)
         return most_recent_date.isoformat()
-
 
     def get_achievement_index(self, path) -> int:
         a_index = self.achievement_indices_by_path.get(path)

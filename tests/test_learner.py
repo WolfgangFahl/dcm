@@ -37,5 +37,7 @@ class TestLearner(Basetest):
             self.assertEqual("architecture", tree_ids[0])
             for achievement in learner.achievements:
                 self.assertTrue(achievement.path in learner.achievements_by_path)
-            debug=True
-            self.assertEqual("2023-06-20T00:00:00",learner.most_recent_achievement_iso_date)
+            debug = True
+            self.assertEqual(
+                "2023-06-20T00:00:00", learner.most_recent_achievement_iso_date
+            )
