@@ -369,7 +369,7 @@ class DcmSolution(InputWebSolution):
         java_script = self.svg.get_java_script()
 
         # Add the script using ui.add_head_html()
-        ui.add_head_html(java_script)
+        ui.add_head_html(java_script,shared=True)
 
     def show_ui(self):
         """

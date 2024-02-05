@@ -3,6 +3,7 @@
 	<name>dcm</name>
 	<comment></comment>
 	<projects>
+		<project>nicegui</project>
 		<project>nicegui_widgets</project>
 	</projects>
 	<buildSpec>
