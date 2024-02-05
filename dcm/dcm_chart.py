@@ -4,7 +4,6 @@ Created on 2024-01-12
 @author: wf
 """
 import copy
-import math
 from typing import List, Optional, Tuple
 
 from dcm.dcm_core import (
@@ -16,7 +15,6 @@ from dcm.dcm_core import (
     RingSpec,
 )
 from dcm.svg import SVG, DonutSegment, SVGConfig, SVGNodeConfig
-
 
 class DcmChart:
     """
@@ -125,27 +123,6 @@ class DcmChart:
             y=self.cy,
         )
         return element_config
-
-    def calculate_radar_chart_points(
-        self,
-        scores: List[float],
-        max_score: float,
-        center: Tuple[float, float],
-        radius: float,
-    ) -> List[Tuple[float, float]]:
-        num_axes = len(scores)
-        angle_per_axis = 2 * math.pi / num_axes  # Angle between each axis in radians
-
-        points = []
-        for i, score in enumerate(scores):
-            angle = angle_per_axis * i  # Angle for this axis
-            # Calculate the distance from the center for this point
-            distance = (score / max_score) * radius
-            x = center[0] + distance * math.cos(angle)
-            y = center[1] + distance * math.sin(angle)
-            points.append((x, y))
-
-        return points
 
     def get_stacked_segment(
         self,
