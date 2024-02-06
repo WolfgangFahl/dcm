@@ -10,7 +10,7 @@ aspects:
 - name: Berufspraktisches Wissen und Können
   short_name: Berufspraktisches Wissen und Können
   id: BerufspraktischesWissenUndKoennen
-  color_code: '#868378'
+  color_code: '#0069a7'
   border_color: white
   areas:
   - name: Didaktik und Methodik
@@ -179,7 +179,7 @@ aspects:
 - name: Fach- und Feldspezifisches Wissen
   short_name: Fach- und Feldspezifiches Wissen
   id: FachUndFeldspezifischesWissen
-  color_code: '#aba89e'
+  color_code: '#008dd0'
   border_color: white
   areas:
   - name: Feldbezug
@@ -228,7 +228,7 @@ aspects:
 - name: Professionelle Werthaltungen und Überzeugungen
   short_name: Werthaltungen
   id: ProfessionelleWerthaltungenUndUeberzeugungen
-  color_code: '#c9c7c0'
+  color_code: '#40a1da'
   border_color: white
   areas:
   - name: Berufsethos
@@ -295,7 +295,7 @@ aspects:
 - name: Professionelle Selbststeuerung
   short_name: Selbststeuerung
   id: ProfessionelleSelbststeuerung
-  color_code: '#e8e6e1'
+  color_code: '#86c0ea'
   border_color: white
   areas:
   - name: Motivationale Orientierungen
@@ -393,31 +393,31 @@ levels:
 - name: nicht erfasst
   short_name: nicht erfa
   id: nicht-erfasst
-  color_code: '#888888'
+  color_code: '#ececec'
   level: 0
   utf8_icon: ❓
 - name: kennen und verstehen
   short_name: kennen und
   id: kennen-und-verstehen
-  color_code: '#ECEABE'
+  color_code: '#e2e6b9'
   level: 1
   utf8_icon: ⭐
 - name: anwenden und umsetzen
   short_name: anwenden u
   id: anwenden-und-umsetzen
-  color_code: '#C8D575'
+  color_code: '#a7be39'
   level: 2
   utf8_icon: ⭐⭐
 - name: analysieren und beurteilen
   short_name: analysiere
   id: analysieren-und-beurteilen
-  color_code: '#AEBF3F'
+  color_code: '#788404'
   level: 3
   utf8_icon: ⭐⭐⭐
 - name: weiterentwickeln und kreieren
   short_name: weiterentw
   id: weiterentwickeln-und-kreieren
-  color_code: '#7D8A2C'
+  color_code: '#3f4a00'
   level: 4
   utf8_icon: ⭐⭐⭐⭐
 element_names:
