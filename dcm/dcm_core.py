@@ -393,7 +393,6 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             box_height,
         )
 
-
 @dataclass_json
 @dataclass
 class Achievement:

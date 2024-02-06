@@ -17,7 +17,6 @@ from dcm.dcm_core import (
     RingSpec,
 )
 
-
 class TestGreta(Basetest):
     """
     test converting the Greta competence Json Model to
@@ -104,9 +103,9 @@ class TestGreta(Basetest):
         )
         ct.element_names = {
             "tree": "Kompetenzbilanz",
-            "aspect": "Kompetenzaspekt",
-            "area": "Kompetenzbereich",
-            "facet": "Kompetenzfacette",
+            "aspect": "Kompetenzaspekte",
+            "area": "Kompetenzbereiche",
+            "facet": "Kompetenzfacetten",
             "level": "Lernziel-Stufen",
         }
         if with_text:
