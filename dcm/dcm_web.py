@@ -131,14 +131,12 @@ class RingSpecsView:
                     self.symmetry_mode_radio = ui.radio(
                         ["count", "time", "score"], 
                         on_change=self.on_symmetry_change
-                    ).props("inline") \
-                    .bind_value(self, 'symmetry_mode') 
+                    ).props("inline")
                 with ui.row():
                     self.symmetry_level_radio = ui.radio(
                         ["aspect", "area", "facet"], 
                         on_change=self.on_symmetry_change
-                    ).props("inline") \
-                    .bind_value(self, 'symmetry_value') 
+                    ).props("inline")
             with ui.grid(columns=2, rows=8) as self.grid:
                 inner_ratio = 0
                 outer_ratio = 1 / 7
@@ -157,18 +155,25 @@ class RingSpecsView:
         """
         update the ring specifications based on the given competence tree
         """
-        self.ct=ct
         self.symmetry_level, self.symmetry_mode = ct.get_symmetry_spec()
+        self.symmetry_level_radio.value=self.symmetry_level
+        self.symmetry_mode_radio.value=self.symmetry_mode
+        # set ct after changing radio buttions
+        self.ct=ct
         for rl in ["tree", "aspect", "area", "facet"]:
             self.rsv[rl].update(ct.ring_specs[rl])
 
-    def on_symmetry_change(self):
+    def on_symmetry_change(self,args):
         """
         handle symmetry changes
         """
-        if self.ct:
-            # check whether the radio values are different from the ct values
+        if self.ct:       
+            # get compentency tree symmetry settings
+            # and the current ui radio button settings
             ct_symmetry_level, ct_symmetry_mode = self.ct.get_symmetry_spec()   
+            self.symmetry_level=self.symmetry_level_radio.value
+            self.symmetry_mode=self.symmetry_mode_radio.value
+            # check whether the radio values are different from the ct values
             if (ct_symmetry_level != self.symmetry_level or ct_symmetry_mode != self.symmetry_mode):
                 self.ct.set_symmetry_mode(self.symmetry_level,self.symmetry_mode)       
             pass
