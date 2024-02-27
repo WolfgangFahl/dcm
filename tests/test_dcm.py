@@ -30,6 +30,9 @@ class TestDCM(Basetest):
         test the symmetry spec handling
         """
         test_cases=[
+            # special cases
+            (None,None,None),
+            (None,None,"Symmetry mode set for multiple ring specs."),
             ("aspect","count",None),
             ("facet","score",None),
             ("area","time",None),
@@ -42,18 +45,20 @@ class TestDCM(Basetest):
                 ct.ring_specs={}
                 test_level="facet"
                 test_mode="count"
-            else:
+            elif index==1:
                 ct.ring_specs = {
-                    test_level: RingSpec(symmetry_mode=test_mode),
-                    # Other ring specs without symmetry_mode set
+                    "facet": RingSpec(symmetry_mode="count"),
+                    "area": RingSpec(symmetry_mode="score")
                 }
+            else:
+                ct.set_symmetry_mode(test_level,test_mode)
             index+=1
             try:
                 # Call the method
                 symmetry_level, symmetry_mode = ct.get_symmetry_spec()
                 
                 # Verify the results
-                self.assertEqual(test_mode, symmetry_mode)
-                self.assertEqual(test_level, symmetry_level)
+                self.assertEqual(test_mode, symmetry_mode,ct.name)
+                self.assertEqual(test_level, symmetry_level,ct.name)
             except Exception as ex:
                 self.assertEqual(str(ex),err_msg) 

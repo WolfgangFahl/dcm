@@ -235,7 +235,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                     outer_ratio=outer_ratio,
                 )
                 
-    def set_symmetry_mode(self,rl:str,symmetry_mode:str):
+    def set_symmetry_mode(self,symmetry_level:str,symmetry_mode:str):
         """
          Sets a new symmetry mode for a specified level 
          in the competence tree. It resets the symmetry 
@@ -245,14 +245,14 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
          only one level has a symmetry mode set at any given time.
 
         Args:
-            rl (str): The level to apply the new symmetry mode. Valid levels include "tree", "aspect", "area", and "facet".
+            symmetry_level(str): The level to apply the new symmetry mode. Valid levels include "tree", "aspect", "area", and "facet".
             symmetry_mode (str): The symmetry mode to set for the specified level. Valid modes are "count", "score", and "time".
         """
         # reset all ring specs
         for rl in ["tree", "aspect", "area", "facet"]:
             self.ring_specs[rl].symmetry_mode=None
-        if rl in self.ct_ring_specs:
-            self.ring_specs[rl].symmetry_mode=symmetry_mode
+        if symmetry_level in self.ring_specs:
+            self.ring_specs[symmetry_level].symmetry_mode=symmetry_mode
                 
     def get_symmetry_spec(self) -> Tuple[str, str]:
         """
