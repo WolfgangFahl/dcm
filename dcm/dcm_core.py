@@ -250,9 +250,9 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         """
         # reset all ring specs
         for rl in ["tree", "aspect", "area", "facet"]:
-            self.ct.ring_specs[rl].symmetry_mode=None
+            self.ring_specs[rl].symmetry_mode=None
         if rl in self.ct_ring_specs:
-            self.ct.ring_specs[rl].symmetry_mode=symmetry_mode
+            self.ring_specs[rl].symmetry_mode=symmetry_mode
                 
     def get_symmetry_spec(self) -> Tuple[str, str]:
         """
