@@ -290,6 +290,7 @@ class DcmChart:
         self,
         level: int,
         svg: SVG,
+        ct: CompetenceTree,
         parent_element: CompetenceElement,
         learner: Learner,
         segment: DonutSegment,
@@ -299,11 +300,12 @@ class DcmChart:
         of the given parent_element at the given level
         e.g. aspects, areas or facets - taking the learner
         achievements into account if a corresponding achievement
-        is found. The segment limits the area in which the generation may operate
+        is found. The segment limits the area in 
+        which the generation may operate
 
         the symmetry level denotes at which level the rings should be symmetric
         """
-        sub_element_name = self.levels[level]
+        sub_element_name = ct.level_attr_names[level]
         # get the elements to be displayed
         elements = getattr(parent_element, sub_element_name)
         total = len(elements)
@@ -354,10 +356,11 @@ class DcmChart:
                     svg, element, learner, segment=sub_segment, ringspec=ringspec
                 )
                 start_angle = end_angle
-                if level + 1 < len(self.levels):
+                if level + 1 < ct.total_levels:
                     self.generate_pie_elements(
                         level=level + 1,
                         svg=svg,
+                        ct=ct,
                         parent_element=element,
                         learner=learner,
                         segment=sub_segment,
@@ -374,11 +377,16 @@ class DcmChart:
         Returns:
             A dictionary where keys are element paths and values are the corresponding DonutSegment objects.
         """
-        level_segments = {}
+        level_segments = {
+            "aspect": {}, 
+            "area": {}, 
+            "facet": {}
+        }
         
-        def calculate_for_element(element, parent_segment, level=0):
+        def calculate_for_element(parent_segment, level=1):
             # Calculate segment size based on the number of elements at this level
-            elements = getattr(element, self.levels[level], [])
+            elements = ct.get_elements_for_level(level)
+            level_name=ct.level_names[level]
             total_elements = len(elements)
             if total_elements == 0:
                 return
@@ -386,7 +394,7 @@ class DcmChart:
             angle_per_element = (parent_segment.end_angle - parent_segment.start_angle) / total_elements
             start_angle = parent_segment.start_angle
             
-            for i, sub_element in enumerate(elements):
+            for _i, sub_element in enumerate(elements):
                 end_angle = start_angle + angle_per_element
                 # Create a new segment for this element
                 segment = DonutSegment(
@@ -398,17 +406,18 @@ class DcmChart:
                     end_angle=end_angle,
                     text_mode=tree_segment.text_mode,
                 )
-                # Store the segment with its corresponding path as the key
-                level_segments[sub_element.path] = segment
+                # add the segment with the sub element's path as the key
+                level_segments[level_name][sub_element.path]=segment
                 
                 # Recurse for sub-elements if not at the last level
-                if level + 1 < len(self.levels):
-                    calculate_for_element(sub_element, segment, level + 1)
+                if level + 1 < len(ct.level_names):
+                    calculate_for_element(segment, level + 1)
                     
                 start_angle = end_angle
         
-        # Start the calculation with the root of the competence tree
-        calculate_for_element(ct, tree_segment)
+        # Start the calculation with the root of 
+        # the competence tree's circular segment
+        calculate_for_element(tree_segment)
         
         return level_segments
 
@@ -457,17 +466,18 @@ class DcmChart:
         if competence_tree is None:
             competence_tree = self.dcm.competence_tree
         self.selected_paths = selected_paths
-        self.levels = ["aspects", "areas", "facets"]
+        
         competence_tree.calculate_ring_specs(text_mode)
         svg = self.prepare_and_add_inner_circle(config, competence_tree, lookup_url)
 
         segment = DonutSegment(
             cx=self.cx, cy=self.cy, inner_radius=0, outer_radius=self.tree_radius
         )
-        self.calculate_segments(competence_tree,segment)
+        segments=self.calculate_segments(competence_tree,segment)
         self.generate_pie_elements(
-            level=0,
+            level=1,
             svg=svg,
+            ct=competence_tree,
             parent_element=competence_tree,
             learner=learner,
             segment=segment,

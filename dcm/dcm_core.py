@@ -209,7 +209,6 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         initalize the path variables of my hierarchy
         """
         super().__post_init__()
-        self.total_elements = {"aspects": 0, "areas": 0, "facets": 0}
         self.update_paths()
         self.calculate_ring_specs("empty")
 
@@ -276,15 +275,34 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         if not mode in ["count","score","time"]:
             raise ValueError(f"Invalid symmetry mode {mode} - must be count, score or time")
         return (level,mode)
+    
+    def get_elements_for_level(self,level:int)->List[CompetenceElement]:
+        """
+        get the elements for the given hierarchy level
+        
+        Args:
+            level(int): the hierarchy level
+            
+        Returns:
+            List(CompetencElement): the list of elements on this level
+        """
+        level_name=self.level_names[level]
+        elements=self.elements_by_level[level_name]
+        return elements
+
 
     def update_paths(self):
         """
         update my paths
         """
+        self.level_names = ["tree","aspect", "area", "facet"]
+        self.level_attr_names = [None,"aspects", "areas", "facets"]
+        self.total_elements = {"tree": 1, "aspects": 0, "areas": 0, "facets": 0}
+        self.elements_by_level = {"tree": [self],"aspect": [], "area": [], "facet": []}  # Reset for re-calculation
+ 
         self.path = self.id
         self.total_levels = 1
         self.elements_by_path = {self.path: self}
-        self.elements_by_level = {"aspect": [], "area": [], "facet": []}  # Reset for re-calculation
         # Loop through each competence aspect and set their paths and parent references
         for aspect in self.aspects:
             aspect.competence_tree = self
