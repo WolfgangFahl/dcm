@@ -4,7 +4,7 @@ Created on 2024-01-12
 @author: wf
 """
 import copy
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from dcm.dcm_core import (
     CompetenceElement,
@@ -293,7 +293,6 @@ class DcmChart:
         parent_element: CompetenceElement,
         learner: Learner,
         segment: DonutSegment,
-        symmetry_level: int = 1,
     ):
         """
         generate the pie elements (donut segments) for the subelements
@@ -363,6 +362,55 @@ class DcmChart:
                         learner=learner,
                         segment=sub_segment,
                     )
+                    
+    def calculate_segments(self, ct: CompetenceTree, tree_segment: DonutSegment) -> Dict[str, DonutSegment]:
+        """
+        Pre-calculate the donut segments for each level of the competence tree.
+        
+        Args:
+            ct: The competence tree for which segments are to be calculated.
+            tree_segment: The initial segment representing the whole competence tree.
+            
+        Returns:
+            A dictionary where keys are element paths and values are the corresponding DonutSegment objects.
+        """
+        level_segments = {}
+        
+        def calculate_for_element(element, parent_segment, level=0):
+            # Calculate segment size based on the number of elements at this level
+            elements = getattr(element, self.levels[level], [])
+            total_elements = len(elements)
+            if total_elements == 0:
+                return
+            
+            angle_per_element = (parent_segment.end_angle - parent_segment.start_angle) / total_elements
+            start_angle = parent_segment.start_angle
+            
+            for i, sub_element in enumerate(elements):
+                end_angle = start_angle + angle_per_element
+                # Create a new segment for this element
+                segment = DonutSegment(
+                    cx=tree_segment.cx,
+                    cy=tree_segment.cy,
+                    inner_radius=tree_segment.inner_radius,
+                    outer_radius=tree_segment.outer_radius,
+                    start_angle=start_angle,
+                    end_angle=end_angle,
+                    text_mode=tree_segment.text_mode,
+                )
+                # Store the segment with its corresponding path as the key
+                level_segments[sub_element.path] = segment
+                
+                # Recurse for sub-elements if not at the last level
+                if level + 1 < len(self.levels):
+                    calculate_for_element(sub_element, segment, level + 1)
+                    
+                start_angle = end_angle
+        
+        # Start the calculation with the root of the competence tree
+        calculate_for_element(ct, tree_segment)
+        
+        return level_segments
 
     def generate_svg_markup(
         self,
@@ -416,6 +464,7 @@ class DcmChart:
         segment = DonutSegment(
             cx=self.cx, cy=self.cy, inner_radius=0, outer_radius=self.tree_radius
         )
+        self.calculate_segments(competence_tree,segment)
         self.generate_pie_elements(
             level=0,
             svg=svg,

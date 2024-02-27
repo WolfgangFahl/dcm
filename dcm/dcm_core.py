@@ -284,6 +284,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         self.path = self.id
         self.total_levels = 1
         self.elements_by_path = {self.path: self}
+        self.elements_by_level = {"aspect": [], "area": [], "facet": []}  # Reset for re-calculation
         # Loop through each competence aspect and set their paths and parent references
         for aspect in self.aspects:
             aspect.competence_tree = self
@@ -291,6 +292,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             self.elements_by_path[aspect.path] = aspect
             self.total_elements["aspects"] = self.total_elements["aspects"] + 1
             self.total_levels = 2
+            self.elements_by_level["aspect"].append(aspect)
             for area in aspect.areas:
                 self.total_levels = 3
                 area.competence_tree = self
@@ -298,6 +300,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                 area.path = f"{self.id}/{aspect.id}/{area.id}"
                 self.elements_by_path[area.path] = area
                 self.total_elements["areas"] = self.total_elements["areas"] + 1
+                self.elements_by_level["area"].append(area)
                 for facet in area.facets:
                     self.total_levels = 4
                     facet.competence_tree = self
@@ -305,6 +308,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                     facet.path = f"{self.id}/{aspect.id}/{area.id}/{facet.id}"
                     self.elements_by_path[facet.path] = facet
                     self.total_elements["facets"] = self.total_elements["facets"] + 1
+                    self.elements_by_level["facet"].append(facet)
 
     @classmethod
     def required_keys(cls) -> Tuple:
