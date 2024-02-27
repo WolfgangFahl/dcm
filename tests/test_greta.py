@@ -111,22 +111,42 @@ class TestGreta(Basetest):
         if with_text:
             ct.ring_specs = {
                 "tree": RingSpec(
-                    inner_ratio=0.0, outer_ratio=1 / 10, text_mode="horizontal"
+                    inner_ratio=0.0, 
+                    outer_ratio=1 / 10, 
+                    text_mode="horizontal"
                 ),
                 "aspect": RingSpec(
-                    text_mode="curved", inner_ratio=9 / 10, outer_ratio=10 / 10
+                    text_mode="curved", 
+                    inner_ratio=9 / 10, 
+                    outer_ratio=10 / 10
                 ),
-                "area": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
+                "area": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0),
                 "facet": RingSpec(
-                    text_mode="angled", inner_ratio=1 / 10, outer_ratio=9 / 10
+                    text_mode="angled", 
+                    inner_ratio=1 / 10, 
+                    outer_ratio=9 / 10,
+                    symmetry_mode="count"
                 ),
             }
         else:
             ct.ring_specs = {
-                "tree": RingSpec(inner_ratio=0.0, outer_ratio=1 / 9),
-                "aspect": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
-                "area": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
-                "facet": RingSpec(inner_ratio=1 / 9, outer_ratio=9 / 9),
+                "tree": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=1 / 9),
+                "aspect": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0),
+                "area": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0),
+                "facet": RingSpec(
+                    inner_ratio=1 / 9, 
+                    outer_ratio=9 / 9,
+                    levels_visible=True,
+                    symmetry_mode="count"
+                ),
             }
 
         # Define color codes for competence levels

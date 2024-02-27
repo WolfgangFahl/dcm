@@ -29,12 +29,13 @@ class RingSpec:
         text_mode (Optional[str]): The mode of text display on the ring. Default is None.
         inner_ratio (Optional[float]): The inner radius of the ring, relative to the chart size.
         outer_ratio (Optional[float]): The outer radius of the ring, relative to the chart size.
+        symmetry_mode (Optional[str]): Specifies the symmetry mode for the ring. Supports "count", "time", or "score" to determine how the ring segments are balanced. Default is None.
     """
-
     text_mode: Optional[str] = "empty"
     inner_ratio: Optional[float] = None
     outer_ratio: Optional[float] = None
     levels_visible: Optional[bool] = False
+    symmetry_mode: Optional[str] = None  
 
     @property
     def empty(self) -> bool:
@@ -233,6 +234,48 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                     inner_ratio=inner_ratio,
                     outer_ratio=outer_ratio,
                 )
+                
+    def set_symmetry_mode(self,rl:str,symmetry_mode:str):
+        """
+         Sets a new symmetry mode for a specified level 
+         in the competence tree. It resets the symmetry 
+         mode for all levels to None and then 
+         applies the new symmetry mode to the 
+         specified level. This method ensures that 
+         only one level has a symmetry mode set at any given time.
+
+        Args:
+            rl (str): The level to apply the new symmetry mode. Valid levels include "tree", "aspect", "area", and "facet".
+            symmetry_mode (str): The symmetry mode to set for the specified level. Valid modes are "count", "score", and "time".
+        """
+        # reset all ring specs
+        for rl in ["tree", "aspect", "area", "facet"]:
+            self.ct.ring_specs[rl].symmetry_mode=None
+        if rl in self.ct_ring_specs:
+            self.ct.ring_specs[rl].symmetry_mode=symmetry_mode
+                
+    def get_symmetry_spec(self) -> Tuple[str, str]:
+        """
+        Get the symmetry specification from the ring_specs, ensuring only one spec has the symmetry mode set.
+
+        Returns:
+            Tuple[str, str]: A pair of symmetry mode and the level it is applied to.
+
+        Raises:
+            ValueError: If multiple RingSpecs have a symmetry mode set.
+        """
+        
+        symmetry_modes = [(level, spec.symmetry_mode) for level, spec in self.ring_specs.items() if spec.symmetry_mode]
+        if len(symmetry_modes) > 1:
+            raise ValueError("Symmetry mode set for multiple ring specs.")
+        elif len(symmetry_modes) == 1:
+            level,mode=symmetry_modes[0]
+        else:
+            # Default to "count" and CompetenceFacet level if no spec is given
+            level,mode= ("facet","count")
+        if not mode in ["count","score","time"]:
+            raise ValueError(f"Invalid symmetry mode {mode} - must be count, score or time")
+        return (level,mode)
 
     def update_paths(self):
         """

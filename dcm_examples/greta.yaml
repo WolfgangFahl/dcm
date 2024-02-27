@@ -446,7 +446,8 @@ ring_specs:
     text_mode: empty
     inner_ratio: 0.1111111111111111
     outer_ratio: 1.0
-    levels_visible: false
+    levels_visible: true
+    symmetry_mode: count
 total_elements:
   aspects: 4
   areas: 10

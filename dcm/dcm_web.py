@@ -21,6 +21,7 @@ class RingSpecView:
         construct me
         """
         self.parent = parent
+        self.ringspec=ringspec
         self.ring_level = ring_level
         self.ringspec = ringspec
         self.change_enabled = False
@@ -32,6 +33,16 @@ class RingSpecView:
         setup the user interface
         """
         with self.parent.grid:
+            selection = ["empty", "curved", "horizontal", "angled"]
+            self.text_mode_select = self.parent.webserver.add_select(
+                self.ring_level,
+                selection,
+                value=self.ringspec.text_mode,
+                on_change=self.on_text_mode_change,
+            )
+            self.level_visible_checkbox = ui.checkbox("level").on(
+                "click", self.on_level_visible_change
+            )
             self.inner_ratio_slider = (
                 ui.slider(min=0, max=1.0, step=0.01, value=self.ringspec.inner_ratio)
                 .props("label-always")
@@ -50,16 +61,7 @@ class RingSpecView:
                     throttle=self.throttle,
                 )
             )
-            selection = ["empty", "curved", "horizontal", "angled"]
-            self.text_mode_select = self.parent.webserver.add_select(
-                self.ring_level,
-                selection,
-                value=self.ringspec.text_mode,
-                on_change=self.on_text_mode_change,
-            )
-            self.level_visible_checkbox = ui.checkbox("level").on(
-                "click", self.on_level_visible_change
-            )
+          
 
     def update(self, rs: RingSpec):
         """
@@ -116,23 +118,31 @@ class RingSpecsView:
         # ringspec views
         self.rsv = {}
         self.setup_ui()
+        self.symmetry_mode=None
+        self.symmetry_level=None
 
     def setup_ui(self):
         """
         setup the user interface
         """
-        with ui.expansion("", icon="settings") as self.expansion:
-            levels = ["tree", "aspect", "area", "facet"]
-            with ui.row():
-                ui.label("symmetry:")
-                self.symmetry_radio = ui.radio(
-                    ["count", "time", "score"], value=None
-                ).props("inline")
-            with ui.row():
-                ui.html("<hr>")
+        with ui.expansion("ring specs", icon="settings") as self.expansion:
+            with ui.expansion("symmetry",icon="balance"):
+                with ui.row():
+                    self.symmetry_mode_radio = ui.radio(
+                        ["count", "time", "score"], 
+                        on_change=self.on_symmetry_change
+                    ).props("inline") \
+                    .bind_value(self, 'symmetry_mode') 
+                with ui.row():
+                    self.symmetry_level_radio = ui.radio(
+                        ["aspect", "area", "facet"], 
+                        on_change=self.on_symmetry_change
+                    ).props("inline") \
+                    .bind_value(self, 'symmetry_value') 
             with ui.grid(columns=2, rows=8) as self.grid:
                 inner_ratio = 0
                 outer_ratio = 1 / 7
+                levels = ["tree", "aspect", "area", "facet"]
                 for rl in levels:
                     rs = RingSpec(
                         text_mode="empty",
@@ -145,11 +155,25 @@ class RingSpecsView:
 
     def update_rings(self, ct: CompetenceTree):
         """
-        update the ring specifications
+        update the ring specifications based on the given competence tree
         """
+        self.ct=ct
+        self.symmetry_level, self.symmetry_mode = ct.get_symmetry_spec()
         for rl in ["tree", "aspect", "area", "facet"]:
             self.rsv[rl].update(ct.ring_specs[rl])
 
+    def on_symmetry_change(self):
+        """
+        handle symmetry changes
+        """
+        if self.ct:
+            # check whether the radio values are different from the ct values
+            ct_symmetry_level, ct_symmetry_mode = self.ct.get_symmetry_spec()   
+            if (ct_symmetry_level != self.symmetry_level or ct_symmetry_mode != self.symmetry_mode):
+                self.ct.set_symmetry_mode(self.symmetry_level,self.symmetry_mode)       
+            pass
+        self.on_change()
+        
     def on_change(self):
         """
         if a ring spec trigger update

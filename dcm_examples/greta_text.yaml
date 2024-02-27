@@ -447,6 +447,7 @@ ring_specs:
     inner_ratio: 0.1
     outer_ratio: 0.9
     levels_visible: false
+    symmetry_mode: count
 total_elements:
   aspects: 4
   areas: 10

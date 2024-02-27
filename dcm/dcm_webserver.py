@@ -507,6 +507,9 @@ class DcmSolution(InputWebSolution):
         self.assess_learner(dcm, learner)
 
     def on_update_ringspecs(self):
+        """
+        react on changes in the ringspecs
+        """
         if self.learner:
             self.render_item(self.learner)
         else:
