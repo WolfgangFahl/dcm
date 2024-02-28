@@ -12,6 +12,8 @@ aspects:
   id: basics
   description: Basics
   color_code: '#c4903a'
+  time: 16
+  time_unit: '%'
   areas:
   - name: Definitionen von Softwarearchitektur diskutieren (R1)
     short_name: LZ1-1
@@ -25,7 +27,6 @@ aspects:
       * Strukturen, Querschnittskonzepte, Prinzipien
       * Architekturentscheidungen mit systemweiten oder den gesamten Lebenszyklus betreffenden Konsequenzen
 
-    facets: []
   - name: Nutzen und Ziele von Softwarearchitektur verstehen und erläutern (R1)
     short_name: LZ1-2
     id: 1-02
@@ -37,7 +38,6 @@ aspects:
       \ für Strukturen und Konzepte des Systems zu vermitteln, bezogen auf sämtliche\
       \ relevanten Stakeholder\n* systematisch Komplexität zu reduzieren \n* architekturrelevante\
       \ Richtlinien für Implementierung und Betrieb zu spezifizieren\n\n"
-    facets: []
   - name: Softwarearchitektur in Software-Lebenszyklus einordnen (R2)
     short_name: LZ1-3
     id: 1-03
@@ -50,7 +50,6 @@ aspects:
       * Konsequenzen von Änderungen bei Anforderungen, Technologien oder der Systemumgebung im Bezug auf die Softwarearchitektur erkennen
       * inhaltliche Zusammenhänge zwischen IT-Systemen und den unterstützten Geschäfts- und Betriebsprozessen aufzeigen
 
-    facets: []
   - name: Aufgaben und Verantwortung von Softwarearchitekt:innen verstehen (R1)
     short_name: LZ1-4
     id: 1-04
@@ -71,7 +70,6 @@ aspects:
 
       Sie sollen selbstständig die Notwendigkeit von Iterationen bei allen Aufgaben erkennen und Möglichkeiten für entsprechende Rückmeldung aufzeigen.
 
-    facets: []
   - name: Rolle von Softwarearchitekt:innen in Beziehung zu anderen Stakeholdern setzen
       (R1)
     short_name: LZ1-5
@@ -84,7 +82,6 @@ aspects:
       * Qualitätssicherung und Test\n* IT-Betrieb (Produktion, Rechenzentren), zutreffend\
       \ primär für Informationssysteme\n* Hardwareentwicklung\n* Unternehmensarchitektur,\
       \ Architekturboard.\n\n"
-    facets: []
   - name: Zusammenhang zwischen Entwicklungsvorgehen und Softwarearchitektur erläutern
       können (R2)
     short_name: LZ1-6
@@ -96,7 +93,6 @@ aspects:
       * Sie müssen aufgrund inhärenter Unsicherheit oftmals iterativ arbeiten und entscheiden.
       Dabei müssen sie bei anderen Stakeholdern systematisch Rückmeldung einholen.
 
-    facets: []
   - name: Kurz- und langfristige Ziele differenzieren (R2)
     short_name: LZ1-7
     id: 1-07
@@ -105,7 +101,6 @@ aspects:
 
       Softwarearchitekt:innen können potenzielle Zielkonflikte zwischen kurz- und langfristigen Zielen erklären, um eine für alle Beteiligten tragfähige Lösung zu erarbeiten
 
-    facets: []
   - name: Explizite Aussagen von impliziten Annahmen unterscheiden (R1)
     short_name: LZ1-8
     id: 1-08
@@ -117,7 +112,6 @@ aspects:
       * können Annahmen oder Voraussetzungen explizit darstellen und dadurch implizite Annahmen vermeiden
       * wissen, dass implizite Annahmen potenzielle Missverständnisse zwischen beteiligten Stakeholdern bewirken
 
-    facets: []
   - name: Zuständigkeit von Softwarearchitekt:innen in organisatorischen Kontext einordnen
       (R3)
     short_name: LZ1-9
@@ -137,7 +131,6 @@ aspects:
 
       Diese Architekturdomänen sind nicht inhaltlicher Fokus vom CPSA-F.
 
-    facets: []
   - name: Typen von IT-Systemen unterscheiden (R3)
     short_name: LZ1-10
     id: 1-10
@@ -155,7 +148,6 @@ aspects:
       * hardwarenahe Systeme; hier verstehen sie die Notwendigkeit des Hardware-/Software-Co-Designs (zeitliche und inhaltliche Abhängigkeiten von Hard- und Softwareentwicklung).
 
 
-    facets: []
   - name: Herausforderungen verteilter Systeme (R3)
     short_name: LZ1-11
     id: 1-11
@@ -168,12 +160,13 @@ aspects:
       \ gibt \n* was das \"Split-Brain\"-Problem ist und warum es schwierig zu lösen\
       \ ist\n* dass es unmöglich ist, die exakte zeitliche Reihenfolge der Ereignisse\
       \ in einem verteilten System zu bestimmen\n"
-    facets: []
 - name: design
   short_name: design
   id: design
   description: Design
   color_code: '#ba904c'
+  time: 40
+  time_unit: '%'
   areas:
   - name: Vorgehen und Heuristiken zur Architekturentwicklung auswählen und anwenden
       können (R1,R3)
@@ -188,7 +181,6 @@ aspects:
       \ siehe <<evans>> (R3)\n* Evolutionäre Architektur, siehe <<ford>> (R3)\n* Globale\
       \ Analyse, siehe <<hofmeister>> (R3) \n* Modellgetriebene Architektur (R3)\n\
       \n"
-    facets: []
   - name: Softwarearchitekturen entwerfen (R1)
     short_name: LZ2-2
     id: 2-02
@@ -207,7 +199,6 @@ aspects:
       * domänenspezifische und technische Bestandteile in Architekturen trennen und diese Trennung begründen
       * Risiken von Entwurfsentscheidungen identifizieren.
 
-    facets: []
   - name: Anforderungen klären und berücksichtigen können (R1-R3)
     short_name: LZ2-3
     id: 2-03
@@ -234,7 +225,6 @@ aspects:
       \ Microservices)\n** Methodik-Trends (z.B. agil)\n** (potenzielle) Auswirkungen\
       \ weiterer Stakeholderinteressen und vorgegebener oder extern festgelegter Designentscheidungen\
       \ \n"
-    facets: []
   - name: Querschnittskonzepte entwerfen und umsetzen (R1)
     short_name: LZ2-4
     id: 2-04
@@ -249,7 +239,6 @@ aspects:
 
       Softwarearchitekt:innen wissen, dass solche Querschnittskonzepte systemübergreifend wiederverwendbar sein können.
 
-    facets: []
   - name: Wichtige Lösungsmuster beschreiben, erklären und angemessen anwenden (R1,
       R3)
     short_name: LZ2-5
@@ -306,7 +295,6 @@ aspects:
 
       Softwarearchitekt:innen kennen wesentliche Quellen für Architekturmuster, beispielsweise die POSA-Literatur (z.B. <<buschmanna>>) und PoEAA (<<fowler>>) (für Informationssysteme) (R3)
 
-    facets: []
   - name: Entwurfsprinzipien erläutern und anwenden (R1-R3)
     short_name: LZ2-6
     id: 2-06
@@ -366,7 +354,6 @@ aspects:
       **Weitere Prinzipien** (R3)
 
       Softwarearchitekt:innen kennen weitere Prinzipien (etwa CUPID, siehe <<nygard-cupid>>) und können diese anwenden.
-    facets: []
   - name: Abhängigkeiten von Bausteinen managen (R1)
     short_name: LZ2-7
     id: 2-07
@@ -383,7 +370,6 @@ aspects:
       \ 2-6>>)\n** Externalisierung von Abhängigkeiten, d.h. konkrete Abhängigkeiten\
       \ erst zur Installations- oder Laufzeit festlegen, etwa durch Anwendung von\
       \ _Dependency Injection_.\n\n\n"
-    facets: []
   - name: Qualitätsanforderungen mit passenden Ansätzen und Techniken erreichen (R1)
     short_name: LZ2-8
     id: 2-08
@@ -403,7 +389,6 @@ aspects:
       * Lösungsmöglichkeiten, _Architectural Tactics_, angemessene Praktiken sowie technische Möglichkeiten zur Erreichung wichtiger Qualitätsanforderungen von Softwaresystemen (unterschiedlich für eingebettete Systeme bzw. Informationssysteme) erklären und anwenden
       * mögliche Wechselwirkungen zwischen solchen Lösungsmöglichkeiten sowie die entsprechenden Risiken identifizieren und kommunizieren.
 
-    facets: []
   - name: Schnittstellen entwerfen und festlegen (R1-R3)
     short_name: LZ2-9
     id: 2-09
@@ -425,7 +410,6 @@ aspects:
       ** ressourcenorientierter Ansatz (REST, REpresentational State Transfer)
       ** serviceorientierter Ansatz (wie bei WS-*/SOAP-basierten Webservices).
 
-    facets: []
   - name: Grundlegende Prinzipien von Software-Deployments kennen (R3)
     short_name: LZ2-10
     id: 2-10
@@ -436,12 +420,13 @@ aspects:
       ** Wiederholbare Builds\n** Konsistente Umgebungen (z.B. durch Nutzung von unveränderlicher\
       \ (_immutable_) Infrastruktur)\n** Alles liegt unter Versionskontrolle\n** Releases\
       \ sind einfach zurückzunehmen\n\n"
-    facets: []
 - name: documentation
   short_name: documentat
   id: documentation
   description: Documentation
   color_code: '#b0915d'
+  time: 24
+  time_unit: '%'
   areas:
   - name: Anforderungen an technische Dokumentation erläutern und berücksichtigen
       (R1)
@@ -457,7 +442,6 @@ aspects:
 
       Sie wissen, dass Verständlichkeit technischer Dokumentation nur von deren Zielgruppen beurteilt werden kann.
 
-    facets: []
   - name: Softwarearchitekturen beschreiben und kommunizieren (R1-R3)
     short_name: LZ3-2
     id: 3-02
@@ -483,7 +467,6 @@ aspects:
       * formale Überprüfungen und Freigabeprozesse für die Dokumentation
 
 
-    facets: []
   - name: Notations-/Modellierungsmittel für Beschreibung von Softwarearchitektur
       erläutern und anwenden (R2-R3)
     short_name: LZ3-3
@@ -495,7 +478,6 @@ aspects:
       Softwarearchitekt:innen kennen Alternativen zu UML, beispielsweise (R3)\n\n\
       * ArchiMate, siehe <<archimate>> \n* für Laufzeitsichten beispielsweise Flussdiagramme,\
       \ nummerierte Listen oder Business-Process-Modelling-Notation (BPMN).\n\n"
-    facets: []
   - name: Architektursichten erläutern und anwenden (R1)
     short_name: LZ3-4
     id: 3-04
@@ -508,7 +490,6 @@ aspects:
       * Laufzeitsicht (dynamische Sicht, Zusammenwirken der Softwarebausteine zur Laufzeit, Zustandsmodelle)
       * Verteilungs-/Deploymentsicht (Hardware und technische Infrastruktur sowie Abbildung von Softwarebausteinen auf diese Infrastruktur)
 
-    facets: []
   - name: Kontextabgrenzung von Systemen erläutern und anwenden (R1)
     short_name: LZ3-5
     id: 3-05
@@ -520,7 +501,6 @@ aspects:
       * externe Schnittstellen von Systemen in der Kontextabgrenzung darstellen
       * fachlichen und technischen Kontext differenzieren.
 
-    facets: []
   - name: Querschnittskonzepte dokumentieren und kommunizieren (R2)
     short_name: LZ3-6
     id: 3-06
@@ -529,7 +509,6 @@ aspects:
 
       Softwarearchitekt:innen können typische Querschnittskonzepte (synonym _Prinzipien_, _Aspekte_) adäquat dokumentieren und kommunizieren, z. B. Persistenz, Ablaufsteuerung, UI, Verteilung/Integration, Protokollierung.
 
-    facets: []
   - name: Schnittstellen beschreiben (R1)
     short_name: LZ3-7
     id: 3-07
@@ -538,7 +517,6 @@ aspects:
 
       Softwarearchitekt:innen können sowohl interne als auch externe Schnittstellen beschreiben und spezifizieren.
 
-    facets: []
   - name: Architekturentscheidungen erläutern und dokumentieren (R1-R2)
     short_name: LZ3-8
     id: 3-08
@@ -551,7 +529,6 @@ aspects:
       * gegenseitige Abhängigkeiten solcher Entscheidungen erkennen, kommunizieren und dokumentieren
 
       Softwarearchitekt:innen kennen Architecture-Decision-Records (ADR, siehe <<nygard>>) und können diese zur Dokumentation von Entscheidungen einsetzen (R2).
-    facets: []
   - name: Weitere Hilfsmittel und Werkzeuge zur Dokumentation kennen (R3)
     short_name: LZ3-9
     id: 3-09
@@ -568,12 +545,13 @@ aspects:
       * Ideen und Beispiele von Checklisten für die Erstellung, Dokumentation und Prüfung von Softwarearchitekturen
       * mögliche Werkzeuge zur Erstellung und Pflege von Architekturdokumentation
 
-    facets: []
 - name: examples
   short_name: examples
   id: examples
   description: Examples
   color_code: '#a6916f'
+  time: 8
+  time_unit: '%'
   areas:
   - name: Bezug von Anforderungen und Randbedingungen zu Lösung erfassen (R3)
     short_name: LZ5-1
@@ -582,7 +560,6 @@ aspects:
 
       Softwarearchitekt:innen haben an mindestens einem Beispiel den Bezug von Anforderungen und Randbedingungen zu Lösungsentscheidungen erkannt und nachvollzogen.
 
-    facets: []
   - name: Technische Umsetzung einer Lösung nachvollziehen (R3)
     short_name: LZ5-2
     id: 5-02
@@ -590,12 +567,13 @@ aspects:
 
       Softwarearchitekt:innen können anhand mindestens eines Beispiels die technische Umsetzung (Implementierung, technische Konzepte, eingesetzte Produkte, Lösungsstrategien) einer Lösung nachvollziehen.
 
-    facets: []
 - name: quality
   short_name: quality
   id: quality
   description: Quality
   color_code: '#9c9180'
+  time: 12
+  time_unit: '%'
   areas:
   - name: Qualitätsmodelle und Qualitätsmerkmale diskutieren (R1)
     short_name: LZ4-1
@@ -613,7 +591,6 @@ aspects:
       ** Sicherheit versus Benutzbarkeit
       ** Laufzeitflexibilität versus Wartbarkeit.
 
-    facets: []
   - name: Qualitätsanforderungen an Softwarearchitekturen klären (R1)
     short_name: LZ4-2
     id: 4-02
@@ -625,7 +602,6 @@ aspects:
       * spezifische Qualitätsanforderungen an die zu entwickelnde Software und deren Architekturen klären und konkret formulieren, beispielsweise in Form von Szenarien und Qualitätsbäumen
       * Szenarien und Qualitätsbäume erklären und anwenden.
 
-    facets: []
   - name: Softwarearchitekturen qualitativ analysieren (R2-R3)
     short_name: LZ4-3
     id: 4-03
@@ -643,7 +619,6 @@ aspects:
       ** Metriken
       ** Sonstige Dokumentationen des Systems, etwa Anforderungs-, Betriebs- oder Testdokumentation.
 
-    facets: []
   - name: Softwarearchitekturen quantitativ bewerten (R2)
     short_name: LZ4-4
     id: 4-04
@@ -662,23 +637,22 @@ aspects:
       ** Testfälle und Testergebnisse.
       * die Verwendung einer Metrik als Zielgröße zu deren Entwertung führen kann (R2), wie z. B. durch Goodharts Gesetz (R3) beschrieben.
 
-    facets: []
 levels:
 - name: Need to Learn
   short_name: Learn
-  id: Need to Learn
+  id: Need-to-Learn
   color_code: '#FF0000'
   level: 1
   icon: thumb_down
 - name: Need to Lookup
   short_name: Lookup
-  id: Need to Lookup
+  id: Need-to-Lookup
   color_code: '#0000FF'
   level: 2
   icon: question_mark
 - name: Already Known
   short_name: Known
-  id: Already Known
+  id: Already-Known
   color_code: '#008000'
   level: 3
   icon: thumb_up
@@ -693,20 +667,25 @@ ring_specs:
     text_mode: horizontal
     inner_ratio: 0.0
     outer_ratio: 0.1111111111111111
+    levels_visible: false
   aspect:
     text_mode: curved
     inner_ratio: 0.1111111111111111
     outer_ratio: 0.4444444444444444
+    levels_visible: false
+    symmetry_mode: time
   area:
     text_mode: angled
     inner_ratio: 0.4444444444444444
     outer_ratio: 1.0
-    symmetry_mode: count
+    levels_visible: false
   facet:
     text_mode: empty
     inner_ratio: 0.0
     outer_ratio: 0.0
+    levels_visible: false
 total_elements:
+  tree: 1
   aspects: 5
   areas: 36
   facets: 0

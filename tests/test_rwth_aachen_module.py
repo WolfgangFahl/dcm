@@ -92,7 +92,15 @@ class TestModule(Basetest):
             competence_element = aspect
         elif lvl == "3":
             # Level 3 - CompetenceAreas
-            area = CompetenceArea(name=name, id=nr, url=url)
+            if not credit_points:
+                credit_points=1
+      
+            area = CompetenceArea(
+                name=name, 
+                id=nr, 
+                url=url,
+                time=credit_points,
+                time_unit="CP")
             parent.areas.append(area)
             competence_element = area
         if level < 3:

@@ -317,86 +317,6 @@ class DcmChart:
                     self.generate_donut_segment_for_element(
                         svg, element, learner, segment=segment, ringspec=ringspec  
                     )
-
-    def generate_pie_elements(
-        self,
-        level: int,
-        svg: SVG,
-        ct: CompetenceTree,
-        parent_element: CompetenceElement,
-        learner: Learner,
-        segment: DonutSegment,
-    ):
-        """
-        generate the pie elements (donut segments) for the subelements
-        of the given parent_element at the given level
-        e.g. aspects, areas or facets - taking the learner
-        achievements into account if a corresponding achievement
-        is found. The segment limits the area in 
-        which the generation may operate
-
-        the symmetry level denotes at which level the rings should be symmetric
-        """
-        sub_element_name = ct.level_attr_names[level]
-        # get the elements to be displayed
-        elements = getattr(parent_element, sub_element_name)
-        total = len(elements)
-        total_sub_elements = self.dcm.competence_tree.total_elements[sub_element_name]
-        hierarchy_level = sub_element_name[:-1]
-        # calculate inner and outer radius
-        ringspec = self.dcm.competence_tree.ring_specs[hierarchy_level]
-        text_mode = ringspec.text_mode
-        # Calculate the actual inner and outer radii
-        inner_radius = self.svg.config.width / 2 * ringspec.inner_ratio
-        outer_radius = self.svg.config.width / 2 * ringspec.outer_ratio
-        # are there any elements to be shown?
-        if total == 0:
-            # there are no subelements we might need a single
-            # empty donut segment
-            # but only if there are any other available subelements
-            # on this level
-            if total_sub_elements == 0:
-                return
-
-            sub_segment = DonutSegment(
-                cx=self.cx,
-                cy=self.cy,
-                inner_radius=inner_radius,
-                outer_radius=outer_radius,
-                start_angle=segment.start_angle,
-                end_angle=segment.end_angle,
-                text_mode=text_mode,
-            )
-            self.generate_donut_segment_for_element(
-                svg, element=None, learner=None, segment=sub_segment, ringspec=ringspec
-            )
-        else:
-            angle_per_element = (segment.end_angle - segment.start_angle) / total
-            start_angle = segment.start_angle
-            for element in elements:
-                end_angle = start_angle + angle_per_element
-                sub_segment = DonutSegment(
-                    cx=self.cx,
-                    cy=self.cy,
-                    inner_radius=inner_radius,
-                    outer_radius=outer_radius,
-                    start_angle=start_angle,
-                    end_angle=end_angle,
-                    text_mode=text_mode,
-                )
-                self.generate_donut_segment_for_element(
-                    svg, element, learner, segment=sub_segment, ringspec=ringspec
-                )
-                start_angle = end_angle
-                if level + 1 < ct.total_levels:
-                    self.generate_pie_elements(
-                        level=level + 1,
-                        svg=svg,
-                        ct=ct,
-                        parent_element=element,
-                        learner=learner,
-                        segment=sub_segment,
-                    )
                     
     def create_donut_segment(self,
          parent_segment: DonutSegment,
@@ -457,24 +377,60 @@ class DcmChart:
         """
         ringspec: RingSpec = ct.ring_specs[level_name]
         sub_segments: Dict[str, DonutSegment] = {}
-    
-        total_elements: int = len(elements)
-        if total_elements == 0:
+        attr_names={
+            "time": "time",
+            "score":"max_score"
+        }
+        if len(elements) == 0:
             return sub_segments
+        num_zero_none_values = 0
     
-        angle_per_element: float = (parent_segment.end_angle - parent_segment.start_angle) / total_elements
-        start_angle: float = parent_segment.start_angle
+        if symmetry_mode=="count":
+            total = len(elements)
+        else:
+            attr_name=attr_names[symmetry_mode]
+            total=0
+            min_value = float('inf')  # Initialize to infinity for proper minimum comparison
+    
+            # Initial loop to calculate total and count 0/None values
+            for element in elements:
+                value = getattr(element, attr_name)
+                if value in (0, None):
+                    num_zero_none_values += 1
+                else:
+                    total += value
+                    if value < min_value:
+                        min_value = value
+        
+        if total == 0 and num_zero_none_values == len(elements):
+            raise ValueError("All element values are 0 or None, cannot divide segment.")
+    
+        # Correct handling when all values are not 0/None 
+        # and therefore  min_value was not updated
+        if num_zero_none_values>0:    
+            # Adjust total value for 0/None values
+            # we use the min_value as a default
+            total += min_value * num_zero_none_values
+   
+        start_angle = parent_segment.start_angle
     
         for element in elements:
-            end_angle = start_angle + angle_per_element
-            segment: DonutSegment = self.create_donut_segment(
+            if symmetry_mode=="count":
+                value=1
+            else:
+                value = getattr(element, attr_name) or min_value
+            proportion = value / total
+            angle_span = (parent_segment.end_angle - parent_segment.start_angle) * proportion
+            end_angle = start_angle + angle_span
+    
+            segment = self.create_donut_segment(
                 parent_segment, start_angle, end_angle, ringspec
             )
-            # Add the segment with the element's path as the key
             sub_segments[element.path] = segment
             start_angle = end_angle
     
         return sub_segments
+
     
     def calculate_parent_segments(
         self,

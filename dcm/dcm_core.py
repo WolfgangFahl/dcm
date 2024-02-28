@@ -29,7 +29,7 @@ class RingSpec:
         text_mode (Optional[str]): The mode of text display on the ring. Default is None.
         inner_ratio (Optional[float]): The inner radius of the ring, relative to the chart size.
         outer_ratio (Optional[float]): The outer radius of the ring, relative to the chart size.
-        symmetry_mode (Optional[str]): Specifies the symmetry mode for the ring. Supports "count", "time", or "score" to determine how the ring segments are balanced. Default is None.
+        symmetry_mode (Optional[str]): Specifies the symmetry mode for the ring. Supports "count", "time", "score" to determine how the ring segments are balanced. Default is None.
     """
     text_mode: Optional[str] = "empty"
     inner_ratio: Optional[float] = None
@@ -70,6 +70,12 @@ class CompetenceElement:
     description: Optional[str] = None
     color_code: Optional[str] = None
     border_color: Optional[str] = None
+    
+    time: Optional[float] = None
+    time_unit: Optional[str] = None # h/CP
+    max_score: Optional[float] = None # 100
+    score_unit: Optional[str] = None # %
+    
 
     def __post_init__(self):
         # Set the id to the the slug of the name if id is None
@@ -127,11 +133,7 @@ class CompetenceFacet(CompetenceElement):
 
     This class can include additional properties or methods specific to a competence facet.
     """
-
-    time: Optional[float] = None
-    time_unit: Optional[str] = "h"
-    max_score: Optional[float] = 100.0
-    score_unit: Optional[str] = "%"
+    
 
 
 @dataclass_json

@@ -12,6 +12,8 @@ aspects:
   id: basics
   description: Basics
   color_code: '#c4903a'
+  time: 16
+  time_unit: '%'
   areas:
   - name: Discuss Definitions of Software Architecture (R1)
     short_name: LG1-1
@@ -26,7 +28,6 @@ aspects:
       * structures, cross-cutting concepts, principles
       * architecture decisions and their consequences on the entire systems and its lifecycle
 
-    facets: []
   - name: Understand and Explain the Goals and Benefits of Software Architecture (R1)
     short_name: LG1-2
     id: 1-02
@@ -38,7 +39,6 @@ aspects:
       \ structures and concepts are understood by all relevant stakeholders\n* systematically\
       \ reduce complexity\n* specify architecturally relevant guidelines for implementation\
       \ and operation\n \n"
-    facets: []
   - name: Understand Software Architecture as Part of the Software Lifecycle (R2)
     short_name: LG1-3
     id: 1-03
@@ -51,7 +51,6 @@ aspects:
       * identify the consequences of changes in requirements, technologies, or the system environment in relation to software architecture
       * elaborate on relationships between IT-systems and the supported business and operational processes
 
-    facets: []
   - name: Understand Software Architects' Tasks and Responsibilities (R1)
     short_name: LG1-4
     id: 1-04
@@ -73,7 +72,6 @@ aspects:
 
       They should independently recognize the necessity of iterations in all tasks and point out possibilities for appropriate and relevant feedback.
 
-    facets: []
   - name: Relate the Role of Software Architects to Other Stakeholders (R1)
     short_name: LG1-5
     id: 1-05
@@ -87,7 +85,6 @@ aspects:
       \ primarily to production environment or data centers for information systems),\n\
       * hardware developers\n* enterprise architects and architecture board members\n\
       \n"
-    facets: []
   - name: Can Explain the Correlation between Development Approaches and Software
       Architecture (R2)
     short_name: LG1-6
@@ -98,7 +95,6 @@ aspects:
       * software architects are able to explain the influence of iterative approaches on architectural decisions (with regard to risks and predictability).
       * due to inherent uncertainty, software architects often have to work and make decisions iteratively. To do so, they have to systematically obtain feedback from other stakeholders.
 
-    facets: []
   - name: Differentiate between Short- and Long-Term Goals (R2)
     short_name: LG1-7
     id: 1-07
@@ -107,7 +103,6 @@ aspects:
 
       Software architects can explain potential conflicts between short-term and long-term goals, in order to find a suitable solution for all stakeholders
 
-    facets: []
   - name: Distinguish Explicit Statements and Implicit Assumptions (R1)
     short_name: LG1-8
     id: 1-08
@@ -119,7 +114,6 @@ aspects:
       * should explicitly present assumptions or prerequisites, therefore avoiding implicit assumptions
       * know that implicit assumptions can lead to potential misunderstandings between stakeholders
 
-    facets: []
   - name: Responsibilities of Software Architects within the Greater Architectural
       Context (R3)
     short_name: LG1-9
@@ -138,7 +132,6 @@ aspects:
       * hardware or processor architecture (for hardware-related systems)
 
       These architectural domains are not the content focus of CPSA-F.
-    facets: []
   - name: Differentiate Types of IT Systems (R3)
     short_name: LG1-10
     id: 1-10
@@ -155,7 +148,6 @@ aspects:
       * systems based upon machine learning or artificial intelligence
       * hardware-related systems; here they understand the necessity of hardware/software co-design (temporal and content-related dependencies of hardware and software design)
 
-    facets: []
   - name: Challenges of Distributed Systems (R3)
     short_name: LG1-11
     id: 1-11
@@ -174,12 +166,13 @@ aspects:
       * limitations regarding consistency in real-world databases
       * what the "split-brain" problem is and why it is difficult
       * that it is impossible to determine the temporal order of events in a distributed system
-    facets: []
 - name: design
   short_name: design
   id: design
   description: Design
   color_code: '#ba904c'
+  time: 40
+  time_unit: '%'
   areas:
   - name: Select and Use Approaches and Heuristics for Architecture Development (R1,R3)
     short_name: LG2-1
@@ -192,7 +185,6 @@ aspects:
       \ (R1)\n* domain-driven design, see <<evans>> (R3)\n* evolutionary architecture,\
       \ see <<ford>> (R3)\n* global analysis, see <<hofmeister>> (R3) \n* model-driven\
       \ architecture (R3)\n\n"
-    facets: []
   - name: Design Software Architectures (R1)
     short_name: LG2-2
     id: 2-02
@@ -211,7 +203,6 @@ aspects:
       * separate technical and domain-related elements of architectures and justify these decisions
       * identify risks related to architecture decisions.
 
-    facets: []
   - name: Identify and Consider Factors Influencing Software Architecture (R1-R3)
     short_name: LG2-3
     id: 2-03
@@ -239,7 +230,6 @@ aspects:
       \ architects are able to describe how those factors can influence design decisions\
       \ and can elaborate on the consequences of changing influencing factors by providing\
       \ examples for some of them (R2).\n\n"
-    facets: []
   - name: Design and Implement Cross-Cutting Concepts (R1)
     short_name: LG2-4
     id: 2-04
@@ -254,7 +244,6 @@ aspects:
 
       Software architects know that such cross-cutting concepts may be re-used throughout the system.
 
-    facets: []
   - name: Describe, Explain and Appropriately Apply Important Solution Patterns (R1,
       R3)
     short_name: LG2-5
@@ -307,7 +296,6 @@ aspects:
 
       Software architects know essential sources for architectural patterns, such as POSA (e.g. <<buschmanna>>) and PoEAA (<<fowler>>) (for information systems) (R3).
 
-    facets: []
   - name: Explain and Use Design Principles (R1-R3)
     short_name: LG2-6
     id: 2-06
@@ -362,7 +350,6 @@ aspects:
       **Other principles** (R3)
 
       Software architects know other principles (such as CUPID, see <<nygard-cupid>>), and can apply them.
-    facets: []
   - name: Manage Dependencies between Building Blocks (R1)
     short_name: LG2-7
     id: 2-07
@@ -379,7 +366,6 @@ aspects:
       ** fundamental design principles (see <<LG-2-6, LG 2-6>>)
       ** externalization of dependencies, i.e. defining concrete dependencies at installation- or runtime, for example by using _Dependency Injection_.
 
-    facets: []
   - name: Achieve Quality Requirements with Appropriate Approaches and Techniques
       (R1)
     short_name: LG2-8
@@ -401,7 +387,6 @@ aspects:
       * identify and communicate possible trade-offs between such solutions and their associated risks
 
 
-    facets: []
   - name: Design and Define Interfaces (R1-R3)
     short_name: LG2-9
     id: 2-09
@@ -415,7 +400,6 @@ aspects:
       \ interfaces differently\n* different approaches for implementing interfaces\
       \ (R3):\n** resource oriented approach (REST, Representational State Transfer)\n\
       ** service oriented approach (see WS-*/SOAP-based web services.\n\n"
-    facets: []
   - name: Know Fundamental Principles of Software Deployment (R3)
     short_name: LG2-10
     id: 2-10
@@ -434,12 +418,13 @@ aspects:
       ** releases are easy-to-undo
 
 
-    facets: []
 - name: documentation
   short_name: documentat
   id: documentation
   description: Documentation
   color_code: '#b0915d'
+  time: 24
+  time_unit: '%'
   areas:
   - name: Explain and Consider the Requirements of Technical Documentation (R1)
     short_name: LG3-1
@@ -453,7 +438,6 @@ aspects:
 
       They know that only the target audiences can assess the understandability of technical documentation.
 
-    facets: []
   - name: Describe and Communicate Software Architectures (R1-R3)
     short_name: LG3-2
     id: 3-02
@@ -482,7 +466,6 @@ aspects:
       * formal reviews and sign-off processes for documentation
 
 
-    facets: []
   - name: Explain and Apply Notations/Models to Describe Software Architecture (R2-R3)
     short_name: LG3-3
     id: 3-03
@@ -501,7 +484,6 @@ aspects:
       * Archimate, see <<archimate>>
       * for runtime views for example flow charts, numbered lists or business-process-modeling-notation (BPMN).
 
-    facets: []
   - name: Explain and Use Architectural Views (R1)
     short_name: LG3-4
     id: 3-04
@@ -511,7 +493,6 @@ aspects:
       \ software building blocks at runtime, state machines) \n* deployment view (hardware\
       \ and technical infrastructure as well as the mapping of software building blocks\
       \ onto the infrastructure)\n\n"
-    facets: []
   - name: Explain and Apply Context View of Systems (R1)
     short_name: LG3-5
     id: 3-05
@@ -523,7 +504,6 @@ aspects:
       * represent external interfaces of systems in the context view
       * differentiate business and technical context.
 
-    facets: []
   - name: Document and Communicate Cross-Cutting Concepts (R2)
     short_name: LG3-6
     id: 3-06
@@ -532,7 +512,6 @@ aspects:
 
       Software architects are able to adequately document and communicate typical cross-cutting concepts (synonym: _principles_, _aspects_), e. g., persistence, workflow management, UI, deployment/integration, logging.
 
-    facets: []
   - name: Describe Interfaces (R1)
     short_name: LG3-7
     id: 3-07
@@ -541,7 +520,6 @@ aspects:
 
       Software architects are able to describe and specify both internal and external interfaces.
 
-    facets: []
   - name: Explain and Document Architectural Decisions (R1-R2)
     short_name: LG3-8
     id: 3-08
@@ -555,7 +533,6 @@ aspects:
 
       Software architects know about Architecture-Decision-Records (ADR, see <<nygard>>) and can apply these to document decisions (R2).
 
-    facets: []
   - name: Know Additional Resources and Tools for Documentation (R3)
     short_name: LG3-9
     id: 3-09
@@ -572,12 +549,13 @@ aspects:
       * ideas and examples of checklists for the creation, documentation, and testing of software architectures
       * possible tools for creating and maintaining architectural documentation
 
-    facets: []
 - name: examples
   short_name: examples
   id: examples
   description: Examples
   color_code: '#a6916f'
+  time: 8
+  time_unit: '%'
   areas:
   - name: Know the Relation between Requirements, Constraints, and Solutions (R3)
     short_name: LG5-1
@@ -586,7 +564,6 @@ aspects:
 
       Software architects are expected to recognize and comprehend the correlation between requirements and constraints, and the chosen solutions using at least one example.
 
-    facets: []
   - name: Know the Rationale of a Solution's Technical Implementation (R3)
     short_name: LG5-2
     id: 5-02
@@ -594,12 +571,13 @@ aspects:
 
       Software architects understand the technical realization (implementation, technical concepts, products used, architectural decisions, solution strategies) of at least one solution.
 
-    facets: []
 - name: quality
   short_name: quality
   id: quality
   description: Quality
   color_code: '#9c9180'
+  time: 12
+  time_unit: '%'
   areas:
   - name: Discuss Quality Models and Quality Characteristics (R1)
     short_name: LG4-1
@@ -617,7 +595,6 @@ aspects:
       ** security versus usability
       ** runtime flexibility versus maintainability.
 
-    facets: []
   - name: Clarify Quality Requirements for Software Architectures (R1)
     short_name: LG4-2
     id: 4-02
@@ -629,7 +606,6 @@ aspects:
       * clarify and formulate specific quality requirements for the software to be developed and its architectures, for example in the form of scenarios and quality trees
       * explain and apply scenarios and quality trees.
 
-    facets: []
   - name: Qualitative Analysis of Software Architectures (R2-R3)
     short_name: LG4-3
     id: 4-03
@@ -647,7 +623,6 @@ aspects:
       ** metrics
       ** other documentation of the system, such as requirements, operational or test documentation.
 
-    facets: []
   - name: Quantitative Evaluation of Software Architectures (R2)
     short_name: LG4-4
     id: 4-04
@@ -666,23 +641,22 @@ aspects:
       ** test cases and test results.
       * the use of a metric as a target can lead to its invalidation (R2), as described, e.g., by Goodhart's law (R3).
 
-    facets: []
 levels:
 - name: Need to Learn
   short_name: Learn
-  id: Need to Learn
+  id: Need-to-Learn
   color_code: '#FF0000'
   level: 1
   icon: thumb_down
 - name: Need to Lookup
   short_name: Lookup
-  id: Need to Lookup
+  id: Need-to-Lookup
   color_code: '#0000FF'
   level: 2
   icon: question_mark
 - name: Already Known
   short_name: Known
-  id: Already Known
+  id: Already-Known
   color_code: '#008000'
   level: 3
   icon: thumb_up
@@ -697,20 +671,25 @@ ring_specs:
     text_mode: horizontal
     inner_ratio: 0.0
     outer_ratio: 0.1111111111111111
+    levels_visible: false
   aspect:
     text_mode: curved
     inner_ratio: 0.1111111111111111
     outer_ratio: 0.4444444444444444
-    symmetry_mode: count
+    levels_visible: false
+    symmetry_mode: time
   area:
     text_mode: angled
     inner_ratio: 0.4444444444444444
     outer_ratio: 1.0
+    levels_visible: false
   facet:
     text_mode: empty
     inner_ratio: 0.0
     outer_ratio: 0.0
+    levels_visible: false
 total_elements:
+  tree: 1
   aspects: 5
   areas: 36
   facets: 0

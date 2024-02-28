@@ -15,22 +15,32 @@ aspects:
     short_name: Theoretica
     id: '1433960'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Visual Computing & Interaction
     short_name: Visual Com
     id: '1436731'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Hardware/Software Systems
     short_name: Hardware/S
     id: '1435044'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: AI & Data
     short_name: AI & Data
     id: '1435552'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Software methods, tools
     short_name: Software m
     id: '1440210'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
 - name: Applied Courses
   short_name: Applied Co
   id: '1430972'
@@ -40,46 +50,68 @@ aspects:
     short_name: Biology
     id: '1430973'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Business Administration
     short_name: Business A
     id: '1431214'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Electrical Engineering
     short_name: Electrical
     id: '1431629'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Mathematics
     short_name: Mathematic
     id: '1431977'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Mechanical Engineering
     short_name: Mechanical
     id: '1432295'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Physics
     short_name: Physics
     id: '1432891'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Philosophy
     short_name: Philosophy
     id: '1433063'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Chemistry
     short_name: Chemistry
     id: '1433477'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Medicine
     short_name: Medicine
     id: '1433612'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Accredited Applied Course
     short_name: Accredited
     id: '1433897'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 18
+    time_unit: CP
   - name: Psychology
     short_name: Psychology
     id: '1433926'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
 - name: Labs, Seminars, Colloquiums
   short_name: Labs, Semi
   id: '1438244'
@@ -89,18 +121,26 @@ aspects:
     short_name: Seminar Co
     id: '1438871'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Software Lab
     short_name: Software L
     id: '1438806'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Depth Area Colloquium
     short_name: Depth Area
     id: '1438690'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 3
+    time_unit: CP
   - name: Seminar aus anderen Fakultäten/Fachgruppen
     short_name: Seminar au
     id: '1534364'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
 - name: Master Thesis
   short_name: Master The
   id: '1433954'
@@ -114,399 +154,597 @@ aspects:
     short_name: Programmin
     id: '1429415'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Compiler Construction
     short_name: Compiler C
     id: '1429435'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Efficient Algorithms
     short_name: 'Efficient '
     id: '1429442'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Satisfiability Checking
     short_name: Satisfiabi
     id: '1429450'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Module Complexity Theory
     short_name: Module Com
     id: '1429477'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Mathematical Logic II
     short_name: Mathematic
     id: '1429491'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Model Checking
     short_name: Model Chec
     id: '1429498'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Modeling and analysis of hybrid systems
     short_name: Modeling a
     id: '1429505'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Calculus for Computer Science
     short_name: Calculus f
     id: '1429511'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Discrete Structures
     short_name: Discrete S
     id: '1429520'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Advanced Internet Technology
     short_name: Advanced I
     id: '1429547'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Communication Systems Engineering
     short_name: Communicat
     id: '1429564'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Embedded Systems
     short_name: Embedded S
     id: '1429579'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Mobile Internet Technology
     short_name: Mobile Int
     id: '1429605'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Model-Based Software Engineering
     short_name: Model-Base
     id: '1429626'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Software Architectures
     short_name: Software A
     id: '1429649'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Software Quality Assurance
     short_name: Software Q
     id: '1429667'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Software-Engineering programming language Ada 95
     short_name: Software-E
     id: '1429682'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Business Process Intelligence
     short_name: Business P
     id: '1429698'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Introduction to Web Technologies
     short_name: Introducti
     id: '1429705'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Artificial Intelligence
     short_name: Artificial
     id: '1429722'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Knowledge Representation
     short_name: 'Knowledge '
     id: '1429739'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Automatic Speech Recognition
     short_name: 'Automatic '
     id: '1429751'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Computer Vision
     short_name: Computer V
     id: '1429777'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Designing Interactive Systems I
     short_name: 'Designing '
     id: '1429790'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Research module
     short_name: Research m
     id: '1429806'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Computer Graphics
     short_name: Computer G
     id: '1429819'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: High-Performance Computing
     short_name: High-Perfo
     id: '1429833'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: iOS Application Development
     short_name: iOS Applic
     id: '1429849'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Concepts and Models for Parallel and Data-centric Programming
     short_name: Concepts a
     id: '1429863'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Performance Analysis and Correctness Checking of Parallel Applications
     short_name: Performanc
     id: '1429876'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Digital Fabrication
     short_name: Digital Fa
     id: '1429891'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Physically-Based Animation
     short_name: Physically
     id: '1429899'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Real-time Graphics
     short_name: 'Real-time '
     id: '1429913'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Social Data Science
     short_name: Social Dat
     id: '1429927'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Social Networks
     short_name: Social Net
     id: '1429934'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Statistical Classification and Machine Learning
     short_name: Statistica
     id: '1429960'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Statistical Methods in Natural Language Processing
     short_name: Statistica
     id: '1429975'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Text Mining
     short_name: Text Minin
     id: '1429990'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Web Mining
     short_name: Web Mining
     id: '1430004'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Introduction to Anatomy
     short_name: Introducti
     id: '1430016'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Introduction to Medicine for Nature Scientists and Engineers 1 and 2
     short_name: Introducti
     id: '1430023'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Health Care Systems
     short_name: Health Car
     id: '1430035'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 2
+    time_unit: CP
   - name: Foundations of Cell Biology and Biochemistry
     short_name: Foundation
     id: '1430041'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Medical Biometrics and Clinical Epidemiology
     short_name: Medical Bi
     id: '1430051'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Medical Methodology
     short_name: Medical Me
     id: '1430060'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 2
+    time_unit: CP
   - name: Methodology of Planning
     short_name: Methodolog
     id: '1430087'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 5
+    time_unit: CP
   - name: Transport planning I
     short_name: 'Transport '
     id: '1430094'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Decision Theory
     short_name: Decision T
     id: '1430189'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 5
+    time_unit: CP
   - name: Operations Research
     short_name: Operations
     id: '1430268'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Biology for Students of Computer Sciences and Mathematics
     short_name: Biology fo
     id: '1430278'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 12
+    time_unit: CP
   - name: Practical Course Biology for Students of Computer Sciences
     short_name: 'Practical '
     id: '1430294'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 10
+    time_unit: CP
   - name: Inorganic Chemistry
     short_name: 'Inorganic '
     id: '1430305'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 10
+    time_unit: CP
   - name: Organic Chemistry
     short_name: Organic Ch
     id: '1430313'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Computational Chemistry
     short_name: Computatio
     id: '1430318'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Theory of Chemical Bonds
     short_name: 'Theory of '
     id: '1430325'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Fundamentals of Electrical Engineering 2 - Modeling and Analysis of Electrical
       Components and Circuits
     short_name: Fundamenta
     id: '1430332'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Power Systems
     short_name: Power Syst
     id: '1430342'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Fundamentals of Integrated Circuits and Systems
     short_name: Fundamenta
     id: '1430349'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Communication Networks
     short_name: Communicat
     id: '1430356'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Communications Engineering
     short_name: Communicat
     id: '1430362'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Automatic Control
     short_name: 'Automatic '
     id: '1430377'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Engineering Mechanics
     short_name: Engineerin
     id: '1430388'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Optional courses of mechanical engineering
     short_name: Optional c
     id: '1430404'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Numerical Analysis I
     short_name: 'Numerical '
     id: '1430426'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Practical Course in Mathematics
     short_name: 'Practical '
     id: '1430435'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Numerical Analysis II
     short_name: 'Numerical '
     id: '1430442'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Computeralgebra
     short_name: Computeral
     id: '1430450'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 9
+    time_unit: CP
   - name: Complex Analysis I
     short_name: Complex An
     id: '1430461'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 9
+    time_unit: CP
   - name: Experimental Physics I (Mechanics and Relativity)
     short_name: Experiment
     id: '1430471'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Experimental Physics II (Heat and Electromagnetism)
     short_name: Experiment
     id: '1430482'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Introduction to Physics
     short_name: Introducti
     id: '1430491'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 16
+    time_unit: CP
   - name: Physics lab
     short_name: Physics la
     id: '1430505'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: General Introduction to Philosophy
     short_name: General In
     id: '1430538'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Theory of Argumentation
     short_name: 'Theory of '
     id: '1430561'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Practical Philosophy
     short_name: 'Practical '
     id: '1430566'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Computability and Complexity
     short_name: Computabil
     id: '1430619'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Mathematical Logic I
     short_name: Mathematic
     id: '1430628'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Formal Systems, Automata, Processes
     short_name: Formal Sys
     id: '1430635'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Data Structures and Algorithms
     short_name: Data Struc
     id: '1430644'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Software Engineering
     short_name: Software E
     id: '1430653'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Introduction to Computer Engineering
     short_name: Introducti
     id: '1430663'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: System Programming
     short_name: System Pro
     id: '1430672'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 8
+    time_unit: CP
   - name: Operating Systems and System Software
     short_name: 'Operating '
     id: '1430686'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Linear Algebra
     short_name: Linear Alg
     id: '1430695'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Introduction to Applied Stochastics
     short_name: Introducti
     id: '1430703'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Databases and Information Systems
     short_name: 'Databases '
     id: '1430710'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Implementation of Databases
     short_name: Implementa
     id: '1430724'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Seminar Computer Science
     short_name: Seminar Co
     id: '1430730'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 4
+    time_unit: CP
   - name: Software Project Lab
     short_name: Software P
     id: '1430838'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Advanced Automata Theory
     short_name: Advanced A
     id: '1430884'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Bookkeeping and Managerial Accounting
     short_name: Bookkeepin
     id: '1430932'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 7
+    time_unit: CP
   - name: Basic Module Philosophical Propaedeutics
     short_name: Basic Modu
     id: '1430939'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 10
+    time_unit: CP
   - name: Introduction to Numerical Methods and Software
     short_name: Introducti
     id: '1430950'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Infinite Computations and Games
     short_name: Infinite C
     id: '1430956'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Data Communication
     short_name: Data Commu
     id: '1509365'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Elements of Machine Learning and Data Science
     short_name: Elements o
     id: '1509575'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: IT-Security
     short_name: IT-Securit
     id: '1509607'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
   - name: Bookkeeping and Managerial Accounting
     short_name: Bookkeepin
     id: '1531579'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 6
+    time_unit: CP
 - name: Scientific Integrity
   short_name: Scientific
   id: '1440206'
@@ -520,22 +758,32 @@ aspects:
     short_name: Modules
     id: '1456159'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Partial Examinations
     short_name: Partial Ex
     id: '1456160'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Languages
     short_name: Languages
     id: '1456161'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Recognized Partial Examinations
     short_name: Recognized
     id: '1456650'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
   - name: Competences
     short_name: Competence
     id: '1457617'
     url: https://sc.informatik.rwth-aachen.de/de/studium/master/informatik/
+    time: 1
+    time_unit: CP
 levels:
 - name: 1,0 - ≥95%
   short_name: 1,0 - ≥95%
