@@ -107,19 +107,19 @@ class MarkupCheck:
                 continue
             element = root.find(f"svg:g[@id='{aspect.id}']", namespaces=namespaces)
             self.test_case.assertIsNotNone(
-                element, f"Aspect with ID '{aspect.id}' not found in SVG."
+                element, f"Aspect with ID '{aspect.id}' not found in SVG for {ct.name}."
             )
 
             link = element.find("svg:a", namespaces=namespaces)
             if aspect.url:
                 self.test_case.assertIsNotNone(
                     link,
-                    f"Link element for aspect with ID '{aspect.id}' not found in SVG.",
+                    f"Link element for aspect with ID '{aspect.id}' not found in SVG for {ct.name}. ",
                 )
                 self.test_case.assertEqual(
                     link.get("{http://www.w3.org/1999/xlink}href"),
                     aspect.url,
-                    f"URL for aspect with ID '{aspect.id}' is incorrect.",
+                    f"URL for aspect with ID '{aspect.id}' is incorrect for {ct.name}.",
                 )
 
     def check_svg_titles(self, root: ET.Element) -> None:

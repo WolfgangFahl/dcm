@@ -701,6 +701,7 @@ ring_specs:
     text_mode: curved
     inner_ratio: 0.1111111111111111
     outer_ratio: 0.4444444444444444
+    symmetry_mode: count
   area:
     text_mode: angled
     inner_ratio: 0.4444444444444444

@@ -195,6 +195,7 @@ ring_specs:
     text_mode: horizontal
     inner_ratio: 0.167
     outer_ratio: 0.5
+    symmetry_mode: count
   area:
     text_mode: angled
     inner_ratio: 0.5

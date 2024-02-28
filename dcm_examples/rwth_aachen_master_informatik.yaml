@@ -614,12 +614,14 @@ ring_specs:
     inner_ratio: 0.3
     outer_ratio: 1.0
     levels_visible: false
+    symmetry_mode: count
   facet:
     text_mode: empty
     inner_ratio: 0.0
     outer_ratio: 0.0
     levels_visible: false
 total_elements:
+  tree: 1
   aspects: 7
   areas: 124
   facets: 0

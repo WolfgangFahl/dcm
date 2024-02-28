@@ -70,20 +70,24 @@ class TestModule(Basetest):
         """
         competence_element = None
         lvl = json_node.get("@LVL", "?")
-        credits_str = json_node.get("@CREDITS", None)
-        credits = int(credits_str) if credits_str else None
+        credit_points_str = json_node.get("@CREDITS", None)
+        credit_points= int(credit_points_str) if credit_points_str else None
         level = int(lvl)
         nr = json_node.get("@NR")
         desc = None
         name = self.get_name(json_node)
         if lvl == "1":
             tree = CompetenceTree(
-                name=name, id=nr, url=url, description=desc, color_code=None
+                name=name, 
+                id=nr, 
+                url=url, 
+                description=desc, 
+                color_code=None
             )
             competence_element = tree
         elif lvl == "2":
             # Level 2 - CompetenceAspects
-            aspect = CompetenceAspect(name=name, id=nr, url=url, credits=credits)
+            aspect = CompetenceAspect(name=name, id=nr, url=url)
             parent.aspects.append(aspect)
             competence_element = aspect
         elif lvl == "3":
@@ -164,15 +168,26 @@ class TestModule(Basetest):
             competence_tree.update_paths()
             competence_tree.ring_specs = {
                 "tree": RingSpec(
-                    inner_ratio=0.0, outer_ratio=1 / 10, text_mode="horizontal"
+                    inner_ratio=0.0, 
+                    outer_ratio=1 / 10, 
+                    text_mode="horizontal",
                 ),
                 "aspect": RingSpec(
-                    text_mode="curved", inner_ratio=1 / 10, outer_ratio=3 / 10
+                    text_mode="curved", 
+                    inner_ratio=1 / 10, 
+                    outer_ratio=3 / 10
+                    
                 ),
                 "area": RingSpec(
-                    text_mode="angled", inner_ratio=3 / 10, outer_ratio=10 / 10
+                    text_mode="angled", 
+                    inner_ratio=3 / 10, 
+                    outer_ratio=10 / 10,
+                    symmetry_mode="count"
                 ),
-                "facet": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
+                "facet": RingSpec(
+                    inner_ratio=0.0, 
+                    outer_ratio=0.0
+                ),
             }
 
             # Pretty print the JSON with specified indentation

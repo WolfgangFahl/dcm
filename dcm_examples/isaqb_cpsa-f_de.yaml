@@ -701,6 +701,7 @@ ring_specs:
     text_mode: angled
     inner_ratio: 0.4444444444444444
     outer_ratio: 1.0
+    symmetry_mode: count
   facet:
     text_mode: empty
     inner_ratio: 0.0

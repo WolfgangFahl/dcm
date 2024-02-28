@@ -158,7 +158,6 @@ class CompetenceAspect(CompetenceElement):
     """
 
     areas: List[CompetenceArea] = field(default_factory=list)
-    credits: Optional[int] = None
 
 
 @dataclass_json
