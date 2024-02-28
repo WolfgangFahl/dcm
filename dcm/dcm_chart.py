@@ -357,7 +357,8 @@ class DcmChart:
         parent_segment: DonutSegment, 
         level_name: str,
         symmetry_mode: str,
-        elements: List[CompetenceElement]
+        elements: List[CompetenceElement],
+        lenient:bool=True
     ) -> Dict[str, DonutSegment]:
         """
         Calculates and returns a dictionary of DonutSegment objects for a given level in the Competence Tree.
@@ -371,7 +372,7 @@ class DcmChart:
             level_name: The name of the level (e.g., 'aspect', 'area', 'facet') for which sub-segments are being calculated.
             symmetry_mode: The symmetry mode ('symmetric' or 'asymmetric') affecting segment calculation.
             elements: A list of CompetenceElement instances at the current level.
-    
+            lenient (bool): if True symmetry mode will be adjusted to count in case there are no values
         Returns:
             A dictionary where keys are element paths and values are DonutSegment instances representing each element's segment in the visualization.
         """
@@ -403,7 +404,13 @@ class DcmChart:
                         min_value = value
         
         if total == 0 and num_zero_none_values == len(elements):
-            raise ValueError("All element values are 0 or None, cannot divide segment.")
+            if not lenient:
+                raise ValueError("All element values are 0 or None, cannot divide segment.")
+            else:
+                # robust reaction on issue
+                symmetry_mode="count"
+                num_zero_none_values=0
+                total = len(elements)
     
         # Correct handling when all values are not 0/None 
         # and therefore  min_value was not updated
