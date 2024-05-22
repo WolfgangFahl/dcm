@@ -115,6 +115,7 @@ class RingSpecsView:
 
     def __init__(self, webserver):
         self.webserver = webserver
+        self.ct=None
         # ringspec views
         self.rsv = {}
         self.setup_ui()
