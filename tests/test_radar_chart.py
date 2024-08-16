@@ -3,6 +3,7 @@ Created on 2024-02-01
 
 @author: wf
 """
+
 import os
 
 from ngwidgets.basetest import Basetest
@@ -60,13 +61,13 @@ class TestDcmChart(Basetest):
         """
         test radar chart creation
         """
-        # Create an SVG instance 
+        # Create an SVG instance
         svg = SVG(SVGConfig(width=600, height=600))
 
-        radar_chart = RadarChart(svg,max_score=100.0)
+        radar_chart = RadarChart(svg, max_score=100.0)
         radar_chart.add_scale_circles()
         radar_chart.add_scores(self.scores)
-  
+
         # Save the SVG to a file or inspect the SVG markup
         svg_file_name = "radar_chart.svg"
         self.save(svg, svg_file_name)

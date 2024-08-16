@@ -3,6 +3,7 @@ Created on 2023-06-11
 
 @author: wf
 """
+
 import json
 import os
 from dataclasses import dataclass, field
@@ -31,11 +32,12 @@ class RingSpec:
         outer_ratio (Optional[float]): The outer radius of the ring, relative to the chart size.
         symmetry_mode (Optional[str]): Specifies the symmetry mode for the ring. Supports "count", "time", "score" to determine how the ring segments are balanced. Default is None.
     """
+
     text_mode: Optional[str] = "empty"
     inner_ratio: Optional[float] = None
     outer_ratio: Optional[float] = None
     levels_visible: Optional[bool] = False
-    symmetry_mode: Optional[str] = None  
+    symmetry_mode: Optional[str] = None
 
     @property
     def empty(self) -> bool:
@@ -70,12 +72,11 @@ class CompetenceElement:
     description: Optional[str] = None
     color_code: Optional[str] = None
     border_color: Optional[str] = None
-    
+
     time: Optional[float] = None
-    time_unit: Optional[str] = None # h/CP
-    max_score: Optional[float] = None # 100
-    score_unit: Optional[str] = None # %
-    
+    time_unit: Optional[str] = None  # h/CP
+    max_score: Optional[float] = None  # 100
+    score_unit: Optional[str] = None  # %
 
     def __post_init__(self):
         # Set the id to the the slug of the name if id is None
@@ -133,7 +134,6 @@ class CompetenceFacet(CompetenceElement):
 
     This class can include additional properties or methods specific to a competence facet.
     """
-    
 
 
 @dataclass_json
@@ -234,14 +234,14 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
                     inner_ratio=inner_ratio,
                     outer_ratio=outer_ratio,
                 )
-                
-    def set_symmetry_mode(self,symmetry_level:str,symmetry_mode:str):
+
+    def set_symmetry_mode(self, symmetry_level: str, symmetry_mode: str):
         """
-         Sets a new symmetry mode for a specified level 
-         in the competence tree. It resets the symmetry 
-         mode for all levels to None and then 
-         applies the new symmetry mode to the 
-         specified level. This method ensures that 
+         Sets a new symmetry mode for a specified level
+         in the competence tree. It resets the symmetry
+         mode for all levels to None and then
+         applies the new symmetry mode to the
+         specified level. This method ensures that
          only one level has a symmetry mode set at any given time.
 
         Args:
@@ -250,10 +250,10 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         """
         # reset all ring specs
         for rl in ["tree", "aspect", "area", "facet"]:
-            self.ring_specs[rl].symmetry_mode=None
+            self.ring_specs[rl].symmetry_mode = None
         if symmetry_level in self.ring_specs:
-            self.ring_specs[symmetry_level].symmetry_mode=symmetry_mode
-                
+            self.ring_specs[symmetry_level].symmetry_mode = symmetry_mode
+
     def get_symmetry_spec(self) -> Tuple[str, str]:
         """
         Get the symmetry specification from the ring_specs, ensuring only one spec has the symmetry mode set.
@@ -264,43 +264,53 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
         Raises:
             ValueError: If multiple RingSpecs have a symmetry mode set.
         """
-        
-        symmetry_modes = [(level, spec.symmetry_mode) for level, spec in self.ring_specs.items() if spec.symmetry_mode]
+
+        symmetry_modes = [
+            (level, spec.symmetry_mode)
+            for level, spec in self.ring_specs.items()
+            if spec.symmetry_mode
+        ]
         if len(symmetry_modes) > 1:
             raise ValueError("Symmetry mode set for multiple ring specs.")
         elif len(symmetry_modes) == 1:
-            level,mode=symmetry_modes[0]
+            level, mode = symmetry_modes[0]
         else:
             # Default to "count" and CompetenceFacet level if no spec is given
-            level,mode= ("facet","count")
-        if not mode in ["count","score","time"]:
-            raise ValueError(f"Invalid symmetry mode {mode} - must be count, score or time")
-        return (level,mode)
-    
-    def get_elements_for_level(self,level:int)->List[CompetenceElement]:
+            level, mode = ("facet", "count")
+        if not mode in ["count", "score", "time"]:
+            raise ValueError(
+                f"Invalid symmetry mode {mode} - must be count, score or time"
+            )
+        return (level, mode)
+
+    def get_elements_for_level(self, level: int) -> List[CompetenceElement]:
         """
         get the elements for the given hierarchy level
-        
+
         Args:
             level(int): the hierarchy level
-            
+
         Returns:
             List(CompetencElement): the list of elements on this level
         """
-        level_name=self.level_names[level]
-        elements=self.elements_by_level[level_name]
+        level_name = self.level_names[level]
+        elements = self.elements_by_level[level_name]
         return elements
-
 
     def update_paths(self):
         """
         update my paths
         """
-        self.level_names = ["tree","aspect", "area", "facet"]
-        self.level_attr_names = [None,"aspects", "areas", "facets"]
+        self.level_names = ["tree", "aspect", "area", "facet"]
+        self.level_attr_names = [None, "aspects", "areas", "facets"]
         self.total_elements = {"tree": 1, "aspects": 0, "areas": 0, "facets": 0}
-        self.elements_by_level = {"tree": [self],"aspect": [], "area": [], "facet": []}  # Reset for re-calculation
- 
+        self.elements_by_level = {
+            "tree": [self],
+            "aspect": [],
+            "area": [],
+            "facet": [],
+        }  # Reset for re-calculation
+
         self.path = self.id
         self.total_levels = 1
         self.elements_by_path = {self.path: self}
@@ -458,6 +468,7 @@ class CompetenceTree(CompetenceElement, YamlAble["CompetenceTree"]):
             box_width,
             box_height,
         )
+
 
 @dataclass_json
 @dataclass

@@ -4,12 +4,13 @@ for displaying the development of skills/competences in the context of
 defined competence aspects.
 
 [![Join the discussion at https://github.com/WolfgangFahl/dcm/discussions](https://img.shields.io/github/discussions/WolfgangFahl/dcm)](https://github.com/WolfgangFahl/dcm/discussions)
-[![pypi](https://img.shields.io/pypi/pyversions/dynamic_competence_map)](https://pypi.org/project/dynamic-competence-map/)
+[![pypi](https://img.shields.io/pypi/pyversions/dynamic_competence_map)](https://pypi.org/project/dynamic_competence_map/)
 [![Github Actions Build](https://github.com/WolfgangFahl/dcm/actions/workflows/build.yml/badge.svg)](https://github.com/WolfgangFahl/dcm/actions/workflows/build.yml)
-[![PyPI Status](https://img.shields.io/pypi/v/dynamic_competence_map.svg)](https://pypi.python.org/pypi/dynamic-competence-map/)
+[![PyPI Status](https://img.shields.io/pypi/v/dynamic_competence_map.svg)](https://pypi.python.org/pypi/dynamic_competence_map/)
 [![GitHub issues](https://img.shields.io/github/issues/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues)
-[![GitHub issues](https://img.shields.io/github/issues-closed/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues/?q=is%3Aissue+is%3Aclosed)
-[![GitHub](https://img.shields.io/github/license/WolfgangFahl/dcm)](https://www.apache.org/licenses/LICENSE-2.0)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/WolfgangFahl/dcm.svg)](https://github.com/WolfgangFahl/dcm/issues/?q=is%3Aissue+is%3Aclosed)
+[![API Docs](https://img.shields.io/badge/API-Documentation-blue)](https://WolfgangFahl.github.io/dcm/)
+[![License](https://img.shields.io/github/license/WolfgangFahl/dcm.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Demos
 * [RWTH Aachen i5](https://dcm.wikidata.dbis.rwth-aachen.de/)
@@ -17,31 +18,31 @@ defined competence aspects.
 
 ## Motivation ##
 
-The **Dynamic Competence Map** (DCM) is an open-source tool 
-designed to support the visualization and analysis of 
+The **Dynamic Competence Map** (DCM) is an open-source tool
+designed to support the visualization and analysis of
 personal skills for a given learning context.
 
-The learning context is described in an hierachical way as a multi level CompetenceTree. 
+The learning context is described in an hierachical way as a multi level CompetenceTree.
 The level names may be adapted to your needs.
 
 ## Motivation
 
-The **Dynamic Competence Map** (DCM) is an open-source tool 
-designed for mapping and assessing skills in educational and 
-professional settings. It uses a hierarchical structure, 
-known as the Competence Tree, to organize and display 
+The **Dynamic Competence Map** (DCM) is an open-source tool
+designed for mapping and assessing skills in educational and
+professional settings. It uses a hierarchical structure,
+known as the Competence Tree, to organize and display
 skills and competencies.
 
-DCM offers a RESTful API for integration with other 
-systems and accepts input in YAML or JSON formats. This 
-allows for easy incorporation of the Competence Tree and 
-learner achievements, which can also be expressed as 
+DCM offers a RESTful API for integration with other
+systems and accepts input in YAML or JSON formats. This
+allows for easy incorporation of the Competence Tree and
+learner achievements, which can also be expressed as
 xAPI statements.
 
-Output from DCM includes a configurable Skillschart, 
-presented as SVG for visualization or available through 
-an interactive web service. This functionality supports 
-a range of uses, from academic research to practical 
+Output from DCM includes a configurable Skillschart,
+presented as SVG for visualization or available through
+an interactive web service. This functionality supports
+a range of uses, from academic research to practical
 applications in skill development and competency management.
 
 ## Features
@@ -77,4 +78,3 @@ applications in skill development and competency management.
 
 ## Authors
 * [Wolfgang Fahl](http://www.bitplan.com/Wolfgang_Fahl)
-

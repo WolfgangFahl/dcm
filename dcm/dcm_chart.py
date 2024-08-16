@@ -3,6 +3,7 @@ Created on 2024-01-12
 
 @author: wf
 """
+
 import copy
 from typing import Dict, List, Optional, Tuple
 
@@ -15,6 +16,7 @@ from dcm.dcm_core import (
     RingSpec,
 )
 from dcm.svg import SVG, DonutSegment, SVGConfig, SVGNodeConfig
+
 
 class DcmChart:
     """
@@ -111,9 +113,11 @@ class DcmChart:
         element_url = (
             element.url
             if element.url
-            else f"{self.lookup_url}/description/{element.path}"
-            if self.lookup_url is not None
-            else None
+            else (
+                f"{self.lookup_url}/description/{element.path}"
+                if self.lookup_url is not None
+                else None
+            )
         )
         show_as_popup = element.url is None
         element_config = element.to_svg_node_config(
@@ -285,21 +289,21 @@ class DcmChart:
                     svg=svg, learner=learner, element=element, segment=segment
                 )
         return result
-    
+
     def generate_pie_elements_for_segments(
         self,
         svg: SVG,
         ct: CompetenceTree,
         segments: Dict[str, Dict[str, DonutSegment]],
-        learner: Learner
+        learner: Learner,
     ):
         """
         Generate pie elements for the competence tree using pre-calculated segments.
-    
+
         This method will iterate through the provided segments dictionary, using each pre-calculated
         DonutSegment to generate and render pie elements (e.g., aspects, areas, or facets) based on
         the learner's achievements.
-    
+
         Args:
             svg (SVG): The SVG object where the pie elements will be drawn.
             ct (CompetenceTree): The competence tree structure.
@@ -310,19 +314,21 @@ class DcmChart:
             learner (Learner): The learner object containing achievement data.
         """
         for level_name, segment_dict in segments.items():
-            ringspec=ct.ring_specs[level_name]
+            ringspec = ct.ring_specs[level_name]
             for path, segment in segment_dict.items():
                 element = ct.elements_by_path.get(path, None)
                 if element:
                     self.generate_donut_segment_for_element(
-                        svg, element, learner, segment=segment, ringspec=ringspec  
+                        svg, element, learner, segment=segment, ringspec=ringspec
                     )
-                    
-    def create_donut_segment(self,
-         parent_segment: DonutSegment,
-         start_angle: float,
-         end_angle: float,
-         ringspec: RingSpec) -> DonutSegment:
+
+    def create_donut_segment(
+        self,
+        parent_segment: DonutSegment,
+        start_angle: float,
+        end_angle: float,
+        ringspec: RingSpec,
+    ) -> DonutSegment:
         """
         Creates a new DonutSegment based on the specified parameters, calculating its
         inner and outer radii based on SVG configuration and ring specifications.
@@ -350,22 +356,22 @@ class DcmChart:
             text_mode=ringspec.text_mode,
         )
         return segment
-                    
+
     def calculate_sub_segments(
         self,
-        ct: CompetenceTree, 
-        parent_segment: DonutSegment, 
+        ct: CompetenceTree,
+        parent_segment: DonutSegment,
         level_name: str,
         symmetry_mode: str,
         elements: List[CompetenceElement],
-        lenient:bool=True
+        lenient: bool = True,
     ) -> Dict[str, DonutSegment]:
         """
         Calculates and returns a dictionary of DonutSegment objects for a given level in the Competence Tree.
-    
+
         This method divides a parent segment into sub-segments based on the number of elements in the specified level,
         and assigns each sub-segment to the corresponding element's path.
-    
+
         Args:
             ct: An instance of CompetenceTree representing the entire competence structure.
             parent_segment: A DonutSegment instance representing the parent segment within which the sub-segments will be calculated.
@@ -378,21 +384,20 @@ class DcmChart:
         """
         ringspec: RingSpec = ct.ring_specs[level_name]
         sub_segments: Dict[str, DonutSegment] = {}
-        attr_names={
-            "time": "time",
-            "score":"max_score"
-        }
+        attr_names = {"time": "time", "score": "max_score"}
         if len(elements) == 0:
             return sub_segments
         num_zero_none_values = 0
-    
-        if symmetry_mode=="count":
+
+        if symmetry_mode == "count":
             total = len(elements)
         else:
-            attr_name=attr_names[symmetry_mode]
-            total=0
-            min_value = float('inf')  # Initialize to infinity for proper minimum comparison
-    
+            attr_name = attr_names[symmetry_mode]
+            total = 0
+            min_value = float(
+                "inf"
+            )  # Initialize to infinity for proper minimum comparison
+
             # Initial loop to calculate total and count 0/None values
             for element in elements:
                 value = getattr(element, attr_name)
@@ -402,135 +407,148 @@ class DcmChart:
                     total += value
                     if value < min_value:
                         min_value = value
-        
+
         if total == 0 and num_zero_none_values == len(elements):
             if not lenient:
-                raise ValueError("All element values are 0 or None, cannot divide segment.")
+                raise ValueError(
+                    "All element values are 0 or None, cannot divide segment."
+                )
             else:
                 # robust reaction on issue
-                symmetry_mode="count"
-                num_zero_none_values=0
+                symmetry_mode = "count"
+                num_zero_none_values = 0
                 total = len(elements)
-    
-        # Correct handling when all values are not 0/None 
+
+        # Correct handling when all values are not 0/None
         # and therefore  min_value was not updated
-        if num_zero_none_values>0:    
+        if num_zero_none_values > 0:
             # Adjust total value for 0/None values
             # we use the min_value as a default
             total += min_value * num_zero_none_values
-   
+
         start_angle = parent_segment.start_angle
-    
+
         for element in elements:
-            if symmetry_mode=="count":
-                value=1
+            if symmetry_mode == "count":
+                value = 1
             else:
                 value = getattr(element, attr_name) or min_value
             proportion = value / total
-            angle_span = (parent_segment.end_angle - parent_segment.start_angle) * proportion
+            angle_span = (
+                parent_segment.end_angle - parent_segment.start_angle
+            ) * proportion
             end_angle = start_angle + angle_span
-    
+
             segment = self.create_donut_segment(
                 parent_segment, start_angle, end_angle, ringspec
             )
             sub_segments[element.path] = segment
             start_angle = end_angle
-    
+
         return sub_segments
 
-    
     def calculate_parent_segments(
-        self,
-        segments: Dict[str, DonutSegment],
-        ringspec: RingSpec
+        self, segments: Dict[str, DonutSegment], ringspec: RingSpec
     ) -> Dict[str, DonutSegment]:
         """
         Aggregates child segments into parent segments, calculating the combined start and end angles
         for each parent based on its children segments. It uses the `create_donut_segment` function to
         ensure that newly created parent segments have the correct dimensions according to the specified `ringspec`.
-    
+
         Args:
             segments: A dictionary of child segments with paths as keys and DonutSegment objects as values.
             ringspec: A RingSpec object specifying the dimensions for the newly created parent segments.
-    
+
         Returns:
             A dictionary of aggregated parent segments with parent paths as keys and newly created DonutSegment objects as values.
         """
         parent_segments: Dict[str, DonutSegment] = {}
-    
+
         for path, segment in segments.items():
             # Extract the parent path
-            parent_path = '/'.join(path.split('/')[:-1])
+            parent_path = "/".join(path.split("/")[:-1])
             if parent_path not in parent_segments:
                 # For a new parent segment, initialize with current segment's angles
                 parent_segments[parent_path] = self.create_donut_segment(
                     parent_segment=segment,  # Assuming there's logic to determine this correctly
                     start_angle=segment.start_angle,
                     end_angle=segment.end_angle,
-                    ringspec=ringspec
+                    ringspec=ringspec,
                 )
             else:
                 # Update existing parent segment's angles
                 parent_segment = parent_segments[parent_path]
-                parent_segment.start_angle = min(segment.start_angle, parent_segment.start_angle)
-                parent_segment.end_angle = max(segment.end_angle, parent_segment.end_angle)
-    
+                parent_segment.start_angle = min(
+                    segment.start_angle, parent_segment.start_angle
+                )
+                parent_segment.end_angle = max(
+                    segment.end_angle, parent_segment.end_angle
+                )
+
         return parent_segments
 
     def calculate_segments(
-        self, 
-        ct: CompetenceTree, 
-        tree_segment: DonutSegment
+        self, ct: CompetenceTree, tree_segment: DonutSegment
     ) -> Dict[str, Dict[str, DonutSegment]]:
         """
         Pre-calculate the donut segments for each level of the competence tree.
-    
+
         Args:
             ct: A CompetenceTree instance for which segments are to be calculated.
             tree_segment: A DonutSegment instance representing the whole competence tree.
-    
+
         Returns:
             A nested dictionary where the first-level keys are level names (e.g., 'aspect', 'area', 'facet'),
             and the second-level keys are element paths with their corresponding DonutSegment objects as values.
         """
 
-        self.level_segments = {
-            "aspect": {}, 
-            "area": {}, 
-            "facet": {}
-        }
-        
+        self.level_segments = {"aspect": {}, "area": {}, "facet": {}}
+
         symmetry_level, symmetry_mode = ct.get_symmetry_spec()
         symmetry_elements = ct.elements_by_level[symmetry_level]
-        sub_segments=self.calculate_sub_segments(ct, tree_segment, symmetry_level, symmetry_mode,symmetry_elements)
-        self.level_segments[symmetry_level]=sub_segments
-        if symmetry_level=="facet":
+        sub_segments = self.calculate_sub_segments(
+            ct, tree_segment, symmetry_level, symmetry_mode, symmetry_elements
+        )
+        self.level_segments[symmetry_level] = sub_segments
+        if symmetry_level == "facet":
             # work from outer level to inner
-            area_segments=self.calculate_parent_segments(sub_segments, ct.ring_specs["area"])
-            self.level_segments["area"]=area_segments
-            aspect_segments=self.calculate_parent_segments(area_segments, ct.ring_specs["aspect"])
-            self.level_segments["aspect"]=aspect_segments
+            area_segments = self.calculate_parent_segments(
+                sub_segments, ct.ring_specs["area"]
+            )
+            self.level_segments["area"] = area_segments
+            aspect_segments = self.calculate_parent_segments(
+                area_segments, ct.ring_specs["aspect"]
+            )
+            self.level_segments["aspect"] = aspect_segments
         elif symmetry_level == "area":
             # work from outer level to inner
-            area_segments=sub_segments
-            aspect_segments=self.calculate_parent_segments(area_segments, ct.ring_specs["aspect"])
-            self.level_segments["aspect"]=aspect_segments
+            area_segments = sub_segments
+            aspect_segments = self.calculate_parent_segments(
+                area_segments, ct.ring_specs["aspect"]
+            )
+            self.level_segments["aspect"] = aspect_segments
             # work from middle level to outer
             for area_path, area_segment in area_segments.items():
                 area = ct.elements_by_path[area_path]
-                facet_segments = self.calculate_sub_segments(ct, area_segment, "facet", symmetry_mode, area.facets)
+                facet_segments = self.calculate_sub_segments(
+                    ct, area_segment, "facet", symmetry_mode, area.facets
+                )
                 self.level_segments["facet"].update(facet_segments)
         elif symmetry_level == "aspect":
             # work from inner level to outer
             for aspect_path, aspect_segment in sub_segments.items():
                 aspect = ct.elements_by_path[aspect_path]
-                area_segments = self.calculate_sub_segments(ct, aspect_segment, "area", symmetry_mode, aspect.areas)
+                area_segments = self.calculate_sub_segments(
+                    ct, aspect_segment, "area", symmetry_mode, aspect.areas
+                )
                 self.level_segments["area"].update(area_segments)
                 for area_path, area_segment in area_segments.items():
                     area = ct.elements_by_path[area_path]
-                    facet_segments = self.calculate_sub_segments(ct, area_segment, "facet", symmetry_mode, area.facets)
+                    facet_segments = self.calculate_sub_segments(
+                        ct, area_segment, "facet", symmetry_mode, area.facets
+                    )
                     self.level_segments["facet"].update(facet_segments)
-         
+
         else:
             raise ValueError(f"Invalid symmetry_level {symmetry_level}")
         return self.level_segments
@@ -580,23 +598,25 @@ class DcmChart:
         if competence_tree is None:
             competence_tree = self.dcm.competence_tree
         self.selected_paths = selected_paths
-        
+
         competence_tree.calculate_ring_specs(text_mode)
         svg = self.prepare_and_add_inner_circle(config, competence_tree, lookup_url)
 
         segment = DonutSegment(
             cx=self.cx, cy=self.cy, inner_radius=0, outer_radius=self.tree_radius
         )
-        segments=self.calculate_segments(competence_tree,segment)
-        self.generate_pie_elements_for_segments(svg=svg, ct=competence_tree, segments=segments, learner=learner)
-        #self.generate_pie_elements(
+        segments = self.calculate_segments(competence_tree, segment)
+        self.generate_pie_elements_for_segments(
+            svg=svg, ct=competence_tree, segments=segments, learner=learner
+        )
+        # self.generate_pie_elements(
         #    level=1,
         #    svg=svg,
         #    ct=competence_tree,
         #    parent_element=competence_tree,
         #    learner=learner,
         #    segment=segment,
-        #)
+        # )
         if svg.config.legend_height > 0:
             competence_tree.add_legend(svg)
 

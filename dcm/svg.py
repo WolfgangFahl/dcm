@@ -56,9 +56,9 @@ class SVGNode:
 
     indent_level: int = 1
     id: Optional[str] = None
-    color: Optional[
-        str
-    ] = None  # Color of font or stroke use default color of config if None
+    color: Optional[str] = (
+        None  # Color of font or stroke use default color of config if None
+    )
     stroke_width: float = 1.0  # Stroke width of the polygon lines
     opacity: float = 0.5  # Opacity of fill e.g. for polygons
     fill: Optional[str] = "black"  # Fill color for the segment

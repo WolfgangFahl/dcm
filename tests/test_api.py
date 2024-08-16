@@ -3,6 +3,7 @@ Created on 2023-11-08
 
 @author: wf
 """
+
 from ngwidgets.webserver_test import WebserverTest
 
 from dcm.dcm_cmd import CompetenceCmd
@@ -29,10 +30,10 @@ class TestAPI(WebserverTest):
         )
         self.example_definitions = {}
         for markup in ["json", "yaml"]:
-            self.example_definitions[
-                markup
-            ] = DynamicCompetenceMap.get_example_dcm_definitions(
-                markup=markup, required_keys=CompetenceTree.required_keys()
+            self.example_definitions[markup] = (
+                DynamicCompetenceMap.get_example_dcm_definitions(
+                    markup=markup, required_keys=CompetenceTree.required_keys()
+                )
             )
 
     def test_svg_render(self):

@@ -3,6 +3,7 @@ Created on 2024-01-15
 
 @author: wf
 """
+
 import json
 import os
 
@@ -16,6 +17,7 @@ from dcm.dcm_core import (
     CompetenceTree,
     RingSpec,
 )
+
 
 class TestGreta(Basetest):
     """
@@ -111,41 +113,29 @@ class TestGreta(Basetest):
         if with_text:
             ct.ring_specs = {
                 "tree": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=1 / 10, 
-                    text_mode="horizontal"
+                    inner_ratio=0.0, outer_ratio=1 / 10, text_mode="horizontal"
                 ),
                 "aspect": RingSpec(
-                    text_mode="curved", 
-                    inner_ratio=9 / 10, 
-                    outer_ratio=10 / 10
+                    text_mode="curved", inner_ratio=9 / 10, outer_ratio=10 / 10
                 ),
-                "area": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0),
+                "area": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
                 "facet": RingSpec(
-                    text_mode="angled", 
-                    inner_ratio=1 / 10, 
+                    text_mode="angled",
+                    inner_ratio=1 / 10,
                     outer_ratio=9 / 10,
-                    symmetry_mode="count"
+                    symmetry_mode="count",
                 ),
             }
         else:
             ct.ring_specs = {
-                "tree": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=1 / 9),
-                "aspect": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0),
-                "area": RingSpec(
-                    inner_ratio=0.0, 
-                    outer_ratio=0.0),
+                "tree": RingSpec(inner_ratio=0.0, outer_ratio=1 / 9),
+                "aspect": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
+                "area": RingSpec(inner_ratio=0.0, outer_ratio=0.0),
                 "facet": RingSpec(
-                    inner_ratio=1 / 9, 
+                    inner_ratio=1 / 9,
                     outer_ratio=9 / 9,
                     levels_visible=True,
-                    symmetry_mode="count"
+                    symmetry_mode="count",
                 ),
             }
 
@@ -158,12 +148,7 @@ class TestGreta(Basetest):
             4: "#3f4a00",  # Very Dark Olive Green for level 4
         }
         # Define the color codes for areas:
-        aspect_color_codes = [
-            "#0069a7", 
-            "#008dd0", 
-            "#40a1da", 
-            "#86c0ea"
-        ]
+        aspect_color_codes = ["#0069a7", "#008dd0", "#40a1da", "#86c0ea"]
 
         # Define icons for competence levels (replace with actual icon names)
         utf8_icons = {0: "❓", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐"}
