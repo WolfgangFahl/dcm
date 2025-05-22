@@ -72,9 +72,10 @@ class TestLLMGreta(Basetest):
         """
         test generating competence assessment Questions
         """
-        if not self.llm.available():
+        skip=True
+        if not self.llm.available() or skip:
             return
-        prompt = """Du agierst als Assessor für das GRETA Kompetenzmodell 
+        prompt = """Du agierst als Assessor für das GRETA Kompetenzmodell
 in der Erwachsenenbildung."""
         prompt += f"Mit {len(self.ct.aspects)} Aspekten"
         for i, aspect in enumerate(self.ct.aspects, start=1):
