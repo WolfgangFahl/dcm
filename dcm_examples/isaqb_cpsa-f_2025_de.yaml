@@ -735,6 +735,7 @@ ring_specs:
     inner_ratio: 0.1111111111111111
     outer_ratio: 0.4444444444444444
     levels_visible: false
+    symmetry_mode: score
   area:
     text_mode: angled
     inner_ratio: 0.4444444444444444
