@@ -14,7 +14,7 @@ aspects:
   color_code: '#c4903a'
   areas:
   - name: Definitionen von Softwarearchitektur verstehen (R1)
-    short_name: LZ1-1
+    short_name: LZ01-01
     id: 01-01
     description: |2+
 
@@ -27,7 +27,7 @@ aspects:
       * Architekturentscheidungen und ihre Auswirkungen auf das gesamte System und seinen Lebenszyklus
 
   - name: Ziele und Nutzen von Softwarearchitektur verstehen und erläutern (R1)
-    short_name: LZ1-2
+    short_name: LZ01-02
     id: 01-02
     description: |2+
 
@@ -42,7 +42,7 @@ aspects:
       * architekturrelevante Richtlinien für Implementierung und Betrieb zu spezifizieren
 
   - name: Langfristige Auswirkungen von Softwarearchitektur kennen (R3)
-    short_name: LZ1-3
+    short_name: LZ01-03
     id: 01-03
     description: |2
 
@@ -57,7 +57,7 @@ aspects:
 
       Sie wissen, wie sie die Auswirkungen von Architekturentscheidungen auf die langfristige Entwicklung eines Systems analysieren können.
   - name: Aufgaben und Verantwortung von Softwarearchitekt:innen verstehen (R1)
-    short_name: LZ1-4
+    short_name: LZ01-04
     id: 01-04
     description: "\nSoftwarearchitekt:innen tragen die Verantwortung für die Erreichung\
       \ der Anforderungen und die Entwicklung der Architektur der Lösung.\nSie müssen\
@@ -80,7 +80,7 @@ aspects:
       \ von Iterationen bei allen Aufgaben erkennen und Möglichkeiten für entsprechende\
       \ Rückmeldung aufzeigen.\n\n"
   - name: Abgrenzung zu anderen Architekturdomänen (R3)
-    short_name: LZ1-5
+    short_name: LZ01-05
     id: 01-05
     description: |2+
 
@@ -100,7 +100,7 @@ aspects:
 
   - name: Rolle von Softwarearchitekt:innen mit anderen Stakeholdern in Beziehung
       setzen (R1)
-    short_name: LZ1-6
+    short_name: LZ01-06
     id: 01-06
     description: "\nSoftwarearchitekt:innen können ihre Rolle erklären. \nSie sollten\
       \ ihren Beitrag zur Systementwicklung in Verbindung mit anderen Stakeholdern\
@@ -112,7 +112,7 @@ aspects:
       \ zutreffend primär für eingebettete und hardwarenahe Systeme\n* Unternehmensarchitektur,\
       \ Architekturboard.\n\n"
   - name: Bedeutung von Daten und Datenmodellen (R2)
-    short_name: LZ1-7
+    short_name: LZ01-07
     id: 01-07
     description: "\n\nSoftwarearchitekt:innen verstehen die Bedeutung von Daten und\
       \ Datenmodellen (unabhängig von ihrer physischen Repräsentation) für die Architektur.\
@@ -131,7 +131,7 @@ aspects:
   color_code: '#ba904c'
   areas:
   - name: Anforderungen durch Architektur erreichen (R1)
-    short_name: LZ3-1
+    short_name: LZ03-01
     id: 03-01
     description: |2+
 
@@ -144,7 +144,7 @@ aspects:
       * können mögliche Abwägungen zwischen Entwürfen sowie den entsprechenden Risiken identifizieren und kommunizieren
 
   - name: Softwarearchitekturen entwerfen (R1)
-    short_name: LZ3-2
+    short_name: LZ03-02
     id: 03-02
     description: |2+
 
@@ -163,7 +163,7 @@ aspects:
 
   - name: Vorgehen und Heuristiken zur Architekturentwicklung auswählen und anwenden
       können (R1,R3)
-    short_name: LZ3-3
+    short_name: LZ03-03
     id: 03-03
     description: "\n\nSoftwarearchitekt:innen können grundlegende Vorgehensweisen\
       \ der Architekturentwicklung benennen, erklären und anwenden, beispielsweise:\n\
@@ -173,7 +173,7 @@ aspects:
       \ siehe <<ford>> (R3)\n* Globale Analyse, siehe <<hofmeister>> (R3) \n* Modellbasierter\
       \ Entwurf (R3)\n\n"
   - name: Entwurfsprinzipien erläutern und anwenden (R1-R3)
-    short_name: LZ3-4
+    short_name: LZ03-04
     id: 03-04
     description: "\n\n\nSoftwarearchitekt:innen sind in der Lage zu erklären, was\
       \ Entwurfsprinzipien sind.\nSie können deren grundlegende Ziele und deren Anwendung\
@@ -210,7 +210,7 @@ aspects:
       \ Principle, Interface Segregation Principle, Dependency Inversion Principle\
       \ \n\n"
   - name: Zusammenhang zwischen Feedback-Schleifen und Risiko (R1, R2)
-    short_name: LZ3-5
+    short_name: LZ03-05
     id: 03-05
     description: "\n\nSoftwarearchitekt:innen verstehen die Notwendigkeit von Iterationen,\
       \ insbesondere bei unter Unsicherheit getroffenen Entscheidungen.\nSie\n  \n\
@@ -220,7 +220,7 @@ aspects:
       \ Rückmeldungen zu Architekturentscheidungen (R1)\n* können von anderen Stakeholdern\
       \ systematisch Rückmeldung einholen. (R2)\n\n"
   - name: Abhängigkeiten von Bausteinen managen (R1)
-    short_name: LZ3-6
+    short_name: LZ03-06
     id: 03-06
     description: "\n\n\nSoftwarearchitekt:innen verstehen Abhängigkeiten und Kopplung\
       \ zwischen Bausteinen und können diese gezielt einsetzen.\nSie:\n\n* kennen\
@@ -242,7 +242,7 @@ aspects:
       \ durch Anwendung von\n{glossary_url}dependency-injection[Dependency Injection]\
       \ (R3) (siehe auch <<LG-03-08>>).\n\n\n"
   - name: Schnittstellen entwerfen und spezifizieren (R1-R3)
-    short_name: LZ3-7
+    short_name: LZ03-07
     id: 03-07
     description: "\n\n\nSoftwarearchitekt:innen kennen die kritische Bedeutung von\
       \ Schnittstellen für die Interaktion zwischen Architekturbausteinen oder zwischen\
@@ -266,7 +266,7 @@ aspects:
       \ <<LG-04-06>>.\n"
   - name: Wichtige Architekturmuster beschreiben, erklären und angemessen anwenden
       (R1, R3)
-    short_name: LZ3-8
+    short_name: LZ03-08
     id: 03-08
     description: |2+
 
@@ -304,7 +304,7 @@ aspects:
       * zusätzliche Quellen für Muster, die sich auf ihre spezifische technische oder Anwendungsdomäne beziehen.
 
   - name: Wichtige Entwurfsmuster beschreiben, erklären und angemessen anwenden (R3)
-    short_name: LZ3-9
+    short_name: LZ03-09
     id: 03-09
     description: "\n\nSoftwarearchitekt:innen können mehrere der folgenden Entwurfsmuster\
       \ beschreiben, ihre Relevanz für die Architektur und konkrete Systeme erklären\
@@ -318,7 +318,7 @@ aspects:
       \ z.B.\n<<gof,GOF>> und <<buschmanna,POSA>>.\n\n\n"
   - name: Querschnittsthemen identifizieren und Querschnittskonzepte entwerfen und
       umsetzen (R1)
-    short_name: LZ3-10
+    short_name: LZ03-10
     id: 03-10
     description: |2
 
@@ -334,7 +334,7 @@ aspects:
 
       Siehe auch <<LG-04-07>>.
   - name: Grundlegende Prinzipien von Software-Deployments kennen (R3)
-    short_name: LZ3-11
+    short_name: LZ03-11
     id: 03-11
     description: |2+
 
@@ -350,7 +350,7 @@ aspects:
       ** Releases sind einfach zurückzunehmen
 
   - name: Herausforderungen verteilter Systeme kennen (R3)
-    short_name: LZ3-12
+    short_name: LZ03-12
     id: 03-12
     description: |2
 
@@ -375,7 +375,7 @@ aspects:
   areas:
   - name: Anforderungen an technische Dokumentation erläutern und berücksichtigen
       (R1)
-    short_name: LZ4-1
+    short_name: LZ04-01
     id: 04-01
     description: |2+
 
@@ -388,7 +388,7 @@ aspects:
       Sie wissen, dass Verständlichkeit technischer Dokumentation nur von deren Zielgruppen beurteilt werden kann.
 
   - name: Softwarearchitekturen beschreiben und kommunizieren (R1-R3)
-    short_name: LZ4-2
+    short_name: LZ04-02
     id: 04-02
     description: |2+
 
@@ -414,7 +414,7 @@ aspects:
 
   - name: Notations-/Modellierungsmittel für Beschreibung von Softwarearchitektur
       erläutern und anwenden (R2-R3)
-    short_name: LZ4-3
+    short_name: LZ04-03
     id: 04-03
     description: |2+
 
@@ -435,7 +435,7 @@ aspects:
       * für Laufzeitsichten beispielsweise Flussdiagramme, nummerierte Listen oder Business-Process-Modelling-Notation (BPMN).
 
   - name: Lernziel nicht gefunden (R3)
-    short_name: LZ4-4
+    short_name: LZ04-04
     id: 04-04
     description: |2+
 
@@ -445,7 +445,7 @@ aspects:
       Hinweis: Der Titel dieses Lernziels wurde bewusst gewählt und stellt keinen technischen Fehler dar.
 
   - name: Architektursichten erläutern und anwenden (R1)
-    short_name: LZ4-5
+    short_name: LZ04-05
     id: 04-05
     description: |2
 
@@ -461,7 +461,7 @@ aspects:
 
       Zusätzliche Sichten können nach Bedarf verwendet werden, um weitere Anliegen oder Anforderungen von Stakeholden zu berücksichtigen, z. B. Funktionale Sicherheit, Informations-, Betriebs- oder User-Interface Sicht (R3).
   - name: Schnittstellen dokumentieren (R1)
-    short_name: LZ4-6
+    short_name: LZ04-06
     id: 04-06
     description: |2+
 
@@ -471,7 +471,7 @@ aspects:
       Siehe auch <<LG-03-07>>.
 
   - name: Querschnittsthemen dokumentieren und kommunizieren (R2)
-    short_name: LZ4-7
+    short_name: LZ04-07
     id: 04-07
     description: |2+
 
@@ -481,7 +481,7 @@ aspects:
       Siehe auch <<LG-03-10>>.
 
   - name: Architekturentscheidungen erläutern und dokumentieren (R1-R2)
-    short_name: LZ4-8
+    short_name: LZ04-08
     id: 04-08
     description: |2
 
@@ -493,7 +493,7 @@ aspects:
 
       Softwarearchitekt:innen kennen Architecture-Decision-Records (ADR, siehe <<nygard>>) und können diese zur Dokumentation von Entscheidungen einsetzen (R2).
   - name: Weitere Hilfsmittel und Werkzeuge zur Dokumentation kennen (R3)
-    short_name: LZ4-9
+    short_name: LZ04-09
     id: 04-09
     description: "\n\nSoftwarearchitekt:innen kennen:\n\n* Grundlagen mehrerer publizierter\
       \ Frameworks zur Beschreibung von Softwarearchitekturen, beispielsweise:\n**\
@@ -508,7 +508,7 @@ aspects:
   color_code: '#a6916f'
   areas:
   - name: Gründe für Architekturanalyse kennen (R1)
-    short_name: LZ5-1
+    short_name: LZ05-01
     id: 05-01
     description: |2+
 
@@ -521,7 +521,7 @@ aspects:
       * überprüfen, inwiefern architekturrelevante Anliegen der Stakeholder berücksichtigt sind
 
   - name: Qualitäten eines Softwaresystems analysieren (R1, R3)
-    short_name: LZ5-2
+    short_name: LZ05-02
     id: 05-02
     description: |2
 
@@ -553,7 +553,7 @@ aspects:
 
       Siehe auch <<LG-02-03>>, <<LG-02-04>>.
   - name: Konformität mit Architekturentscheidungen bewerten (R2)
-    short_name: LZ5-3
+    short_name: LZ05-03
     id: 05-03
     description: |2+
 
@@ -568,14 +568,14 @@ aspects:
   color_code: '#9c9180'
   areas:
   - name: Bezug von Anforderungen und Randbedingungen zur Lösung erfassen (R3)
-    short_name: LZ6-1
+    short_name: LZ06-01
     id: 06-01
     description: |2+
 
       Softwarearchitekt:innen haben an mindestens einem Beispiel den Bezug von Anforderungen und Randbedingungen zu Lösungsentscheidungen erkannt und nachvollzogen.
 
   - name: Technische Umsetzung einer Lösung nachvollziehen (R3)
-    short_name: LZ6-2
+    short_name: LZ06-02
     id: 06-02
     description: |2+
 
@@ -589,7 +589,7 @@ aspects:
   color_code: '#929292'
   areas:
   - name: Stakeholder-Anliegen verstehen (R1, R3)
-    short_name: LZ2-1
+    short_name: LZ02-01
     id: 02-01
     description: |2
 
@@ -629,7 +629,7 @@ aspects:
 
       Architekt:innen können die Anliegen der Stakeholder nutzen, um fehlende oder widersprüchliche Anforderungen zu entdecken und/oder Anforderungen und Einschränkungen an der Architektur zu validieren, z.B. in Stakeholder-Interviews. (R3)
   - name: Anforderungen und Randbedingungen klären und berücksichtigen können (R1-R3)
-    short_name: LZ2-2
+    short_name: LZ02-02
     id: 02-02
     description: "\n\nSoftwarearchitekt:innen verstehen, dass sowohl Anforderungen\
       \ als auch Randbedingungen Auswirkungen auf die Architektur und die Architekturarbeit\
@@ -658,7 +658,7 @@ aspects:
       \ wirken, und sie können die Konsequenzen einer Änderung der Einflussfaktoren\
       \ anhand von Beispielen erläutern (R2).\n\n\n"
   - name: Qualitäten eines Softwaresystems verstehen und erklären (R1)
-    short_name: LZ2-3
+    short_name: LZ02-03
     id: 02-03
     description: "\n\nSoftwarearchitekt:innen wissen dass der Begriff \"Qualität\"\
       \ in verschiedenen Kontexten unterschiedlich benutzt wird: \n\n* im Kontext\
@@ -675,7 +675,7 @@ aspects:
       \ verstehen, dass sich eine einzelne Anforderung auf mehrere Qualitäten beziehen\
       \ kann.\n"
   - name: Anforderungen an Qualitäten formulieren (R1-R3)
-    short_name: LZ2-4
+    short_name: LZ02-04
     id: 02-04
     description: |2+
 
@@ -689,7 +689,7 @@ aspects:
       * wissen, dass die Verwendung einer Metrik als Ziel diese invalidieren kann (R2), wie z.{nbsp}B. in Goodhart's Law (R3) beschrieben
 
   - name: Explizite Aussagen vor impliziten Annahmen bevorzugen (R1)
-    short_name: LZ2-5
+    short_name: LZ02-05
     id: 02-05
     description: |2+
 
