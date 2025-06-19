@@ -18,7 +18,7 @@ class Version:
     name = "dcm"
     version = dcm.__version__
     date = "2023-11-06"
-    updated = "2025-05-22"
+    updated = "2025-06-19"
     description = "python based visualization of dynamic competence maps"
 
     authors = "Wolfgang Fahl"
